@@ -1,0 +1,50 @@
+#green a.img img { border-color: #317f4e; }
+#green a.img:hover img { border-color: #133b22 !important; }
+#green img.img { border-color: #b9b9b9; }
+
+#green input,
+#green textarea,
+#green select { color: #458c60; }
+
+#green #header { background: #0a3319 url(../images/green/header-short-bg.gif) repeat-x 0 0; }
+#green #header .header-image { background-image: url(../images/green/top-light-short.jpg); }
+#green .header-long { background-image: url(../images/green/header-bg.gif) !important; }
+#green .header-long .header-image { background-image: url(../images/green/top-light-long.jpg) !important; }
+
+#green #navigation ul li a,
+#green #navigation ul li a span { color: #97d1a9; }
+
+#green #navigation ul li a:hover,
+#green #navigation ul li a.active,
+#green #navigation ul li a:hover span,
+#green #navigation ul li a.active span { background-image: url(../images/green/button.gif); }
+
+#green #header .line { background-image: url(../images/green/header-line.gif); }
+
+#green .slider-nav  { background-image: url(../images/green/slider-nav-bg.gif); border-color: #34b462; }
+#green .slider-nav li a { background-image: url(../images/green/slider-nav-links.gif); }
+
+#green .button, 
+#green .button span { background-image: url(../images/green/button2.gif); }
+
+#green #bottom { background: url(../images/green/bottom-bg.gif) repeat-x 0 0; }
+#green #bottom .shell { background-image: url(../images/green/bottom-light.gif); }
+
+#green #bottom h3,
+#green #bottom ul li,
+#green #bottom .testimonial { background-image: url(../images/green/bottom-border.gif); }
+
+#green .newsletter .field { background: url(../images/green/field.gif); }
+#green .quick-contact .field { background: url(../images/green/small-field.gif); }
+#green #bottom .submit { background: url(../images/green/button3.gif); }
+#green #bottom textarea { background: url(../images/green/textarea.gif); }
+
+#green .gallery-details .menu ul li a.active span { background-image: url(../images/green/active-menu.png); }
+#green #respond .submit { background-image: url(../images/green/button5.gif); }
+
+#green .wp-pagenavi a.page:hover ,
+#green .wp-pagenavi span.current,
+#green .pagination p a:hover,
+#green .pagination p a.active { background-image: url(../images/green/paging-bg.gif); }
+
+#green .gallery-details .menu ul li a.active span  { filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='css/images/green/active-menu.png', sizingMethod='image'); }

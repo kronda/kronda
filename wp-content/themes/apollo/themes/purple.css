@@ -1,0 +1,50 @@
+#purple a.img img { border-color: #55497b; }
+#purple a.img:hover img { border-color: #674cbc !important; }
+#purple img.img { border-color: #b9b9b9; }
+
+#purple input,
+#purple textarea,
+#purple select { color: #68588b; }
+
+#purple #header { background: #2d2346 url(../images/purple/header-short-bg.gif) repeat-x 0 0; }
+#purple #header .header-image { background-image: url(../images/purple/top-light-short.jpg); }
+#purple .header-long { background-image: url(../images/purple/header-bg.gif) !important; }
+#purple .header-long .header-image { background-image: url(../images/purple/top-light-long.jpg) !important; }
+
+#purple #navigation ul li a,
+#purple #navigation ul li a span { color: #8e82ae; }
+
+#purple #navigation ul li a:hover,
+#purple #navigation ul li a.active,
+#purple #navigation ul li a:hover span,
+#purple #navigation ul li a.active span { background-image: url(../images/purple/button.gif); }
+
+#purple #header .line { background-image: url(../images/purple/header-line.gif); }
+
+#purple .slider-nav  { background-image: url(../images/purple/slider-nav-bg.gif); border-color: #6b529a; }
+#purple .slider-nav li a { background-image: url(../images/purple/slider-nav-links.gif); }
+
+#purple .button, 
+#purple .button span { background-image: url(../images/purple/button2.gif); }
+
+#purple #bottom { background: url(../images/purple/bottom-bg.gif) repeat-x 0 0; }
+#purple #bottom .shell { background-image: url(../images/purple/bottom-light.gif); }
+
+#purple #bottom h3,
+#purple #bottom ul li,
+#purple #bottom .testimonial { background-image: url(../images/purple/bottom-border.gif); }
+
+#purple .newsletter .field { background: url(../images/purple/field.gif); }
+#purple .quick-contact .field { background: url(../images/purple/small-field.gif); }
+#purple #bottom .submit { background: url(../images/purple/button3.gif); }
+#purple #bottom textarea { background: url(../images/purple/textarea.gif); }
+
+#purple .gallery-details .menu ul li a.active span { background-image: url(../images/purple/active-menu.png); }
+#purple #respond .submit { background-image: url(../images/purple/button5.gif); }
+
+#purple .wp-pagenavi a.page:hover ,
+#purple .wp-pagenavi span.current,
+#purple .pagination p a:hover,
+#purple .pagination p a.active { background-image: url(../images/purple/paging-bg.gif); }
+
+#purple .gallery-details .menu ul li a.active span  { filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='css/images/purple/active-menu.png', sizingMethod='image'); }

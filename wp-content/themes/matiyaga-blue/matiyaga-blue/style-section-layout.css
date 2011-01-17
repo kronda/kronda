@@ -1,0 +1,291 @@
+/************************************************/
+/*** Layout : Core : Start **********************/
+/************************************************/
+
+html, body, div { margin: 0; padding: 0; }
+form { display: block; margin: 0; padding: 0; }
+blockquote { margin: 15px 0; padding: 0 20px 0 20px; }
+
+.clearer { clear: both; }
+.hidden { visibility: hidden; }
+.nodisplay { display: none; }
+
+div#container { 
+	margin: 0 auto; padding: 0; 
+
+}
+
+/************************************************/
+/*** Layout : Core : End ************************/
+/************************************************/
+
+
+/************************************************/
+/*** Layout : Header : Start ********************/
+/************************************************/
+
+div#nav-container { height: 31px; padding : 0 0px; width:100%; }
+div#nav-container-wrapper { height: 32px; padding : 0 0px; width:1000px; margin:0 auto; }
+div#navmenu { height: 32px; padding : 0 0 0 5px; width:100%; float:left; }
+div#navmenu-wrapper { margin: 0 auto; width:1000px; height:32px; padding-top:4px;}
+
+
+
+
+
+div#category-menu { height: 38px;  padding:0;   }
+div#category { height: 38px; margin: 0 auto;width:500px; padding:0;   }
+div#category-wrapper { height: 41px; float:right; width:50%; margin:30px 0 0 0;}
+
+div#title { padding: 0; margin: 0; height: 140px; text-align:left; }
+div#title-wrapper { margin: 0 auto; height: 140px; width:1020px; padding:0 0 0 20px;}
+div#sitename { margin: 20px 0 0 0 ; padding: 0; float: left; width: 338px; height: 87px; }
+
+div#sitename h1 { display: block; margin: 0px; padding: 0; height: 67px; }
+div#sitename h1 a, div#sitename h1 a:visited {
+	display: block; margin: 0; padding: 0; height: 67px;
+	line-height: 91px; text-indent: -99999px;
+}
+
+div#sitename p { display: block; padding:0; margin:0 0 0 18px; }
+
+
+div#featured { height: 213px;  padding:0 10px 0 0px; margin:0px;  }
+div#featured-wrapper  { height:193px; width:1020px; margin:0px auto;  text-align:center; padding:10px 0 10px 40px; list-style: none;}
+
+div#myads-wrapper{padding: 0; margin: 0; height: 134px; text-align:left;}
+div#myads { margin: 0px auto; padding: 0;  border:none; text-align:center; width:983px; }
+div#myads p {  margin: 0; padding: 0; text-align:center; }
+div#myads p a img { border: 0; }
+
+
+
+/************************************************/
+/*** Layout : Header : End **********************/
+/************************************************/
+
+
+/************************************************/
+/*** Layout : Body : Start **********************/
+/************************************************/
+
+div#wrapper { padding: 40px 0 0 0; margin:0; }
+div#wrapper-wrapper { width:983px; margin:0 auto; padding-top:0px;}
+div#top-wrapper {width:983px; height:29px; margin:0 auto;}
+div#bot-wrapper {width:983px; height:29px; margin:0 auto;}
+
+div#wrap-top { padding: 0px; }
+div#wrapper-top { height:19px; width:995px; margin:0 auto;}
+div#wrap-bottom { padding: 0px; }
+div#wrapper-bottom { height:19px; width:985px; margin:0 auto;}
+
+div#content { margin: 0px; padding: 0px; width: 595px; float: left; }
+
+div#sidebar { 
+	margin: 17px 25px 20px 0; !important margin: 17px 30px 20px 0; padding: 0 0 0 20px; 
+	border: none; width: 295px; 
+	float: right;
+}
+div#sidebar-bottom { 
+	padding: 0px; height:2px;
+	border: none; width: 294px; 
+	float: right;  margin:0 3px 0 0;
+}
+div#topwrap { padding: 10px; margin: 0 0 10px 0; }
+div#topwrap-wrapper { height: 250px; }
+
+
+
+/************************************************/
+/*** Layout : Body : End ************************/
+/************************************************/
+
+
+/************************************************/
+/*** Layout : Blog Entry : Start ****************/
+/************************************************/
+
+div.pagetitle { margin: 0 0 0 5px; padding: 0px; width:610px }
+div.pagetitle h2 { display: block; margin: 1px; padding: 18px; text-align: center; }
+
+div.singlegoogle { text-align: center; margin: 25px 0 0 20px; padding: 4px 11px; display:block; float:left; }
+div.singlegoogle-page { margin: 15px 0 15px; }
+div.singlegoogle-page { padding: 4px 11px; text-align: center; }
+
+div.postgroup { padding: 0; margin:20px 0 0 0; }
+
+div.post { margin: 0 0 0px 0; padding: 0 0 0px 0; border-top: 1px solid; }
+div.post div.title { display: block; margin: 0 0 0 20px; padding: 0px; width:96%; float:left;}
+div.post div.title div.postmeta { display: block; margin: 0 0 0 0px; padding: 0; }
+div.post div.twtbutton { display:block; margin:5px 5px 0 0px;padding:0;height:60px;width:50px; float:left;}
+
+div.post img.header { padding: 9px; margin: 20px; width: 560px; height: 189px; border:#999 1px solid;  }
+div.post div.entry { padding: 20px 10px 0 15px; margin:0px;   }
+
+div.post span.section { padding: 0 10px 0 0; }
+div.post div.entry p.akpc_pop { display: block; margin: 0; }
+div.post div.errorentry p { display: block; margin: 0; padding: 0; }
+div.post div.postmeta { display: block; float:left; margin: 0; padding: 0; width:100%; }
+div.post div.avatar { display: block; float:left; margin: 8px 5px 0 0; padding: 5px 1px 1px 6px; width:35px; height:35px; }
+div.post div.section-1 { padding: 0px 0px; float:left; display:block; }
+div.post div.section-1 a{ padding: 0px;  }
+div.post div.section-2 { padding: 0px 0px; float:right; display:block; margin:0px; }
+div.post div.section-2 a{ padding: 0px 0px 0 15px; float:left; display:block; }
+div.post div.title h2 { display: block; margin: 0; padding: 0; }
+
+
+div.indexpost div.entry{ width: 283px; margin: 0 0 0px 0; height:350px;}
+div.indexpost div.text { margin: 0 0 0 20px; padding: 0; display:block;  }
+div.indexpost div.text p { margin: 0 0 0 20px; padding: 0; display:block; }
+div.post-bot { height:35px; width:563px; margin:10px 0 20px 25px;}
+
+div.listpost { margin: 0px; padding: 0 5px; width:100%;}
+div.listpost div.entry { background:none; padding: 0px; margin: 0 0 0 10px;}
+div.listpost div.title { height: auto; margin:0; padding:15px 0; width:100%; }
+div.listpost div.readmore { display: block; margin: 10px 10px 20px; padding: 10px 20px; width: 100px; }
+
+div.singlepost { margin: 20px 0 0 5px; width:600px; }
+div.singlepost div.entry { padding:0px; margin: 0 0 0 10px;}
+div.singlepost div.title { height: auto; margin: 0 0 20px; display:block; float:left; padding:0; width:590px;}
+div.singlepost div.title h2{ height: auto; margin: 0; display:block; float:left; padding:0;}
+div.singlepost div.avatar { display: block; float:left; margin: 8px 5px 0 0; padding: 5px 1px 1px 6px; width:45px; height:45px; }
+div.singlepost div.title div.singlegoogle { margin: 0; }
+
+
+
+/************************************************/
+/*** Layout : Blog Entry : End ******************/
+/************************************************/
+
+
+/************************************************/
+/*** Layout : Comments : Start ******************/
+/************************************************/
+
+div#comments { margin: 0 0 20px 10px; padding: 0px; width:580px;}
+div#comments div.title h2 { display: block; margin: 0; padding: 0 0 5px 0; }
+div#comments div.title p { display: block; margin: 0; padding: 5px 0 0 0; }
+div#comments p.nocomments { display: block; margin: 0; padding: 10px 0 0 0; }
+
+ol.commentlist { display: block; margin: 0; list-style-type: none; padding: 20px 0 0 0; }
+ol.commentlist li.comment { display: block; margin: 0;  padding: 0 0 20px 0; }
+ol.commentlist li.comment div.comment { padding: 0 0 10px 0; border-bottom: 1px solid; }
+ol.commentlist li.comment div.comment-author { height: 42px; }
+ol.commentlist li.comment div.comment-author span.says { display: none;}
+ol.commentlist li.comment img { float: left; margin: 0 10px 0 0; padding: 1px; border: 1px solid; }
+ol.commentlist li.comment ul.children { margin: 20px 0 -20px 50px; padding: 0; list-style-type: none; }
+
+div#respond { margin: 0 0 0 10px; padding: 0px; width:580px}
+div#respond div.title h2 { display: block; margin: 0; padding: 0 0 5px 0; }
+div#respond div.title p { display: block; margin: 0; padding: 5px 0 0 0; }
+div#respond p.norespond { display: block; margin: 0; padding: 10px 0 0 0; }
+
+form#commentform { display: block; margin: 10px 0 0 0; padding: 0; }
+form#commentform p { display: block; margin: 0 0 5px 0; padding: 0; line-height: 27px; }
+form#commentform p label { display: block; margin: 0; padding: 0; }
+form#commentform p.input span { display: block; width: 220px; height: 21px; margin: 0; padding: 0; float: left; }
+form#commentform p.input span input { width: 200px; padding: 5px; border: 1px solid;display: block;  }
+form#commentform p.input span label {  }
+form#commentform p.textarea { display: block; margin: 0 0 10px 0;  }
+form#commentform p.textarea label { display: none; }
+form#commentform p.textarea span { display: block; }
+
+form#commentform label.error{
+margin: 5px 0 0;
+width:210px;
+display:none;
+}
+form#commentform p.button { display: block; text-align: left; margin: 0; padding: 0; }
+textarea#comment { width: 570px; height: 117px; padding: 5px; border: 1px solid; }
+
+/************************************************/
+/*** Layout : Comments : End ********************/
+/************************************************/
+	
+
+/************************************************/
+/*** Layout : Sidebar : Start *******************/
+/************************************************/
+
+div.search-social{ width:293px; height:62px; border:none; margin-bottom:30px; }
+div#search { height: 35px; margin: 0; width:270px; float:left; padding:18px 0 0 20px; }
+div#search form { padding: 0; margin:0; float:left;display:block; }
+div#search input.searchbox { border: 0; padding: 5px 0 0 10px; width: 150px; height: 30px; margin:0 15px 0 0; float:left;}
+div#search input.button { border: 0; padding: 0px; width: 90px; height: 30px; margin:0; float:left; }
+
+div#socialbookmark { height: 32px; padding : 0px; float:left; width:50%; }
+div#socialbookmark-wrapper { margin: 15px 10px 0 15px; width:350px; height:32px; padding:0px; float:left;}
+div#socialbookmark ul { display: block; list-style-type: none; margin: 0 auto; padding: 0; height: 22px; float:left;  }
+div#socialbookmark ul li { 
+	display: block; margin: 3.5px; padding: 0; 
+	float: left; height: 22px;
+}
+div#socialbookmark ul li a.bookmark {border:none; padding:0 5px;}
+div#socialbookmark-wrapper ul li a.bookmark {border:none; padding:0px;}
+div#socialbookmark ul li img {border:none; }
+
+
+div.box { margin: 30px 0 0 0 ;  border:none; }
+div.box h2 { 
+	display: block; margin: 0px; padding: 10px 0 0 20px;
+	border:none; width:289px; height:30px;
+}
+
+div.box div.bottom { 
+	display: block; margin: 0; width:289px; height:22px;
+}
+div.box div.interior { width:287px; margin:0px; }
+div.box div.interior ul  { display: block; list-style-type: none; margin: 0; padding: 0; }
+div.box div.interior ul li { display: block; padding: 10px 10px 15px 20px; margin: 0; }
+div.box div.interior ul li span{ display: block; padding: 0px; margin: 0; }
+div.box div.interior p { display: block; margin: 0; padding:8px 8px 0 19px; }
+div.box div.interior p.banner a img { border:none;}
+
+div.box-adverts div.interior { padding: 0; margin:0px; }
+div.box-adverts div.interior div.row { margin: 0 auto; width: 270px; height: 125px; }
+div.box-adverts div.interior div a, div.box-adverts div.interior div a:visited { display: block; width: 125px; height: 125px; }
+div.box-adverts div.interior div a img, div.box-adverts div.interior div a:visited img { width: 125px; height: 125px; border: 0; }
+div.box-adverts div.interior div a.ads-l, div.box-adverts div.interior div a.ads-l:visited { float: left; margin-left:8px; }
+div.box-adverts div.interior div a.ads-r, div.box-adverts div.interior div a.ads-r:visited { float: right; margin-right:8px; }
+div.box-adverts div.interior div.row-1 { margin: 0 auto 8px; }
+
+div.box-video div.interior { padding: 10px 0 20px 10px; margin:0px; width:277px; }
+
+div.box-flickr div.interior { padding: 15px 0 20px 10px; margin:0px; width:277px; }
+div.box-flickr div.interior a { display: block; float: left; margin: 0;padding: 2px;  }
+div.box-flickr div.interior img { border: 1px solid; padding: 4px; }
+
+div.box-widget_pages div.interior ul li { padding: 0; }
+div.box-widget_pages div.interior ul li span { display: block; padding: 10px 10px 10px 30px; margin: 0; }
+
+div#calendar_wrap { padding: 10px 0 0 0; }
+table#wp-calendar { width: 180px; margin: 0 auto; }
+
+/************************************************/
+/*** Layout : Sidebar : End *********************/
+/************************************************/
+
+			
+
+			
+/************************************************/
+/*** Layout : Footer : Start ********************/
+/************************************************/
+
+div#footer { width: 100%; height:86px;  }
+div#footer-wrapper { margin: 0 auto; width: 987px; padding: 12px 0; }
+div#footer-wrapper div.context { margin: 0 auto; width: 600px; padding: 12px 0; float:left; }
+div#footer-wrapper div.connect { margin: 0 auto; padding: 12px 0; float:right; width:325px; }
+div#footer-wrapper div.connect ul  { display: block; list-style-type: none; margin: 0 auto; padding: 0; height: 17px; float:left;  }
+div#footer-wrapper div.connect ul li { 	display: block; margin: 3.5px; padding: 0 0 0 20px; 
+	float: left; height: 17px;}
+div#footer-wrapper div.connect ul li a { text-decoration:underline;}	
+
+div#footer-wrapper div.connect ul li span{ display: block; padding: 0px; margin: 0; }
+
+div#footer-wrapper div.connect img { margin: 10px 0 0 0; }
+div#footer-wrapper p { display: block; margin: 0; padding: 0 0 0 20px; text-align: left; }
+
+/************************************************/
+/*** Layout : Footer : End **********************/
+/************************************************/

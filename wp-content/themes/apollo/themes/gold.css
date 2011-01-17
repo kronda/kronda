@@ -1,0 +1,50 @@
+#gold a.img img { border-color: #8b7837; }
+#gold a.img:hover img { border-color: #5a4b16 !important; }
+#gold img.img { border-color: #b9b9b9; }
+
+#gold input,
+#gold textarea,
+#gold select { color: #8b7b58; }
+
+#gold #header { background: #352f07 url(../images/gold/header-short-bg.gif) repeat-x 0 0; }
+#gold #header .header-image { background-image: url(../images/gold/top-light-short.jpg); }
+#gold .header-long { background-image: url(../images/gold/header-bg.gif) !important; }
+#gold .header-long .header-image { background-image: url(../images/gold/top-light-long.jpg) !important; }
+
+#gold #navigation ul li a,
+#gold #navigation ul li a span { color: #eadfb1; }
+
+#gold #navigation ul li a:hover,
+#gold #navigation ul li a.active,
+#gold #navigation ul li a:hover span,
+#gold #navigation ul li a.active span { background-image: url(../images/gold/button.gif); }
+
+#gold #header .line { background-image: url(../images/gold/header-line.gif); }
+
+#gold .slider-nav  { background-image: url(../images/gold/slider-nav-bg.gif); border-color: #e7e044; }
+#gold .slider-nav li a { background-image: url(../images/gold/slider-nav-links.gif); }
+
+#gold .button, 
+#gold .button span { background-image: url(../images/gold/button2.gif); }
+
+#gold #bottom { background: url(../images/gold/bottom-bg.gif) repeat-x 0 0; }
+#gold #bottom .shell { background-image: url(../images/gold/bottom-light.gif); }
+
+#gold #bottom h3,
+#gold #bottom ul li,
+#gold #bottom .testimonial { background-image: url(../images/gold/bottom-border.gif); }
+
+#gold .newsletter .field { background: url(../images/gold/field.gif); }
+#gold .quick-contact .field { background: url(../images/gold/small-field.gif); }
+#gold #bottom .submit { background: url(../images/gold/button3.gif); }
+#gold #bottom textarea { background: url(../images/gold/textarea.gif); }
+
+#gold .gallery-details .menu ul li a.active span { background-image: url(../images/gold/active-menu.png); }
+#gold #respond .submit { background-image: url(../images/gold/button5.gif); }
+
+#gold .wp-pagenavi a.page:hover ,
+#gold .wp-pagenavi span.current,
+#gold .pagination p a:hover,
+#gold .pagination p a.active { background-image: url(../images/gold/paging-bg.gif); }
+
+#gold .gallery-details .menu ul li a.active span  { filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='css/images/gold/active-menu.png', sizingMethod='image'); }

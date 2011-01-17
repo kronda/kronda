@@ -1,0 +1,122 @@
+/************************************************/
+/*** Typography : Core : Start ******************/
+/************************************************/
+
+html, body, input, button, select, option, textarea { 
+	font-size: 12px; line-height: 18px; 
+	font-family: Arial, Helvetical, sans-serif; 
+}
+blockquote { font-style: italic; }
+blockquote blockquote { font-style: normal; }
+
+a, a:visited { text-decoration: none; }
+a:hover { text-decoration: none; }
+
+/************************************************/
+/*** Typography : Core : End ********************/
+/************************************************/
+
+
+/************************************************/
+/*** Typography : Header : Start ****************/
+/************************************************/
+
+/************************************************/
+/*** Typography : Header : End ******************/
+/************************************************/
+
+
+/************************************************/
+/*** Typography : Blog Entry : Start ************/
+/************************************************/
+
+h2.pagetitle { 
+	font-family:'Arial', Helvetica, sans-serif;
+	font-size: 35px; line-height: 32px; font-weight:normal;
+}
+
+div.post div.title h2 {
+	font-family:'Arial', Helvetica, sans-serif;
+	font-size: 35px; line-height: 32px; font-weight:normal;
+}
+div.post div.title h2 a, div.post div.title h2 a:visited {
+	font-family:'Arial', Helvetica, sans-serif;
+	font-size: 35px; line-height: 32px; font-weight:normal;
+}
+div.post div.title,div.post div.title p {
+	font-family:'Arial', Helvetica, sans-serif;
+	font-size: 35px; line-height: 32px; font-weight:normal;
+}
+
+div.post div.entry p {
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10pt; line-height: 18px; font-weight: normal;
+}
+div.post div.entry div.text p {
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10pt; line-height: 18px; font-weight: normal;
+}
+div.post div.title div.postmeta { font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10pt; line-height: 24px; font-weight: normal; }
+div.post div.title div.postmeta a{ font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10pt; line-height: 24px; font-weight: bold; }
+	
+div.post div.text {  font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10pt; line-height: 24px; font-weight: normal;  }
+/************************************************/
+/*** Typography : Blog Entry : End **************/
+/************************************************/
+
+
+/************************************************/
+/*** Typography : Comments : Start **************/
+/************************************************/
+
+div#comments  div.title h2, div#respond  div.title h2 { 
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10pt; font-weight: normal;
+}
+
+ol.commentlist li.commentlist cite { font-family:Verdana, Arial, Helvetica, sans-serif;	font-style: normal; line-height: 24px; }
+
+ol.commentlist div.comment { font-family:Verdana, Arial, Helvetica, sans-serif;	font-style: normal; line-height: 24px; font-size:10px; }
+
+h3#replycomment { font-family:Verdana, Arial, Helvetica, sans-serif; font-size: 10pt; line-height: 30px; }
+h3#replycomment a:hover { text-decoration: none; }
+
+form#commentform p small { font-size: 11px; }
+form#commentform p.button { text-align: right; }
+
+/************************************************/
+/*** Typography : Comments : End ****************/
+/************************************************/
+
+
+/************************************************/
+/*** Typography : Sidebar : Start ***************/
+/************************************************/
+div#search input { 
+	font-family:Verdana, Arial, Helvetica, sans-serif; font-size: 10pt;
+}
+
+div.box h2,div.box h2 a { font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight: normal; text-transform: uppercase; }
+div.box-twitter h2,div.box-twitter h2 a { font-family:Arial, Helvetica, sans-serif; font-size:14px; font-weight: normal; text-transform: uppercase; }
+div.box h2 a, div.box h2 a:visited { font-family:Arial, Helvetica, sans-serif; font-size: 12px; }
+div.box div.interior ul li { font-family:Arial, Helvetica, sans-serif; font-size:12px; font-weight: normal; line-height: 18pt;}
+div.box div.interior ul li a, div.box div.interior ul li a:visited{ font-family:Arial, Helvetica, sans-serif; font-size:12px; font-weight: bold;  }
+
+/************************************************/
+/*** Typography : Sidebar : End *****************/
+/************************************************/
+
+
+/************************************************/
+/*** Typography : Footer : Start ****************/
+/************************************************/
+
+div#footer { font-family:Verdana, Arial, Helvetica, sans-serif; font-size: 7pt;line-height: 18px; }
+
+/************************************************/
+/*** Typography : Footer : End ******************/
+/************************************************/
+	

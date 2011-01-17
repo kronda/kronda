@@ -1,0 +1,37 @@
+/************************************************/
+/*** Pagination : Start *************************/
+/************************************************/
+
+div.navigation { height: 39px; padding: 0 ; float:left; }
+div.navigation div.prev { float: left; height: 39px; line-height: 30px; }
+div.navigation div.next { float: right; height: 39px; line-height: 30px; }
+
+div#pagenav { 
+	display:block; float:left; width:622px; margin:0px; padding:0 0 0 4px;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+}
+div#pagenav div.simplenavi { text-align: center; padding:7px 10px; }
+div#pagenav div.simplenavi a, div#pagenav div.simplenavi a:link, div#pagenav div.simplenavi a:visited { 
+	padding: 7px 10px; 
+}
+div#pagenav div.simplenavi a:hover { text-decoration: none; border: 1px solid #ebebeb; }
+div#pagenav div.simplenavi a:active { text-decoration: none; border: 1px solid #ebebeb; }
+
+div#pagenav div.wp-pagenavi { height: 26px; padding: 11px 10px 0 15px; text-align: left; float:left; }
+
+div#pagenav div.wp-pagenavi a, div#pagenav div.wp-pagenavi a:link, div#pagenav div.wp-pagenavi a:visited { 
+	margin: 0 6px 0 0; padding: 7px 10px; background:  #fff none; color: #646973; border: 1px solid #646973;
+	font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; font-weight: bold;
+}
+div#pagenav div.wp-pagenavi a:hover { text-decoration: none; color: #fff; background:#646973; }
+div#pagenav div.wp-pagenavi a:active { text-decoration: none; color: #646973;  }
+div#pagenav div.wp-pagenavi span {
+	margin: 0 6px 0 0; padding: 7px 10px; background: #646973 none; color:#fff; border:solid 1px #646973;
+	font-family:Verdana, Arial, Helvetica, sans-serif; font-size: 11px; font-weight: normal;
+}
+div#pagenav div.wp-pagenavi span.current { color: #fff; background:#646973 none; border:none; padding: 7px 10px;  }
+div#pagenav div.wp-pagenavi span.extend {  }
+
+/************************************************/
+/*** Pagination : End ***************************/
+/************************************************/

@@ -1,0 +1,21 @@
+/*
+Theme Name: Matiyaga Blue
+Theme URI: http://www.paddsolutions.com/wordpress-theme-matiyaga
+Description: Matiyaga Blue is a two-column, fixed-width and widget-ready WordPress theme with TweetMeme retweet button and lots of advertising blocks for monetization. Download more <a href="http://www.paddsolutions.com">free WordPress Themes</a>.
+Version: 1.0
+Author: Padd Solutions
+Author URI: http://www.paddsolutions.com
+Tags: two columns, fixed width, adsense ready, advertisement ready, valid css, valid xhtml, feature content gallery, twitter, youtube, tweetmeme, sliding carousel,
+
+The CSS, XHTML and design is released under Creative Commons Attribution-Noncommercial-Share Alike 3.0 Unported:
+http://creativecommons.org/licenses/by-nc-sa/3.0/
+*/
+
+@import 'style-section-required.css';
+@import 'style-section-typography.css';
+@import 'style-section-navigation.css';
+@import 'style-section-layout.css';
+@import 'style-section-pagination.css';
+@import 'style-section-colors.css';
+@import 'style-gallery-jcarousel.css';
+@import 'style-gallery-skin.css'; 

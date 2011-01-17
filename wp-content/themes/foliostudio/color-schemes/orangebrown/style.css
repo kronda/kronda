@@ -1,0 +1,116 @@
+body {background: #e6ddd5; color: #886a4d;}
+a {color: #e3722d;}
+
+#page-top {background-image: url(images/page-top.png);}
+#page-bottom {background-image: url(images/page-bottom.png);}
+#page-middle {background-image: url(images/page-middle.png);}
+.doubleborder {background-image: url(images/doubleborder.gif);}
+
+#header #branding h1#logo a {background-image: url(images/logo.jpg);}
+#header #navigation ul li {background-image: url(images/nav-divider.gif);}
+#header #navigation ul li a {color: #333;}
+#header #navigation ul li a.active,
+#header #navigation ul li a:hover,
+#header #navigation ul li.hover a {background: #e3722d; color: #fff;}
+#header #navigation ul li.has-dd a {background: transparent url(images/toplevel-dd-arr.gif) right 0 no-repeat;}
+#header #navigation ul li.has-dd a:hover,
+#header #navigation ul li.hover a {background: #e3722d url(images/toplevel-dd-arr.gif) right bottom no-repeat;}
+#header #navigation ul li.login a {background: url(images/nav-login-icon.gif) no-repeat 0 0;}
+#header #navigation ul li.login a:hover,
+#header #navigation ul li.login a.hover {background: #e3722d url(images/nav-login-icon.gif) no-repeat 0 bottom; color: #fff;}
+#header #navigation ul li ul li {background: #e3722d;}
+#header #navigation ul li ul li a {background: transparent !important;}
+#header #navigation ul li ul li a:hover,
+#header #navigation ul li ul li.hover a {background: #c1652d right bottom no-repeat !important;}
+#header #navigation ul li ul li.has-dd a {background: #c1652d url(images/sublevel-dd-arr.gif) no-repeat right 0 !important;}
+#header #navigation ul li ul li.has-dd a:hover,
+#header #navigation ul li ul li.hover a {background: #c1652d url(images/sublevel-dd-arr.gif) no-repeat right bottom !important;}
+#header #navigation ul li ul li ul li a,
+#header #navigation ul li ul li.hover ul li a {background: #e3722d !important;}
+#header #navigation ul li ul li ul li a:hover,
+#header #navigation ul li ul li.hover ul li a:hover {background: #c1652d !important;}
+#header #navigation ul li .login-dd {background: #e3722d;}
+#header #navigation ul li .login-dd .login-field {background: url(images/login-field.gif) no-repeat;}
+#header #navigation ul li .login-dd .login-button {background: url(images/login-button.gif);}
+#header #header-search .search-field {background-image: url(images/search-field-bg.gif); border: 1px solid #cfcfcf;}
+#header #header-search .search-button {background-image: url(images/search-button.gif);}
+
+#pagination a.active { color: #E3722D; }
+
+#cycle-slider .slide-navigation a {background: url(images/slider-nav-inactive.png);}
+#cycle-slider .slide-navigation a.active {background: url(images/slider-nav-active.png);}
+.slide-control a.prev {background: url(images/home-slider-prev.png);}
+.slide-control a.prev:hover {background: url(images/home-slider-prev-hover.png);}
+.slide-control a.next {background: url(images/home-slider-next.png);}
+.slide-control a.next:hover {background: url(images/home-slider-next-hover.png);}
+#cycle-slider .slides .slide h1 {color: #fff;}
+
+#gallery-slider .slide-navigation .left-mask {background: url(images/gallery-slider-left-mask.png);}
+#gallery-slider .slide-navigation .right-mask {background: url(images/gallery-slider-right-mask.png);}
+#gallery-slider .slides .slide h1 {color: #fff;}
+
+#main-blocks .text-block strong {color: #333;}
+
+#get-started h2 {color: #e3722d;}
+#get-started .get-started-button {background-image: url(images/get-started.gif);}
+
+#featured-projects h3 {color: #333;}
+#featured-projects .featured-project .image {background: url(images/featured-project-frame.gif);}
+#featured-projects .featured-project .image a { background: #fff;}
+#featured-projects .featured-project .image a:hover { background: #4d3c2b;}
+#featured-projects .featured-project h4,
+#featured-projects .featured-project h4 a {color: #333;}
+#featured-projects .view-project {background-image: url(images/view-project.gif);}
+
+#meet-the-team .image a { background: #fff;}
+#meet-the-team .image a:hover { background: #4d3c2b;}
+
+#from-the-blog h3 {color: #333;}
+#from-the-blog a.rss {background-image: url(images/rss.gif);}
+#from-the-blog .blog-posts .blog-post {border-bottom: 1px solid #e3e3e3;}
+#from-the-blog .visit-the-blog {background: url(images/visit-the-blog.gif);}
+
+.btn-submit { background: url(images/submit.gif) no-repeat 0 0; }
+
+.btn-read-more { background-image: url(images/btn-read-more.gif); }
+
+.btn-archive { background-image: url(images/btn-archive.gif); }
+
+.comment-num { background-image: url(images/comment-num.png) !important; background-color: transparent !important;}
+.comment-num:hover { background-image: url(images/comment-num-hover.png) !important; background-color: transparent !important;}
+
+a.newer-post { background-image: url(images/btn-newer-post.gif); }
+a.older-post { background-image: url(images/btn-older-post.gif); }
+
+.archive-list li a { background: url(images/arrow.gif) no-repeat 15px center; color: #666;}
+.archive-list li.active a { background-image: url(images/arrow-active.gif); color: #E3722D; }
+.archive-list li { background:url("images/doubleborder.gif") repeat-x scroll 0 bottom transparent; }
+
+.btn-prev-month  { background-image: url(images/btn-prev-month.gif); }
+.btn-next-month  { background-image: url(images/btn-next-month.gif); }
+
+.post-archive-list .image a { background: #fff; }
+.post-archive-list .image a:hover { background: #4d3c2b; }
+
+.main-post .image a { background: #fff;}
+.main-post .image a:hover { background: #4d3c2b;}
+
+.post .image a { background: #fff; }
+.post .image a:hover { background: #4d3c2b; }
+
+#portfolio li .image a { background: #fff; }
+#portfolio li .image a:hover { background: #4d3c2b; }
+#portfolio li.hover a { background: #4d3c2b; }
+#portfolio li.hover h3 { color: #E3722D; } 
+
+.pages a:hover,
+.pages a.active { background: #fff; border-color: #E3722D; color: #E3722D; }
+
+#footer {border-top: 2px solid #666; color: #ccc;}
+#footer a:hover {color: #9fd7d7;}
+#footer-inner {background-image: url(images/footer-middle.gif);}
+#footer-bottom {background: url(images/footer-bottom.png);}
+#footer h3 {color: #fff;}
+#footer .testimonial {background: #333;}
+#footer .testimonial-top {background-image: url(images/footer-testimonial-top.gif);}
+#footer .testimonial-bottom {background-image: url(images/footer-testimonial-bottom.gif);}

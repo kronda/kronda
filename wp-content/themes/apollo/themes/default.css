@@ -1,0 +1,50 @@
+#default a.img img { border-color: #49607b; }
+#default a.img:hover img { border-color: #31486f !important; }
+#default img.img { border-color: #b9b9b9; }
+
+#default input,
+#default textarea,
+#default select { color: #58708b; }
+
+#default #header { background: #1a2533 url(../images/default/header-short-bg.gif) repeat-x 0 0; }
+#default #header .header-image { background-image: url(../images/default/top-light-short.jpg); }
+#default .header-long { background-image: url(../images/default/header-bg.gif) !important; }
+#default .header-long .header-image { background-image: url(../images/default/top-light-long.jpg) !important; }
+
+#default #navigation ul li a,
+#default #navigation ul li a span { color: #8798ab; }
+
+#default #navigation ul li a:hover,
+#default #navigation ul li a.active,
+#default #navigation ul li a:hover span,
+#default #navigation ul li a.active span { background-image: url(../images/default/button.gif); }
+
+#default #header .line { background-image: url(../images/default/header-line.gif); }
+
+#default .slider-nav  { background-image: url(../images/default/slider-nav-bg.gif); border-color: #52759a; }
+#default .slider-nav li a { background-image: url(../images/default/slider-nav-links.gif); }
+
+#default .button, 
+#default .button span { background-image: url(../images/default/button2.gif); }
+
+#default #bottom { background: url(../images/default/bottom-bg.gif) repeat-x 0 0; }
+#default #bottom .shell { background-image: url(../images/default/bottom-light.gif); }
+
+#default #bottom h3,
+#default #bottom ul li,
+#default #bottom .testimonial { background-image: url(../images/default/bottom-border.gif); }
+
+#default .newsletter .field { background: url(../images/default/field.gif); }
+#default .quick-contact .field { background: url(../images/default/small-field.gif); }
+#default #bottom .submit { background: url(../images/default/button3.gif); }
+#default #bottom textarea { background: url(../images/default/textarea.gif); }
+
+#default .gallery-details .menu ul li a.active span { background-image: url(../images/default/active-menu.png); }
+#default #respond .submit { background-image: url(../images/default/button5.gif); }
+
+#default .wp-pagenavi a.page:hover ,
+#default .wp-pagenavi span.current,
+#default .pagination p a:hover,
+#default .pagination p a.active { background-image: url(../images/default/paging-bg.gif); }
+
+#default .gallery-details .menu ul li a.active span  { filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='css/images/default/active-menu.png', sizingMethod='image'); }

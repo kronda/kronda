@@ -1,0 +1,15 @@
+h1#logo a { background-image: none; filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='css/images/logo.png', sizingMethod='image'); }
+.gallery-thumbs .shadow { background-image: none; filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='css/images/gallery-thumbs-shadow.png', sizingMethod='image'); }
+
+.gallery-details .shadow,
+#contact .shadow { background-image: none; filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='css/images/gallery-shadow-wide.png', sizingMethod='image'); }
+
+.post .shadow { background-image: none; filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='css/images/post-wide-shadow.png', sizingMethod='image'); }
+.post .small-shadow { background-image: none; filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='css/images/post-small-shadow.png', sizingMethod='image'); }
+.comment-entry { height: 130px; }
+
+#red .gallery-details .menu ul li a.active span { background-image: none; filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='css/images/red/active-menu.png', sizingMethod='image'); }
+
+.widget_search .field { background-image: none; filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='css/images/search-field.png', sizingMethod='image'); }
+
+
