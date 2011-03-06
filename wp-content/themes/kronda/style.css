@@ -183,6 +183,7 @@ body.home !important {
   padding-left: 12px;
   color: #D9D9CF;
   margin-bottom: 7px;
+	line-height: 1.3em;
 }
 .home #header ul#object li span {
   color: #a1c4e0;
@@ -239,9 +240,6 @@ body.home !important {
 	float: right;
 	width: 220px;
 }
-
-
-
 
 /* =Menu
 -------------------------------------------------------------- */
@@ -301,29 +299,6 @@ div.menu ul {
 	list-style: none;
 	margin: -8px 0 0;
 }
-
-#access a {
-	/*color: red;*/
-	display: block;
-	line-height: 38px;
-	padding: 0 10px;
-	text-decoration: none;
-}
-#access ul ul {
-	box-shadow: 0px 3px 3px rgba(0,0,0,0.2);
-	-moz-box-shadow: 0px 3px 3px rgba(0,0,0,0.2);
-	-webkit-box-shadow: 0px 3px 3px rgba(0,0,0,0.2);
-	display: none;
-	position: absolute;
-	top: 38px;
-	left: 0;
-	float: left;
-	width: 180px;
-	z-index: 99999;
-}
-
-
-
 
 /* Footer widget areas */
 #footer-widget-area {
