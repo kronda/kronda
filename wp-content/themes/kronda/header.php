@@ -54,13 +54,25 @@
 
 <body <?php body_class(); ?>>
 <div id="wrapper" class="hfeed">
+	
 	<div id="header">
+		<div id="nav-bg"></div> <!-- this is to stretch the nav bar full width -->
 		<div id="masthead">
 			<!-- custom header image -->
 			<div id="header_img">
 				<img src="<?php echo CHILD_TEMPLATE_DIRECTORY;?>/images/me_bigger.png"  width="380" height="231" alt="Me, my laptop and my favorite cargo bike, geeking out on the go">
 			</div><!-- header_img -->
-				
+			
+			<!-- insert custom header element -->
+			<div id="object-container">
+				<ul id="object">
+					<li class="first">Name: <span>Kronda Adair</span>;</li>
+					<li id="title">Title: <span>Web Developer</span>;</li>
+					<li id="work">Work: <span>Creating standards based websites using HTML, CSS &amp; Javascript<span id="semicolon">;</span></span></li>
+					<li id="play">Play: <span> Ride. Read. Write.</span>;</li>
+				</ul>
+			</div><!-- object-container -->
+			
 			<div id="branding" role="banner">
 				<?php $heading_tag = ( is_home() || is_front_page() ) ? 'h1' : 'div'; ?>
 				<<?php echo $heading_tag; ?> id="site-title">
@@ -85,12 +97,14 @@
 					<?php endif; ?>
 					<?php endif; ?> 
 			</div><!-- #branding -->
-
+			
+			
 			<div id="access" role="navigation">
 			  <?php /*  Allow screen readers / text browsers to skip the navigation menu and get right to the good stuff */ ?>
 				<div class="skip-link screen-reader-text"><a href="#content" title="<?php esc_attr_e( 'Skip to content', 'twentyten' ); ?>"><?php _e( 'Skip to content', 'twentyten' ); ?></a></div>
 				<?php /* Our navigation menu.  If one isn't filled out, wp_nav_menu falls back to wp_page_menu.  The menu assiged to the primary position is the one used.  If none is assigned, the menu with the lowest ID is used.  */ ?>
 				<?php wp_nav_menu( array( 'container_class' => 'menu-header', 'theme_location' => 'primary' ) ); ?>
+				
 			</div><!-- #access -->
 		</div><!-- #masthead -->
 	</div><!-- #header -->

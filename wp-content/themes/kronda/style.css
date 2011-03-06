@@ -75,6 +75,38 @@ a img {
 	border: none;
 }
 
+/* =Home page overrides
+-------------------------------------------------------------- */
+body.home !important {
+  font: 1em/1.5em "ff-dagny-web-pro-1", "ff-dagny-web-pro-2", "Trebuchet MS", Verdana, sans-serif;
+  background-color: #dedede; /* light gray */
+  color: #fbfbfb; /* off white */
+  letter-spacing: .22px;
+}
+.home h1 {
+  position: absolute;
+  left: -5000px;
+}
+
+.home p,
+.home a,
+.home small,
+.home ul,
+.home li {
+	font: 1em/1.5em "ff-dagny-web-pro-1", "ff-dagny-web-pro-2", "Trebuchet MS", Verdana, sans-serif;
+}
+.home a, 
+.home a:link, 
+.home a:visited {
+  text-decoration: none;
+  color: #a1c4e0; /* light blue */
+}
+.home a:hover, a:focus, a:active {
+  text-decoration: underline;
+}
+.home small {
+  font-size: 0.875em;
+}
 
 /* =Home page header
 -------------------------------------------------------------- */
@@ -84,6 +116,7 @@ a img {
   width: 100%;
   position: relative;
   color: #fbfbfb;
+	padding: 0;
 }
 
 .home #masthead {
@@ -102,11 +135,89 @@ a img {
   top: -15px;
 }
 
+/*hide this on everything but the first page*/
+#object-container {
+	display: none;
+}
+
+.home #header ul#object:before {
+  content: "{";
+  font-size: 1.625em;
+  color: #ff941c;
+  position: relative;
+  top: 0;
+  left: -25px;
+}
+.home #header ul#object:after {
+  content: "}";
+  font-size: 1.625em;
+  color: #ff941c;
+  position: relative;
+  bottom: 0;
+  left: -20px;
+}
+.home #header #object-container {
+	display: block;
+  background: #333;
+  height: 200px;
+  width: 460px;
+  opacity: 0.8;
+  position: absolute;
+  top: 0;
+  left: 517px;
+  -webkit-border-radius-bottomright: 15px;
+  -moz-border-radius-bottomright: 15px;
+  border-bottom-right-radius: 15px;
+  -webkit-border-radius-bottomleft: 15px;
+  -moz-border-radius-bottomleft: 15px;
+  border-bottom-left-radius: 15px;
+}
+.home #header ul#object {
+  height: 180px;
+  width: 400px;
+  font-family: Monaco, sans-serif;
+  font-size: 1.125em;
+  position: relative;
+  top: -20px;
+  left: 47px;
+}
+.home #header ul#object li {
+  padding-left: 12px;
+  color: #D9D9CF;
+  margin-bottom: 7px;
+}
+.home #header ul#object li span {
+  color: #a1c4e0;
+}
+.home #header ul#object li.first {
+  margin: -25px 0 0.25em 24px;
+}
+.home #header ul#object li#title {
+  margin-left: 14px;
+}
+.home #header ul#object li#work {
+  margin-left: 24px;
+}
+.home #header ul#object li#work span {
+  display: block;
+  margin: -22px 0 0.25em 64px;
+}
+.home #header ul#object li#work #semicolon {
+  display: inline;
+  color: #fff;
+  margin: 0;
+}
+.home #header ul#object li#play {
+  margin-left: 22px;
+}
+
+
 /* =Structure
 -------------------------------------------------------------- */
 .home #wrapper {
 	width: 100%;
-	margin-top: 0;
+	margin: 0;
+	padding: 0;
 }
 /* Structure the footer area */
 #footer-widget-area {
@@ -131,61 +242,70 @@ a img {
 	width: 220px;
 }
 
-s
-/* =Header
--------------------------------------------------------------- */
 
-#header {
-	padding: 30px 0 0 0;
-}
-#site-title {
-	float: left;
-	font-size: 30px;
-	line-height: 36px;
-	margin: 0 0 18px 0;
-	width: 700px;
-}
-#site-title a {
-	color: #000;
-	font-weight: bold;
-	text-decoration: none;
-}
-#site-description {
-	clear: right;
-	float: right;
-	font-style: italic;
-	margin: 14px 0 18px 0;
-	width: 220px;
-}
+
 
 /* =Menu
 -------------------------------------------------------------- */
+.home #nav-bg {
+  height: 50px;
+  background: #333;
+  opacity: 0.8;
+  width: 100%;
+}
 
-#access {
-	background: #000;
-	display: block;
-	float: left;
-	margin: 0 auto;
-	width: 940px;
+.home #access {
+  height: 50px;
+  width: 960px;
+  margin: 0 auto;
+  text-align: center;
+	background: none;
+	float: none;
 }
-#access .menu-header,
+.home #access .menu ul {
+	position: absolute;
+	top: -69px;
+	left: 0;
+}
+.home #access .menu-header li,
+.home div.menu li{
+  float: left;
+  margin: 9px 0 0 0;
+}
+.home #access .menu li a, 
+.home #access .menu li a:hover, 
+.home #access .menu li a:visited,
+.home #access .menu ul li.current_page_item > a, 
+.home #access .menu ul li.current-menu-ancestor > a, 
+.home #access .menu ul li.current-menu-item > a, 
+.home #access .menu ul li.current-menu-parent > a {
+  font-size: 1em;
+  padding: 1.5em;
+  opacity: 1.0;
+  text-transform: uppercase;
+	background: none;
+	color: #A1C4E0;
+}
+
+.home #access .menu li a:hover {
+	text-decoration: underline;
+}
+/* overiding parent styles */
+.home #access .menu-header,
 div.menu {
-	font-size: 13px;
-	margin-left: 12px;
-	width: 928px;
+	font-size: .875em;
+	margin: 0;
+	width: 100%;
 }
-#access .menu-header ul,
+
+.home #access .menu-header ul,
 div.menu ul {
 	list-style: none;
-	margin: 0;
+	margin: -8px 0 0;
 }
-#access .menu-header li,
-div.menu li {
-	float: left;
-	position: relative;
-}
+
 #access a {
-	color: #aaa;
+	/*color: red;*/
 	display: block;
 	line-height: 38px;
 	padding: 0 10px;
