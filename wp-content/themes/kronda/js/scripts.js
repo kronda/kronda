@@ -1,27 +1,16 @@
-(function($) {
+jQuery(document).ready(function($) {
+
 	//start up lightbox
-    $('#slider a').lightBox();
+    jQuery('.home #slider a').lightBox();
 	
 	//start up slide show
-	$("#slider").easySlider({
+	jQuery("#slider").easySlider({
 		auto: false, 
 		continuous: true,
 		numeric: true,
 		speed: 400,
 		pause: 4000
 	});
-	
-	//get tweets from twitter.js
-	// getTwitters('tweet', { 
-	// 	  id: 'ephanypdx', 
-	// 	  count: 4, 
-	// 	  enableLinks: true, 
-	// 	  ignoreReplies: true, 
-	// 	  clearContents: true,
-	// 	  timeout: 10,
-	// 	  template: '"%text%" <a href="http://twitter.com/%user_screen_name%/statuses/%id_str%/">%time%</a>'
-	// 	});
-	// 	
 
 	//get tweets via jquery.tweet.js
 	$("#tweet").tweet({
@@ -50,7 +39,4 @@
 		
 	});
 	
-	
-	
-
-})(jQuery);
+});

@@ -3,8 +3,6 @@
 	get_header();
 	
 ?>
-
-<div id="container">
 	
 	<div id="content">
 		
@@ -12,7 +10,7 @@
 		   	<ul>				
 				<li id="jillmalone" class="case_study">
 					<div class="img_holder">
-						<a href="images/jill_bg.jpg"><img src="images/jill.jpg" width="300" height="600" alt="Jill"></a>
+						<a href="<?php echo CHILD_TEMPLATE_DIRECTORY;?>/images/jill_bg.jpg"><img src="<?php echo CHILD_TEMPLATE_DIRECTORY;?>/images/jill.jpg" width="300" height="600" alt="Jill"></a>
 					</div><!-- img_holder -->
 					
 					<div class="checkboxes">
@@ -36,7 +34,7 @@
 				
 				<li id="waronpink" class="case_study">
 					<div class="img_holder">
-						<a href="images/wop_bg.jpg"><img src="images/wop.jpg" width="300" height="600" alt="Jill"></a>
+						<a href="<?php echo CHILD_TEMPLATE_DIRECTORY;?>/images/wop_bg.jpg"><img src="<?php echo CHILD_TEMPLATE_DIRECTORY;?>/images/wop.jpg" width="300" height="600" alt="Jill"></a>
 					</div><!-- img_holder -->
 					<div class="checkboxes">
 						<dl class="checks">
@@ -58,7 +56,7 @@
 
 				<li id="sorella" class="case_study">
 					<div class="img_holder">
-						<a href="images/sorella_bg.jpg"><img src="images/sorella.jpg" width="300" height="600" alt="Sorella"></a>
+						<a href="<?php echo CHILD_TEMPLATE_DIRECTORY;?>/images/sorella_bg.jpg"><img src="<?php echo CHILD_TEMPLATE_DIRECTORY;?>/images/sorella.jpg" width="300" height="600" alt="Sorella"></a>
 					</div><!-- img_holder -->
 					
 					<div class="checkboxes">
@@ -82,7 +80,7 @@
 
 				<li id="checafe" class="case_study">
 					<div class="img_holder">
-						<a href="images/che_bg.jpg"><img src="images/checafe.jpg" width="300" height="600" alt="Jill"></a>
+						<a href="<?php echo CHILD_TEMPLATE_DIRECTORY;?>/images/che_bg.jpg"><img src="<?php echo CHILD_TEMPLATE_DIRECTORY;?>/images/checafe.jpg" width="300" height="600" alt="Jill"></a>
 					</div><!-- img_holder -->
 					
 					<div class ="checkboxes">
@@ -105,7 +103,7 @@
 				
 				<li id="trendless" class="case_study">
 					<div class="img_holder">
-						<a href="images/trendless_bg.jpg"><img src="images/trendless.jpg" width="300" height="600" alt="Jill"></a>
+						<a href="<?php echo CHILD_TEMPLATE_DIRECTORY;?>/images/trendless_bg.jpg"><img src="<?php echo CHILD_TEMPLATE_DIRECTORY;?>/images/trendless.jpg" width="300" height="600" alt="Jill"></a>
 					</div><!-- img_holder -->
 					
 					<div class="checkboxes">
@@ -130,8 +128,6 @@
 		</div><!-- showbusy -->
 		
 	</div><!-- content -->
-
-</div><!-- container -->	
 
 
 <?php get_footer();?>

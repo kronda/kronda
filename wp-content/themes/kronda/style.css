@@ -300,6 +300,96 @@ div.menu ul {
 	margin: -8px 0 0;
 }
 
+/* Content ---------------------------------------------- */
+
+/* override main */
+.home #main {
+	padding: 0;
+	overflow: visible;
+}
+.home #content {
+  position: relative;
+  z-index: 10;
+  background: #202629;
+  width: 780px;
+  height: 520px;
+  margin: -40px auto -30px auto;
+  -webkit-box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.6);
+  box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.6);
+  color: #fbfbfb;
+}
+
+.case_study h2 {
+  text-align: center;
+  margin-bottom: 10px;
+  margin-top: 0;
+  text-transform: uppercase;
+}
+.case_study .desc {
+  width: 384px;
+  height: 330px;
+  float: right;
+  margin-top: -406px;
+  margin-right: 33px;
+}
+.case_study p {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.home #content .visit {
+  color: #202629;
+  background: #a1c4e0;
+  padding: .25em 0;
+  display: block;
+  margin-top: 15px;
+  width: 5em;
+  text-align: center;
+  border: 2px solid #fbfbfb;
+  font-weight: bold;
+}
+.home #content .visit a.visit:hover {
+  text-decoration: none;
+}
+.home .img_holder {
+  height: 300px;
+  width: 300px;
+  overflow: hidden;
+  position: relative;
+  top: 20px;
+  left: 20px;
+}
+.home .img_holder img {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.home .img_holder a:hover img {
+  top: -300px;
+}
+.home .checkboxes {
+  width: 300px;
+  height: 87px;
+  margin-top: 30px;
+  margin-left: 18px;
+}
+.home .img_holder {
+  padding-left: 30px;
+}
+.home .img_holder dt {
+  background: url('../images/chk_gradient.png') no-repeat scroll 2px 5px;
+  padding-left: 30px;
+}
+.home .img_holder .row2 {
+  display: block;
+  margin: -72px 0 0 130px;
+}
+.home .img_holder .row2 span {
+  display: block;
+}
+
+/*end content*/
+
 /* Footer widget areas */
 #footer-widget-area {
 }
@@ -344,3 +434,53 @@ img#wpstats {
 	margin: 0 auto 10px;
 }
 
+/* =Plugin specific styles
+-------------------------------------------------------------- */
+
+/* @group Easy Slider */
+.home #slider {
+  padding-top: 80px;
+}
+
+.home #slider ul,
+.home #slider ul li,
+.home #slider2 ul, 
+.home #slider2 li {
+	margin:0;
+	padding:0;
+	list-style:none;
+}
+
+.home #slider ul,
+.home #slider li {
+	height: 440px;
+	width: 778px;
+	overflow: hidden;
+}
+
+ol#controls{
+	margin:1em 0;
+	padding:0;
+	height:60px;
+	position: absolute;	
+	top: 0;
+	left: 20px;
+	}
+ol#controls li{
+	float:left;
+	list-style:none;
+	height:60px;
+	}
+ol#controls li a{
+	float:left;
+	height:60px;
+	width: 60px;
+	margin: 0 20px 0 0;
+	opacity: 1;
+	}
+ol#controls li.current a{
+	opacity: 0.6;
+	}
+ol#controls li a:focus, #prevBtn a:focus, #nextBtn a:focus{outline:none;}
+
+/* // Easy Slider */

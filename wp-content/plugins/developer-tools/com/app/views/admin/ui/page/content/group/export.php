@@ -1,0 +1,1 @@
+<p><?php _e( 'Export settings', 'developer-tools' ) ?></p>

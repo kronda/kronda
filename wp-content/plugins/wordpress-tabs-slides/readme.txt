@@ -1,10 +1,10 @@
 === Wordpress Tabs Slides ===
-Contributors: Abdul Ibad
+Contributors: abdul_ibad
 Donate Link: http://ibad.bebasbelanja.com/wordpress-tabs-slides.html 
 Tags: tabs, slides, post
-Requires at least: 2.5
-Tested up to: 2.9
-Stable tag: 2.5
+Requires at least: 2.7
+Tested up to: 3.0
+Stable tag: 2.0.0
 
 Tabs and Slides (in post/page) Plugin gives you the ability to easily add content tabs and/or content slides.
 
@@ -68,6 +68,19 @@ Now, slideID is change to title of slides. don't use same name for slides.
 (Since version 1.8) Slides is available in accordion-like structure. You can call it with accordion tag.
 
 == Changelog ==
+
+= Version 2.0.1 = 
+* Added: Custom CSS Style
+* Fixed: Some improvements on default CSS
+* Change: scripts and styles insert with wp_enqueue_styles and wp_enqueue_scripts
+
+= Version 2.0 =
+* Fixed: gap between title and content on tabs
+* Fixed: Disable script problem in the frontpage
+* Fixed: Javascript issue on slider
+* Added: Style option
+* Added: Enable script on specify post/page only
+
 = Version 1.9 =
 * Fix javascript conflict with eshop (thanks peter)
 * Copyright text is disable

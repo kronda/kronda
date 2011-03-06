@@ -96,7 +96,7 @@
 			
 			if(options.numeric){									
 				for(var i=0;i<s;i++){	
-					var thumb = '<img src="images/thumb' + (i+1) + '.jpg" width="60" height="60" alt="thumbnail'+ (i+1) +'">'					
+					var thumb = '<img src="http://localhost/kronda/wp-content/themes/kronda/images/thumb' + (i+1) + '.jpg" width="60" height="60" alt="thumbnail'+ (i+1) +'">';					
 					$(document.createElement("li"))
 						.attr('id',options.numericId + (i+1))
 						.html('<a rel='+ i +' href=\"javascript:void(0);\">'+ thumb +'</a>')

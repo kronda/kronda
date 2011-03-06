@@ -146,5 +146,5 @@ wtsslide = function(wrapper,speed){
 
 wtsaccordion = function(group,wrapper,speed){
 	jQuery(group).hide();
-		jQuery(wrapper).slideToggle(speed);
+	jQuery(wrapper).slideToggle(speed).toggleClass("active");
 }

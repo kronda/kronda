@@ -60,9 +60,10 @@
 		<div id="masthead">
 			<!-- custom header image -->
 			<div id="header_img">
+				<?php if ( is_front_page() ): ?>
 				<img src="<?php echo CHILD_TEMPLATE_DIRECTORY;?>/images/me_bigger.png"  width="380" height="231" alt="Me, my laptop and my favorite cargo bike, geeking out on the go">
 			</div><!-- header_img -->
-			
+			<?php endif ?>
 			<!-- insert custom header element -->
 			<div id="object-container">
 				<ul id="object">
