@@ -90,9 +90,7 @@ body.home !important {
 
 .home p,
 .home a,
-.home small,
-.home ul,
-.home li {
+.home small {
 	font: 1em/1.5em "ff-dagny-web-pro-1", "ff-dagny-web-pro-2", "Trebuchet MS", Verdana, sans-serif;
 }
 .home a, 
@@ -172,10 +170,10 @@ body.home !important {
   -moz-border-radius-bottomleft: 15px;
   border-bottom-left-radius: 15px;
 }
-.home #header ul#object {
+.home #header #object-container #object {
   height: 180px;
   width: 400px;
-  font-family: Monaco, sans-serif;
+  font-family: Monaco, sans-serif !important;
   font-size: 1.125em;
   position: relative;
   top: -20px;
