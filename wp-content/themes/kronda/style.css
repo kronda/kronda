@@ -77,7 +77,7 @@ a img {
 
 /* =Home page overrides
 -------------------------------------------------------------- */
-body.home !important {
+body.home {
   font: 1em/1.5em "ff-dagny-web-pro-1", "ff-dagny-web-pro-2", "Trebuchet MS", Verdana, sans-serif;
   background-color: #dedede; /* light gray */
   color: #fbfbfb; /* off white */
@@ -90,7 +90,8 @@ body.home !important {
 
 .home p,
 .home a,
-.home small {
+.home small,
+.home .checks dt {
 	font: 1em/1.5em "ff-dagny-web-pro-1", "ff-dagny-web-pro-2", "Trebuchet MS", Verdana, sans-serif;
 }
 .home a, 
@@ -106,6 +107,9 @@ body.home !important {
   font-size: 0.875em;
 }
 
+.home #content .checks dt {
+	color: #FBFBFB;
+}
 /* =Home page header
 -------------------------------------------------------------- */
 .home #header {
@@ -218,28 +222,6 @@ body.home !important {
 	margin: 0;
 	padding: 0;
 }
-/* Structure the footer area */
-#footer-widget-area {
-	overflow: hidden;
-}
-#footer-widget-area .widget-area {
-	float: left;
-	margin-right: 20px;
-	width: 220px;
-}
-#footer-widget-area #fourth {
-	margin-right: 0;
-}
-#site-info {
-	float: left;
-	font-size: 14px;
-	font-weight: bold;
-	width: 700px;
-}
-#site-generator {
-	float: right;
-	width: 220px;
-}
 
 /* =Menu
 -------------------------------------------------------------- */
@@ -320,20 +302,24 @@ div.menu ul {
   color: #fbfbfb;
 }
 
-.case_study h2 {
+.home .case_study h2 {
   text-align: center;
   margin-bottom: 10px;
   margin-top: 0;
   text-transform: uppercase;
 }
-.case_study .desc {
+.home .case_study .desc {
   width: 384px;
   height: 330px;
   float: right;
   margin-top: -406px;
   margin-right: 33px;
 }
-.case_study p {
+
+.home #content h2 {
+	color: #FBFBFB;
+}
+.home .case_study p {
   padding-left: 10px;
   padding-right: 10px;
 }
@@ -373,66 +359,182 @@ div.menu ul {
   margin-top: 30px;
   margin-left: 18px;
 }
-.home .img_holder {
+.home .checks {
   padding-left: 30px;
 }
-.home .img_holder dt {
-  background: url('../images/chk_gradient.png') no-repeat scroll 2px 5px;
+.home .checks dt {
+  background: url('images/chk_gradient.png') no-repeat scroll 2px 5px;
   padding-left: 30px;
 }
-.home .img_holder .row2 {
+.home .checks .row2 {
   display: block;
   margin: -72px 0 0 130px;
 }
-.home .img_holder .row2 span {
+.home .checks .row2 span {
   display: block;
+}
+ /* Busy meter */
+
+.home #showbusy {
+  background: none repeat scroll 0 0 #EAAC39;
+  color: #FBFBFB;
+  font-weight: bold;
+  height: 30px;
+  position: absolute;
+  text-align: center;
+  bottom: 0;
+  left: -102px;
+  width: 100px;
+  cursor: pointer;
+  border-left: 1px dashed #ff0000;
+  border-bottom: 1px dashed #ff0000;
+  border-right: 1px dashed #ff0000;
+}
+.home #busymeter {
+  display: none ;
+  height: 100%;
+  width: 300px;
+  float: left;
+}
+.home #busymeter img {
+  float: left;
+  margin-right: 13px;
+}
+.home #busymeter ul {
+  margin-top: 15px;
+}
+.home #busymeter small .block {
+  display: block;
+  height: 19px;
+  margin-left: 220px;
+  margin-top: -5px;
+  width: 100px;
+}
+.home #gradclock {
+  display: block;
+  clear: both;
+  margin-top: 10px;
+}
+.home #gradclock span {
+  display: inline;
 }
 
 /*end content*/
 
-/* Footer widget areas */
+/* Structure the footer area */
+.home #footer {
+	width: 100%;
+  height: auto;
+  background: #333;
+  opacity: 0.8;
+  position: relative;
+  bottom: 0;
+  margin-bottom: 0;
+  padding: 50px 0 30px 0;
+}
 #footer-widget-area {
+	/*overflow: hidden;*/
 }
 
-
-/* =Footer
--------------------------------------------------------------- */
-
-#footer {
-	margin-bottom: 20px;
+#footer-widget-area .widget-area {
+	/*float: left;
+		margin-right: 20px;
+		width: 220px;*/
 }
-#colophon {
-	border-top: 4px solid #000;
-	margin-top: -4px;
-	overflow: hidden;
-	padding: 18px 0;
+#footer-widget-area #fourth {
+	margin-right: 0;
 }
+
 #site-info {
+	float: left;
+	font-size: 14px;
 	font-weight: bold;
-}
-#site-info a {
-	color: #000;
-	text-decoration: none;
+	width: 700px;
 }
 #site-generator {
-	font-style: italic;
+	float: right;
+	width: 220px;
+}
+
+/* overrides*/
+.home #site-info {
+	display: none;
+}
+
+.home #site-generator {
+	display: none;
+}
+
+.home #colophon {
+	border: none;
+	height: auto;
+	width: 960px;
+	margin: 0 auto;
+  overflow: visible;
 	position: relative;
+	padding: 0;
 }
-#site-generator a {
-	background: url(images/wordpress.png) center left no-repeat;
-	color: #666;
-	display: inline-block;
-	line-height: 16px;
-	padding-left: 20px;
-	text-decoration: none;
+
+/* Footer widget areas */
+.home #footer-widget-area .widget-area {
+	width: 300px;
 }
-#site-generator a:hover {
-	text-decoration: underline;
+
+.home #footer-widget-area .widget-area h3 {
+	text-align: center;
+	margin-bottom: 14px;
 }
-img#wpstats {
-	display: block;
-	margin: 0 auto 10px;
+.home #first {
+	/*display: none;*/
+  height: 100%;
+  width: 300px;
+  /*float: left;*/
 }
+
+.home #first img {
+  float: left;
+  margin-right: 13px;
+}
+
+.home #first ul {
+  margin-top: 15px;
+}
+.home #first small .block {
+  display: block;
+  height: 19px;
+  margin-left: 220px;
+  margin-top: -5px;
+  width: 100px;
+}
+.home #gradclock {
+  display: block;
+  clear: both;
+  margin-top: 10px;
+}
+
+.home #gradclock span {
+  display: inline;
+}
+
+/* @group Classes ---------------------------------------------- */
+.floatcontainer:after {
+  content: ".";
+  display: block;
+  height: 0;
+  font-size: 0;
+  clear: both;
+  visibility: hidden;
+}
+.hide {
+  display: none;
+}
+.show {
+  display: block;
+}
+.clearfix {
+  clear: both;
+}
+/* @end Classes ---------------------------------------------- */
 
 /* =Plugin specific styles
 -------------------------------------------------------------- */
@@ -483,4 +585,108 @@ ol#controls li.current a{
 	}
 ol#controls li a:focus, #prevBtn a:focus, #nextBtn a:focus{outline:none;}
 
-/* // Easy Slider */
+/*  @end Easy Slider */
+
+/* Lightbox styles @example Visit http://leandrovieira.com/projects/jquery/lightbox/  ---------------------------------------------- */
+#jquery-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 90;
+  width: 100%;
+  height: 500px;
+}
+#jquery-lightbox {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  text-align: center;
+  line-height: 0;
+}
+#jquery-lightbox a img {
+  border: none;
+}
+#lightbox-container-image-box {
+  position: relative;
+  background-color: #444;
+  width: 250px;
+  height: 250px;
+  margin: 0 auto;
+}
+#lightbox-container-image {
+  padding: 10px;
+}
+#lightbox-loading {
+  position: absolute;
+  top: 40%;
+  left: 0%;
+  height: 25%;
+  width: 100%;
+  text-align: center;
+  line-height: 0;
+}
+#lightbox-nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 10;
+}
+#lightbox-container-image-box > #lightbox-nav {
+  left: 0;
+}
+#lightbox-nav a {
+  outline: none;
+}
+#lightbox-nav-btnPrev, #lightbox-nav-btnNext {
+  width: 49%;
+  height: 100%;
+  zoom: 1;
+  display: block;
+}
+#lightbox-nav-btnPrev {
+  left: 0;
+  float: left;
+}
+#lightbox-nav-btnNext {
+  right: 0;
+  float: right;
+}
+#lightbox-container-image-data-box {
+  font: 10px Verdana, Helvetica, sans-serif;
+  background-color: #444;
+  margin: 0 auto;
+  line-height: 1.4em;
+  overflow: auto;
+  width: 100%;
+  padding: 0 10px 0;
+}
+#lightbox-container-image-data {
+  padding: 0 10px;
+  color: #fbfbfb;
+}
+#lightbox-container-image-data #lightbox-image-details {
+  width: 70%;
+  float: left;
+  text-align: left;
+}
+#lightbox-image-details-caption {
+  font-weight: bold;
+}
+#lightbox-image-details-currentNumber {
+  display: block;
+  clear: left;
+  padding-bottom: 1.0em;
+}
+#lightbox-secNav-btnClose {
+  width: 66px;
+  float: right;
+  padding-bottom: 0.7em;
+}
+
+
+
+

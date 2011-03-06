@@ -12,8 +12,8 @@
 ?>
 	</div><!-- #main -->
 
-	<div id="footer" role="contentinfo">
-		<div id="colophon">
+	<div id="footer" role="contentinfo" class="floatcontainer">
+		<div id="colophon" class="floatcontainer">
 
 <?php
 	/* A sidebar in the footer? Yep. You can can customize
