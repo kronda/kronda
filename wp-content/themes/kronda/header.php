@@ -56,6 +56,11 @@
 <div id="wrapper" class="hfeed">
 	<div id="header">
 		<div id="masthead">
+			<!-- custom header image -->
+			<div id="header_img">
+				<img src="<?php echo CHILD_TEMPLATE_DIRECTORY;?>/images/me_bigger.png"  width="380" height="231" alt="Me, my laptop and my favorite cargo bike, geeking out on the go">
+			</div><!-- header_img -->
+				
 			<div id="branding" role="banner">
 				<?php $heading_tag = ( is_home() || is_front_page() ) ? 'h1' : 'div'; ?>
 				<<?php echo $heading_tag; ?> id="site-title">
@@ -66,6 +71,8 @@
 				<div id="site-description"><?php bloginfo( 'description' ); ?></div>
 
 				<?php
+					//check if this is the front page before showing the normal header img
+					if ( !is_front_page() ) :
 					// Check if this is a post or page, if it has a thumbnail, and if it's a big one
 					if ( is_singular() &&
 							has_post_thumbnail( $post->ID ) &&
@@ -76,6 +83,7 @@
 					else : ?>
 						<img src="<?php header_image(); ?>" width="<?php echo HEADER_IMAGE_WIDTH; ?>" height="<?php echo HEADER_IMAGE_HEIGHT; ?>" alt="" />
 					<?php endif; ?>
+					<?php endif; ?> 
 			</div><!-- #branding -->
 
 			<div id="access" role="navigation">

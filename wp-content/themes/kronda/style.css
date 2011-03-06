@@ -76,53 +76,37 @@ a img {
 }
 
 
-
-/* =Fonts (overridden with typekit)
--------------------------------------------------------------- */
-body,
-input,
-textarea,
-.page-title span,
-.pingback a.url {
-	font-family: "ff-dagny-web-pro-1","ff-dagny-web-pro-2", "Trebuchet MS", Verdana, sans-serif;
-}
-h3#comments-title,
-h3#reply-title,
-#access .menu,
-#access div.menu ul,
-#cancel-comment-reply-link,
-.form-allowed-tags,
-#site-info,
-#site-title,
-#wp-calendar,
-.comment-meta,
-.comment-body tr th,
-.comment-body thead th,
-.entry-content label,
-.entry-content tr th,
-.entry-content thead th,
-.entry-meta,
-.entry-title,
-.entry-utility,
-#respond label,
-.navigation,
-.page-title,
-.pingback p,
-.reply,
-.widget-title,
-.wp-caption-text,
-input[type=submit] {
-	font-family: "ff-dagny-web-pro-1","ff-dagny-web-pro-2", "Trebuchet MS", Verdana, sans-serif;
-}
-
 /* =Home page header
 -------------------------------------------------------------- */
+.home #header {
+  height: 300px;
+  background: transparent url(images/header_bg2.png) no-repeat center top;
+  width: 100%;
+  position: relative;
+  color: #fbfbfb;
+}
 
+.home #masthead {
+  background: transparent;
+  height: 250px;
+  width: 960px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.home #masthead #header_img {
+  height: 221px;
+  width: 370px;
+  position: absolute;
+  left: 135px;
+  top: -15px;
+}
 
 /* =Structure
 -------------------------------------------------------------- */
 .home #wrapper {
 	width: 100%;
+	margin-top: 0;
 }
 /* Structure the footer area */
 #footer-widget-area {
