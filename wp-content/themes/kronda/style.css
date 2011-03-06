@@ -77,9 +77,9 @@ a img {
 
 /* =Home page overrides
 -------------------------------------------------------------- */
-body.home {
+.home {
   font: 1em/1.5em "ff-dagny-web-pro-1", "ff-dagny-web-pro-2", "Trebuchet MS", Verdana, sans-serif;
-  background-color: #dedede; /* light gray */
+  background-color: #dedede !important; /* light gray */
   color: #fbfbfb; /* off white */
   letter-spacing: .22px;
 }
@@ -545,10 +545,6 @@ div.menu ul {
 }
 
 /* Social Links */
-
-.home #second {
-	left: 9px;
-}
 
 .home .widget-area#second ul ul {
 	padding-left: 10px;
