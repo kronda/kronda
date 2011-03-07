@@ -35,11 +35,16 @@
 					<?php printf( __('Proudly powered by %s.', 'twentyten'), 'WordPress' ); ?>
 				</a>
 			</div><!-- #site-generator -->
-
+			<div id="blogteaser">
+				<h3>From The Blog</h3>
+				
+				<?php show_featured_post($PreFeature = '', $PostFeature = '', $AlwaysShow = false); ?>
+				
+			</div><!-- blogteaser -->
 		</div><!-- #colophon -->
 	</div><!-- #footer -->
 
-</div><!-- #wrapper -->
+<!-- </div> --><!-- #wrapper -->
 
 <?php
 	/* Always have wp_footer() just before the closing </body>
