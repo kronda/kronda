@@ -35,7 +35,7 @@ jQuery(document).ready(function($) {
 	});
 	
 	$('.home #footer, .home #colophon').css('height', function(){
-		return $('#blogteaser').height() + 20 + 'px';
+		return $('#blogteaser').height() + 10 + 'px';
 	});
 
 });

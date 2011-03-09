@@ -16,10 +16,8 @@ Leftover from TwentyTen:
 Tags: black, blue, white, two-columns, fixed-width, custom-header, custom-background, threaded-comments, sticky-post, translation-ready, microformats, rtl-language-support, editor-style
 */
 
-
 /* =Reset default browser CSS. Based on work by Eric Meyer: http://meyerweb.com/eric/tools/css/reset/index.html (updated to Meyer's latest version 3/5/2011)
 -------------------------------------------------------------- */
-
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -45,7 +43,6 @@ article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
-
 body {
 	line-height: 1;
 }
@@ -76,6 +73,7 @@ a img {
 	border: none;
 }
 
+
 /* =Home page overrides
 -------------------------------------------------------------- */
 .home {
@@ -87,7 +85,6 @@ a img {
   position: absolute;
   left: -5000px;
 }
-
 .home p,
 .home a,
 .home small,
@@ -106,7 +103,6 @@ a img {
 .home small {
   font-size: 0.875em;
 }
-
 .home #content .checks dt {
 	color: #FBFBFB;
 }
@@ -116,6 +112,9 @@ a img {
 	padding: 0;
 	background: #DEDEDE; /* light gray */
 }
+.home #site-info {
+	display: none;
+}
 #primary {
 	font-size: 0.9em;
 	line-height: 1.4em;
@@ -123,6 +122,7 @@ a img {
 #access {
 	padding-top: .5em;
 }
+
 /* =Home page header
 -------------------------------------------------------------- */
 .home #header {
@@ -133,7 +133,6 @@ a img {
   color: #fbfbfb;
 	padding: 0;
 }
-
 .home #masthead {
   background: transparent;
   height: 250px;
@@ -141,7 +140,6 @@ a img {
   margin: 0 auto;
   position: relative;
 }
-
 .home #masthead #header_img {
   height: 221px;
   width: 370px;
@@ -154,7 +152,6 @@ a img {
 #object-container {
 	display: none;
 }
-
 .home #header ul#object:before {
   content: "{";
   font-size: 1.625em;
@@ -235,7 +232,6 @@ a img {
   opacity: 0.8;
   width: 100%;
 }
-
 .home #access {
   height: 50px;
   width: 960px;
@@ -268,7 +264,6 @@ a img {
 	background: none;
 	color: #A1C4E0;
 }
-
 .home #access .menu li a:hover {
 	text-decoration: underline;
 }
@@ -279,14 +274,12 @@ div.menu {
 	margin: 0;
 	width: 100%;
 }
-
 .home #access .menu-header ul,
 div.menu ul {
 	list-style: none;
 	margin: -8px 0 0;
 }
 
-/* Content ---------------------------------------------- */
 
 /* override main */
 .home #main {
@@ -377,7 +370,7 @@ div.menu ul {
 .home .checks .row2 span {
   display: block;
 }
- /* Busy meter */
+ /* Busy meter button*/
 
 .home #showbusy {
   background: none repeat scroll 0 0 #EAAC39;
@@ -402,7 +395,7 @@ div.menu ul {
   height: auto;
   background: #333;
   opacity: 0.8;
-  position: relative;
+  /*position: relative;*/
   margin-bottom: 0;
   padding: 50px 0 10px 0;
 	font-size: .95em;
@@ -412,25 +405,22 @@ div.menu ul {
 }
 .home #colophon {
 	border: none;
-	height: auto;
 	width: 960px;
 	margin: 0 auto;
-  overflow: visible;
-	position: relative;
 	padding: 0;
+	position: relative;
+	overflow: visible;
 }
-
 /* ----------Footer widget areas-------- */
+#blogteaser, #tweet {
+	position: absolute;
+	top:0;
+}
 .home .footercolumn {
 	width: 300px;
-	position: absolute;
-	top: 0;
 }
 .home .footercolumn h4 {
 	font-weight: bold;
-}
-.home #social {
-	margin-left:0;
 }
 .home .footercolumn h3 {
 	text-align: center;
@@ -441,16 +431,12 @@ div.menu ul {
 	font-weight: bold;
 	margin-bottom: 17px;
 }
-.home .footercolumn ul li,
-.home .footercolumn ul ul {
-	list-style: none;
-}
 /* ---Busy Meter--------------- */
 .home #busymeter {
 	display: none;
   height: 100%;
   width: 300px;
-  float: left;
+  /*float: left;*/
 	margin-left: 14px;
 }
 .home #busymeter #piechart {
@@ -478,14 +464,14 @@ div.menu ul {
   clear: both;
 	padding-top: 20px;
 }
-
 .home #gradclock span {
   display: inline;
 }
-
 /* ---Social Links------------------------ */
 .home #social {
   left: 9px;
+	/*float: left;*/
+	/*margin-left: 0;*/
 }
 .home #social ul {
 	padding-left: 10px;
@@ -523,25 +509,6 @@ div.menu ul {
   margin-bottom: 20px;
   padding: 0 7px;
 }
-/* @group Classes ---------------------------------------------- */
-.floatcontainer:after {
-  content: ".";
-  display: block;
-  height: 0;
-  font-size: 0;
-  clear: both;
-  visibility: hidden;
-}
-.hide {
-  display: none;
-}
-.show {
-  display: block;
-}
-.clearfix {
-  clear: both;
-}
-/* @end Classes ---------------------------------------------- */
 
 /* =Plugin specific styles
 -------------------------------------------------------------- */
