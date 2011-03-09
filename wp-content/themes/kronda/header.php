@@ -53,7 +53,7 @@
 </head>
 
 <body <?php body_class(); ?>>
-<!-- <div id="wrapper" class="hfeed floatcontainer"> -->
+<div id="wrapper" class="hfeed floatcontainer">
 	
 	<div id="header">
 		<div id="nav-bg"></div> <!-- this is to stretch the nav bar full width -->

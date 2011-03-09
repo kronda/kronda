@@ -30,11 +30,11 @@ jQuery(document).ready(function($) {
 		$('#social').hide();
 		$('#busymeter').slideDown();
 	}, function(){
-		$('#tweet').fadeIn('3000');
+		$('#social').fadeIn('3000');
 		$('#busymeter').slideUp('fast');
 	});
 	
-	$('#footer, #colophon').css('height', function(){
+	$('.home #footer, .home #colophon').css('height', function(){
 		return $('#blogteaser').height() + 20 + 'px';
 	});
 
