@@ -407,40 +407,9 @@ div.menu ul {
   padding: 50px 0 10px 0;
 	font-size: .95em;
 }
-
-#footer-widget-area {
-	overflow: hidden;
-}
-
-#footer-widget-area .widget-area {
-		float: left;
-		margin-right: 20px;
-		width: 220px;
-}
-#footer-widget-area #fourth {
-	margin-right: 0;
-}
-
-#site-info {
-	float: left;
-	font-size: 14px;
-	font-weight: bold;
-	width: 700px;
-}
-#site-generator {
-	float: right;
-	width: 220px;
-}
-
-/* overrides*/
-.home #site-info {
-	display: none;
-}
-
 .home #site-generator {
 	display: none;
 }
-
 .home #colophon {
 	border: none;
 	height: auto;

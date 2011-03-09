@@ -80,7 +80,6 @@ a img {
 -------------------------------------------------------------- */
 .home {
   font: 1em/1.5em "ff-dagny-web-pro-1", "ff-dagny-web-pro-2", "Trebuchet MS", Verdana, sans-serif;
-  background-color: #dedede !important; /* light gray */
   color: #fbfbfb; /* off white */
   letter-spacing: .22px;
 }
@@ -110,6 +109,19 @@ a img {
 
 .home #content .checks dt {
 	color: #FBFBFB;
+}
+.home #wrapper {
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	background: #DEDEDE; /* light gray */
+}
+#primary {
+	font-size: 0.9em;
+	line-height: 1.4em;
+}
+#access {
+	padding-top: .5em;
 }
 /* =Home page header
 -------------------------------------------------------------- */
@@ -213,15 +225,6 @@ a img {
 }
 .home #header ul#object li#play {
   margin-left: 22px;
-}
-
-
-/* =Structure
--------------------------------------------------------------- */
-.home #wrapper {
-	width: 100%;
-	margin: 0;
-	padding: 0;
 }
 
 /* =Menu
@@ -497,7 +500,7 @@ div.menu ul {
 .home #busymeter small .block {
   display: block;
   height: 19px;
-  margin-left: 200px;
+  margin-left: 220px;
   margin-top: -3px;
   width: 100px;
 }
@@ -721,7 +724,3 @@ ol#controls li a:focus, #prevBtn a:focus, #nextBtn a:focus{outline:none;}
   float: right;
   padding-bottom: 0.7em;
 }
-
-
-
-
