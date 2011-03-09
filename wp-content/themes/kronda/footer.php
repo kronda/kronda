@@ -40,26 +40,26 @@
 				<div id="busymeter" class="footercolumn">
 					<h3>What Am I Doing?</h3>
 					<div>
-						<img id="piechart" src="http://kronda.com/wp-content/themes/kronda/images/6_piechart.png" width="170" height="180" alt="Busy Meter Pie Chart" />
+						<img id="piechart" src="<?php echo CHILD_TEMPLATE_DIRECTORY;?>/images/6_piechart.png" width="170" height="180" alt="Busy Meter Pie Chart" />
 						<ul>
 							<li>
-								<img src="http://kronda.com/wp-content/themes/kronda/images/1_school.png" width="24" height="20" alt="School: 36%">
+								<img src="<?php echo CHILD_TEMPLATE_DIRECTORY;?>/images/1_school.png" width="24" height="20" alt="School: 36%">
 								<small>School</small>
 							</li>
 							<li>
-								<img src="http://kronda.com/wp-content/themes/kronda/images/2_work.png" width="24" height="20" alt="Work: 15%">
+								<img src="<?php echo CHILD_TEMPLATE_DIRECTORY;?>/images/2_work.png" width="24" height="20" alt="Work: 15%">
 								<small>Work</small>
 							</li>
 							<li>
-								<img src="http://kronda.com/wp-content/themes/kronda/images/3_sleep.png" width="24" height="20" alt="Sleep: 29%">
+								<img src="<?php echo CHILD_TEMPLATE_DIRECTORY;?>/images/3_sleep.png" width="24" height="20" alt="Sleep: 29%">
 								<small>Sleep</small>
 							</li>
 							<li>
-								<img src="http://kronda.com/wp-content/themes/kronda/images/4_fun.png" width="24" height="20" alt="Fun: 4%">
+								<img src="<?php echo CHILD_TEMPLATE_DIRECTORY;?>/images/4_fun.png" width="24" height="20" alt="Fun: 4%">
 								<small>Fun</small>
 							</li>
 							<li>
-								<img src="http://kronda.com/wp-content/themes/kronda/images/5_undercats.png" width="24" height="20" alt="Trapped Under Cats: 16%">
+								<img src="<?php echo CHILD_TEMPLATE_DIRECTORY;?>/images/5_undercats.png" width="24" height="20" alt="Trapped Under Cats: 16%">
 								<small>Trapped<span class="block"> Under&nbsp;Cats</span></small>
 							</li>
 						</ul>

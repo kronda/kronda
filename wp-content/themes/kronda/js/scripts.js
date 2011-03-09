@@ -13,7 +13,7 @@ jQuery(document).ready(function($) {
 	});
 
 	//get tweets via jquery.tweet.js
-	$("#tweet").tweet({
+	jQuery("#tweet").tweet({
         username: "ephanypdx",
         join_text: "auto",
         avatar_size: 32,
@@ -26,15 +26,15 @@ jQuery(document).ready(function($) {
     }).bind("empty", function() { $(this).append('No matching tweets found, but you can <a href="http://twitter.com/ephanypdx>follow me</a> instead.'); });
 
 	//show and hide the busy meter graphic
-	$('#showbusy').toggle(function(){
-		$('#social').hide();
-		$('#busymeter').slideDown();
+	jQuery('#showbusy').toggle(function(){
+		jQuery('#social').hide();
+		jQuery('#busymeter').slideDown();
 	}, function(){
-		$('#social').fadeIn('3000');
-		$('#busymeter').slideUp('fast');
+		jQuery('#social').fadeIn('3000');
+		jQuery('#busymeter').slideUp('fast');
 	});
 	
-	$('.home #footer, .home #colophon').css('height', function(){
+	jQuery('.home #footer, .home #colophon').css('height', function(){
 		return $('#blogteaser').height() + 10 + 'px';
 	});
 
