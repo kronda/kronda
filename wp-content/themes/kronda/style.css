@@ -45,6 +45,7 @@ article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
+
 body {
 	line-height: 1;
 }
@@ -390,35 +391,6 @@ div.menu ul {
   border-bottom: 1px dashed #ff0000;
   border-right: 1px dashed #ff0000;
 }
-.home #busymeter {
-  display: none ;
-  height: 100%;
-  width: 300px;
-  float: left;
-}
-.home #busymeter img {
-  float: left;
-  margin-right: 13px;
-}
-.home #busymeter ul {
-  margin-top: 15px;
-}
-.home #busymeter small .block {
-  display: block;
-  height: 19px;
-  margin-left: 220px;
-  margin-top: -5px;
-  width: 100px;
-}
-.home #gradclock {
-  display: block;
-  clear: both;
-  margin-top: 10px;
-}
-.home #gradclock span {
-  display: inline;
-}
-
 /*end content*/
 
 /* Structure the footer area */
@@ -434,13 +406,13 @@ div.menu ul {
 }
 
 #footer-widget-area {
-	/*overflow: hidden;*/
+	overflow: hidden;
 }
 
 #footer-widget-area .widget-area {
-	/*float: left;
+		float: left;
 		margin-right: 20px;
-		width: 220px;*/
+		width: 220px;
 }
 #footer-widget-area #fourth {
 	margin-right: 0;
@@ -476,19 +448,19 @@ div.menu ul {
 	padding: 0;
 }
 
-/* Footer widget areas */
-.home #footer-widget-area .widget-area,
-.home #blogteaser {
+/* ----------Footer widget areas-------- */
+.home .footercolumn {
 	width: 300px;
-}
-
-.home #second,
-.home #blogteaser,
-.home #fourth {
 	position: absolute;
+	top: 0;
 }
-.home #footer-widget-area .widget-area h3,
-.home #blogteaser h3 {
+.home .footercolumn h4 {
+	font-weight: bold;
+}
+.home #social {
+	margin-left:0;
+}
+.home .footercolumn h3 {
 	text-align: center;
 	color: #FBFBFB;
 	text-transform: uppercase;
@@ -497,40 +469,32 @@ div.menu ul {
 	font-weight: bold;
 	margin-bottom: 17px;
 }
-
-/* Busy Meter */
-.home #first {
+.home .footercolumn ul li,
+.home .footercolumn ul ul {
+	list-style: none;
+}
+/* ---Busy Meter--------------- */
+.home #busymeter {
 	display: none;
   height: 100%;
   width: 300px;
   float: left;
 	margin-left: 14px;
 }
-
-.home #first .xoxo {
-	margin-top: none;
+.home #busymeter #piechart {
+	margin-top: -10px;
 }
-.home #first img {
+.home #busymeter img {
   float: left;
   margin-right: 13px;
 }
-
-.home #first .text-widget {
-	margin-top: -20px;
-}
-
-.home #first .text-widget > img {
+.home #busymeter > img {
 	margin-top: -29px;
 }
-.home #first ul ul {
+.home #busymeter ul ul {
   padding-top: 20px;
 }
-
-.home #first ul li,
-.home .widget-area ul ul {
-	list-style: none;
-}
-.home #first small .block {
+.home #busymeter small .block {
   display: block;
   height: 19px;
   margin-left: 200px;
@@ -547,41 +511,43 @@ div.menu ul {
   display: inline;
 }
 
-/* Social Links */
-
-.home .widget-area#second ul ul {
+/* ---Social Links------------------------ */
+.home #social {
+  left: 9px;
+}
+.home #social ul {
 	padding-left: 10px;
   padding-right: 10px;
 }
-.home .widget-area#second ul ul li:first-child {
+.home #social .first {
 	border-top: 2px dashed #8895ac;
 }
-.home .widget-area#second ul ul li {
+.home #social li {
 	border-bottom: 2px dashed #8895ac;
   font-size: 1.2em;
   padding-bottom: .75em;
   padding-top: .75em;
   text-align: center;
 }
-.home .widget-area#second ul ul li a {
-	font-weight: bold;
-}
-
+/* ---Blog posts------------------------ */
 .home #blogteaser {
-	left: 330px;
+  left: 330px;
 }
-
-.home #fourth {
+.home #blogteaser div {
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-bottom: 10px;
+}
+/* ---Tweets------------------------ */
+.home #tweet {
 	left: 650px;
 }
-
-.home #fourth a img {
+.home #tweet a img {
   float: left;
   margin-right: 5px;
 	padding-top: 5px;
 }
-
-.home #fourth li {
+.home #tweet li {
   margin-bottom: 20px;
   padding: 0 7px;
 }

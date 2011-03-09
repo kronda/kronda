@@ -27,15 +27,15 @@ jQuery(document).ready(function($) {
 
 	//show and hide the busy meter graphic
 	$('#showbusy').toggle(function(){
-		$('#second').hide();
-		$('#first').slideDown();
+		$('#social').hide();
+		$('#busymeter').slideDown();
 	}, function(){
-		$('#second').fadeIn('3000');
-		$('#first').slideUp('fast');
+		$('#tweet').fadeIn('3000');
+		$('#busymeter').slideUp('fast');
 	});
 	
 	$('#footer, #colophon').css('height', function(){
-		return $('#second').height() + 20 + 'px';
+		return $('#blogteaser').height() + 20 + 'px';
 	});
 
 });
