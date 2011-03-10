@@ -160,7 +160,7 @@ a img {
   font-size: 1.625em;
   color: #ff941c;
   position: relative;
-  top: 0;
+  top: 26px;
   left: -25px;
 }
 .home #header ul#object:after {
@@ -193,7 +193,7 @@ a img {
   font-family: Monaco, sans-serif !important;
   font-size: 1.125em;
   position: relative;
-  top: -20px;
+  top: -49px;
   left: 47px;
 }
 .home #header #object .label {
@@ -207,33 +207,22 @@ a img {
 .home #header ul#object li {
   /*padding-left: 12px;*/
   margin-bottom: 7px;
+	margin-left: 20px;
+	display: block;
 /*	line-height: 1.3em;*/
 }
 .home #header ul#object li span {
   color: #a1c4e0;
 }
-.home #header ul#object li.first {
-  /*margin: -25px 0 0.25em 24px;*/
-}
-.home #header ul#object li#title {
-  /*margin-left: 14px;*/
-}
-.home #header ul#object li#work {
-  /*margin-left: 24px;*/
-}
-.home #header ul#object li#work span {
-  /*display: block;
-    margin: -22px 0 0.25em 64px;*/
+.home #header ul#object li #worksub {
+  display: block;
+  margin-left: 80px;
 }
 .home #header ul#object li#work #semicolon {
  	display: inline;
 	color: #fff;
 	margin: 0;
 }
-.home #header ul#object li#play {
-  /*margin-left: 22px;*/
-}
-
 /* =Menu
 -------------------------------------------------------------- */
 .home #nav-bg {
