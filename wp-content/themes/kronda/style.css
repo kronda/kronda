@@ -296,6 +296,12 @@ div.menu ul {
   -moz-box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.6);
   box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.6);
   color: #fbfbfb;
+	-webkit-border-radius-topleft: 15px;
+  -moz-border-radius-topleft: 15px;
+  border-top-left-radius: 15px;
+	-webkit-border-radius-bottomright: 15px;
+  -moz-border-radius-bottomright: 15px;
+  border-bottom-right-radius: 15px;
 }
 
 .home .case_study h2 {
