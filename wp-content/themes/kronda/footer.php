@@ -64,7 +64,7 @@
 							</li>
 						</ul>
 					</div>
-										<p id="gradclock">Time to Graduation: <span id="gradtimer">Clock</span></p>
+										<!-- <p id="gradclock">Time to Graduation: <span id="gradtimer">Clock</span></p> -->
 					
 				</div><!-- busymeter -->
 				

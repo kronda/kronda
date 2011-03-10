@@ -115,6 +115,9 @@ a img {
 .home #site-info {
 	display: none;
 }
+.home #site-description {
+	display: none;
+}
 #primary {
 	font-size: 0.9em;
 	line-height: 1.4em;
@@ -193,35 +196,42 @@ a img {
   top: -20px;
   left: 47px;
 }
+.home #header #object .label {
+	display: block;
+	float: left;
+	color: #D9D9CF; /*off-white*/
+	min-width: 70px;
+	text-align: right;
+	padding-right: 10px;
+}
 .home #header ul#object li {
-  padding-left: 12px;
-  color: #D9D9CF;
+  /*padding-left: 12px;*/
   margin-bottom: 7px;
-	line-height: 1.3em;
+/*	line-height: 1.3em;*/
 }
 .home #header ul#object li span {
   color: #a1c4e0;
 }
 .home #header ul#object li.first {
-  margin: -25px 0 0.25em 24px;
+  /*margin: -25px 0 0.25em 24px;*/
 }
 .home #header ul#object li#title {
-  margin-left: 14px;
+  /*margin-left: 14px;*/
 }
 .home #header ul#object li#work {
-  margin-left: 24px;
+  /*margin-left: 24px;*/
 }
 .home #header ul#object li#work span {
-  display: block;
-  margin: -22px 0 0.25em 64px;
+  /*display: block;
+    margin: -22px 0 0.25em 64px;*/
 }
 .home #header ul#object li#work #semicolon {
-  display: inline;
-  color: #fff;
-  margin: 0;
+ 	display: inline;
+	color: #fff;
+	margin: 0;
 }
 .home #header ul#object li#play {
-  margin-left: 22px;
+  /*margin-left: 22px;*/
 }
 
 /* =Menu

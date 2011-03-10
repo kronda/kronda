@@ -67,10 +67,25 @@
 			<!-- insert custom header element -->
 			<div id="object-container">
 				<ul id="object">
-					<li class="first">Name: <span>Kronda Adair</span>;</li>
-					<li id="title">Title: <span>Web Developer</span>;</li>
-					<li id="work">Work: <span>Creating standards based websites using HTML, CSS &amp; Javascript<span id="semicolon">;</span></span></li>
-					<li id="play">Play: <span> Ride. Read. Write.</span>;</li>
+					<li class="first">
+						<span class="label">Name:</span>
+						<span>Kronda Adair</span>;
+					</li>
+					
+					<li id="title">
+						<span class="label">Title:</span>
+						<span>Web Developer</span>;
+					</li>
+					
+					<li id="work">
+						<span class="label">Work:</span>
+						<span>Creating standards based websites using HTML, CSS &amp; Javascript<span id="semicolon">;</span></span>
+					</li>
+					
+					<li id="play">
+						<span class="label">Play:</span>
+						<span> Ride. Read. Write.</span>;
+					</li>
 				</ul>
 			</div><!-- object-container -->
 			
@@ -82,6 +97,7 @@
 					</span>
 				</<?php echo $heading_tag; ?>>
 				<div id="site-description"><?php bloginfo( 'description' ); ?></div>
+			
 
 				<?php
 					//check if this is the front page before showing the normal header img
