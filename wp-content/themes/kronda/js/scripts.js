@@ -2,10 +2,10 @@ jQuery(document).ready(function($) {
 
 	//start up lightbox
     jQuery('.home #slider .img_holder a').lightBox();
-	
+
 	//start up slide show
 	jQuery("#slider").easySlider({
-		auto: false, 
+		auto: false,
 		continuous: true,
 		numeric: true,
 		speed: 400,
@@ -22,7 +22,7 @@ jQuery(document).ready(function($) {
 		fetch: 8,
         loading_text: "loading tweets...",
 		filter: function(t){ return ! /^@\w+/.test(t["tweet_raw_text"]); },
-		
+
     }).bind("empty", function() { $(this).append('No matching tweets found, but you can <a href="http://twitter.com/ephanypdx>follow me</a> instead.'); });
 
 	//show and hide the busy meter graphic
@@ -33,9 +33,13 @@ jQuery(document).ready(function($) {
 		jQuery('#social').fadeIn('3000');
 		jQuery('#busymeter').slideUp('fast');
 	});
-	
+
 	jQuery('.home #footer, .home #colophon').css('height', function(){
 		return $('#blogteaser').height() + 10 + 'px';
 	});
 
+  alert(jQuery.browser.version);
+  if (jQuery.browser.version == 7.0) {
+    alert('What are ya trapped at work with some old legacy office computer? Upgrade to IE8 or 9 why don\'tcha?');
+  };
 });

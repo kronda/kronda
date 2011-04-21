@@ -38,5 +38,13 @@ function add_custom_js() {
 	
 	}
 } 
-   
+ 
+function ie7_update(){
+	echo '<!--[if lt IE 8]>
+<script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE8.js"></script>
+<![endif]-->';
+}
+
+ 
 add_action('init', 'add_custom_js');
+add_action('wp_head','ie7_update');
