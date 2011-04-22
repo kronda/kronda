@@ -68,6 +68,10 @@ div.single_field span.single_field.advanced:not(.hidden):last-child {
 	border:1px solid #5CACEE !important;	
 }
 
+a.button-primary:hover span{
+  color: #D54E21;
+}
+
 .feature_buttons .button-primary{
 	margin: 10px 10px 0 0;
 	display: inline-block;
@@ -238,11 +242,12 @@ input[type=text].small_int{
 }	
 	
 .group{
-	padding: 5px 10px;
-	border: 1px solid #E3E3E3;
+	padding: 5px 10px 5px 20px;
+	border: 1px solid #ccc;
 	-moz-border-radius: 4px;
 	-webkits-border-radius: 4px;
 	margin: 0 0 0 20px;
+	border-left: 5px solid #ccc;
 }
 
 .duplicate_feature{
@@ -336,9 +341,9 @@ div.postbox div.inside{
 }
 
 .single_feature{
-	padding: 5px 10px 20px 20px;
-	margin-bottom: 20px;
-	border-bottom: 1px solid #E3E3E3;
+	padding: 5px 10px 20px 0;
+	margin: 0 0 20px 20px;
+	border-bottom: 2px solid #ccc;
 }
 
 .single_feature span.single_field{
@@ -359,7 +364,7 @@ div.postbox div.inside{
 .group .single_feature{
 	padding: 10px 0 20px;
 	margin: 0 0 10px;
-	border-bottom: 1px solid #EFEFEF;
+	border-bottom: 2px solid #ccc;
 }
 
 .group .single_feature:last-child{
@@ -747,6 +752,10 @@ li.krumo-footnote{
 #PreviewJavaScriptRequired{
   margin: 5px 0;
   cursor: pointer;
+}
+
+#developer_tools_js_required{
+  color: red;
 }
 
 .no_javascript{

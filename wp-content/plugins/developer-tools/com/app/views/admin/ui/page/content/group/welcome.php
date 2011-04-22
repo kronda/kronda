@@ -1,5 +1,5 @@
 <?php
-	$rss = fetch_feed( 'http://developertools.kjmeath.com/?feed=rss2&cat=5&tag=' . DEVELOPER_TOOLS_VERSION );
+	$rss = fetch_feed( 'http://developertools.kjmeath.com/?feed=rss2&tag=' . DEVELOPER_TOOLS_VERSION );
 	if (!is_wp_error( $rss ) ) :
 	  $maxitems = $rss->get_item_quantity(5); 
 	  $rss_items = $rss->get_items(0, $maxitems); 

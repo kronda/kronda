@@ -4,7 +4,7 @@ Donate link: http://developertools.kjmeath.com/donate/
 Tags: theme, developer, development, tool, tools, enqueue, script, scripts, cufon, sifr, swf, object, dd, belated, png, fix, ie, ie6, html5, shiv, google, analytics, excerpt, length, menu, menus, sidebar, sidebars, custom, taxonomy, taxonomies, post, type, types, feature, featured, image, thumbnail, thumbnails, disable, meta, box, boxes, field, fields, size, quality, core, update, updates, plugin, tinymce, auto, formating, auto-formating, hide, admin, login, dashboard, widgets, widget, krumo, database, backup, db, sql, buddy, sqlbuddy, management, login, log-in, log, in, multisite, remove, admin, tool, bar
 Requires at least: 3.0.0
 Tested up to: 3.1
-Stable tag: 1.0.2
+Stable tag: 1.1.1
 
 Streamline your WordPress development!  Creates admin UI for many of the code-enabled features in WP and includes commonly used JavaScript libraries.
 
@@ -12,7 +12,7 @@ Streamline your WordPress development!  Creates admin UI for many of the code-en
 
 Streamline your WordPress development!
 
-The Developer Tools plugin for WordPress is the ultimate WordPress development tool.  It creates an admin user interface for many of the code-enabled features in WordPress and commonly used web development libraries.  The Developer Tools plugin can also generate template code for theme development.
+The Developer Tools plugin creates an admin user interface for many of the code-enabled features in WordPress and commonly used JavaScript libraries.  It also generate template code for theme development.
 
 <strong>[Plugin home page](http://developertools.kjmeath.com/ "Plugin home page")</strong>
 
@@ -68,6 +68,45 @@ If you're willing to help translate my plugin please contact me.
 1. Developer Tools - Settings
 
 == Changelog ==
+
+= 1.1.1 =
+* Fixed Error log RSS feed url on welcome screen
+* Added "Disable TinyMCE visual editor" feature
+* Updated template code for add post type to include "post_status=publish"
+* Updated "Hide Developer Tools plugin" feature
+* Updated "Hide Default admin" feature
+
+= 1.1.0 =
+* Hid required field indicator if feature value is set
+
+= 1.0.9 =
+* Fixed remove button not appearing after save
+* Hid required field indicator after duplicating a feature
+* Minor style update to distinguish between features better
+* Added private and hierarchical fields to custom post type feature
+
+= 1.0.8 = 
+* Included missing models dir
+
+= 1.0.7 =
+* Fixed Warning: array_merge() [function.array-merge]: Argument #2 bug when saving
+* Updated saved value checking method
+* Fixed required field indicators
+
+= 1.0.6 =
+* Fixed Fatal error from making 1.0.5 update
+
+= 1.0.5 =
+* Fixed incorrect version in readme
+
+= 1.0.4 =
+* Fixed JavaScript "click me" alert
+
+= 1.0.3 =
+* Moved Application.php to com/app/MainApplication.php
+* Removed deprecated call_user_method() function in MainApplication.php to fix bug when loading fieldData models
+* Updated "advanced fields" button bug
+* Fixed remove button bug
 
 = 1.0.2 =
 * Updated: SQL Buddy database library to version 1.3.3

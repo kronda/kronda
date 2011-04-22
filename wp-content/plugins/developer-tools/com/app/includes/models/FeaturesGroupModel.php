@@ -140,6 +140,7 @@ class FeaturesGroupModel
 						  'DisableWpCoreUpdates',
 						  'DisablePluginUpdates',		
 						  'DisableTinyMceAutoFormatting',
+						  'DisableTinyMceVisualEditor',
 						  'DisableAdminMenuItems',
               'DisableDashboardWidgets',							
 						  'CustomLoginImage'						

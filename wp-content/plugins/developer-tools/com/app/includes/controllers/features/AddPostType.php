@@ -6,7 +6,7 @@ class AddPostType extends Feature
 		$this->title				  = __( 'Add post type', 'developer-tools' );
 		$this->multiple				= true;
 		$this->codeSample			= array(
-		  'code' => '&lt;?php <a href="http://codex.wordpress.org/Function_Reference/query_posts" target="_blank">query_posts</a>( \'post_type=<span class="replace-1"></span>\' ); ?&gt;',
+		  'code' => '&lt;?php <a href="http://codex.wordpress.org/Function_Reference/query_posts" target="_blank">query_posts</a>( \'post_type=<span class="replace-1"></span>&post_status=publish\' ); ?&gt;',
 			'placement' => 'right_before',
 			'moreCodexLink' => 'http://codex.wordpress.org/Post_Types'
 		);
@@ -41,7 +41,21 @@ class AddPostType extends Feature
         'characterSet' => 'numeric',
         'afterLabel' => __( '5 - below Posts (Default), 10 - below Media, 20 - below Pages, 60 - below first separator, 100 - below second separator', 'developer-tools' ),
         'cssClass' => 'small_int'
-      ) ,							
+      ),
+      array( 
+        'fieldType' => 'Checkbox',
+        'name' => 'hierarchical',
+        'advanced' => true,        
+        'label' => __( 'Hierarchical', 'developer-tools' ),
+        'afterLabel' => __( 'Whether the post type is hierarchical. Allows Parent to be specified.', 'developer-tools' ),
+      ),
+      array( 
+        'fieldType' => 'Checkbox',
+        'name' => 'private',
+        'advanced' => true,        
+        'label' => __( 'Private', 'developer-tools' ),
+        'afterLabel' => __( 'Do not display a user-interface for this post type, queries can not be performed from the front end, exclude posts with this post type from search results and hide for selection in navigation menus.', 'developer-tools' ),
+      ),      
 			array( 
 				'fieldType' => 'MultipleCheckboxes',
 				'label' => __( 'Meta boxes', 'developer-tools' ),
@@ -55,7 +69,7 @@ class AddPostType extends Feature
 				'fieldDataModel' => 'TaxonomiesModel'
 			)									
 		);
-	}	
+	}
 	
 	public function SupportsDataMethod()
 	{
@@ -69,7 +83,7 @@ class AddPostType extends Feature
 			'custom-fields|' . __( 'Custom Fields', 'developer-tools' ) . "\n" .
 			'comments|' . __( 'Comments', 'developer-tools' ) . "\n" .
 			'revisions|' . __( 'Revision', 'developer-tools' ) . "\n" .
-			'page-attributes|' . __( 'Page Attributes (Templates and post-type order)', 'developer-tools' ) . "\n" .
+			'page-attributes|' . __( 'Page Attributes (post-type order)', 'developer-tools' ) . "\n" .
 			'thumbnail|' . __( 'Featured Image Thumbnail (Must also be enabled below)', 'developer-tools' ) . "\n"
 		;
 	}
@@ -85,7 +99,6 @@ class AddPostType extends Feature
 		foreach($this->value as $key => $postType)
 		{
       if( !$postType['id'] ) continue;
-			$hierarchical = ( $postType['supports'] && in_array( 'page-attributes', $postType['supports'] ) ? true : false );
 			$supports = ( count($postType['supports']) > 0  ? $postType['supports'] : '' );
 			$taxonomies = ( $postType['taxonomies'] ? $postType['taxonomies'] : array());
 			$singularName = ( $postType['name'] ? $postType['name'] : $postType['id'] );
@@ -106,11 +119,12 @@ class AddPostType extends Feature
 					    'not_found_in_trash' => __('No '.$pluralName.' found in Trash'), 
 					    'parent_item_colon' => ''
 					),
-          'public' => true,
-					'hierarchical' => $hierarchical,
+          'public' => ( $postType['private'] ? false : true ),
+					'hierarchical' => ( $postType['hierarchical'] ? true : false ),
 					'supports' => $supports,
 					'taxonomies' => $taxonomies,
-					'menu_position' => ( $postType['menu_position'] ? $postType['menu_position'] : 5 )
+					'menu_position' => ( $postType['menu_position'] ? $postType['menu_position'] : 5 ),
+					'capability_type' => 'page'
 				)
 		    );
 		}		

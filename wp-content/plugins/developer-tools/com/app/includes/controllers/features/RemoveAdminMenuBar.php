@@ -10,7 +10,7 @@ class RemoveAdminMenuBar extends Feature
 			array( 
 				'fieldType' => 'Checkbox',
 				'name' => 'enabled',
-        'label' => __( 'Remove', 'developer-tools' )				
+				'label' => __( 'Remove', 'developer-tools' )
 			),
       array( 
         'fieldType' => 'Checkbox',

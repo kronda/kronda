@@ -22,7 +22,6 @@ class HideDefaultAdmin extends Feature
 			add_action('admin_init', array(&$this, 'EnqueueJquery'));
 			add_action('admin_head-users.php', array(&$this, 'HideDefaultAdminHeadUsers'));
 			add_action('admin_head-user-edit.php', array(&$this, 'HideDefaultAdminHeadUsersEdit'));
-			add_action('admin_head', array(&$this, 'HideDefaultAdminHead'));
 		}		
 	}
 	
@@ -33,57 +32,20 @@ class HideDefaultAdmin extends Feature
 	
 	public function HideDefaultAdminHeadUsers()
 	{ ?>
+	  <style type='text/css'> #user-1{ display: none !important; height: 0 !important; } </style>
 		<script type='text/javascript'>
 			if( typeof jQuery == 'function' )
-				(function($){
-					$(function(){
-						$('#user-1').remove();
-						$('.subsubsub li a').each(function(){
-							if($(this).attr('href') == 'users.php' || $(this).attr('href') == 'users.php?role=administrator')
-							{
-								var userCount = $('.count', this).html().replace('(', '').replace(')', '');
-								var newUserCount = parseInt(userCount)-1;
-								$('.count', this).html('('+newUserCount+')');
-							}
-						});
-					});
-				})(jQuery);
+        jQuery(function($){
+					$('#user-1').remove();
+          if( $('ul.subsubsub li.administrator') ) $('ul.subsubsub li.administrator a span.count').text( '(' + $('#the-list td.column-role:contains(Administrator)').length + ')' );
+          $('ul.subsubsub li.all a span.count').text( '(' + $('#the-list > tr').length + ')' );
+				});
 		</script>
-		<style type='text/css'> #user-1{ display: none !important; height: 0 !important; } </style>
 		<?php
 	}
 	
 	public function HideDefaultAdminHeadUsersEdit()
 	{
-		if($_GET['user_id'] == 1) : ?>
-		<script type='text/javascript'>
-			window.onload = function()
-			{
-				var profilePageContainer = document.getElementById('wpbody-content');
-				var profilePage = document.getElementById('profile-page');
-				profilePageContainer.removeChild(profilePage);
-			}
-			window.location = 'users.php';
-		</script>
-		<style type='text/css'>#profile-page{ display: none !important; height: 0 !important; }</style>
-	    <?php endif;		
-	}
-	
-	public function HideDefaultAdminHead()
-	{ ?>
-		<script type='text/javascript'>
-			if( typeof jQuery == 'function' )
-				(function($){
-					$(function(){
-						if($('#post_author_override').length > 0)
-							$('#post_author_override option').each( function(){
-								if($(this).val() == 1 ) $(this).remove();
-							});
-						$('#contextual-help-link-wrap, #footer-upgrade').remove();
-					});
-				})(jQuery);
-		</script>
-		<style type='text/css'> #user-1, #footer-upgrade, #contextual-help-link-wrap{ display: none !important; height: 0 !important; } </style>
-	    <?php		
+		if($_GET['user_id'] == 1) header( "Location: users.php");		
 	}
 }

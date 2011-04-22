@@ -113,9 +113,9 @@ var DeveloperTools = {
       }
     }
     if( totalRequiredValues == setRequiredValues )
-      $obj.find('.feature_buttons .remove_group, .feature_buttons .code_button').removeClass('hidden');
+      $obj.find('.feature_buttons .code_button').removeClass('hidden');
     else
-      $obj.find('.feature_buttons .remove_group, .feature_buttons .code_button').addClass('hidden');
+      $obj.find('.feature_buttons .code_button').addClass('hidden');
   },  
   
   alphaNumericInit : function( $obj )
@@ -154,24 +154,21 @@ var DeveloperTools = {
       
        // reset the feature visisble options    
       $newFeatureObj.find(':input').not(':button, :submit, :reset').each( function(){
-/* 
- * TODO: Slap this bitchy code in the face
+        _.$( this ).val('').removeAttr('value').removeAttr('selected').removeAttr('checked'); // whore
+      });
+/*
+ * TODO: above ^
  * After you duplicate a feature, its suppose to clear the form out, which it visually appears to do.
  * But if you remove any of the duplicated features, all of the newly created features inherit the original features, data..
  * idfk this happens. >:(
- */ 
-        _.$( this ).val('').removeAttr('value').removeAttr('selected').removeAttr('checked'); // whore
-      });
-      
+ */
       $newFeatureObj.find('.unmodifiable').html('');
       $newFeatureObj.find('.unmodifiableAfterSave').removeClass('existing').addClass('new');
       
-      // show/ hide buttons for new feature group
-      var hideElements = [ '.remove_group', '.code_button', '.code_template', '.advanced' ];
+      // hide items
+      var hideElements = [ '.remove_group', '.code_button', '.code_template', '.advanced', '.required_icon' ];
       for( var i = 0; i < hideElements.length; i++ ) $newFeatureObj.find( hideElements[i] ).addClass('hidden');
-      $newFeatureObj.find( '.show_advanced' ).removeClass('hidden');
-      $newFeatureObj.find( '.required_icon' ).removeClass('hidden');
-
+      
       _.alphaNumericInit( $newFeatureObj ); // we have to init this for the new dom element
 
   },
@@ -231,12 +228,8 @@ var DeveloperTools = {
   showAdvancedFields : function( $feature )
   {
       //show hidden advanced fields
-      var $advancedFields = $feature.find('.advanced.hidden');
+      var $advancedFields = $feature.find('.advanced');
       this.showHide( $advancedFields );
-      //hide addvance button
-      var $advancedButton = $feature.find('.feature_buttons a.show_advanced');
-      this.showHide( $advancedButton );
-       
   },
   
   showHide : function( $obj )

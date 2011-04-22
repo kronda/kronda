@@ -3,7 +3,6 @@ new DeveloperTools();
 class DeveloperTools { 
   private $_data;
   private $_hiddenFeatures;
-  private $_checkSavedValues;
   private $_setSavedValues = false;
   private $_errors = false;
   private $_messages = false; 
@@ -33,13 +32,13 @@ class DeveloperTools {
     define( "DEVELOPER_TOOLS_PAGE_URL", $_SERVER['REQUEST_URI'] );
 
     define( "DEVELOPER_TOOLS_VIEWS_DIR", DEVELOPER_TOOLS_APP_DIR.'views/' );
-    define( "DEVELOPER_TOOLS_INCLUDES_DIR", DEVELOPER_TOOLS_APP_DIR.'includes/' );  
+    define( "DEVELOPER_TOOLS_INCLUDES_DIR", DEVELOPER_TOOLS_APP_DIR.'includes/' ); 
       
     define( "IS_WP_ADMIN", ( is_admin() ? TRUE : FALSE ) );
     
     include_once DEVELOPER_TOOLS_DIR.'libs/krumo/class.krumo.php';
     include_once(ABSPATH . WPINC . '/feed.php');
-    add_filter( 'wp_feed_cache_transient_lifetime', create_function('$fixrss', 'return 1800;') );
+    //add_filter( 'wp_feed_cache_transient_lifetime', create_function('$fixrss', 'return 1800;') );
     
     //Load all these class files in this exact order
     $this->_LoadIncludes(DEVELOPER_TOOLS_INCLUDES_DIR.'models', true);
@@ -154,7 +153,6 @@ class DeveloperTools {
     wp_register_script( 'developer_tools-jquery_alphanumeric', DEVELOPER_TOOLS_URL.'js/jquery.alphanumeric.pack.js', array('jquery'));
     wp_register_script( 'developer_tools-jquery_scrollto', DEVELOPER_TOOLS_URL.'js/jquery.scrollTo-min.js', array('jquery'));
     wp_register_script( 'developer_tools', DEVELOPER_TOOLS_URL.'js/developer-tools.js', array('developer_tools-fancybox', 'developer_tools-swfobject_fileprogress', 'developer_tools-swfobject_handlers', 'developer_tools-jquery_alphanumeric', 'developer_tools-jquery_scrollto'));    
-    //wp_register_script( 'developer_tools_menu_item', DEVELOPER_TOOLS_URL.'js/developer-tools-menu-item.js', array('jquery'));
     
     wp_register_style( 'developer_tools-fancybox', DEVELOPER_TOOLS_URL.'libs/fancybox/jquery.fancybox-1.3.4.css' );
     wp_register_style( 'developer_tools', DEVELOPER_TOOLS_URL.'css/developer-tools.css', array('developer_tools-fancybox') );
@@ -165,10 +163,8 @@ class DeveloperTools {
   { 
     $developerToolsPage = add_menu_page('Developer Tools', 'Developer&nbsp;Tools', 10, DEVELOPER_TOOLS_PAGE_SLUG, array(&$this, 'AdminUiPageContent'));
     add_action('admin_head-'.$developerToolsPage, array(&$this, 'AdminUiPageHeader'));
-    add_action('admin_footer-'.$developerToolsPage, array(&$this, 'AdminUiPageFooter'));
     add_action('admin_print_scripts-'.$developerToolsPage, array(&$this, 'AdminUiPageJsLibs'));
     add_action('admin_print_styles-'.$developerToolsPage, array(&$this, 'AdminUiPageCss'));
-    //add_action('admin_print_scripts', array(&$this, 'AdminHeaderScripts'));
 
   }  
   
@@ -182,8 +178,6 @@ class DeveloperTools {
     );
     $this->_LoadView('admin-ui-page-header', $viewData );
   }
-  
-  public function AdminUiPageFooter(){ $this->_LoadView('admin-ui-page-footer'); }
   
   public function AdminUiPageCss(){ wp_enqueue_style('developer_tools'); }
   
@@ -407,15 +401,13 @@ class DeveloperTools {
       $viewDataFeatureButtons['id'] = $className.'-'.$i;
       
       if( $this->_advancedFields ) // advanced button
-      {
-        $viewDataFeatureButtons['advanced_show'] = ( $this->_enabledAdvancedFieldsCounter == $this->_advancedFieldsCounter ? 'hidden' : 'show');
-      }
+        $viewDataFeatureButtons['advanced_show'] = true;
       
       if( $feature->codeSample ) // code sample button
-        $viewDataFeatureButtons['code_show'] =  ( $this->_valueNotSet ? 'hidden' : 'show' );               
+        $viewDataFeatureButtons['code_show'] =  ( $this->_valueNotSet ? 'show' : 'hidden' );               
 
       if ( $feature->multiple ) // remove button
-        $viewDataFeatureButtons['remove_button'] = ( $this->_valueNotSet ? 'hidden' : 'show' );
+        $viewDataFeatureButtons['remove_button'] = ( $this->_valueNotSet ? 'show' : 'hidden' );
       
       if( $this->_advancedFields || $feature->codeSample || $feature->multiple )
         $this->_LoadView('admin-ui-page-content-group-feature-buttons', $viewDataFeatureButtons);
@@ -449,7 +441,7 @@ class DeveloperTools {
         {
           $this->_advancedFields = true;
           $this->_advancedFieldsCounter++;
-          if( empty($value) || $value == null || $value == '' || $value == false )
+          if( !strlen($value) )
           {
             $fieldSettings['advanced'] = 'hidden';
           }
@@ -460,7 +452,7 @@ class DeveloperTools {
           }
         }
     
-        if( $fieldSettings['required'] && ( empty($value) || $value == null || $value == '' || $value == false ) )
+        if( $fieldSettings['required'] && strlen($value) )
           $this->_valueNotSet = true;
           
         if( $fieldSettings['fieldDataMethod'] )
@@ -471,9 +463,9 @@ class DeveloperTools {
         
         if( $fieldSettings['fieldDataModel'] )
         {
-          $initData = call_user_method('getInstance',$fieldSettings['fieldDataModel']);
+          $initData = call_user_func( array( $fieldSettings['fieldDataModel'], 'getInstance' ) );
           $initData->GetData();
-          $callData = call_user_method('getInstance',$fieldSettings['fieldDataModel']);
+          $callData = call_user_func( array( $fieldSettings['fieldDataModel'], 'getInstance' ) );
           $fieldData = (array)$callData;
           $fieldSettings['data'] = $fieldData['data'];
         }
@@ -540,19 +532,18 @@ class DeveloperTools {
       {
         case 'save' :
           if( !wp_verify_nonce( $wpnonce, 'developer-tools-save' ) ) die( __( 'Developer Tools security failure: Error code: 2', 'developer-tools' ) ); 
-          if( $_POST )
+          if( $_POST['hidden'] ||  $_POST['dt'] )
           {
-            // we dont need these values saved
-            unset( $_POST['_wpnonce'] );
-            unset( $_POST['_wp_http_referer'] );
-            
-            $this->_checkSavedValues = $_POST;
-            $_POST = null;
+            if ( $_POST['hidden'] )
+              $this->_setSavedValues['hidden'] = $_POST['hidden'];
+                          
             $this->_CheckSavedValues();
-            if( $this->_setSavedValues && update_option( 'developer-tools-values', $this->_setSavedValues ) )
+            
+            if( $this->_setSavedValues && update_option( 'developer-tools-values', maybe_unserialize($this->_setSavedValues) ) )
                 $this->_messages[] = __( 'Options saved.', 'developer-tools' );
             else
                 $this->_errors[] = __( 'No values were set.', 'developer-tools' );
+
           }
         break;
         case 'reset' :
@@ -606,49 +597,20 @@ class DeveloperTools {
           }
         }
       }
-    } 
+    }
   }
   
-//TODO: This checks up to 4 levels deep, needs to be a better way to do this dynamically as deep as the $_POST var is
   private function _CheckSavedValues()
   {
-    if ( $this->_checkSavedValues['hidden'] )
-      $this->_setSavedValues['hidden'] = $this->_checkSavedValues['hidden'];
-      
-    foreach( $this->_checkSavedValues['dt'] as $key1 => $value1 )
+    // TODO: Still saves null values
+    function CheckNull( $value )
     {
-      if( is_array( $value1 ) )
-        foreach( $value1 as $key2 => $value2 )
-        {
-          if( is_array( $value2 ) )
-            foreach( $value2 as $key3 => $value3 )
-            {
-              if( !is_array($value3) && isset($value3) && $value3 != '' && $value3 != null )
-              {
-                $this->_setSavedValues['dt'][$key1][$key2][$key3] = $value3;
-              }
-              elseif( is_array($value3) )
-              {
-                foreach( $value3 as $key4 => $value4 )
-                {
-                  if( !is_array($value4) && isset($value4) && $value4 != '' && $value4 != null )
-                  {
-                    $this->_setSavedValues['dt'][$key1][$key2][$key3][$key4] = $value4;
-                  }
-                  elseif( is_array($value4) )
-                  {
-// TODO: DOES THIS ERROR EVER SHOW UP?                  
-                    $this->_errors[] = __( 'Trying to save an array as a value for', 'developer-tools' ) . ' ' . $key1.'['.$key2.']['.$key3.']['.$key4.']';
-                  }             
-                }
-              }
-            }
-          elseif( isset($value2) && $value2 != '' && $value2 != null )
-            $this->_setSavedValues['dt'][$key1][$key2] = $value2; 
-        }
-      elseif( isset($value1) && $value1 != '' && $value1 != null )
-        $this->_setSavedValues['dt'][$key1] = $value1;
+      if( is_array( $value ) )
+        return array_filter( $value, 'CheckNull');
+      else
+        return( strlen($value) );
     }
+    $this->_setSavedValues['dt'] = array_filter( $_POST['dt'], 'CheckNull');
   }
   
   private function _Export()

@@ -354,9 +354,8 @@ a:hover {
 	clear: right;
 	float: right;
 	font-style: italic;
-	margin: -6px 0 18px 0;
+	margin: 15px 0 18px 0;
 	width: 220px;
-	line-height: 1.3em;
 }
 
 /* This is the custom header image */
