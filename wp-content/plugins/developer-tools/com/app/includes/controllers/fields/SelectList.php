@@ -4,18 +4,23 @@ class SelectList extends Field
 	public function __construct($featureName = false, $duplicateCounter = false, $value = false, $fieldSettings = false)
 	{
 		$this->singleField = true;
-		$this->SetField();			
+		$this->SetField();
 
     $fieldSettings['selectListSet'] = false;
-    foreach( $fieldSettings['selectListValues'] as $id => $text )
+    $options = explode("\n", $fieldSettings['data']);
+    foreach( $options as $option )
     {
-      $selectOptions .= '<option value="'.$id.'"';
-      if( $value == $id )
+      if( $option != '' && $option != null )
       {
-        $fieldSettings['selectListSet'] = true;
-        $selectOptions .= ' selected="selected"';
+        $optionData = explode("|", $option);
+        $selectOptions .= '<option value="'.$optionData[0].'"';
+        if( $value == $optionData[0] )
+        {
+          $fieldSettings['selectListSet'] = true;
+          $selectOptions .= ' selected="selected"';
+        }
+        $selectOptions .= '>'.$optionData[1].'</option>';
       }
-      $selectOptions .= '>'.$text.'</option>';
     }
     $value = $selectOptions;
 
@@ -27,7 +32,6 @@ class SelectList extends Field
 	
 	public function SetField()
 	{
-		$this->metaBoxField = true;
 		$this->fieldType = __( 'Select list', 'developer-tools' );
 		$this->fieldBeginning = '<select ';
 		$this->fieldBeforeValue = '><option value=""></option>';

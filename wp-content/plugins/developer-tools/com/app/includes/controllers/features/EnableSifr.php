@@ -3,7 +3,7 @@ class EnableSifr extends Feature
 {	
 	public function SetSettings()
 	{
-		$this->title				  = __( 'Enable', 'developer-tools' ) . ' <a href="http://wiki.novemberborn.net/sifr3/" target="_blank">sIFR</a>';
+		$this->title				  = '<a href="http://wiki.novemberborn.net/sifr3/" target="_blank">sIFR</a>';
     $this->information    = 'sIFR ' . __('is an open source JavaScript and Adobe Flash dynamic web fonts implementation, enabling the replacement of text elements on HTML web pages with Flash equivalents. If possible, use Cuf&oacute;n over sIFR, as it is seemingly no longer supported.', 'developer-tools' ) . ' <a href="http://wiki.novemberborn.net/sifr3/JavaScript+Configuration" target="_blank">' . __( 'API details', 'developer-tools' ) . '</a>. v3';
 		$this->multiple				= true;
 		$this->uploads				= array(
@@ -46,30 +46,26 @@ class EnableSifr extends Feature
 		$this->value = $value;
     if( !IS_WP_ADMIN )
       add_action('init', array(&$this, 'Init'));
-    add_action('wp_print_scripts', array(&$this, 'PrintScripts'));
-    // add_action('wp_print_styles ', array(&$this, 'PrintStyles'));  // this doesnt work for some reason
+    add_action('wp_print_styles ', array(&$this, 'PrintStyles'));  // this doesnt work for some reason
     add_action('wp_head', array(&$this, 'HeadInclude'));		 
 	}	
 	
 	public function Init()
 	{
     wp_register_script('sifr-js', DEVELOPER_TOOLS_URL.'libs/sifr3/js/sifr.js', array('jquery'), '3-beta');
-    // wp_register_style( 'sifr-css', DEVELOPER_TOOLS_URL.'libs/sifr3/css/sifr.css' ); 	
-	}
-	
-	public function PrintScripts()
-	{
-    wp_enqueue_script('sifr-js');		
+		wp_enqueue_script('sifr-js');	 	
 	}
 	
 	public function PrintStyles()
 	{
+		wp_register_style( 'sifr-css', DEVELOPER_TOOLS_URL.'libs/sifr3/css/sifr.css' );
     wp_enqueue_style('sifr-css');		
 	}
 	
 	public function HeadInclude()
 	{ ?>
     <link rel="stylesheet" type="text/css" media="screen" href="<?php print DEVELOPER_TOOLS_URL ?>libs/sifr3/css/sifr.css" />
+
 		<script type='text/javascript'>
 		  if (typeof sIFR == "object")
 			{

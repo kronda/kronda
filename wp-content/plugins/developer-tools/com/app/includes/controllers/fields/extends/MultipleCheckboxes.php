@@ -30,6 +30,5 @@ class MultipleCheckboxes extends Checkbox
 		}
 		$this->output .= '</div>';
 		$this->fieldType = __( 'Multiple checkboxes', 'developer-tools' );
-		$this->metaBoxField = true;
 	}
 }

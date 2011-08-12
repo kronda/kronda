@@ -3,7 +3,7 @@ class EnabledHtml5shiv extends Feature
 {
   public function SetSettings()
   {
-    $this->title        = __( 'Enable', 'developer-tools' ) . ' <a href="http://code.google.com/p/html5shiv/" target="_blank" title="Goto site">HTML5 shiv</a>';
+    $this->title        = '<a href="http://code.google.com/p/html5shiv/" target="_blank" title="Goto site">HTML5 shiv</a>';
     $this->information  = __( 'This is a JavaScript library that forces older versions of Internet Explorer to acknowledge HTML5 tags.', 'developer-tools' );
     $this->fields       = array(
       array( 

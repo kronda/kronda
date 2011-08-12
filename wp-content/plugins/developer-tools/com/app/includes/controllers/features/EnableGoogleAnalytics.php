@@ -3,7 +3,7 @@ class EnableGoogleAnalytics extends Feature
 {
 	public function SetSettings()
 	{	
-		$this->title				= __( 'Enable', 'developer-tools' ) . ' <a href="http://www.google.com/analytics/" target="_blank">Google Analytics</a>';
+		$this->title				= '<a href="http://www.google.com/analytics/" target="_blank">Google Analytics</a>';
 		$this->information  = __( 'Where can I find my tracking code and account number?', 'developer-tools' ) . ' <a href="http://www.google.com/support/analytics/bin/answer.py?hl=en&answer=81977" target="_blank">' . __( 'here', 'developer-tools' ) .'</a>.';
 		$this->fields				= array(
 			array( 
