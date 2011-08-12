@@ -110,7 +110,7 @@ a img {
 	width: 100%;
 	margin: 0;
 	padding: 0;
-	background: #DEDEDE; /* light gray */
+	background: #FFF; /* was DEDEDE light gray */
 }
 .home #site-info {
 	display: none;
@@ -130,7 +130,7 @@ a img {
 -------------------------------------------------------------- */
 .home #header {
   height: 300px;
-  background: transparent url(images/header_bg2.png) no-repeat center top;
+  background: transparent url(images/header_bg3.png) no-repeat center top;
   width: 100%;
   position: relative;
   color: #fbfbfb;
