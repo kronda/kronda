@@ -3,9 +3,9 @@ class EnableSwfObject extends Feature
 {
   public function SetSettings()
   { 
-    $this->title          = __( 'Enable', 'developer-tools' ) . ' <a href="http://code.google.com/p/swfobject/" target="_blank">SWFObject</a>';
+    $this->title          = '<a href="http://code.google.com/p/swfobject/" target="_blank">SWFObject</a>';
     $this->multiple       = true;
-    $this->information    = __( 'SWFObject is an open-source JavaScript library used to embed Adobe Flash content onto Web pages.', 'developer-tools' ) . ' <a href="http://code.google.com/p/swfobject/wiki/documentation" target="_blank">' . __( 'API details', 'developer-tools' ) . '</a>. v2.2';
+    $this->information    = __( 'SWFObject is an open-source JavaScript library used to embed Adobe Flash content into web pages.', 'developer-tools' ) . ' <a href="http://code.google.com/p/swfobject/wiki/documentation" target="_blank">' . __( 'API details', 'developer-tools' ) . '</a>. v2.2';
     $this->uploads        = array(
       'allowedFileTypes' => '*.swf',
       'uploadDescription' => __( 'Upload the swf.', 'developer-tools' )
@@ -86,11 +86,12 @@ class EnableSwfObject extends Feature
   public function Enabled( $value )
   {
     $this->value = $value;
-    add_action('wp_print_scripts', array(&$this, 'PrintScripts'));      
+		if( !IS_WP_ADMIN )
+		  add_action('init', array(&$this, 'Init'));  
     add_action('wp_head', array(&$this, 'HeadInclude')); 
   }
   
-  public function PrintScripts()
+  public function Init()
   {
     wp_enqueue_script( 'swfobject' );
     wp_enqueue_script( 'jquery' );

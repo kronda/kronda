@@ -30,6 +30,6 @@
 </div>
 <div id="welcome_description">
   <p><?php _e( 'When this plugin is enabled, you have access to', 'developer-tools' ) ?> <a href="http://krumo.sourceforge.net/" target="_blank">krumo( )</a> <?php _e( 'in the theme files. Instead of using', 'developer-tools' ) ?> <span style="color:red">&lt;?php</span> var_dump( $foo ); <span style="color:red">?&gt;</span> <?php _e( 'or', 'developer-tools' ) ?> <span style="color:red">&lt;?php</span> print_r( $foo ); <span style="color:red">?&gt;</span> <?php _e( 'to debug PHP variables, use', 'developer-tools' ) ?> <span style="color:red">&lt;?php</span> krumo( $variable ); <span style="color:red">?&gt;</span></p>
-  <p><strong><?php _e( 'Find a bug? Having issues? Want other features?', 'developer-tools' ) ?></strong><br /><?php _e( 'Go to the', 'developer-tools' ) ?> <a href="http://developertools.kjmeath.com/bbpress/" target="_blank"><?php _e( 'support forum.', 'developer-tools' ) ?></a></p>
+  <p><strong><?php _e( 'Find a bug? Having issues? Want other features?', 'developer-tools' ) ?></strong><br /><?php _e( 'Go to the', 'developer-tools' ) ?> <a href="http://wordpress.org/tags/developer-tools/" target="_blank"><?php _e( 'support forum.', 'developer-tools' ) ?></a></p>
 </div>
 <div class="clear"></div>

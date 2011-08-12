@@ -1,0 +1,329 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Search and Replace\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-05-24 17:55+0100\n"
+"PO-Revision-Date: 2008-05-24 17:55+0100\n"
+"Last-Translator: Frank Bueltge <frank@bueltge.de>\n"
+"Language-Team: Frank Bueltge <frank@bueltge.de>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: D:\\Eigene\\WP-Plugins\\search-and-replace\\trunk\\search-and-replace\\\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: search-and-replace.php:24
+#: search-and-replace.php:25
+msgid "Suchen &amp; Ersetzen"
+msgstr "Search &amp; Replace"
+
+#: search-and-replace.php:71
+msgid "<p><strong>Keine Aktion (Checkbox) gew&auml;hlt um zu ersetzen!</strong></p>"
+msgstr "<p><strong>Nothing (Checkbox) selected to modify!</strong></p>"
+
+#: search-and-replace.php:78
+msgid "Suche nach Beitr&auml;gen"
+msgstr "Looking @ post content"
+
+#: search-and-replace.php:92
+msgid "Suche nach ID"
+msgstr "Looking @ ID"
+
+#: search-and-replace.php:131
+msgid "Suche nach GUID"
+msgstr "Looking @ GUID"
+
+#: search-and-replace.php:145
+msgid "Suche nach Titeln"
+msgstr "Looking @ post titles"
+
+#: search-and-replace.php:159
+msgid "Suche nach Ausz&uuml;gen"
+msgstr "Looking @ post excerpts"
+
+#: search-and-replace.php:173
+msgid "Suche nach Meta Daten"
+msgstr "Looking @ Meta Data"
+
+#: search-and-replace.php:187
+msgid "Suche nach Kommentarbetr&auml;gen"
+msgstr "Looking @ modifying comments text"
+
+#: search-and-replace.php:201
+msgid "Suche nach Kommentarautor"
+msgstr "Looking @ modifying comments author"
+
+#: search-and-replace.php:215
+msgid "Suche nach Kommentarautoren-E-Mails"
+msgstr "Looking @ modifying comments author e-mail"
+
+#: search-and-replace.php:229
+msgid "Suche nach Kommentarautor-URLs"
+msgstr "Looking @ modifying comments author URLs"
+
+#: search-and-replace.php:243
+msgid "Suche nach Kommentar-Counter"
+msgstr "Looking @ Comment-Count"
+
+#: search-and-replace.php:257
+msgid "Suche nach Kategorie-Beschreibungen"
+msgstr "Looking @ category description"
+
+#: search-and-replace.php:271
+msgid "Suche nach Tags"
+msgstr "Looking @ Tags"
+
+#: search-and-replace.php:290
+msgid "Suche nach User-ID"
+msgstr "Looking @ User-ID"
+
+#: search-and-replace.php:322
+msgid "Suche nach User Login"
+msgstr "Looking @ User Login"
+
+#: search-and-replace.php:351
+msgid "... in Tabelle "
+msgstr "... in Table "
+
+#: search-and-replace.php:356
+msgid "Die Anfrage konnte nicht ausgef&uuml;hrt werden : "
+msgstr "The inquiry could not be implemented : "
+
+#: search-and-replace.php:360
+msgid "Keine Eintr&auml;ge gefunden."
+msgstr "Nothing found."
+
+#: search-and-replace.php:378
+msgid "Search &amp; Replace"
+msgstr "Search &amp; Replace"
+
+#: search-and-replace.php:399
+msgid "&raquo; Du musst Text spezifizieren, um Text zu ersetzen!"
+msgstr "&raquo; You must specify some text to replace!"
+
+#: search-and-replace.php:402
+msgid "&raquo; Versuche die Suche duchzuf&uuml;hren und zu ersetzen ..."
+msgstr "&raquo; Attempting to perform search and replace ..."
+
+#: search-and-replace.php:403
+msgid "Suche nach"
+msgstr "Search"
+
+#: search-and-replace.php:403
+msgid "und ersetze mit"
+msgstr "and replace with"
+
+#: search-and-replace.php:427
+msgid "Es gab eine St&ouml;rung!"
+msgstr "There was an error!"
+
+#: search-and-replace.php:430
+msgid "Erfolgreich durchgef&uuml;hrt!"
+msgstr "Completed successfully!"
+
+#: search-and-replace.php:434
+msgid "You do not have sufficient permissions to edit plugins for this blog."
+msgstr "You do not have sufficient permissions to edit plugins for this blog."
+
+#: search-and-replace.php:438
+msgid "Hinweise Suchen &amp; Ersetzen"
+msgstr "Information Search &amp; Replace"
+
+#: search-and-replace.php:439
+msgid "Dieses Plugin arbeitet mit einer Standard SQL Abfrage und ver&auml;ndert deine Datenbank direkt!<br /><strong>Achtung: </strong>Du <strong>kannst nichts</strong> r&uuml;ckg&auml;ngig machen mit diesem Plugin. <strong>Fertige eine <a href=\"http://bueltge.de/wp-datenbank-backup-mit-phpmyadmin/97/\" title=\"Klick zum Tutorial\">Sicherung deiner Datenbank</a> im Vorfeld an.</strong> Keine Rechtsanspr&uuml;che an den Autor des Plugins! <strong>Aktiviere</strong> das Plugin <strong>nur</strong>, wenn es ben&ouml;tigt wird!"
+msgstr "This plugin uses an standard SQL query so it modifies your database directly!<br /><strong>Attention: </strong>You <strong>cannot</strong> undo any changes made by this plugin. <strong>It is therefore advisable to <a href=\"http://bueltge.de/wp-datenbank-backup-mit-phpmyadmin/97/\" title=\"click for tutorial\">backup your database</a> before running this plugin.</strong> No legal claims to the author of this plugin! <strong>Aktivate</strong> the plugin <strong>only</strong>, if you want to use it!"
+
+#: search-and-replace.php:440
+msgid "Die Textsuche ist sensitiv und besitzt keine passende Abstimmungsbef&auml;higung. Die Funktion arbeitet stringbasierend und kann somit auch HTML-Tags ersetzen."
+msgstr "Text search is case sensitive and has no pattern matching capabilites. This replace function matchs raw text so it can be used to replace HTML tags too."
+
+#: search-and-replace.php:446
+msgid "Suche in"
+msgstr "Search in"
+
+#: search-and-replace.php:451
+msgid "Beitr&auml;gen"
+msgstr "Content"
+
+#: search-and-replace.php:453
+msgid "Feld: <code>post_content</code> Tabelle: <code>_posts</code>"
+msgstr "Field: <code>post_content</code> Table: <code>_posts</code>"
+
+#: search-and-replace.php:457
+msgid "ID"
+msgstr "ID"
+
+#: search-and-replace.php:459
+msgid "Feld: <code>ID</code>, <code>post_parent</code>, <code>post_id</code>, <code>object_id</code> und <code>comments</code><br />Tabelle: <code>_posts</code>, <code>_postmeta</code>, <code>_term_relationships</code> und <code>_comment_post_ID</code>"
+msgstr "Field: <code>ID</code>, <code>post_parent</code>, <code>post_id</code>, <code>object_id</code> and <code>comments</code><br />Table: <code>_posts</code>, <code>_postmeta</code>, <code>_term_relationships</code> and <code>_comment_post_ID</code>"
+
+#: search-and-replace.php:463
+msgid "GUID"
+msgstr "GUID"
+
+#: search-and-replace.php:465
+msgid "Feld: <code>guid</code> Tabelle: <code>_posts</code>"
+msgstr "Field: <code>guid</code> Table: <code>_posts</code>"
+
+#: search-and-replace.php:468
+msgid "Titeln"
+msgstr "Titles"
+
+#: search-and-replace.php:470
+msgid "Feld: <code>post_tilte</code> Tabelle: <code>_posts</code>"
+msgstr "Field: <code>post_tilte</code> Table: <code>_posts</code>"
+
+#: search-and-replace.php:473
+msgid "Ausz&uuml;gen"
+msgstr "Excerpts"
+
+#: search-and-replace.php:475
+msgid "Feld: <code>post_excerpt</code> Tabelle: <code>_posts</code>"
+msgstr "Field: <code>post_excerpt</code> Table: <code>_posts</code>"
+
+#: search-and-replace.php:478
+msgid "Meta Daten"
+msgstr "Meta Data"
+
+#: search-and-replace.php:480
+msgid "Feld: <code>meta_value</code> Tabelle: <code>_postmeta</code>"
+msgstr "Field: <code>meta_value</code> Table: <code>_postmeta</code>"
+
+#: search-and-replace.php:483
+msgid "Kommentarbeitr&auml;gen"
+msgstr "Comments content"
+
+#: search-and-replace.php:485
+msgid "Feld: <code>comment_content</code> Tabelle: <code>_comments</code>"
+msgstr "Field: <code>comment_content</code> Table: <code>_comments</code>"
+
+#: search-and-replace.php:488
+msgid "Kommentarautoren"
+msgstr "Comments author"
+
+#: search-and-replace.php:490
+msgid "Feld: <code>comment_author</code> Tabelle: <code>_comments</code>"
+msgstr "Field: <code>comment_author</code> Table: <code>_comments</code>"
+
+#: search-and-replace.php:493
+msgid "Kommentarautoren-E-Mail"
+msgstr "Comments author e-mail"
+
+#: search-and-replace.php:495
+msgid "Feld: <code>comment_author_email</code> Tabelle: <code>_comments</code>"
+msgstr "Field: <code>comment_author_email</code> Table: <code>_comments</code>"
+
+#: search-and-replace.php:498
+msgid "Kommentarautoren-URLs"
+msgstr "Comments author URLs"
+
+#: search-and-replace.php:500
+msgid "Feld: <code>comment_author_url</code> Tabelle: <code>_comments</code>"
+msgstr "Field: <code>comment_author_url</code> Table: <code>_comments</code>"
+
+#: search-and-replace.php:503
+msgid "Kommentar-Counter"
+msgstr "Comments-Counter"
+
+#: search-and-replace.php:505
+msgid "Feld: <code>comment_count</code> Tabelle: <code>_posts</code>"
+msgstr "Field: <code>comment_count</code> Table: <code>_posts</code>"
+
+#: search-and-replace.php:509
+msgid "Kategorie-Beschreibung"
+msgstr "Category description"
+
+#: search-and-replace.php:511
+msgid "Feld: <code>description</code> Tabelle: <code>_term_taxonomy</code>"
+msgstr "Field: <code>description</code> Table: <code>_term_taxonomy</code>"
+
+#: search-and-replace.php:514
+msgid "Tags &amp; Kategorien"
+msgstr "Tags &amp; Categories"
+
+#: search-and-replace.php:516
+msgid "Feld: <code>name</code> und <code>slug</code> Tabelle: <code>_terms</code>"
+msgstr "Field: <code>name</code> and <code>slug</code> Table: <code>_terms</code>"
+
+#: search-and-replace.php:520
+msgid "User-ID"
+msgstr "User-ID"
+
+#: search-and-replace.php:522
+msgid "Feld: <code>ID</code>, <code>user_id</code>, <code>post_author</code> und <code>link_owner</code><br />Tabelle: <code>_users</code>, <code>_usermeta</code>, <code>_posts</code> und <code>_links</code>"
+msgstr "Field: <code>ID</code>, <code>user_id</code>, <code>post_author</code> and <code>link_owner</code<br /> Table: <code>_users</code>, <code>_usermeta</code>, <code>_posts</code> and <code>_links</code>"
+
+#: search-and-replace.php:525
+msgid "User-Login"
+msgstr "User-Login"
+
+#: search-and-replace.php:527
+msgid "Feld: <code>user_login</code> Tabelle: <code>_users</code>"
+msgstr "Field: <code>user_login</code> Table: <code>_users</code>"
+
+#: search-and-replace.php:531
+msgid "Checkboxen markieren"
+msgstr "Checkboxes to assign"
+
+#: search-and-replace.php:531
+msgid "alle"
+msgstr "all"
+
+#: search-and-replace.php:531
+msgid "Checkboxen demarkieren"
+msgstr "Checkboxes to unmask"
+
+#: search-and-replace.php:531
+msgid "keine"
+msgstr "none"
+
+#: search-and-replace.php:538
+msgid "Ersetze"
+msgstr "Replace"
+
+#: search-and-replace.php:542
+msgid "mit"
+msgstr "with"
+
+#: search-and-replace.php:547
+msgid "Ausf&uuml;hren"
+msgstr "Go"
+
+#: search-and-replace.php:556
+msgid "Hinweise zum Plugin"
+msgstr "Information on the plugin"
+
+#: search-and-replace.php:557
+msgid "&quot;Search and Replace&quot; Originalplugin (en) ist von <a href='http://thedeadone.net/'>Mark Cunningham</a> und wurde erweitert (Kommentarbeitr&auml;ge, Kommentarautor) durch <a href='http://www.gonahkar.com'>Gonahkar</a>.<br />&quot;Suchen &amp; Ersetzen&quot; wurde erweitert und gepflegt in der aktuellen Version durch <a href='http://bueltge.de'>Frank Bueltge</a>."
+msgstr "&quot;Search and Replace&quot; originalplugin (en) created by <a href='http://thedeadone.net/'>Mark Cunningham</a> and provided (comments) by durch <a href='http://www.gonahkar.com'>Gonahkar</a>.<br />&quot;Search &amp; Replace&quot;, current version provided by <a href='http://bueltge.de'>Frank Bueltge</a>."
+
+#: search-and-replace.php:558
+msgid "Weitere Informationen: Besuche die <a href='http://bueltge.de/wp-suchen-und-ersetzen-de-plugin/114'>plugin homepage</a> f&uuml;r weitere Informationen oder nutze die letzte Version des Plugins."
+msgstr "Further information: Visit the <a href='http://bueltge.de/wp-suchen-und-ersetzen-de-plugin/114'>plugin homepage</a> for further information or to grab the latest version of this plugin."
+
+#: search-and-replace.php:558
+msgid "Du willst Danke sagen? Besuche meine <a href='http://bueltge.de/wunschliste'>Wunschliste</a>."
+msgstr "You want to thank me? Visit my <a href='http://bueltge.de/wunschliste'>wishlist</a>."
+
+#~ msgid ""
+#~ "<strong>Aktiviere</strong> das Plugin <strong>nur</strong>, wenn es "
+#~ "ben&ouml;tigt wird!"
+#~ msgstr ""
+#~ "<strong>Aktivate</strong> the plugin <strong>only</strong>, if you want "
+#~ "to use it!"
+#~ msgid ""
+#~ "Die Textsuche ist sensitiv und besitzt keine passende Abstimmungsbef&auml;"
+#~ "higung.<br />Du kannst folgende Eintr&auml;ge bearbeiten: Beitrag "
+#~ "(content), Titel (titles), Auszug (excerpt), Kommentarbeitr&auml;ge "
+#~ "(comment_content), Kommentarautor (comment_author), Kommentar-URL "
+#~ "(comment_author_url), Kategorie-Beschreibung (description) und Tags/ "
+#~ "Kategorie-Namen (name und slug).<br />Die Funktion arbeitet "
+#~ "stringbasierend und kann somit auch HTML-Tags ersetzen."
+#~ msgstr ""
+#~ "Text search is case sensitive and has no pattern matching capabilites."
+#~ "<br />You can chose to modify post excerpts, comment authors and post and "
+#~ "comment content, titles tags/categories and categrory-description.<br /> "
+#~ "This replace function matchs raw text so it can be used to replace HTML "
+#~ "tags too."
+

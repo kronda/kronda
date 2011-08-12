@@ -1,12 +1,11 @@
 <?php
 new DeveloperTools();
 class DeveloperTools { 
-  private $_data;
-  private $_hiddenFeatures;
+  private $_pluginSettings;
+	private $_data;
   private $_setSavedValues = false;
   private $_errors = false;
-  private $_messages = false; 
-  private $_showEnabledFeatures;
+  private $_messages = false;
   private $_globals;
   private $_valueNotSet = false;
   private $_advancedFields = false;
@@ -27,39 +26,46 @@ class DeveloperTools {
     define( "DEVELOPER_TOOLS_URL", WP_PLUGIN_URL.'/developer-tools/' );
     define( "DEVELOPER_TOOLS_APP_DIR", DEVELOPER_TOOLS_DIR.'com/app/' );
     define( "DEVELOPER_TOOLS_APP_URL", DEVELOPER_TOOLS_URL.'com/app/' );
-    
+
     define( "DEVELOPER_TOOLS_PAGE_SLUG", "developer-tools" );
     define( "DEVELOPER_TOOLS_PAGE_URL", $_SERVER['REQUEST_URI'] );
 
     define( "DEVELOPER_TOOLS_VIEWS_DIR", DEVELOPER_TOOLS_APP_DIR.'views/' );
     define( "DEVELOPER_TOOLS_INCLUDES_DIR", DEVELOPER_TOOLS_APP_DIR.'includes/' ); 
-      
+
     define( "IS_WP_ADMIN", ( is_admin() ? TRUE : FALSE ) );
-    
+
     include_once DEVELOPER_TOOLS_DIR.'libs/krumo/class.krumo.php';
     include_once(ABSPATH . WPINC . '/feed.php');
-    //add_filter( 'wp_feed_cache_transient_lifetime', create_function('$fixrss', 'return 1800;') );
-    
+
+    add_filter( 'wp_feed_cache_transient_lifetime', create_function('$fixrss', 'return 1800;') );
+
     //Load all these class files in this exact order
     $this->_LoadIncludes(DEVELOPER_TOOLS_INCLUDES_DIR.'models', true);
     $this->_LoadIncludes(DEVELOPER_TOOLS_INCLUDES_DIR.'libs', true);
     $this->_LoadIncludes(DEVELOPER_TOOLS_INCLUDES_DIR.'controllers');
     $this->_LoadIncludes(DEVELOPER_TOOLS_INCLUDES_DIR.'controllers/features');
-    $this->_LoadIncludes(DEVELOPER_TOOLS_INCLUDES_DIR.'controllers/fields');
-    $this->_LoadIncludes(DEVELOPER_TOOLS_INCLUDES_DIR.'controllers/fields/extends');
-    
+    $this->_LoadIncludes(DEVELOPER_TOOLS_INCLUDES_DIR.'controllers/fields', false, true);
+    $this->_LoadIncludes(DEVELOPER_TOOLS_INCLUDES_DIR.'controllers/fields/extends', false, true);
+
     $this->_PluginSetup();
   }
   
-  private function _LoadIncludes( $path, $recursive = false )
+  private function _LoadIncludes( $path, $recursive = false, $field = false )
   {
     $d = dir($path);
     while (false !== ($file = $d->read()))
       if( $file != '.' && $file != '..' && !preg_match("/^\./", $file ) )
+			{
         if( is_dir( "$path/$file" ) && $recursive )
-          $this->_LoadIncludes( "$path/$file" );
+				{
+          $this->_LoadIncludes( "$path/$file", $recursive, $field );
+				}
         elseif( !is_dir( "$path/$file" ) )
+				{
           include_once "$path/$file";
+				}
+			}
     $d->close();
   } 
   
@@ -71,10 +77,9 @@ class DeveloperTools {
     $getData = ValuesModel::getInstance();
     $getData->GetData();
     $getData = (array)$getData;
-    if( $getData['values']['dt'] && is_array( $getData['values']['dt'] ) )
+		$this->_pluginSettings = $getData['values'];
+    if( $this->_pluginSettings['dt'] && is_array( $this->_pluginSettings['dt'] ) )
       $this->_data = $getData['values']['dt'];
-    if( $getData['values']['hidden'] && is_array( $getData['values']['hidden'] ) )
-      $this->_hiddenFeatures = $getData['values']['hidden'];      
     
     $setUploadsDirectory = new SetUploadsDirectory();
     if( $setUploadsDirectory->errors )
@@ -98,11 +103,11 @@ class DeveloperTools {
     $this->_LoadEnabledFeatures();
     
     add_action('init', array( &$this, 'LoadTranslationFile') );    
-    
+		
     if( DEVELOPER_TOOLS_ACCESS )
       $this->_DeveloperToolsActivate();
   }
-
+	
   private function _LoadEnabledFeatures()
   {
     if( $this->_data )
@@ -124,7 +129,6 @@ class DeveloperTools {
   private function _DeveloperToolsActivate()
   {
     add_action('admin_menu', array(&$this, 'AdminUiPageSetup'));
-    
     if( isset( $_GET['page'] ) && $_GET['page'] == DEVELOPER_TOOLS_PAGE_SLUG ) // we only want to do all of this if we are on the developer tools plugin page
     {
       define("DEVELOPER_TOOLS_ACTION_SET", ( isset( $_GET['action'] ) ? TRUE : FALSE ));
@@ -136,7 +140,6 @@ class DeveloperTools {
       
       add_action('admin_init', array(&$this, 'AdminUiPageInit'));
     }
-
   }
   
   public function AdminUiPageInit()
@@ -147,21 +150,21 @@ class DeveloperTools {
     $this->_formNonce['Export'] = wp_nonce_url( DEVELOPER_TOOLS_PAGE_URL . '&action=export', 'developer-tools-export' );
     $this->_formNonce['Import'] = wp_nonce_url( DEVELOPER_TOOLS_PAGE_URL . '&action=import', 'developer-tools-import' );
     
+		/* Plugin js and css */
     wp_register_script( 'developer_tools-fancybox', DEVELOPER_TOOLS_URL.'libs/fancybox/jquery.fancybox-1.3.4.pack.js', array('jquery'), '1.3.4');
     wp_register_script( 'developer_tools-swfobject_fileprogress', DEVELOPER_TOOLS_URL.'libs/swfupload/js/fileprogress.js', array('swfupload', 'swfupload-queue'));
     wp_register_script( 'developer_tools-swfobject_handlers', DEVELOPER_TOOLS_URL.'libs/swfupload/js/handlers.js', array('swfupload', 'swfupload-queue'));
     wp_register_script( 'developer_tools-jquery_alphanumeric', DEVELOPER_TOOLS_URL.'js/jquery.alphanumeric.pack.js', array('jquery'));
     wp_register_script( 'developer_tools-jquery_scrollto', DEVELOPER_TOOLS_URL.'js/jquery.scrollTo-min.js', array('jquery'));
-    wp_register_script( 'developer_tools', DEVELOPER_TOOLS_URL.'js/developer-tools.js', array('developer_tools-fancybox', 'developer_tools-swfobject_fileprogress', 'developer_tools-swfobject_handlers', 'developer_tools-jquery_alphanumeric', 'developer_tools-jquery_scrollto'));    
+    wp_register_script( 'developer_tools-plugin', DEVELOPER_TOOLS_URL.'js/developer-tools-plugin.js', array('developer_tools-fancybox', 'developer_tools-swfobject_fileprogress', 'developer_tools-swfobject_handlers', 'developer_tools-jquery_alphanumeric', 'developer_tools-jquery_scrollto'));
     
     wp_register_style( 'developer_tools-fancybox', DEVELOPER_TOOLS_URL.'libs/fancybox/jquery.fancybox-1.3.4.css' );
-    wp_register_style( 'developer_tools', DEVELOPER_TOOLS_URL.'css/developer-tools.css', array('developer_tools-fancybox') );
-    
+    wp_register_style( 'developer_tools-plugin', DEVELOPER_TOOLS_URL.'css/developer-tools-plugin.css', array('developer_tools-fancybox') );
   }
   
   public function AdminUiPageSetup()
   { 
-    $developerToolsPage = add_menu_page('Developer Tools', 'Developer&nbsp;Tools', 10, DEVELOPER_TOOLS_PAGE_SLUG, array(&$this, 'AdminUiPageContent'));
+    $developerToolsPage = add_menu_page('Developer Tools', 'Developer&nbsp;Tools', 'activate_plugins', DEVELOPER_TOOLS_PAGE_SLUG, array(&$this, 'AdminUiPageContent'));
     add_action('admin_head-'.$developerToolsPage, array(&$this, 'AdminUiPageHeader'));
     add_action('admin_print_scripts-'.$developerToolsPage, array(&$this, 'AdminUiPageJsLibs'));
     add_action('admin_print_styles-'.$developerToolsPage, array(&$this, 'AdminUiPageCss'));
@@ -179,11 +182,9 @@ class DeveloperTools {
     $this->_LoadView('admin-ui-page-header', $viewData );
   }
   
-  public function AdminUiPageCss(){ wp_enqueue_style('developer_tools'); }
+  public function AdminUiPageCss(){ wp_enqueue_style('developer_tools-plugin'); }
   
-  public function AdminUiPageJsLibs(){ wp_enqueue_script('developer_tools'); }
-
-  // public function AdminHeaderScripts(){ wp_enqueue_script('developer_tools_menu_item'); }
+  public function AdminUiPageJsLibs(){ wp_enqueue_script('developer_tools-plugin'); }
   
   public function AdminUiPageContent()
   {
@@ -207,12 +208,7 @@ class DeveloperTools {
     
     $activeFeatureGroup = ( $_COOKIE['developer_tools_current_menu_item'] ? $_COOKIE['developer_tools_current_menu_item'] : 'home' );
     $featureGroups = new FeaturesGroupModel();
-    $viewData = array( 
-        'tabs' => $featureGroups->groupGroups,
-        'active' => $activeFeatureGroup
-    );     
-    
-    $this->_LoadView('admin-ui-page-content-header', $viewData );    
+    $this->_LoadView('admin-ui-page-content-header');    
     
     foreach( $featureGroups->groups as $groupTitle => $featuresGroup )
     {
@@ -223,11 +219,9 @@ class DeveloperTools {
       
       $viewData = array( 
         'group_title' => $groupTitle, 
-        'group_classes' => ( $featuresGroup['closed'] ? ' closed' : ''), 
-        'group' => $featuresGroup['group'],
-        'active' => $activeFeatureGroup,
         'action' => ( $featuresGroup['form'] ? $this->_formNonce[$featuresGroup['form']['action']] : false ),
-        'begin_form' => ( $featuresGroup['form'] ? $featuresGroup['form']['begin'] : false )
+        'begin_form' => ( $featuresGroup['form'] ? $featuresGroup['form']['begin'] : false ),
+        'closed' => ( $featuresGroup['closed'] ? ' closed' : '' )
       );
       $this->_LoadView('admin-ui-page-content-group-header', $viewData);
       
@@ -300,9 +294,6 @@ class DeveloperTools {
     $featureEnabled = false;
     if( $this->_data[$className] )
       $featureEnabled = true;
-      
-    if( $featureEnabled && !$feature->pluginSetting )
-      $this->_showEnabledFeatures .= '<div class="feature_title show_feature"><a href="#'.$className.'-anchor" class="'.$className.'">'.strip_tags( $feature->title ).'</a></div>'."\n";
     
     $viewData['enabled'] = ( $featureEnabled ? ' enabled' : '' );
     
@@ -313,16 +304,16 @@ class DeveloperTools {
     else
       $viewData['title'] = '<span class="untitled">Untitled Feature:</span> '.$className;
 
-    $isHidden = ( $this->_hiddenFeatures ? in_array( $className, $this->_hiddenFeatures ) : false);
+    $showFeature = ( $this->_pluginSettings['show'] ? in_array( $className, $this->_pluginSettings['show'] ) : false);
     
-    $viewData['checked'] = ( $isHidden ? 'checked="checked"' : '');
+    $viewData['checked'] = ( $showFeature ? 'checked="checked"' : '' );
     
     if( $feature->information )
       $viewData['information'] = $feature->information;    
     
     $this->_LoadView('admin-ui-page-content-group-feature-title', $viewData);
 
-    $viewData['hide'] = ( $isHidden ? ' hidden' : '');
+    $viewData['hide'] = ( $showFeature ? '' : ' hidden');
       
     if( $feature->description )
       $viewData['description'] = $feature->description;
@@ -436,12 +427,14 @@ class DeveloperTools {
         if( $fieldSettings['name'] )
           $value = $value[$fieldSettings['name']];
 // TODO: field['name'] is required, verifiy that it is set here
-    
+					
+    		$fieldSettings['featureItemEnabled'] = $this->_data && ( $duplicateCounter ? array_key_exists($className, $this->_data) && array_key_exists($className.'-'.$i, $this->_data[$className]) : array_key_exists($className, $this->_data) );
+				
         if( $fieldSettings['advanced'] )
         {
           $this->_advancedFields = true;
           $this->_advancedFieldsCounter++;
-          if( !strlen($value) )
+          if( !$value ) // TODO: This valid?
           {
             $fieldSettings['advanced'] = 'hidden';
           }
@@ -451,8 +444,9 @@ class DeveloperTools {
             $fieldSettings['advanced'] = 'open';
           }
         }
-    
-        if( $fieldSettings['required'] && strlen($value) )
+				
+// TODO: This valid?
+        if( $value )
           $this->_valueNotSet = true;
           
         if( $fieldSettings['fieldDataMethod'] )
@@ -475,40 +469,7 @@ class DeveloperTools {
 
         $field = new $fieldSettings['fieldType']($className, $duplicateCounter, $value, $fieldSettings);
         
-        $this->_PrintField($field->output);   
-  }
-  
-  private function _PrintField($output){ print $output; }
-  
-  private function _KrumoSetValues(){ krumo( $this->_StripSlashesDeep( $this->_data ) ); }
-  
-  private function _StripSlashesDeep( $value ){ return is_array($value) ? array_map('stripslashes_deep', $value) : stripslashes($value); }
-  
-  private function _ServerConfiguration()
-  {
-    function mysql_version(){
-       $output = shell_exec('mysql -V');
-       preg_match('@[0-9]+\.[0-9]+\.[0-9]+@', $output, $version);
-       return $version[0];
-    }
-    
-    $current_php_version = phpversion();
-    $current_mysql_version = mysql_version();
-    $current_wp_version = $GLOBALS['wp_version'];
-    
-    $viewData = array( 
-      'php' => $current_php_version, 
-      'mysql' => $current_mysql_version, 
-      'wordpress' => $current_wp_version
-    );
-    
-    if( !get_option('developer-tools-server-configuration') )
-      add_option( 'developer-tools-server-configuration', $viewData );
-      
-    $viewData['original'] = get_option('developer-tools-server-configuration');
-    
-    $this->_LoadView('admin-ui-page-content-group-server', $viewData);
-    
+        print $field->output;   
   }
   
   private function _LoadView($fileName = false, $view = false)
@@ -532,11 +493,12 @@ class DeveloperTools {
       {
         case 'save' :
           if( !wp_verify_nonce( $wpnonce, 'developer-tools-save' ) ) die( __( 'Developer Tools security failure: Error code: 2', 'developer-tools' ) ); 
-          if( $_POST['hidden'] ||  $_POST['dt'] )
+          if( $_POST['show'] ||  $_POST['dt'] )
           {
-            if ( $_POST['hidden'] )
-              $this->_setSavedValues['hidden'] = $_POST['hidden'];
-                          
+          	$this->_setSavedValues['version'] = DEVELOPER_TOOLS_VERSION;
+            if ( $_POST['show'] )
+              $this->_setSavedValues['show'] = $_POST['show'];
+             
             $this->_CheckSavedValues();
             
             if( $this->_setSavedValues && update_option( 'developer-tools-values', maybe_unserialize($this->_setSavedValues) ) )
@@ -552,24 +514,16 @@ class DeveloperTools {
           $this->_messages[] = __( 'Options reset.', 'developer-tools' );
         break;
         case 'export' :
-          if( !wp_verify_nonce( $wpnonce, 'developer-tools-export' ) ) die( __( 'Developer Tools security failure: Error code: 4', 'developer-tools' ) );
-          add_action('admin_head', array(&$this, 'AdminHeadBuffer') );   
-          add_action('admin_footer', array(&$this, 'AdminFooterBuffer') );           
-          $this->_Export();
+          if( !wp_verify_nonce( $wpnonce, 'developer-tools-export' ) ) die( __( 'Developer Tools security failure: Error code: 4', 'developer-tools' ) );          
+          new ExportSettings( $this->_pluginSettings );
         break;
         case 'import' :
           if( !wp_verify_nonce( $wpnonce, 'developer-tools-import' ) ) die( __( 'Developer Tools security failure: Error code: 5', 'developer-tools' ) );
-          if ( !is_uploaded_file( $_FILES['developer_tools_imported_file']['tmp_name'] ) )
-          {
-            $this->_errors[] = __( 'What are you trying to do?  I do not like the way you are trying to upload this file.', 'developer-tools' );
-            return;
-          }
-          ob_start();
-          readfile( $_FILES['developer_tools_imported_file']['tmp_name'] );
-          $importedFile = ob_get_contents();
-          ob_end_clean();
-          $this->_importedFile = maybe_unserialize( $importedFile );
-          $this->_Import();
+					$importSettings = new ImportSettings();
+					if( $importSettings->errors )
+						$this->_errors[] = $importSettings->errors;
+					if( $importSettings->messages )
+						$this->_messages[] = $importSettings->messages;
         break;
       }
     }
@@ -602,64 +556,23 @@ class DeveloperTools {
   
   private function _CheckSavedValues()
   {
-    // TODO: Still saves null values
-    function CheckNull( $value )
+// TODO: Still saves null values
+    function _CheckNull( $value )
     {
       if( is_array( $value ) )
-        return array_filter( $value, 'CheckNull');
+        return array_filter( $value, '_CheckNull');
       else
         return( strlen($value) );
     }
-    $this->_setSavedValues['dt'] = array_filter( $_POST['dt'], 'CheckNull');
+    $this->_setSavedValues['dt'] = array_filter( $_POST['dt'], '_CheckNull');
   }
-  
-  private function _Export()
-  {
-    $filename = "developer_tools_export_".get_userdata( CURRENT_UID )->user_nicename.'_'.date('Y.m.d-g.ia');
-    $exportData['developer_tools_import_file'] = true;
-    $exportData['dt'] = $this->_data;
-    $exportData['hidden'] = $this->_hiddenFeatures;
-    $exportData['server'] = get_option('developer-tools-server-configuration');
-    header("Accept-Ranges: none");
-    header("Content-Disposition: attachment; filename=$filename");
-    header('Content-Type: application/octet-stream');
-    echo maybe_serialize( $exportData );
-    exit();
+
+  private function _DebugSettings(){
+  	$krumo_data = array();
+		$krumo_data['plugin_settings'] = is_array($this->_pluginSettings) ? array_map('stripslashes_deep', $this->_pluginSettings) : stripslashes($this->_pluginSettings);
+		global $developer_tools;
+		$krumo_data['developer_tools_global'] = $developer_tools;
+		krumo( $krumo_data );
   }
-  
-  private function _Import()
-  {
-    $data = $this->_importedFile;
-    if( !$data['developer_tools_import_file'] )
-    {
-      $this->_errors[] = __( 'Invalid import file.', 'developer-tools' );
-      return;
-    }
-    if( $date['server'] )
-      update_option( 'developer-tools-server-configuration', $date['server'] );
-      
-    $importedValues = false;
-    if( $data['dt'] )
-      $importedValues['dt'] = $data['dt'];
-    if( $data['hidden'] )
-      $importedValues['hidden'] = $data['hidden'];
-    if( $importedValues && update_option( 'developer-tools-values', $importedValues ) )
-      $this->_messages[] = __( 'Options imported.', 'developer-tools' );
-      
-  }
-  
-  public function AddEnctype( $buffer )
-  {
-    return $buffer;
-  }
-  
-  public function AdminHeadBuffer()
-  {   
-    ob_start( array( &$this, 'AddEnctype' ) );   
-  } 
-  
-  public function AdminFooterBuffer()
-  {   
-    ob_end_flush();   
-  }  
+
 }

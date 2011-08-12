@@ -13,7 +13,6 @@ class TextArea extends Field
 	
 	public function SetField()
 	{
-		$this->metaBoxField = true;
 		$this->fieldType = __( 'Textarea', 'developer-tools' );
 		$this->fieldBeginning = '<textarea ';
 		$this->fieldBeforeValue = '>';

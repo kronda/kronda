@@ -20,7 +20,6 @@ class SingleImageUploader extends Uploader
 	
 	public function SetField()
 	{
-		$this->metaBoxField = true;
 		$this->fieldType = __( 'Image uploader', 'developer-tools' );	
 		$this->fieldBeginning = '<a class="upload_new upload-new-image-file button-primary">' . __( 'Upload new', 'developer-tools' ) . '</a>';
 		$this->fieldBeginning .= '<div class="clear"></div><div class="image_legend">' . __( 'Image preview', 'developer-tools' ) . '</div><div class="clear"></div>';

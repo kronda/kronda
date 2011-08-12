@@ -3,7 +3,7 @@ class EnableCufon extends Feature
 {
 	public function SetSettings()
 	{
-		$this->title				  = __( 'Enable', 'developer-tools' ) . ' <a href="http://cufon.shoqolate.com/generate/" target="_blank">Cuf&oacute;n</a>';
+		$this->title				  = '<a href="http://cufon.shoqolate.com/generate/" target="_blank">Cuf&oacute;n</a>';
 		$this->multiple				= true;
     $this->information    = 'Cuf&oacute;n ' . __( 'allows you to use custom fonts on the web. This will automatically load jQuery.', 'developer-tools' ) . ' <a href="https://github.com/sorccu/cufon/wiki/API" target="_blank">' . __( 'API details', 'developer-tools' ) . '</a>. v1.09i';
 		$this->uploads				= array(
@@ -39,20 +39,15 @@ class EnableCufon extends Feature
 	{
 		$this->value = $value;
 		if( !IS_WP_ADMIN )
-		  add_action('init', array(&$this, 'Init'));
-    add_action('wp_print_scripts', array(&$this, 'PrintScripts'));  		
+		  add_action('init', array(&$this, 'Init'));	
 		add_action('wp_head', array(&$this,'HeadInclude'));	
 		add_action('wp_footer', array(&$this,'FooterInclude'));
 	}
   
 	public function Init()
 	{
-    wp_register_script('cufon', DEVELOPER_TOOLS_URL.'libs/cufon/cufon-yui.js', array('jquery'), '1.09i');		
-	}
-	
-	public function PrintScripts()
-	{
-    wp_enqueue_script('cufon');
+    wp_register_script('cufon', DEVELOPER_TOOLS_URL.'libs/cufon/cufon-yui.js', array('jquery'), '1.09i');
+		wp_enqueue_script('cufon');	
 	}
 	
 	public function HeadInclude()

@@ -3,8 +3,8 @@ class LoadWpCoreJavascriptLibraries extends Feature
 {               
   public function SetSettings()
   {
-    $this->title              = __( 'Load JavaScript libraries', 'developer-tools' );
-    $this->description        = __( 'These are only loaded on the front-end.', 'developer-tools' );
+    $this->title              = __( 'Load WordPress core JavaScript libraries', 'developer-tools' );
+    $this->description        = __( 'These are only loaded on the front-end for whichever theme is enabled.', 'developer-tools' );
     $this->information        =  __( 'Full details about all these scripts can be found' , 'developer-tools' ) . ' <a href="http://codex.wordpress.org/Function_Reference/wp_enqueue_script" target="_blank">' . __('here' , 'developer-tools' ) . '</a>.';
     $this->featureDataMethod  = true;
     $this->fields       = array(
@@ -46,8 +46,8 @@ class LoadWpCoreJavascriptLibraries extends Feature
   public function fieldDataMethod1()
   {
     $this->data = 
-      'jquery'."|".'jQuery 1.4.2'."\n".
-      'jquery-ui-core'."|".'jQuery UI Core 1.8.1'."\n".
+      'jquery'."|".'jQuery'."\n".
+      'jquery-ui-core'."|".'jQuery UI Core'."\n".
       'jquery-ui-sortable'."|".'jQuery UI Sortable'."\n".
       'jquery-ui-draggable'."|".'jQuery UI Draggable'."\n".
       'jquery-ui-droppable'."|".'jQuery UI Droppable'."\n".

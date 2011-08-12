@@ -14,7 +14,6 @@ class TextInput extends Field
 	public function SetField()
 	{
 		$this->fieldType = __( 'Text input', 'developer-tools' );
-		$this->metaBoxField = true;
 		$this->fieldBeginning = '<input type="text" ';
 		$this->fieldBeforeValue = 'value="';
 		$this->fieldAfterValue = '"';

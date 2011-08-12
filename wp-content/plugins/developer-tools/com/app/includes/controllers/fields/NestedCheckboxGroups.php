@@ -1,7 +1,6 @@
 <?php
 class NestedCheckboxGroups
 {
-	public $output; 
 	public function __construct($featureName = false, $duplicateCounter = false, $value = false, $fieldSettings = false)
 	{
 		foreach( $fieldSettings['data'] as $page => $values )

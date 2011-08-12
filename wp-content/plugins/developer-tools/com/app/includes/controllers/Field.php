@@ -4,7 +4,6 @@ class Field
 	public $output;
 	protected $field;
 	protected $fieldType;
-	protected $metaBoxField;
 	protected $singleField;
 	protected $fieldBeginning;
 	protected $fieldBeforeValue;
@@ -14,6 +13,22 @@ class Field
 	
 	protected function SetFieldSettings($featureName,$duplicateCounter,$value,$fieldSettings)
 	{
+	  // begin field id
+    $fieldId = $featureName;
+    
+    if( $duplicateCounter )
+      $fieldId .= '-'.$duplicateCounter;
+
+    if( $fieldSettings['name'] && $fieldSettings['name'] != '' /* added for multicheckbox */ )
+      $fieldId .= '-'.$fieldSettings['name'];
+      
+    if( $fieldSettings['checkboxID'] )
+      $fieldId .= '-'.$fieldSettings['checkboxID'];       
+
+    $fieldId .= '-field';	  
+	  // end field id
+	  
+    // begin the field html
 		$this->field = '<';
 		
 		if( $this->singleField )
@@ -48,28 +63,7 @@ class Field
 			$this->field .= '<label';
 			
 			// begin for attribute
-			$this->field .= ' for="'.$featureName;
-			$fieldId = $featureName;
-			if( $duplicateCounter )
-			{
-				$this->field .= '-'.$duplicateCounter;
-				$fieldId .= '-'.$duplicateCounter;
-			}
-			if( $fieldSettings['name'] && $fieldSettings['name'] != '' /* added for multicheckbox */ )
-			{
-				$this->field .= '-'.$fieldSettings['name'];
-				$fieldId .= '-'.$fieldSettings['name'];
-			}
-			if( $fieldSettings['checkboxID'] )
-			{
-				$this->field .= '-'.$fieldSettings['checkboxID'];
-				$fieldId .= '-'.$fieldSettings['checkboxID'];				
-			}
-			$this->field .= '-field"';
-			$fieldId .= '-field';
-			// end for attribute
-			
-			$this->field .= '>';
+			$this->field .= ' for="'.$fieldId.'">';
 			if( $fieldSettings['advanced'] )
 				$this->field .= '<span class="advanced_label">' . __('Advanced', 'developer-tools' ) . '</span> ';
 			$this->field .= $fieldSettings['label'];
@@ -80,7 +74,7 @@ class Field
     if( $fieldSettings['required'] )
     {
       $this->field .= '<a class="required_icon';
-      if( ( $fieldSettings['fieldType'] != 'SelectListUploader' && strlen($value) ) || ( $fieldSettings['fieldType'] == 'SelectListUploader' && $fieldSettings['selectListSet'] ) || !strlen($value) )
+      if( ( $fieldSettings['fieldType'] != 'SelectListUploader' && strlen($value) ) || ( $fieldSettings['fieldType'] == 'SelectListUploader' && $fieldSettings['selectListSet'] ) || !$fieldSettings['featureItemEnabled'] )
         $this->field .= ' hidden';
       $this->field .= '" title="' . __( 'This is a required field', 'developer-tools') . '">!</a>';
     }		
@@ -104,36 +98,37 @@ class Field
 		$this->field .= '" ';
 		// end field name
 		
-		// begin field css class
-		if( $fieldSettings['required'] || $fieldSettings['characterSet'] || $fieldSettings['uploaderClass'] ){ // add css classes
-			$this->field .= 'class="'.$fieldSettings['fieldType'];
+		// begin field's css classes
+	  $this->field .= 'class="'.$fieldSettings['fieldType'];
 
-      if( $fieldSettings['cssClass'] && is_string( $fieldSettings['cssClass'] ) )
-        $this->field .= ' '.str_replace( '.', null, $fieldSettings['cssClass'] );
-        
-      if( $fieldSettings['cssClass'] && is_array( $fieldSettings['cssClass'] ) )
-        foreach( $fieldSettings['cssClass'] as $cssClass ) 
-          if( is_string( $cssClass ) ) 
-            $this->field .= ' '.str_replace( '.', null, $cssClass );
+    if( $fieldSettings['cssClass'] && is_string( $fieldSettings['cssClass'] ) )
+      $this->field .= ' '.str_replace( '.', null, $fieldSettings['cssClass'] );
+      
+    if( $fieldSettings['cssClass'] && is_array( $fieldSettings['cssClass'] ) )
+      foreach( $fieldSettings['cssClass'] as $cssClass ) 
+        if( is_string( $cssClass ) ) 
+          $this->field .= ' '.str_replace( '.', null, $cssClass );
 
-			if( $fieldSettings['required'] )
-				$this->field .= ' required_field';
-			
-			if( $fieldSettings['characterSet'] )
-				$this->field .= ' '.$fieldSettings['characterSet'];
+		if( $fieldSettings['required'] )
+			$this->field .= ' required_field';
+		
+		if( $fieldSettings['characterSet'] )
+			$this->field .= ' '.$fieldSettings['characterSet'];
 
-			if( $fieldSettings['unmodifiableAfterSave'] )
-				$this->field .= ' unmodifiableAfterSaveValue';
+		if( $fieldSettings['unmodifiableAfterSave'] )
+			$this->field .= ' unmodifiableAfterSaveValue';
 
-			if( $fieldSettings['codeReplaceClass'] )	
-				$this->field .= ' '.$fieldSettings['codeReplaceClass'].' replace-text';
-			
-			if( $fieldSettings['uploaderClass'] )
-				$this->field .= ' '.$fieldSettings['uploaderClass'];
-			
-			$this->field .= '" ';
-		}
-		// end field css class	
+		if( $fieldSettings['codeReplaceClass'] )	
+			$this->field .= ' '.$fieldSettings['codeReplaceClass'].' replace-text';
+		
+		if( $fieldSettings['uploaderClass'] )
+			$this->field .= ' '.$fieldSettings['uploaderClass'];
+		
+    if( $fieldSettings['fieldSelector'] )
+      $this->field .= ' field_selector';
+      
+		$this->field .= '" ';
+		// end field's css classes
 		
 		if( $this->fieldChecked )
 			$this->field .= $this->fieldChecked.' ';

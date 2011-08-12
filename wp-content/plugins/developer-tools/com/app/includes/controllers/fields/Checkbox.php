@@ -25,7 +25,6 @@ class Checkbox extends Field
 	
 	public function SetField()
 	{
-		$this->metaBoxField = true;
 		$this->fieldType = __( 'Checkbox', 'developer-tools' );
 		$this->fieldBeginning = '<input type="checkbox" ';
 		$this->fieldBeforeValue = 'value="';

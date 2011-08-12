@@ -1,6 +1,7 @@
 <?php
 class DisableAdminMenuItems extends Feature
-{	
+{
+	//http://codex.wordpress.org/Function_Reference/remove_menu_page for wp 3.1.0 +	
 	public function SetSettings()
 	{
 		$this->title				= __( 'Hide admin menu items', 'developer-tools' );
