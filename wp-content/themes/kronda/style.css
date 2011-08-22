@@ -146,7 +146,7 @@ Version: 1.1
   font-size: 1.125em;
   position: relative;
   top: -49px;
-  left: 47px;
+  left: 4px;
 }
 .home #header #object .label {
 	display: block;
@@ -193,7 +193,7 @@ Version: 1.1
 }
 .home #access .menu ul {
 	position: absolute;
-	top: -69px;
+	top: -75px;
 	left: 0;
 }
 .home #access .menu-header li,
@@ -215,10 +215,17 @@ Version: 1.1
 	background: none;
 	color: #A1C4E0;
 }
+.home #access .menu ul li.current_page_item {
+  height: 66px;
+  background-color: #FFF;
+}
+.home #access .menu ul li.current_page_item a {
+  color: #333;
+}
 .home #access .menu li a:hover {
 	text-decoration: underline;
 }
-/* overiding parent styles */
+/* overriding parent styles */
 .home #access .menu-header,
 div.menu {
 	font-size: .875em;
@@ -305,7 +312,7 @@ div.menu ul {
   left: 0;
 }
 .home .img_holder a:hover img {
-  top: -300px;
+  /*top: -300px;*/
 }
 .home .checkboxes {
   width: 300px;
