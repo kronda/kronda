@@ -1,139 +1,157 @@
 /*
-Theme Name: Twenty Ten
+Theme Name: Twenty Eleven
+Description: Used to style the TinyMCE editor.
 */
-/*
-Used to style the TinyMCE editor.
-*/
+
 html .mceContentBody {
-	max-width:640px;
+	max-width: 584px;
 }
 * {
-	font-family: Georgia, "Bitstream Charter", serif;
-	color: #444;
-	line-height: 1.5;
+	color: inherit;
+	font: 15px "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-style: inherit;
+	font-weight: inherit;
+	line-height: 1.625;
 }
-p,
-dl,
-td,
-th,
-ul,
-ol,
-blockquote {
-	font-size: 16px;
+body {
+	color: #333;
+	font: 15px "Helvetica Neue", Helvetica, Arial, "Nimbus Sans L", sans-serif;
+	font-weight: 300;
+	line-height: 1.625;
 }
-tr th,
-thead th,
-label,
-tr th,
-thead th {
-	font-family: "Helvetica Neue", Arial, Helvetica, "Nimbus Sans L", sans-serif;
+
+/* Headings */
+h1,h2,h3,h4,h5,h6 {
+	clear: both;
 }
-pre {
-	font-family: "Courier 10 Pitch", Courier, monospace;
+h1,
+h2 {
+	color: #000;
+	font-size: 15px;
+	font-weight: bold;
+	margin: 0 0 .8125em;
 }
-code, code var {
-	font-family: Monaco, Consolas, "Andale Mono", "DejaVu Sans Mono", monospace;
+h3 {
+	font-size: 10px;
+	letter-spacing: 0.1em;
+	line-height: 2.6em;
+	text-transform: uppercase;
 }
-body, input, textarea {
-	font-size: 12px;
-	line-height: 18px;
+h4, h5, h6 {
+	font-size: 14px;
+	margin: 0;
 }
 hr {
-	background-color: #e7e7e7;
-	border:0;
+	background-color: #ccc;
+	border: 0;
 	height: 1px;
-	margin-bottom: 18px;
-	clear:both;
+	margin-bottom: 1.625em;
 }
+
 /* Text elements */
+p, ul, ol, dl {
+	font-weight: 300;
+}
 p {
-	margin-bottom: 18px;
+	margin-bottom: 1.625em;
+}
+ul, ol {
+	margin: 0 0 1.625em 2.5em;
+	padding: 0;
 }
 ul {
 	list-style: square;
-	margin: 0 0 18px 1.5em;
 }
 ol {
-	list-style: decimal;
-	margin: 0 0 18px 1.5em;
+	list-style-type: decimal;
 }
 ol ol {
-	list-style:upper-alpha;
+	list-style: upper-alpha;
 }
 ol ol ol {
-	list-style:lower-roman;
+	list-style: lower-roman;
 }
 ol ol ol ol {
-	list-style:lower-alpha;
+	list-style: lower-alpha;
 }
-ul ul,
-ol ol,
-ul ol,
-ol ul {
-	margin-bottom:0;
+ul ul, ol ol, ul ol, ol ul {
+	margin-bottom: 0;
 }
 dl {
-	margin:0 0 24px 0;
+	margin: 0 1.625em;
 }
 dt {
+	font-size: 15px;
 	font-weight: bold;
 }
 dd {
-	margin-bottom: 18px;
+	margin: 0 0 1.625em;
 }
 strong {
 	font-weight: bold;
-	color: #000;
 }
-cite,
-em,
-i {
+cite, em, i {
 	font-style: italic;
+}
+cite {
 	border: none;
 }
 big {
 	font-size: 131.25%;
 }
-ins {
-	background: #ffffcc;
-	border: none;
-	color: #333;
+.mceContentBody blockquote,
+.mceContentBody blockquote p {
+	font-family: Georgia, "Bitstream Charter", serif !important;
+	font-style: italic !important;
+	font-weight: normal;
+	margin: 0 3em;
 }
-del {
-	text-decoration: line-through;
-	color: #555;
-}
-blockquote {
-	font-style: italic;
-	padding: 0 3em;
-}
-blockquote cite,
-blockquote em,
-blockquote i {
+.mceContentBody blockquote em,
+.mceContentBody blockquote i,
+.mceContentBody blockquote cite {
 	font-style: normal;
 }
-pre {
-	background: #f7f7f7;
-	color: #222;
-	line-height: 18px;
-	margin-bottom: 18px;
-	padding: 1.5em;
+.mceContentBody blockquote cite {
+	color: #666;
+	font: 12px "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-weight: 300;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
 }
-abbr,
-acronym {
+pre {
+	background: #f4f4f4;
+	font: 13px "Courier 10 Pitch", Courier, monospace;
+	line-height: 1.5;
+	margin-bottom: 1.625em;
+	padding: 0.75em 1.625em;
+}
+code, kbd, code var {
+	font: 13px Monaco, Consolas, "Andale Mono", "DejaVu Sans Mono", monospace;
+}
+abbr, acronym, dfn {
 	border-bottom: 1px dotted #666;
 	cursor: help;
 }
+address {
+	display: block;
+	margin: 0 0 1.625em;
+}
+del {
+	color: #333;
+}
 ins {
+	background: #fff9c0;
+	border: none;
+	color: #333;
 	text-decoration: none;
 }
 sup,
 sub {
+	font-size: 10px;
 	height: 0;
 	line-height: 1;
-	vertical-align: baseline;
 	position: relative;
-	font-size: 10px;
+	vertical-align: baseline;
 }
 sup {
 	bottom: 1ex;
@@ -141,149 +159,153 @@ sup {
 sub {
 	top: .5ex;
 }
-a:link {
-	color:#0066cc;
+input[type=text],
+textarea {
+	background: #fafafa;
+	-moz-box-shadow: inset 0 1px 1px rgba(0,0,0,0.1);
+	-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.1);
+	box-shadow: inset 0 1px 1px rgba(0,0,0,0.1);
+	border: 1px solid #ddd;
+	color: #888;
 }
-a:visited {
-	color:#743399;
+input[type=text]:focus,
+textarea:focus {
+	color: #333;
 }
+textarea {
+	padding-left: 3px;
+	width: 98%;
+}
+input[type=text] {
+	padding: 3px;
+}
+
+/* Links */
+a,
+a em,
+a strong {
+	color: #1b8be0;
+	text-decoration: none;
+}
+a:focus,
 a:active,
 a:hover {
-	color: #ff4b33;
-}
-p,
-ul,
-ol,
-dd,
-pre,
-hr {
-	margin-bottom:24px;
-}
-ul ul,
-ol ol,
-ul ol,
-ol ul {
-	margin-bottom:0;
-}
-pre,
-kbd,
-tt,
-var {
-	font-size: 15px;
-	line-height: 21px;
-}
-code {
-	font-size: 13px;
-}
-strong,
-b,
-dt,
-th {
-	color: #000;
-}
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-	color: #000;
-	margin: 0 0 20px 0;
-	line-height: 1.5em;
-	font-weight: normal;
-}
-h1 {
-	font-size: 2.4em;
-}
-h2 {
-	font-size: 1.8em;
-}
-h3 {
-	font-size: 1.4em;
-}
-h4 {
-	font-size: 1.2em;
-}
-h5 {
-	font-size: 1em;
-}
-h6 {
-	font-size: 0.9em;
-}
-table {
-	border: 1px solid #e7e7e7 !important;
-	text-align: left;
-	margin: 0 -1px 24px 0;
-	width: 100%;
-	border-collapse: collapse;
-	border-spacing: 0;
-}
-tr th,
-thead th {
-	border: none !important;
-	color: #888;
-	font-size: 12px;
-	font-weight: bold;
-	line-height: 18px;
-	padding: 9px 24px;
-}
-tr td {
-	border: none !important;
-	border-top: 1px solid #e7e7e7 !important;
-	padding: 6px 24px;
+	text-decoration: underline;
 }
 
-
-img {
-	margin: 0;
-	max-width: 640px;
-}
-.alignleft,
-img.alignleft {
+/* Alignment */
+.alignleft {
 	display: inline;
 	float: left;
-	margin-right: 24px;
-	margin-top: 4px;
+	margin-right: 1.625em;
 }
-.alignright,
-img.alignright {
+.alignright {
 	display: inline;
 	float: right;
-	margin-left: 24px;
-	margin-top: 4px;
+	margin-left: 1.625em;
 }
-.aligncenter,
-img.aligncenter {
+.aligncenter {
 	clear: both;
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
 }
+
+/* Tables */
+table {
+	border: none !important;
+	border-bottom: 1px solid #ddd !important;
+	border-collapse: collapse;
+	border-spacing: 0;
+	text-align: left;
+	margin: 0 0 1.625em;
+	width: 100%;
+}
+tr th {
+	border: none !important;
+	color: #666;
+	font-size: 10px;
+	font-weight: 500;
+	letter-spacing: 0.1em;
+	line-height: 2.6em;
+	text-transform: uppercase;
+}
+td {
+	border: none !important;
+	border-top: 1px solid #ddd !important;
+	padding: 6px 10px 6px 0;
+}
+
+/* Images */
+img[class*="wp-image-"] {
+	height: auto;
+	max-width: 97.5%;
+}
+img.size-full {
+	width: auto; /* Prevent stretching of full-size images in IE8 */
+}
+img.wp-smiley {
+	border: none;
+	margin-bottom: 0;
+	margin-top: 0;
+	padding: 0;
+}
+p img,
+.wp-caption {
+	margin-top: 0.4em;
+}
+img {
+	border: 1px solid #ddd;
+	padding: 6px;
+}
 img.alignleft,
 img.alignright,
 img.aligncenter {
-	margin-bottom: 12px;
+	margin-bottom: 1.625em;
 }
 .wp-caption {
+	background: #eee;
 	border: none;
-	background: #f1f1f1;
-	color: #888;
-	font-size: 12px;
-	line-height: 18px;
-	text-align: center;
-	margin-bottom: 20px;
-	padding: 4px;
-	-moz-border-radius: 0;
-	-khtml-border-radius: 0;
-	-webkit-border-radius: 0;
-	border-radius: 0;
+	margin-bottom: 1.625em;
+	max-width: 96%;
+	padding: 9px;
 }
 .wp-caption img {
-	margin: 5px;
+	display: block;
+	margin: 5px auto 0 !important;
+	max-width: 98%;
+	border-color: #eee;
 }
-.wp-caption p.wp-caption-text {
-	margin: 0 0 4px;
+.wp-caption .wp-caption-text,
+.wp-caption-dd {
+	color: #666;
+	font-family: Georgia, serif !important;
+	font-size: 12px;
+	margin: 0 0 0.6em 0 !important;
+	padding: 0 0 5px 40px;
+	position: relative;
+	text-align: left;
 }
-.wp-smiley {
-	margin:0;
+.wp-caption .wp-caption-text:before {
+	color: #666;
+	content: '\2014';
+	font-size: 14px;
+	font-style: normal;
+	font-weight: bold;
+	margin-right: 5px;
+	position: absolute;
+	left: 10px;
+	top: 7px;
+}
+a:focus img[class*="wp-image-"],
+a:hover img[class*="wp-image-"],
+a:active img[class*="wp-image-"] {
+	background: #eee;
+	border-color: #bbb;
+}
+.wp-caption a:focus img,
+.wp-caption a:active img,
+.wp-caption a:hover img {
+	background: #fff;
+	border-color: #ddd;
 }

@@ -354,7 +354,7 @@ div.menu ul {
 /*end content*/
 
 /* Structure the footer area */
-.home #footer {
+.home footer {
 	width: 100%;
   height: auto;
   background: #333;
@@ -444,7 +444,7 @@ div.menu ul {
 .home #social .first {
 	border-top: 2px dashed #8895ac;
 }
-.home #social li {
+.home #social li { 
 	border-bottom: 2px dashed #8895ac;
   font-size: 1.2em;
   padding-bottom: .75em;
