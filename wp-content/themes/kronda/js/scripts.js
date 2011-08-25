@@ -34,7 +34,7 @@ jQuery(document).ready(function($) {
 		jQuery('#busymeter').slideUp('fast');
 	});
 
-	jQuery('.home #footer, .home #colophon').css('height', function(){
+	jQuery('.home footer, .home #widgets').css('height', function(){
 		return $('#blogteaser').height() + 10 + 'px';
 	});
 

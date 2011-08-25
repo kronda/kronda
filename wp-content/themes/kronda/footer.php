@@ -13,7 +13,9 @@
 	</div><!-- #main -->
 
 	<footer id="colophon" role="contentinfo">
-
+    <div id="widgets">
+        
+    </div><!--  -->
 			<?php
 				/* A sidebar in the footer? Yep. You can can customize
 				 * your footer with three columns of widgets.
@@ -93,7 +95,7 @@
 
 
 </div><!-- #page -->
-
+</div><!-- wrapper -->
 <?php wp_footer(); ?>
 
 </body>
