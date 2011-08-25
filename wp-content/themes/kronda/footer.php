@@ -15,7 +15,6 @@
 	<footer id="colophon" role="contentinfo">
     <div id="widgets">
         
-    </div><!--  -->
 			<?php
 				/* A sidebar in the footer? Yep. You can can customize
 				 * your footer with three columns of widgets.
@@ -90,7 +89,7 @@
 					<h3>What Is She Talking About?</h3>
 				</div><!-- tweet -->
 			<?php endif ?>
-			
+			</div><!-- widgets -->
 	</footer><!-- #colophon -->
 
 

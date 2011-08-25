@@ -374,22 +374,21 @@ div.menu ul {
 .home #site-generator {
 	display: none;
 }
-.home #widgets,
-.home #colophon {
+.home #widgets {
 	border: none;
 	width: 960px;
 	margin: 0 auto;
 	padding: 0;
 	position: relative;
 	overflow: visible;
+	border: 1px solid red;
 }
 /* ----------Footer widget areas-------- */
 #blogteaser, #tweet {
-	position: absolute;
-	top:0;
+	
 }
 .home .footercolumn {
-	width: 300px;
+	
 }
 .home .footercolumn h4 {
 	font-weight: bold;
@@ -408,7 +407,6 @@ div.menu ul {
 	display: none;
   height: 100%;
   width: 300px;
-  /*float: left;*/
 	margin-left: 14px;
 }
 .home #busymeter #piechart {
@@ -441,9 +439,7 @@ div.menu ul {
 }
 /* ---Social Links------------------------ */
 .home #social {
-  left: 9px;
-	/*float: left;*/
-	/*margin-left: 0;*/
+  
 }
 .home #social ul {
 	padding-left: 10px;
@@ -461,7 +457,7 @@ div.menu ul {
 }
 /* ---Blog posts------------------------ */
 .home #blogteaser {
-  left: 330px;
+  
 }
 .home #blogteaser div {
   padding-left: 10px;
@@ -470,7 +466,7 @@ div.menu ul {
 }
 /* ---Tweets------------------------ */
 .home #tweet {
-	left: 650px;
+	
 }
 .home #tweet a img {
   float: left;

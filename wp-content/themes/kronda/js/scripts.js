@@ -33,10 +33,11 @@ jQuery(document).ready(function($) {
 		jQuery('#social').fadeIn('3000');
 		jQuery('#busymeter').slideUp('fast');
 	});
-
-	jQuery('.home footer, .home #widgets').css('height', function(){
-		return $('#blogteaser').height() + 10 + 'px';
-	});
+	
+	//Adjust the height of the footer depending on blog teaser
+	// jQuery('.home footer, .home #widgets').css('height', function(){
+	// 		return $('#blogteaser').height() + 10 + 'px';
+	// 	});
 
   //alert(jQuery.browser.version);
   if (jQuery.browser.version == 7.0) {
