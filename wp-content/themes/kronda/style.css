@@ -362,26 +362,21 @@ div.menu ul {
 
 /* Structure the footer area */
 .home footer {
-	width: 100%;
-  height: auto;
   background: #333;
   opacity: 0.8;
-  /*position: relative;*/
-  margin-bottom: 0;
-  padding: 50px 0 10px 0;
-	font-size: .95em;
+  font-size: .95em;
 }
 .home #site-generator {
 	display: none;
 }
 .home #widgets {
-	border: none;
-	width: 960px;
-	margin: 0 auto;
-	padding: 0;
-	position: relative;
-	overflow: visible;
-	border: 1px solid red;
+	/*border: none;
+	 width: 960px;
+	 margin: 0 auto;
+	 padding: 0;
+	 position: relative;
+	 overflow: visible;
+	 border: 1px solid red;*/
 }
 /* ----------Footer widget areas-------- */
 #blogteaser, #tweet {

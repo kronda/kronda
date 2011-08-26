@@ -1,8 +1,5 @@
 jQuery(document).ready(function($) {
 
-	//start up lightbox
-    jQuery('.home #slider .img_holder a').lightBox();
-
 	//start up slide show
 	jQuery("#slider").easySlider({
 		auto: false,

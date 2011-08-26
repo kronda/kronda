@@ -35,6 +35,8 @@
 					<?php printf( __('Proudly powered by %s.', 'twentyten'), 'WordPress' ); ?>
 				</a>
 			</div><!-- #site-generator -->
+			
+			
 			<?php if ( is_front_page() ): ?>
 				
 				<div id="busymeter" class="footercolumn">
@@ -64,8 +66,7 @@
 							</li>
 						</ul>
 					</div>
-										<!-- <p id="gradclock">Time to Graduation: <span id="gradtimer">Clock</span></p> -->
-					
+
 				</div><!-- busymeter -->
 				
 				<div id="social" class="footercolumn">
