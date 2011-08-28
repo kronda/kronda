@@ -1,14 +1,10 @@
 jQuery(document).ready(function($) {
-
-	//start up slide show
-	jQuery("#slider").easySlider({
-		auto: false,
-		continuous: true,
-		numeric: true,
-		speed: 400,
-		pause: 4000
+	// start jquery flexislider
+	$('.flexslider').flexslider({
+		animation: "slide",
+		controlsContainer: ".flexcontrols"
 	});
-
+	
 	//get tweets via jquery.tweet.js
 	jQuery("#tweet").tweet({
         username: "ephanypdx",
@@ -31,11 +27,6 @@ jQuery(document).ready(function($) {
 		jQuery('#busymeter').slideUp('fast');
 	});
 	
-	//Adjust the height of the footer depending on blog teaser
-	// jQuery('.home footer, .home #widgets').css('height', function(){
-	// 		return $('#blogteaser').height() + 10 + 'px';
-	// 	});
-
   //alert(jQuery.browser.version);
   if (jQuery.browser.version == 7.0) {
     alert('What are ya trapped at work with some old legacy office computer? Upgrade to IE8 or 9 why don\'tcha?');

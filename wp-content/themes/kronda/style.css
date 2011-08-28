@@ -10,7 +10,15 @@ Template: twentyeleven
 Version: 1.1
 */
 
-/* =Home page overrides
+/* @group Global styles 
+-------------------------------------------------------------- */
+
+#access a { 
+  color: transparent; /* override parent theme */
+}
+/* @end Global styles */
+
+/* @group Home page overrides
 -------------------------------------------------------------- */
 .home {
   font: 1em/1.5em "ff-dagny-web-pro-1", "ff-dagny-web-pro-2", "Trebuchet MS", Verdana, sans-serif;
@@ -85,7 +93,9 @@ Version: 1.1
 .home #searchform {
   display: none;
 }
-/* =Home page header
+/* @end Home page overrides */
+
+/* @group Home page header
 -------------------------------------------------------------- */
 .home header {
   height: 300px;
@@ -182,7 +192,9 @@ Version: 1.1
 	color: #fff;
 	margin: 0;
 }
-/* =Menu
+/* @end Home page header */
+
+/* @group Menu 
 -------------------------------------------------------------- */
 .home #nav-bg {
   height: 50px;
@@ -244,9 +256,9 @@ div.menu ul {
 	list-style: none;
 	margin: -8px 0 0;
 }
+/* @end Menu */
 
-
-/* override main */
+/* @group Home page content */
 .home #main {
 	padding: 0;
 	overflow: visible;
@@ -262,10 +274,10 @@ div.menu ul {
   -moz-box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.6);
   box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.6);
   color: #fbfbfb;
-	-webkit-border-radius-topleft: 15px;
+  -webkit-border-radius-topleft: 15px;
   -moz-border-radius-topleft: 15px;
   border-top-left-radius: 15px;
-	-webkit-border-radius-bottomright: 15px;
+  -webkit-border-radius-bottomright: 15px;
   -moz-border-radius-bottomright: 15px;
   border-bottom-right-radius: 15px;
 }
@@ -318,9 +330,6 @@ div.menu ul {
   top: 0;
   left: 0;
 }
-.home .img_holder a:hover img {
-  /*top: -300px;*/
-}
 .home .checkboxes {
   width: 300px;
   height: 87px;
@@ -341,7 +350,10 @@ div.menu ul {
 .home .checks .row2 span {
   display: block;
 }
- /* Busy meter button*/
+/* @end Home page content */
+
+ /* @group Busy meter button
+ -------------------------------------------------------------- */
 
 .home #showbusy {
   background: none repeat scroll 0 0 #EAAC39;
@@ -358,9 +370,9 @@ div.menu ul {
   border-bottom: 1px dashed #ff0000;
   border-right: 1px dashed #ff0000;
 }
-/*end content*/
+/* @end Busy meter button */
 
-/* Structure the footer area */
+/* @group Footer Home page overrides */
 .home footer {
   background: #333;
   opacity: 0.8;
@@ -369,16 +381,8 @@ div.menu ul {
 .home #site-generator {
 	display: none;
 }
-.home #widgets {
-	/*border: none;
-	 width: 960px;
-	 margin: 0 auto;
-	 padding: 0;
-	 position: relative;
-	 overflow: visible;
-	 border: 1px solid red;*/
-}
-/* ----------Footer widget areas-------- */
+
+/* ---- Footer widget areas --- */
 #blogteaser, #tweet {
 	
 }
@@ -397,7 +401,7 @@ div.menu ul {
 	font-weight: bold;
 	margin-bottom: 17px;
 }
-/* ---Busy Meter--------------- */
+/* --- Busy Meter ---*/
 .home #busymeter {
 	display: none;
   height: 100%;
@@ -424,18 +428,8 @@ div.menu ul {
   margin-top: -3px;
   width: 100px;
 }
-.home #gradclock {
-  display: block;
-  clear: both;
-	padding-top: 20px;
-}
-.home #gradclock span {
-  display: inline;
-}
-/* ---Social Links------------------------ */
-.home #social {
-  
-}
+
+/* Social Links */
 .home #social ul {
 	padding-left: 10px;
   padding-right: 10px;
@@ -450,182 +444,4 @@ div.menu ul {
   padding-top: .75em;
   text-align: center;
 }
-/* ---Blog posts------------------------ */
-.home #blogteaser {
-  
-}
-.home #blogteaser div {
-  padding-left: 10px;
-  padding-right: 10px;
-  margin-bottom: 10px;
-}
-/* ---Tweets------------------------ */
-.home #tweet {
-	
-}
-.home #tweet a img {
-  float: left;
-  margin-right: 5px;
-	padding-top: 5px;
-}
-.home #tweet li {
-  margin-bottom: 20px;
-  padding: 0 7px;
-}
-
-/* =Plugin specific styles
--------------------------------------------------------------- */
-
-/* @group Easy Slider */
-.home #slider {
-  padding-top: 80px;
-}
-
-.home #slider ul,
-.home #slider ul li,
-.home #slider2 ul, 
-.home #slider2 li {
-	margin:0;
-	padding:0;
-	list-style:none;
-}
-
-.home #slider ul,
-.home #slider li {
-	height: 440px;
-	width: 778px;
-	overflow: hidden;
-}
-
-ol#controls{
-	margin:1em 0;
-	padding:0;
-	height:60px;
-	position: absolute;	
-	top: 0;
-	left: 20px;
-	}
-ol#controls li{
-	float:left;
-	list-style:none;
-	height:60px;
-	}
-ol#controls li a{
-	float:left;
-	height:60px;
-	width: 60px;
-	margin: 0 20px 0 0;
-	opacity: 1;
-	}
-ol#controls li.current a{
-	opacity: 0.6;
-	}
-ol#controls li a:focus, #prevBtn a:focus, #nextBtn a:focus{outline:none;}
-
-/*  @end Easy Slider */
-
-/* Lightbox styles @example Visit http://leandrovieira.com/projects/jquery/lightbox/  ---------------------------------------------- */
-#jquery-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 90;
-  width: 100%;
-  height: 500px;
-}
-#jquery-lightbox {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 100;
-  text-align: center;
-  line-height: 0;
-}
-#jquery-lightbox a img {
-  border: none;
-}
-#lightbox-container-image-box {
-  position: relative;
-  background-color: #444;
-  width: 250px;
-  height: 250px;
-  margin: 0 auto;
-}
-#lightbox-container-image {
-  padding: 10px;
-}
-#lightbox-loading {
-  position: absolute;
-  top: 40%;
-  left: 0%;
-  height: 25%;
-  width: 100%;
-  text-align: center;
-  line-height: 0;
-}
-#lightbox-nav {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  z-index: 10;
-}
-#lightbox-container-image-box > #lightbox-nav {
-  left: 0;
-}
-#lightbox-nav a {
-  outline: none;
-}
-#lightbox-nav-btnPrev, #lightbox-nav-btnNext {
-  width: 49%;
-  height: 100%;
-  zoom: 1;
-  display: block;
-}
-#lightbox-nav-btnPrev {
-  left: 0;
-  float: left;
-}
-#lightbox-nav-btnNext {
-  right: 0;
-  float: right;
-}
-#lightbox-container-image-data-box {
-  font: 10px Verdana, Helvetica, sans-serif;
-  background-color: #444;
-  margin: 0 auto;
-  line-height: 1.4em;
-  overflow: auto;
-  width: 100%;
-  padding: 0 10px 0;
-}
-#lightbox-container-image-data {
-  padding: 0 10px;
-  color: #fbfbfb;
-}
-#lightbox-container-image-data #lightbox-image-details {
-  width: 70%;
-  float: left;
-  text-align: left;
-}
-#lightbox-image-details-caption {
-  font-weight: bold;
-}
-#lightbox-image-details-currentNumber {
-  display: block;
-  clear: left;
-  padding-bottom: 1.0em;
-}
-#lightbox-secNav-btnClose {
-  width: 66px;
-  float: right;
-  padding-bottom: 0.7em;
-}
-
-/* @group Global styles */
-
-#access a { 
-  color: transparent; /* override parent theme */
-}
+/* @end Footer homepage overrides */
