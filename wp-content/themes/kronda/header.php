@@ -71,7 +71,7 @@
 <body <?php body_class(); ?>>
 <div id="wrapper"> <!-- Sad panda had to wrap the page to not break rest of wp site -->
 
-<div id="page" class="hfeed floatcontainer">
+<div id="page" class="hfeed">
 	<header id="branding" role="banner">
 	  <div id="nav-bg"></div> <!-- this is to stretch the nav bar full width -->
 			<div id="masthead">

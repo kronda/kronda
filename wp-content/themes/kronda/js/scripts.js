@@ -2,9 +2,35 @@ jQuery(document).ready(function($) {
 	// start jquery flexislider
 	$('.flexslider').flexslider({
 		animation: "slide",
-		controlsContainer: ".flexcontrols"
+		controlsContainer: ".flexcontrols",
+		slideshow: false,                //Should the slider animate automatically by default? (true/false)
+    slideshowSpeed: 4000,           //Set the speed of the slideshow cycling, in milliseconds
+    animationDuration: 500,         //Set the speed of animations, in milliseconds
+    directionNav: false,             //Create navigation for previous/next navigation? (true/false)
+    controlNav: true,               //Create navigation for paging control of each slide? (true/false)
+    keyboardNav: true,              //Allow for keyboard navigation using left/right keys (true/false)
+    touchSwipe: true,               //Touch swipe gestures for left/right slide navigation (true/false)
+    //prevText: "Previous",           //Set the text for the "previous" directionNav item
+    //nextText: "Next",               //Set the text for the "next" directionNav item
+    randomize: false,               //Randomize slide order on page load? (true/false)
+    slideToStart: 0,                //The slide that the slider should start on. Array notation (0 = first slide)
+    pauseOnAction: true,            //Pause the slideshow when interacting with control elements, highly recommended. (true/false)
+    pauseOnHover: true,            //Pause the slideshow when hovering over slider, then resume when no longer hovering (true/false)
 	});
 	
+	
+	function addThumbnails () {
+		var element = $('.flex-control-nav li a');
+		var baseurl = window.location.href;
+	
+		element.each(function(i, j){		
+			$(this).css('background', 'url(' + baseurl + 'wp-content/themes/kronda/images/thumb' + (i+1) + '.jpg )');
+			j++;
+		});
+		
+	}
+	
+	addThumbnails();
 	//get tweets via jquery.tweet.js
 	jQuery("#tweet").tweet({
         username: "ephanypdx",

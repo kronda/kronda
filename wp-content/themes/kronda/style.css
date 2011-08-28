@@ -16,6 +16,14 @@ Version: 1.1
 #access a { 
   color: transparent; /* override parent theme */
 }
+.floatcontainer {
+  content: "."; 
+  display: block; 
+  height: 0; 
+  font-size:0; 
+  clear: both; 
+  visibility:hidden; 
+}
 /* @end Global styles */
 
 /* @group Home page overrides
@@ -319,11 +327,12 @@ div.menu ul {
 }
 .home .img_holder {
   height: 300px;
-  width: 300px;
+  max-width: 300px;
   overflow: hidden;
   position: relative;
   top: 20px;
   left: 20px;
+  padding-top: 10px;
 }
 .home .img_holder img {
   position: absolute;
