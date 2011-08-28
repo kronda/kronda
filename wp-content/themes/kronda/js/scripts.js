@@ -46,7 +46,11 @@ jQuery(document).ready(function($) {
 		});
 	}
 	
-	
+	$('.flex-control-nav').easyListSplitter({ 
+			colNumber: 2,
+			direction: 'horizontal'
+	});
+
 	//get tweets via jquery.tweet.js
 	jQuery("#tweet").tweet({
         username: "ephanypdx",
