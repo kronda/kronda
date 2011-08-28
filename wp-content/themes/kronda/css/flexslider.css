@@ -10,7 +10,7 @@
 /* FlexSlider Necessary Styles
 *********************************/
 .flexslider {
-  width: 100%;
+  width: 70%;
   margin: 0;
   padding: 0;
 }
@@ -34,6 +34,8 @@
   padding: 0;
   list-style: none;
 }
+/* @end Browser Resets */
+
 .flexcontrols {
   width: 100%;
   padding-top: 20px;
@@ -45,7 +47,7 @@
   height: 60px;
 }
 .flex-control-nav > li {
-  margin-left: 20px;
+  margin-left: 3%;
 }
 .flex-control-nav li a {
   color: transparent;

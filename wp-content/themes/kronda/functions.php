@@ -15,6 +15,11 @@ function add_custom_js() {
 		       array('jquery'),
 		 	   '1.4');
 		
+			wp_register_script('flexie.min',
+			       '/wp-content/themes/kronda/js/flexie.min.js',
+			       array('jquery'),
+			 	   '1.0.3');
+		
 		wp_register_script('jquery.tweet',
 		       '/wp-content/themes/kronda/js/jquery.tweet.js',
 		       array('jquery'),
@@ -26,7 +31,8 @@ function add_custom_js() {
 		       '1.0');
 	
 		// enqueue the scripts
-		wp_enqueue_script('jquery.flexslider-min'); 		
+		wp_enqueue_script('jquery.flexslider-min');
+		wp_enqueue_script('flexie.min'); 		
 		wp_enqueue_script('jquery.tweet');	
 		wp_enqueue_script('scripts');
 	

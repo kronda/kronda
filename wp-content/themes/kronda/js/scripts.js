@@ -19,18 +19,34 @@ jQuery(document).ready(function($) {
 	});
 	
 	
-	function addThumbnails () {
+	function addThumbnails() {
 		var element = $('.flex-control-nav li a');
 		var baseurl = window.location.href;
 	
 		element.each(function(i, j){		
-			$(this).css('background', 'url(' + baseurl + 'wp-content/themes/kronda/images/thumb' + (i+1) + '.jpg )');
+			$(this).css({
+				'background' : 'url(' + baseurl + 'wp-content/themes/kronda/images/thumb' + (i+1) + '.jpg )',
+				'background-repeat' : 'no-repeat'
+				});
 			j++;
 		});
-		
+	} // addThumbnails
+	addThumbnails();
+	
+	function addFlexie() {
+		//Add flexbox to the flexnav
+		var box = new Flexie.box({
+		    target : document.getElementById("flexboxnav"),
+		    orient : "horizontal",
+		    align : "stretch",
+		    direction : "normal",
+		    pack : "start",
+		    flexMatrix : [1, 1, 1, 1],
+		    ordinalMatrix : [0, 0, 0, 0]
+		});
 	}
 	
-	addThumbnails();
+	
 	//get tweets via jquery.tweet.js
 	jQuery("#tweet").tweet({
         username: "ephanypdx",
