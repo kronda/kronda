@@ -64,11 +64,6 @@
 								<a href="http://www.sorellaforte.com"><img src="<?php echo CHILD_TEMPLATE_DIRECTORY;?>/images/sorellaforte.jpg" alt="Sorella Forte thumbnail" title="Take me to the site!"></a>
 							</div><!-- img_holder -->
 							
-							<div class="desc">
-								<h2>Sorella Forte Custom Drupal site</h2>
-								<p>This might come as a surprise, but I'm really into bikes. As I ventured into the world of Drupal, updating my cycling team's outdated website seemed like the perfect match. With a CMS in place, any team member can now contribute blog posts, race reports and photos, keeping the site fresh and up to date. <a class="visit" href="http://www.sorellaforte.com/">Visit Site</a></p>
-							</div><!-- desc -->
-							
 							<div class="checkboxes">
 								<dl class="checks">
 									<dt>Design</dt>

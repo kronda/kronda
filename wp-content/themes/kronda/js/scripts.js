@@ -48,7 +48,7 @@ jQuery(document).ready(function($) {
 	
 	$('.flex-control-nav').easyListSplitter({ 
 			colNumber: 2,
-			direction: 'horizontal'
+			direction: 'vertical'
 	});
 
 	//get tweets via jquery.tweet.js
