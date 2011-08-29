@@ -16,7 +16,7 @@ Version: 1.1
 #access a { 
   color: transparent; /* override parent theme */
 }
-.floatcontainer {
+.floatcontainer:after {
   content: "."; 
   display: block; 
   height: 0; 
@@ -287,70 +287,15 @@ div.menu ul {
   -webkit-border-radius-bottomright: 15px;
   -moz-border-radius-bottomright: 15px;
   border-bottom-right-radius: 15px;
-  
-  display: -webkit-box;
-  display: -moz-box;
-	display: box;
-	
-	-webkit-box-align: center;
-	-moz-box-align: center;
-	box-align: center;
-	
-	-webkit-box-orient: horizontal;
-  -moz-box-orient: horizontal;
-  box-orient: horizontal;
-  
-  -webkit-box-pack: justify;
-  -mox-box-pack: justify;
-  -box-pack: justify;
 }
 
 /* @group Flexbox positioning */
 
-/* main columns : nav + slider */
-.home .column1 {
-  margin-left: 2%;
-  margin-right: 2%;
-  min-height: 300px;
-  border: 1px solid pink;
-  
-  display: -webkit-box;
-  display: -moz-box;
-  display: box;
-
-  -webkit-box-flex: 1;
-  -moz-box-flex: 1;
-  box-flex: 1;
-
-  -webkit-box-orient: vertical;
-  -moz-box-orient: vertical;
-  box-orient: vertical;
-
-  -webkit-box-align: center;
-  -moz-box-align: center;
-  box-align: center;
-
-  -webkit-box-direction: normal;
-  -moz-box-direction: normal;
-  box-direction: normal;
-
-  -webkit-box-pack: center;
-  -moz-box-pack: center;
-  box-pack: center;
-}
-.home .column2 {
-  border: 1px solid pink;
-  margin-right: 2%;
-}
-.listContainer1 {
-  /*width: 100%;*/
-}
-
 /* general sizing for thumbnails */
 
 .flex-control-nav li {
-  min-width: 60px;
-  min-height: 60px;
+  width: 60px;
+  height: 60px;
 }
 .flex-control-nav li a {
   color: transparent;
@@ -363,36 +308,59 @@ div.menu ul {
   opacity: 0.5;
 }
 
-/* nav list items into rows*/
-.listContainer1 {
-  border: 1px solid white;
+/* main columns : nav + slider */
+
+/*holds all the thumbnails*/
+.home .column1 {  
+  width: 30%;
+  height: 50%;
+
   display: -webkit-box;
-  display: -moz-box;
   display: box;
 
   -webkit-box-orient: vertical;
-  -moz-box-orient: vertical;
   box-orient: vertical;
 
-  /*-webkit-box-align: center;
-    -moz-box-align: center;
-    box-align: center;*/
+  -webkit-box-align: stretch;
+  box-align: stretch;
 
-  /*-webkit-box-pack: center;
-    -moz-box-pack: center;
-    box-pack: center;*/
+  -webkit-box-direction: normal;
+  box-direction: normal;
+
+  -webkit-box-pack: center;
+  box-pack: center;
 }
-.listCol1 {
-  border: 1px solid red;
+
+/*holds large image, checkboxes, description*/
+.home .column2 {
+ 
+}
+
+/* nav list items into rows*/
+.listContainer1 {
+  border: 5px solid green;
+  height: 300px;
+}
+.listCol1,
+.listCol2 {
+  border: 1px solid white;
+  height: 50%;
   display: -webkit-box;
-  display: -moz-box;
   display: box;
+
+  -webkit-box-align: stretch;
+  box-align: stretch;
+
+  -webkit-box-pack: center;
+  box-pack: center;
+}
+.listCol1 li,
+.listCol2 li {
+  webkit-box-flex: 1;
+  box-flex: 1;
 }
 .listCol2 {
-  border: 1px solid red;
-  display: -webkit-box;
-  display: -moz-box;
-  display: box;
+  border: 1px solid orange;
 }
 /* @end Flexbox positioning */
 
@@ -403,12 +371,7 @@ div.menu ul {
   text-transform: uppercase;
 }
 .home .case_study .desc {
-  width: 52%;
-  margin-top: -314px;
-  margin-left: 3%;
-  margin-right: 3%;
-  padding: 10px;
-  float: right;
+  
 }
 
 .home #content h2 {

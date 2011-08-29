@@ -33,19 +33,6 @@ jQuery(document).ready(function($) {
 	} // addThumbnails
 	addThumbnails();
 	
-	function addFlexie() {
-		//Add flexbox to the flexnav
-		var box = new Flexie.box({
-		    target : document.getElementById("flexboxnav"),
-		    orient : "horizontal",
-		    align : "stretch",
-		    direction : "normal",
-		    pack : "start",
-		    flexMatrix : [1, 1, 1, 1],
-		    ordinalMatrix : [0, 0, 0, 0]
-		});
-	}
-	
 	$('.flex-control-nav').easyListSplitter({ 
 			colNumber: 2,
 			direction: 'vertical'
