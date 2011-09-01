@@ -13,7 +13,7 @@ Version: 1.1
 /* @group Global styles 
 -------------------------------------------------------------- */
 .home #access {
-  height: 50px;
+  height: 2.9em;
   padding: 0;
 }
 #access a { 
@@ -215,8 +215,9 @@ Version: 1.1
 /* @group Menu 
 -------------------------------------------------------------- */
 .home #access .menu {
-  margin: 0;
-  padding: 0;
+/*  margin: 0;
+  padding: 0;*/
+  height: 100%;
 }
 .home #access .menu ul {
 	width: 100%;
@@ -319,21 +320,6 @@ div.menu ul {
 .home .column1 {  
   width: 30%;
   height: 50%;
-
-  display: -webkit-box;
-  display: box;
-
-  -webkit-box-orient: vertical;
-  box-orient: vertical;
-
-  -webkit-box-align: stretch;
-  box-align: stretch;
-
-  -webkit-box-direction: normal;
-  box-direction: normal;
-
-  -webkit-box-pack: center;
-  box-pack: center;
 }
 
 /*holds large image, checkboxes, description*/
@@ -350,19 +336,10 @@ div.menu ul {
 .listCol2 {
   border: 1px solid white;
   height: 50%;
-  display: -webkit-box;
-  display: box;
-
-  -webkit-box-align: stretch;
-  box-align: stretch;
-
-  -webkit-box-pack: center;
-  box-pack: center;
 }
 .listCol1 li,
 .listCol2 li {
-  webkit-box-flex: 1;
-  box-flex: 1;
+
 }
 .listCol2 {
   border: 1px solid orange;
