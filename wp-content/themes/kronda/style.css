@@ -12,7 +12,10 @@ Version: 1.1
 
 /* @group Global styles 
 -------------------------------------------------------------- */
-
+.home #access {
+  height: 50px;
+  padding: 0;
+}
 #access a { 
   color: transparent; /* override parent theme */
 }
@@ -38,6 +41,9 @@ Version: 1.1
   margin: 0 auto;
 	max-width: 100%;
 	background: #fff;
+}
+.home .skip-link {
+  margin-left: -999px;
 }
 .home hgroup {
 	border: none;
@@ -91,12 +97,18 @@ Version: 1.1
 	line-height: 1.4em;
 }
 .home #access {
-	padding-top: .5em;
-	background: none;
+  background: #333;
+  opacity: 0.8;
+  width: 100%;
+  margin: 0;
 	float: none;
 	-webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
+}
+.home #access div {
+  margin: 0;
+  padding: 0;
 }
 .home #searchform {
   display: none;
@@ -182,11 +194,9 @@ Version: 1.1
 	padding-right: 10px;
 }
 .home header ul#object li {
-  /*padding-left: 12px;*/
   margin-bottom: 7px;
 	margin-left: 20px;
 	display: block;
-/*	line-height: 1.3em;*/
 }
 .home header ul#object li span {
   color: #a1c4e0;
@@ -204,29 +214,22 @@ Version: 1.1
 
 /* @group Menu 
 -------------------------------------------------------------- */
-.home #nav-bg {
-  height: 50px;
-  background: #333;
-  opacity: 0.8;
-  width: 100%;
-}
-.home #access {
-  height: 50px;
-  width: 960px;
-  margin: 0 auto;
-  text-align: center;
-	background: none;
-	float: none;
+.home #access .menu {
+  margin: 0;
+  padding: 0;
 }
 .home #access .menu ul {
-	position: absolute;
-	top: -75px;
-	left: 0;
+	width: 100%;
+	margin: 0;
+	padding: 0;
 }
-.home #access .menu-header li,
-.home div.menu li{
-  float: left;
-  margin: 9px 0 0 0;
+.home #access .menu ul:after {
+  content: "."; 
+  display: block; 
+  height: 0; 
+  font-size:0; 
+  clear: both; 
+  visibility:hidden; 
 }
 .home #access .menu li a, 
 .home #access .menu li a:hover, 
@@ -236,14 +239,14 @@ Version: 1.1
 .home #access .menu ul li.current-menu-item > a, 
 .home #access .menu ul li.current-menu-parent > a {
   font-size: 1em;
-  padding: 1.5em;
   opacity: 1.0;
   text-transform: uppercase;
 	background: none;
-	color: #A1C4E0;
+	color: #A1C4E0; /*light blue*/
+	line-height: 1.4em;
+	padding: 1.3em;
 }
 .home #access .menu ul li.current_page_item {
-  height: 66px;
   background-color: #FFF;
 }
 .home #access .menu ul li.current_page_item a {
@@ -251,6 +254,8 @@ Version: 1.1
 }
 .home #access .menu li a:hover {
 	text-decoration: underline;
+	background: #FFF;
+	color: #333;
 }
 /* overriding parent styles */
 .home #access .menu-header,
@@ -262,7 +267,7 @@ div.menu {
 .home #access .menu-header ul,
 div.menu ul {
 	list-style: none;
-	margin: -8px 0 0;
+	margin: 0;
 }
 /* @end Menu */
 
