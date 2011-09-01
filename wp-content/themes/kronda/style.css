@@ -498,3 +498,66 @@ div.menu ul {
   text-align: center;
 }
 /* @end Footer homepage overrides */
+
+/* @group =Responsive Structure for home page */
+
+@media (max-width: 800px) {
+  
+}
+@media (max-width: 650px) {
+  
+}
+@media (max-width: 450px) {
+  #header_img {
+    display: none;
+  }
+  .listContainer1 {
+    height: auto;
+  }
+  .flex-control-nav {
+    width: 48%;
+    height: auto;
+    float: left;
+  }
+  .flex-control-nav li {
+    float: left;
+  }
+  .home #masthead {
+    background: transparent;
+    height: 250px;
+    width: 100%;
+    margin: 0;
+  }
+  
+  .home header #object-container {
+    height: 250px;
+    width: 100%;
+    opacity: 0.8;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }  
+  
+  .home header #object-container #object {
+    width: 80%;
+  }
+  .home header ul#object::before {
+    top: 12px;
+    left: -35px;
+  }
+  
+  .home header ul#object::after {
+    bottom: 20px;
+    left: -30px;
+  }
+  .home header ul#object li {
+    margin-left: 0;
+  }
+  .flexslider {
+    width: 95%; /* expand the slider if the screen is small */
+  }
+}
+  
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+  
+}
