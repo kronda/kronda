@@ -541,6 +541,11 @@ div.menu ul {
   .home header #object-container #object {
     width: 80%;
   }
+  .home header #object-container #object {
+    top: 0;
+    left: 0;
+    font-size: 1em;
+  }
   .home header ul#object::before {
     top: 12px;
     left: -35px;
