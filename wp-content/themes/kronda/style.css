@@ -1,4 +1,5 @@
 @import url("../twentyeleven/style.css");
+@import url("css/more.less");
 
 /*
 Theme Name: Kronda's Custom Theme
@@ -99,9 +100,10 @@ Version: 1.1
 .home #access {
   background: #333;
   opacity: 0.8;
-  width: 100%;
+  /*width: 100%;*/
   margin: 0;
 	float: none;
+	border: 1px solid red;
 	-webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
