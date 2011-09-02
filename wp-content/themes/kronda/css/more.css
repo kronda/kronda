@@ -1,28 +1,24 @@
-@import 'grid.less';
-@gutter-width: 0;
+body {
+  width: 100%;
+  float: left;
+}
 /*@total-width: 100%;*/
-
-
 .home #wrapper {
   /*.column(12);*/
-}
 
-.home #main,
-.home #content {
+}
+.home #main, .home #content {
   /*.column(9);*/
-}
 
+}
 .home #object-container {
   /*.column(6);*/
+
 }
 .home #object {
   /*.column(5);*/
-}
-.home .listContainer1 {
-  
-}
 
-
+}
 /*article {
    .column(9);
 

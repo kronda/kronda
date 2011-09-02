@@ -320,8 +320,7 @@ div.menu ul {
 
 /*holds all the thumbnails*/
 .home .column1 {  
-  width: 30%;
-  height: 50%;
+  
 }
 
 /*holds large image, checkboxes, description*/
@@ -331,20 +330,18 @@ div.menu ul {
 
 /* nav list items into rows*/
 .listContainer1 {
-  border: 5px solid green;
-  height: 300px;
+  
 }
 .listCol1,
 .listCol2 {
-  border: 1px solid white;
-  height: 50%;
+  
 }
 .listCol1 li,
 .listCol2 li {
 
 }
 .listCol2 {
-  border: 1px solid orange;
+  
 }
 /* @end Flexbox positioning */
 
