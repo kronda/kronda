@@ -2,14 +2,28 @@ body {
   width: 100%;
   float: left;
 }
-/*@total-width: 100%;*/
-.home #wrapper {
-  /*.column(12);*/
-
+.home #wrapper, .home #main {
+  display: inline;
+  float: left;
+  overflow: hidden;
+  width: 100%;
+  margin: 0 0%;
 }
-.home #main, .home #content {
-  /*.column(9);*/
-
+.home #content {
+  display: inline;
+  float: left;
+  overflow: hidden;
+  width: 66.66666666666666%;
+  margin: 0 0%;
+  margin-left: 16%;
+}
+.home #access ul {
+  display: inline;
+  float: left;
+  overflow: hidden;
+  width: 83.33333333333334%;
+  margin: 0 0%;
+  padding-left: 360px;
 }
 .home #object-container {
   /*.column(6);*/

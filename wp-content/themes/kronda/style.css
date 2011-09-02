@@ -103,7 +103,6 @@ Version: 1.1
   /*width: 100%;*/
   margin: 0;
 	float: none;
-	border: 1px solid red;
 	-webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
@@ -217,14 +216,11 @@ Version: 1.1
 /* @group Menu 
 -------------------------------------------------------------- */
 .home #access .menu {
-/*  margin: 0;
-  padding: 0;*/
   height: 100%;
 }
 .home #access .menu ul {
 	width: 100%;
-	margin: 0;
-	padding: 0;
+/*  padding-left: 15em;*/
 }
 .home #access .menu ul:after {
   content: "."; 
@@ -282,13 +278,12 @@ div.menu ul {
 .home #content {
   z-index: 10;
   background: #202629;
-  width: 70%;
+  color: #fbfbfb;
   height: auto;
   margin: -40px auto -30px auto; 
   -webkit-box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.6);
   -moz-box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.6);
   box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.6);
-  color: #fbfbfb;
   -webkit-border-radius-topleft: 15px;
   -moz-border-radius-topleft: 15px;
   border-top-left-radius: 15px;

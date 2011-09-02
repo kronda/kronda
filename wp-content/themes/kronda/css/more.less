@@ -1,17 +1,19 @@
 @import 'grid.less';
 @gutter-width: 0;
-/*@total-width: 100%;*/
+@total-width: 100%;
 
 
-.home #wrapper {
-  /*.column(12);*/
+.home #wrapper, .home #main {
+  .column(12);
 }
-
-.home #main,
 .home #content {
-  /*.column(9);*/
+  .column(8);
+  margin-left: 16%
 }
-
+.home #access ul {
+  .column(10);
+  padding-left: @column-width * 6px;
+}
 .home #object-container {
   /*.column(6);*/
 }
