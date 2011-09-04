@@ -272,7 +272,7 @@ div.menu ul {
 
 /* @group Home page content */
 .home #main {
-	padding: 0;
+	padding: 0 10px 10px 0;
 	overflow: visible;
 }
 .home #content {
@@ -280,7 +280,6 @@ div.menu ul {
   background: #202629;
   color: #fbfbfb;
   height: auto;
-  margin: -40px auto -30px auto; 
   -webkit-box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.6);
   -moz-box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.6);
   box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.6);
@@ -325,11 +324,24 @@ div.menu ul {
 
 /* nav list items into rows*/
 .listContainer1 {
-  
+  padding: 15px;
 }
-.listCol1,
-.listCol2 {
-  
+.flex-control-nav {
+  border: 1px solid blue;
+  width: 100%;
+}
+.flex-control-nav li {
+  float: left;
+  width: 48%;
+}
+.home .listCol1:after,
+.home .listCol2:after {
+  content: "."; 
+  display: block; 
+  height: 0; 
+  font-size:0; 
+  clear: both; 
+  visibility:hidden; 
 }
 .listCol1 li,
 .listCol2 li {

@@ -13,44 +13,49 @@
 			   	<ul class="slides">				
 						
 						<li id="jillmalone" class="case_study">	
-								<div class="img_holder">
-									<a href="http://www.jillmalone.com"><img src="<?php echo CHILD_TEMPLATE_DIRECTORY;?>/images/jillmalone.jpg" alt="Jill Malone thumbnail" title="Take me to the site!"></a>
-								</div><!-- img_holder -->
+								<div class="slide_column">
+									<div class="img_holder">
+										<a href="http://www.jillmalone.com"><img src="<?php echo CHILD_TEMPLATE_DIRECTORY;?>/images/jillmalone.jpg" alt="Jill Malone thumbnail" title="Take me to the site!"></a>
+									</div><!-- img_holder -->
 							
-								<div class="checkboxes">
-									<dl class="checks">
-										<dt>Design</dt>
-										<dt>HTML</dt>
-										<dt>CSS</dt>
-										<span class="row2">
-											<dt>jQuery</dt>									
-											<dt>Wordpress</dt>
-											<dt>PHP</dt>
-										</span>
-									</dl>
-								</div><!-- checkboxes -->
+									<div class="checkboxes">
+										<dl class="checks">
+											<dt>Design</dt>
+											<dt>HTML</dt>
+											<dt>CSS</dt>
+											<span class="row2">
+												<dt>jQuery</dt>									
+												<dt>Wordpress</dt>
+												<dt>PHP</dt>
+											</span>
+										</dl>
+									</div><!-- checkboxes -->
+							</div><!-- slide_column -->
 							
 							<div class="desc">
 								<h2>Wordpress Redesign</h2>
 								<p>Author Jill Malone wanted a fresh look to her Wordpress website that reflected the sensiblity of her work. I designed a custom Wordpress theme and implemented a home page to showcase her books. The site features widgets to facilitate easy updating, and new and improved search functionality. A tabbed sidebar invites users to explore featured blog posts and the latest visitor comments.<a class="visit" href="http://www.jillmalone.com/">Visit Site</a></p>
 							</div><!-- desc -->
-						</li><!-- jillmalone --> <!-- another comment -->
+							
+						</li><!-- jillmalone -->
 				
 						<li id="waronpink" class="case_study">
-							<div class="img_holder">
-								<a href="http://waronpink.kronda.com"><img src="<?php echo CHILD_TEMPLATE_DIRECTORY;?>/images/waronpink.jpg" alt="War on Pink thumbnail" title="Take me to the site!"></a>
-							</div><!-- img_holder -->
+							<div class="slide_column">
+								<div class="img_holder">
+									<a href="http://waronpink.kronda.com"><img src="<?php echo CHILD_TEMPLATE_DIRECTORY;?>/images/waronpink.jpg" alt="War on Pink thumbnail" title="Take me to the site!"></a>
+								</div><!-- img_holder -->
 							
-							<div class="checkboxes">
-								<dl class="checks">
-									<dt>HTML</dt>
-									<dt>CSS</dt>
-									<dt>PHP</dt>
-									<span class="row2">
-										<dt>MYSQL</dt>										
-									</span>
-								</dl>
-							</div><!-- checkboxes -->
+								<div class="checkboxes">
+									<dl class="checks">
+										<dt>HTML</dt>
+										<dt>CSS</dt>
+										<dt>PHP</dt>
+										<span class="row2">
+											<dt>MYSQL</dt>										
+										</span>
+									</dl>
+								</div><!-- checkboxes -->
+							</div><!-- slide_column -->
 							
 							<div class="desc">
 								<h2>PHP Class Final Project</h2>
@@ -60,22 +65,24 @@
 				
 
 						<li id="sorella" class="case_study">
-							<div class="img_holder">
-								<a href="http://www.sorellaforte.com"><img src="<?php echo CHILD_TEMPLATE_DIRECTORY;?>/images/sorellaforte.jpg" alt="Sorella Forte thumbnail" title="Take me to the site!"></a>
-							</div><!-- img_holder -->
+							<div class="slide_column">
+								<div class="img_holder">
+									<a href="http://www.sorellaforte.com"><img src="<?php echo CHILD_TEMPLATE_DIRECTORY;?>/images/sorellaforte.jpg" alt="Sorella Forte thumbnail" title="Take me to the site!"></a>
+								</div><!-- img_holder -->
 							
-							<div class="checkboxes">
-								<dl class="checks">
-									<dt>Design</dt>
-									<dt>HTML</dt>
-									<dt>CSS</dt>
-									<span class="row2">
-										<dt>Drupal</dt>
-										<dt>PHP</dt>
-										<dt>Custom Module</dt>
-									</span>
-								</dl>
-							</div><!-- checkboxes -->	
+								<div class="checkboxes">
+									<dl class="checks">
+										<dt>Design</dt>
+										<dt>HTML</dt>
+										<dt>CSS</dt>
+										<span class="row2">
+											<dt>Drupal</dt>
+											<dt>PHP</dt>
+											<dt>Custom Module</dt>
+										</span>
+									</dl>
+								</div><!-- checkboxes -->	
+							</div><!-- slide_column -->
 							
 							<div class="desc">
 								<h2>Sorella Forte Custom Drupal site</h2>
@@ -84,21 +91,23 @@
 						</li><!-- sorella -->
 
 						<li id="checafe" class="case_study">
-							<div class="img_holder">
-								<a href="http://www.checafepdx.com"><img src="<?php echo CHILD_TEMPLATE_DIRECTORY;?>/images/checafe.jpg" alt="Che Cafe thumbnail" title="Take me to the site!"></a>
-							</div><!-- img_holder -->
+							<div class="slide_column">
+								<div class="img_holder">
+									<a href="http://www.checafepdx.com"><img src="<?php echo CHILD_TEMPLATE_DIRECTORY;?>/images/checafe.jpg" alt="Che Cafe thumbnail" title="Take me to the site!"></a>
+								</div><!-- img_holder -->
 							
-							<div class ="checkboxes">
-								<dl class="checks">
-									<dt>Design</dt>
-									<dt>HTML</dt>
-									<dt>CSS</dt>
-									<span class="row2">
-										<dt>jQuery</dt>
-										<dt>Optimized<span>for mobile</span></dt>
-									</span>
-								</dl>
-							</div><!-- checkboxes -->
+								<div class ="checkboxes">
+									<dl class="checks">
+										<dt>Design</dt>
+										<dt>HTML</dt>
+										<dt>CSS</dt>
+										<span class="row2">
+											<dt>jQuery</dt>
+											<dt>Optimized<span>for mobile</span></dt>
+										</span>
+									</dl>
+								</div><!-- checkboxes -->
+							</div><!-- slide_column -->
 							
 							<div class="desc">
 								<h2>Foodcart Website</h2>
