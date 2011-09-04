@@ -2,20 +2,47 @@ body {
   width: 100%;
   float: left;
 }
-.home #wrapper, .home #main {
+.home #wrapper {
   display: inline;
   float: left;
   overflow: hidden;
   width: 100%;
   margin: 0 0%;
 }
-.home #content {
+.home header#branding {
+  display: inline;
+  float: left;
+  overflow: hidden;
+  width: 100%;
+  margin: 0 0%;
+}
+.home #main {
   display: inline;
   float: left;
   overflow: hidden;
   width: 66.66666666666666%;
   margin: 0 0%;
   margin-left: 16%;
+}
+.home #main #content {
+  display: inline-block;
+  overflow: hidden;
+  width: 100%;
+  margin: 0 0%;
+}
+.home #main #content .column1 {
+  display: inline;
+  float: left;
+  overflow: hidden;
+  width: 25%;
+  margin: 0 0%;
+}
+.home #main #content .column2 {
+  display: inline;
+  float: left;
+  overflow: hidden;
+  width: 75%;
+  margin: 0 0%;
 }
 .home #access ul {
   display: inline;
@@ -25,13 +52,15 @@ body {
   margin: 0 0%;
   padding-left: 240px;
 }
-.home #object-container {
-  /*.column(6);*/
-
+.home #colophon {
+  display: inline;
+  float: left;
+  overflow: hidden;
+  width: 100%;
+  margin: 0 0%;
 }
-.home #object {
-  /*.column(5);*/
-
+.home #main {
+  margin-top: -40px;
 }
 /*article {
    .column(9);

@@ -34,7 +34,7 @@
 								<h2>Wordpress Redesign</h2>
 								<p>Author Jill Malone wanted a fresh look to her Wordpress website that reflected the sensiblity of her work. I designed a custom Wordpress theme and implemented a home page to showcase her books. The site features widgets to facilitate easy updating, and new and improved search functionality. A tabbed sidebar invites users to explore featured blog posts and the latest visitor comments.<a class="visit" href="http://www.jillmalone.com/">Visit Site</a></p>
 							</div><!-- desc -->
-						</li><!-- jillmalone -->
+						</li><!-- jillmalone --> <!-- another comment -->
 				
 						<li id="waronpink" class="case_study">
 							<div class="img_holder">

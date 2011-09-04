@@ -3,28 +3,42 @@
 @total-width: 100%;
 
 
-.home #wrapper, .home #main {
+.home #wrapper {
   .column(12);
 }
-.home #content {
-  .column(8);
-  margin-left: 16%
+.home header#branding {
+  .column(12);
 }
+.home #main {
+  .column(8);
+  margin-left: 16%;
+  
+  #content {
+    .row(8);
+    
+    .column1 {
+      .column(2,8);
+    }
+    
+    .column2 {
+      .column(6,8);
+    }
+  }
+}
+
 .home #access ul {
   .column(10);
   padding-left: @column-width * 4px;
 }
-.home #object-container {
-  /*.column(6);*/
-}
-.home #object {
-  /*.column(5);*/
-}
 .home .listContainer1 {
   
 }
-
-
+.home #colophon {
+  .column(12);
+}
+.home #main {
+  margin-top: -40px;
+}
 /*article {
    .column(9);
 

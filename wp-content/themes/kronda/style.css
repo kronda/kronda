@@ -129,7 +129,7 @@ Version: 1.1
 .home #masthead {
   background: transparent;
   height: 250px;
-  width: 960px;
+  width: 60%; /*was 960px*/
   margin: 0 auto;
   position: relative;
 }
@@ -137,8 +137,8 @@ Version: 1.1
   height: 221px;
   width: 370px;
   position: absolute;
-  left: 135px;
-  top: -15px;
+  top: 7px;
+  left: 260px;
 }
 
 /*hide this on everything but the first page*/
@@ -164,12 +164,12 @@ Version: 1.1
 .home header #object-container {
 	display: block;
   background: #333;
-  height: 200px;
-  width: 460px;
   opacity: 0.8;
   position: absolute;
   top: 0;
-  left: 517px;
+  right: 0;
+  height: 190px;
+  width: 450px;
   -webkit-border-radius-bottomright: 15px;
   -moz-border-radius-bottomright: 15px;
   border-bottom-right-radius: 15px;
@@ -183,8 +183,8 @@ Version: 1.1
   font-family: Monaco, sans-serif !important;
   font-size: 1.125em;
   position: relative;
-  top: -49px;
-  left: 4px;
+  top: -61px;
+  left: 0;
 }
 .home header #object .label {
 	display: block;
@@ -292,7 +292,7 @@ div.menu ul {
   border-bottom-right-radius: 15px;
 }
 
-/* @group Flexbox positioning */
+/* @group Semantic.gs column positioning */
 
 /* general sizing for thumbnails */
 
@@ -338,7 +338,7 @@ div.menu ul {
 .listCol2 {
   
 }
-/* @end Flexbox positioning */
+/* @end Semantic.gs positioning */
 
 .home .case_study h2 {
   text-align: center;
