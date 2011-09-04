@@ -5,10 +5,12 @@
 ?>
 	
 	<div id="content">
-		<div class="flexcontrols column1">
-				<!-- this is populated by the flexslider script -->
-		</div><!-- flexcontrols -->
-			
+		<div class="column1">
+			<div class="flexcontrols">
+					<!-- this is populated by the flexslider script -->			
+			</div><!-- flexcontrols -->
+			<a id="porfolio" href="/portfolio">View All Projects</a>
+		</div><!-- column1 -->
 			<div id="slider" class="flexslider column2">
 			   	<ul class="slides">				
 						
@@ -20,10 +22,12 @@
 							
 									<div class="checkboxes">
 										<dl class="checks">
+											<span class="row">
 											<dt>Design</dt>
 											<dt>HTML</dt>
 											<dt>CSS</dt>
-											<span class="row2">
+											</span>
+											<span class="row">
 												<dt>jQuery</dt>									
 												<dt>Wordpress</dt>
 												<dt>PHP</dt>
@@ -47,10 +51,12 @@
 							
 								<div class="checkboxes">
 									<dl class="checks">
+										<span class="row">
 										<dt>HTML</dt>
 										<dt>CSS</dt>
 										<dt>PHP</dt>
-										<span class="row2">
+										</span>
+										<span class="row">
 											<dt>MYSQL</dt>										
 										</span>
 									</dl>
@@ -72,10 +78,12 @@
 							
 								<div class="checkboxes">
 									<dl class="checks">
+										<span class="row">
 										<dt>Design</dt>
 										<dt>HTML</dt>
 										<dt>CSS</dt>
-										<span class="row2">
+										</span>
+										<span class="row">
 											<dt>Drupal</dt>
 											<dt>PHP</dt>
 											<dt>Custom Module</dt>
@@ -98,10 +106,12 @@
 							
 								<div class ="checkboxes">
 									<dl class="checks">
+										<span class="row">
 										<dt>Design</dt>
 										<dt>HTML</dt>
 										<dt>CSS</dt>
-										<span class="row2">
+										</span>
+										<span class="row">
 											<dt>jQuery</dt>
 											<dt>Optimized<span>for mobile</span></dt>
 										</span>

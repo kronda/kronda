@@ -71,6 +71,9 @@ Version: 1.1
 .home a:hover, a:focus, a:active {
   text-decoration: underline;
 }
+.home .column1 #porfolio {
+  /*color: red;*/
+}
 .home ul,
 .home li {
   list-style: none;
@@ -100,7 +103,7 @@ Version: 1.1
 .home #access {
   background: #333;
   opacity: 0.8;
-  /*width: 100%;*/
+  min-height: 50px;
   margin: 0;
 	float: none;
 	-webkit-box-shadow: none;
@@ -138,7 +141,7 @@ Version: 1.1
   width: 370px;
   position: absolute;
   top: 7px;
-  left: 260px;
+  left: 0;
 }
 
 /*hide this on everything but the first page*/
@@ -148,17 +151,17 @@ Version: 1.1
 .home header ul#object:before {
   content: "{";
   font-size: 1.625em;
-  color: #ff941c;
+  color: #ff941c; /*orange*/
   position: relative;
-  top: 26px;
+  top: 10px;
   left: -25px;
 }
 .home header ul#object:after {
   content: "}";
   font-size: 1.625em;
-  color: #ff941c;
+  color: #ff941c; /*orange*/
   position: relative;
-  bottom: 0;
+  bottom: 18px;
   left: -20px;
 }
 .home header #object-container {
@@ -183,7 +186,7 @@ Version: 1.1
   font-family: Monaco, sans-serif !important;
   font-size: 1.125em;
   position: relative;
-  top: -61px;
+  top: -40px;
   left: 0;
 }
 .home header #object .label {
@@ -252,7 +255,7 @@ Version: 1.1
   color: #333;
 }
 .home #access .menu li a:hover {
-	text-decoration: underline;
+	text-decoration: none;
 	background: #FFF;
 	color: #333;
 }
@@ -327,12 +330,13 @@ div.menu ul {
   padding: 15px;
 }
 .flex-control-nav {
-  border: 1px solid blue;
+  margin-bottom: 5%;
   width: 100%;
 }
 .flex-control-nav li {
   float: left;
-  width: 48%;
+  padding: 4%;
+  margin-left: 12%;
 }
 .home .listCol1:after,
 .home .listCol2:after {
@@ -359,16 +363,16 @@ div.menu ul {
   text-transform: uppercase;
 }
 .home .case_study .desc {
-  
+  padding-top: 20px;
 }
 
 .home #content h2 {
 	color: #FBFBFB;
 }
-.home .case_study p {
-  padding-left: 10px;
-  padding-right: 10px;
+.home .desc p {
+  padding: 0 5%;
 }
+.home .column1 #porfolio,
 .home #content .visit {
   color: #202629;
   background: #a1c4e0;
@@ -379,6 +383,10 @@ div.menu ul {
   text-align: center;
   border: 2px solid #fbfbfb;
   font-weight: bold;
+}
+.home .column1 #porfolio {
+  width: 60%;
+  margin: 0 auto;
 }
 .home #content .visit a.visit:hover {
   text-decoration: none;
@@ -391,22 +399,21 @@ div.menu ul {
   margin-left: 3%;
 }
 .home .checkboxes {
-  width: 300px;
-  margin: 20px 0;
-  clear: both;
+
 }
 .home .checks {
-  padding-left: 30px;
+  margin: 0 0 0 1.2em;
 }
 .home .checks dt {
   background: url('images/chk_gradient.png') no-repeat scroll 2px 5px;
   padding-left: 30px;
 }
-.home .checks .row2 {
+.home .checks .row {
   display: block;
-  margin: -72px 0 0 130px;
+  width: 48%;
+  float: left;
 }
-.home .checks .row2 span {
+.home .checks .row span {
   display: block;
 }
 /* @end Home page content */
