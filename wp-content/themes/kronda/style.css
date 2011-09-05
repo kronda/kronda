@@ -315,16 +315,6 @@ div.menu ul {
 
 /* main columns : nav + slider */
 
-/*holds all the thumbnails*/
-.home .column1 {  
-  
-}
-
-/*holds large image, checkboxes, description*/
-.home .column2 {
- 
-}
-
 /* nav list items into rows*/
 .listContainer1 {
   padding: 0 15px 15px 15px;
@@ -347,13 +337,6 @@ div.menu ul {
   clear: both; 
   visibility:hidden; 
 }
-.listCol1 li,
-.listCol2 li {
-
-}
-.listCol2 {
-  
-}
 /* @end Semantic.gs positioning */
 
 .home .case_study h2 {
@@ -362,10 +345,6 @@ div.menu ul {
   margin-top: 0;
   text-transform: uppercase;
 }
-.home .case_study .desc {
-  /*padding-top: 20px;*/
-}
-
 .home #content h2 {
 	color: #FBFBFB;
 }
@@ -519,13 +498,38 @@ div.menu ul {
 /* @group =Responsive Structure for home page */
 
 /* iPad [portrait + landscape] */
-@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
-  
-  .home #masthead {
-    width: 95%;
-    border: 1px solid red;  
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+  .home #content {
+    padding-top: 20px;
   }
-
+  .home #masthead {
+    width: 90%;
+  }
+  .home #masthead #header_img {
+    left: 0;
+  }
+  .home .flex-control-nav {
+    float: left;
+    width: auto;
+  }
+  .home .flex-control-nav li {
+    margin-left: 20px;
+    padding: 0;
+  }
+  .home .column1 #porfolio {
+    width: 20%;
+    float: right;
+    margin-right: 5%;
+  }
+  .home .listContainer1 {
+    padding: 0;
+  }
+  .home .slide_column {
+  }
+  .home .desc p {
+    padding: 0 0 0 10%;
+  }
+  
 }
 /* iPhone [portrait + landscape] */
 @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {

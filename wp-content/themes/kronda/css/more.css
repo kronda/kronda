@@ -103,15 +103,19 @@ body {
     margin-left: 8%;
   }
 }
+@media (max-width: 800px) {
+  
+}
 /* iPad [portrait + landscape] */
-@media (max-device-width: 1024px) {
+@media (max-width: 1024px) {
   .home #main {
     display: inline;
     float: left;
     overflow: hidden;
-    width: 100%;
+    width: 91.66666666666666%;
     margin: 0 0%;
-    margin-left: 0;
+    margin-top: -40px;
+    margin-left: 4%;
   }
   .home #main #content {
     display: inline-block;
@@ -154,14 +158,15 @@ body {
     display: inline;
     float: left;
     overflow: hidden;
-    width: 100%;
+    width: 36.36363636363637%;
     margin: 0 0%;
+    margin-left: 15px;
   }
   .home #main #content .column2 .slides li .desc {
     display: inline;
     float: left;
     overflow: hidden;
-    width: 100%;
+    width: 54.54545454545454%;
     margin: 0 0%;
   }
 }

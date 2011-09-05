@@ -62,11 +62,16 @@
   }
 }
 
+@media (max-width: 800px) {
+  
+}
+
 /* iPad [portrait + landscape] */
-@media (max-device-width: 1024px) {
+@media (max-width: 1024px) {
   .home #main {
-    .column(12);
-    margin-left: 0;
+    .column(11);
+    margin-top: -40px;
+    margin-left: 4%;
   
     #content {
       .row(11);
@@ -86,10 +91,11 @@
             .row(11);
           
             .slide_column{
-              .column(11,11);
+              .column(4,11);
+              margin-left: 15px;
             }
             .desc { 
-              .column(11,11);
+              .column(6,11);
             }
           
           }
