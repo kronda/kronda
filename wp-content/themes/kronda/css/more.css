@@ -20,9 +20,9 @@ body {
   display: inline;
   float: left;
   overflow: hidden;
-  width: 66.66666666666666%;
+  width: 58.333333333333336%;
   margin: 0 0%;
-  margin-left: 16%;
+  margin-left: 20%;
 }
 .home #main #content {
   display: inline-block;
@@ -34,14 +34,14 @@ body {
   display: inline;
   float: left;
   overflow: hidden;
-  width: 25%;
+  width: 28.57142857142857%;
   margin: 0 0%;
 }
 .home #main #content .column2 {
   display: inline;
   float: left;
   overflow: hidden;
-  width: 75%;
+  width: 71.42857142857143%;
   margin: 0 0%;
 }
 .home #main #content .column2 .slides {
@@ -65,15 +65,18 @@ body {
   display: inline;
   float: left;
   overflow: hidden;
-  width: 33.33333333333333%;
+  width: 40%;
   margin: 0 0%;
 }
 .home #main #content .column2 .slides li .desc {
   display: inline;
   float: left;
   overflow: hidden;
-  width: 66.66666666666666%;
+  width: 60%;
   margin: 0 0%;
+}
+.home #main {
+  margin-top: -40px;
 }
 .home #access ul {
   display: inline;
@@ -90,20 +93,11 @@ body {
   width: 100%;
   margin: 0 0%;
 }
-.home #main {
-  margin-top: -40px;
+.home #supplementary {
+  display: inline;
+  float: left;
+  overflow: hidden;
+  width: 66.66666666666666%;
+  margin: 0 0%;
+  margin-left: 8%;
 }
-/*article {
-   .column(9);
-
-   ul { example of nested column set up
-      .row(9); make a row with the same width as the parent
-
-      li {
-         .column(4,9);
-      }
-   }
-}
-aside {
-   .column(3);
-}*/

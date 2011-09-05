@@ -283,6 +283,7 @@ div.menu ul {
   background: #202629;
   color: #fbfbfb;
   height: auto;
+  padding: 40px 0;
   -webkit-box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.6);
   -moz-box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.6);
   box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.6);
@@ -327,7 +328,7 @@ div.menu ul {
 
 /* nav list items into rows*/
 .listContainer1 {
-  padding: 15px;
+  padding: 0 15px 15px 15px;
 }
 .flex-control-nav {
   margin-bottom: 5%;
@@ -335,7 +336,7 @@ div.menu ul {
 }
 .flex-control-nav li {
   float: left;
-  padding: 4%;
+  padding: 0 4% 4% 4%;
   margin-left: 12%;
 }
 .home .listCol1:after,
@@ -363,14 +364,14 @@ div.menu ul {
   text-transform: uppercase;
 }
 .home .case_study .desc {
-  padding-top: 20px;
+  /*padding-top: 20px;*/
 }
 
 .home #content h2 {
 	color: #FBFBFB;
 }
 .home .desc p {
-  padding: 0 5%;
+  padding: 0 10%;
 }
 .home .column1 #porfolio,
 .home #content .visit {
@@ -387,22 +388,23 @@ div.menu ul {
 .home .column1 #porfolio {
   width: 60%;
   margin: 0 auto;
+  padding: .5em;
 }
 .home #content .visit a.visit:hover {
   text-decoration: none;
 }
 .home .img_holder {
-  height: 300px;
+  height: auto;
   max-width: 300px;
   overflow: hidden;
-  margin-top: 20px;
-  margin-left: 3%;
+  margin: 0 0 10% 3%;
+ /* margin-left: 3%;*/
 }
 .home .checkboxes {
 
 }
 .home .checks {
-  margin: 0 0 0 1.2em;
+  margin: 0 0 0 0.8em;
 }
 .home .checks dt {
   background: url('images/chk_gradient.png') no-repeat scroll 2px 5px;
@@ -443,6 +445,9 @@ div.menu ul {
   background: #333;
   opacity: 0.8;
   font-size: .95em;
+}
+.home #supplementary {
+  border-top: none;
 }
 .home #site-generator {
 	display: none;

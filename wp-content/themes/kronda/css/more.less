@@ -10,31 +10,31 @@
   .column(12);
 }
 .home #main {
-  .column(8);
-  margin-left: 16%;
+  .column(7);
+  margin-left: 20%;
   
   #content {
-    .row(8);
+    .row(7);
     
     .column1 {
-      .column(2,8);
+      .column(2,7);
     }
     
     .column2 {
-      .column(6,8);
+      .column(5,7);
       
       .slides {
-        .row(6);
+        .row(5);
         
         li {
-          .column(6,6);
-          .row(6);
+          .column(5,5);
+          .row(5);
           
           .slide_column{
-            .column(2,6);
+            .column(2,5);
           }
           .desc {
-            .column(4,6);
+            .column(3,5);
           }
           
         }
@@ -42,7 +42,9 @@
     }
   }
 }
-
+.home #main {
+  margin-top: -40px;
+}
 .home #access ul {
   .column(10);
   padding-left: @column-width * 4px;
@@ -53,20 +55,7 @@
 .home #colophon {
   .column(12);
 }
-.home #main {
-  margin-top: -40px;
+.home #supplementary {
+  .column(8);
+  margin-left: 8%;
 }
-/*article {
-   .column(9);
-
-   ul { example of nested column set up
-      .row(9); make a row with the same width as the parent
-
-      li {
-         .column(4,9);
-      }
-   }
-}
-aside {
-   .column(3);
-}*/
