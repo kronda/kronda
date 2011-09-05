@@ -28,7 +28,7 @@ jQuery(document).ready(function($) {
 				'background' : 'url(' + baseurl + 'wp-content/themes/kronda/images/thumb' + (i+1) + '.jpg )',
 				'background-repeat' : 'no-repeat'
 				});
-			j++;
+			// j++;
 		});
 	} // addThumbnails
 	addThumbnails();

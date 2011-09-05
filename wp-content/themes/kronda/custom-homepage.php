@@ -5,12 +5,14 @@
 ?>
 	
 	<div id="content">
+
 		<div class="column1">
 			<div class="flexcontrols">
 					<!-- this is populated by the flexslider script -->			
 			</div><!-- flexcontrols -->
 			<a id="porfolio" href="/portfolio">View All Projects</a>
 		</div><!-- column1 -->
+	
 			<div id="slider" class="flexslider column2">
 			   	<ul class="slides">				
 						
@@ -34,7 +36,7 @@
 											</span>
 										</dl>
 									</div><!-- checkboxes -->
-							</div><!-- slide_column -->
+								</div><!-- slide_column -->
 							
 							<div class="desc">
 								<h2>Wordpress Redesign</h2>

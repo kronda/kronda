@@ -1,5 +1,4 @@
 @import url("../twentyeleven/style.css");
-@import url("css/more.less");
 
 /*
 Theme Name: Kronda's Custom Theme
@@ -140,8 +139,8 @@ Version: 1.1
   height: 221px;
   width: 370px;
   position: absolute;
-  top: 7px;
-  left: 0;
+  top: 3px;
+  left: 24%;
 }
 
 /*hide this on everything but the first page*/
@@ -522,64 +521,16 @@ div.menu ul {
 /* iPad [portrait + landscape] */
 @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
   
-}
+  .home #masthead {
+    width: 95%;
+    border: 1px solid red;  
+  }
 
+}
 /* iPhone [portrait + landscape] */
 @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
   
-  .home #header_img {
-    display: none;
-  }
-  .listContainer1 {
-    height: auto;
-  }
-  .flex-control-nav {
-    width: 48%;
-    height: auto;
-    float: left;
-  }
-  .flex-control-nav li {
-    float: left;
-  }
-  .home #masthead {
-    background: transparent;
-    height: 250px;
-    width: 100%;
-    margin: 0;
-  }
-  
-  .home header #object-container {
-    height: 250px;
-    width: 100%;
-    opacity: 0.8;
-    position: absolute;
-    top: 0;
-    left: 0;
-  }  
-  
-  .home header #object-container #object {
-    width: 80%;
-  }
-  .home header #object-container #object {
-    top: 0;
-    left: 0;
-    font-size: 1em;
-  }
-  .home header ul#object::before {
-    top: 12px;
-    left: -35px;
-  }
-  
-  .home header ul#object::after {
-    bottom: 20px;
-    left: -30px;
-  }
-  .home header ul#object li {
-    margin-left: 0;
-  }
-  .flexslider {
-    width: 95%; /* expand the slider if the screen is small */
-  }
+
 }
   
 

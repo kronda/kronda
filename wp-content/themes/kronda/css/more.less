@@ -2,60 +2,99 @@
 @gutter-width: 0;
 @total-width: 100%;
 
-
-.home #wrapper {
-  .column(12);
-}
-.home header#branding {
-  .column(12);
-}
-.home #main {
-  .column(7);
-  margin-left: 20%;
+@media only screen and (min-width: 1025px) {
   
-  #content {
-    .row(7);
+  .home #wrapper {
+    .column(12);
+  }
+  .home header#branding {
+    .column(12);
+  }
+  .home #main {
+    .column(7);
+    margin-left: 20%;
+  
+    #content {
+      .row(7);
     
-    .column1 {
-      .column(2,7);
-    }
+      .column1 {
+        .column(2,7);
+      }
     
-    .column2 {
-      .column(5,7);
+      .column2 {
+        .column(5,7);
       
-      .slides {
-        .row(5);
-        
-        li {
-          .column(5,5);
+        .slides {
           .row(5);
+        
+          li {
+            .column(5,5);
+            .row(5);
           
-          .slide_column{
-            .column(2,5);
-          }
-          .desc {
-            .column(3,5);
-          }
+            .slide_column{
+              .column(2,5);
+            }
+            .desc { 
+              .column(3,5);
+            }
           
+          }
         }
       }
     }
   }
-}
-.home #main {
-  margin-top: -40px;
-}
-.home #access ul {
-  .column(10);
-  padding-left: @column-width * 4px;
-}
-.home .listContainer1 {
+  .home #main {
+    margin-top: -40px;
+  }
+  .home #access ul {
+    .column(10);
+    padding-left: @column-width * 4px;
+  }
+  .home .listContainer1 {
   
+  }
+  .home #colophon {
+    .column(12);
+  }
+  .home #supplementary {
+    .column(8);
+    margin-left: 8%;
+  }
 }
-.home #colophon {
-  .column(12);
-}
-.home #supplementary {
-  .column(8);
-  margin-left: 8%;
+
+/* iPad [portrait + landscape] */
+@media (max-device-width: 1024px) {
+  .home #main {
+    .column(12);
+    margin-left: 0;
+  
+    #content {
+      .row(11);
+    
+      .column1 {
+        .column(11,11);
+      }
+    
+      .column2 {
+        .column(11,11);
+      
+        .slides {
+          .row(11);
+        
+          li {
+            .column(11,11);
+            .row(11);
+          
+            .slide_column{
+              .column(11,11);
+            }
+            .desc { 
+              .column(11,11);
+            }
+          
+          }
+        }
+      }
+    }
+  }
 }
