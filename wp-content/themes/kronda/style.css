@@ -519,14 +519,15 @@ div.menu ul {
 
 /* @group =Responsive Structure for home page */
 
-@media (max-width: 800px) {
+/* iPad [portrait + landscape] */
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
   
 }
-@media (max-width: 650px) {
+
+/* iPhone [portrait + landscape] */
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
   
-}
-@media (max-width: 450px) {
-  #header_img {
+  .home #header_img {
     display: none;
   }
   .listContainer1 {
@@ -581,6 +582,4 @@ div.menu ul {
   }
 }
   
-@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
-  
-}
+
