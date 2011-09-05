@@ -107,7 +107,7 @@ body {
   
 }
 /* iPad [portrait + landscape] */
-@media (max-width: 1024px) {
+@media (min-width: 650px) and (max-width: 1024px) {
   .home #main {
     display: inline;
     float: left;
@@ -168,5 +168,88 @@ body {
     overflow: hidden;
     width: 54.54545454545454%;
     margin: 0 0%;
+  }
+}
+/* iPhone [portrait + landscape] */
+@media (max-width: 649px) {
+  .home #main {
+    display: inline;
+    float: left;
+    overflow: hidden;
+    width: 100%;
+    margin: 0 0%;
+    margin-top: -40px;
+    margin-left: 4%;
+  }
+  .home #main #content {
+    display: inline-block;
+    overflow: hidden;
+    width: 100%;
+    margin: 0 0%;
+  }
+  .home #main #content .column1 {
+    display: inline;
+    float: left;
+    overflow: hidden;
+    width: 109.09090909090908%;
+    margin: 0 0%;
+  }
+  .home #main #content .column2 {
+    display: inline;
+    float: left;
+    overflow: hidden;
+    width: 109.09090909090908%;
+    margin: 0 0%;
+  }
+  .home #main #content .column2 .slides {
+    display: inline-block;
+    overflow: hidden;
+    width: 100%;
+    margin: 0 0%;
+  }
+  .home #main #content .column2 .slides li {
+    display: inline;
+    float: left;
+    overflow: hidden;
+    width: 100%;
+    margin: 0 0%;
+    display: inline-block;
+    overflow: hidden;
+    width: 100%;
+    margin: 0 0%;
+  }
+  .home #main #content .column2 .slides li .slide_column {
+    display: inline;
+    float: left;
+    overflow: hidden;
+    width: 100%;
+    margin: 0 0%;
+    display: inline-block;
+    overflow: hidden;
+    width: 100%;
+    margin: 0 0%;
+    margin-left: 6%;
+  }
+  .home #main #content .column2 .slides li .slide_column .img_holder {
+    display: inline;
+    float: left;
+    overflow: hidden;
+    width: 58.333333333333336%;
+    margin: 0 0%;
+  }
+  .home #main #content .column2 .slides li .slide_column .checkboxes {
+    display: inline;
+    float: left;
+    overflow: hidden;
+    width: 41.66666666666667%;
+    margin: 0 0%;
+  }
+  .home #main #content .column2 .slides li .desc {
+    display: inline;
+    float: left;
+    overflow: hidden;
+    width: 100%;
+    margin: 0 0%;
+    margin-top: 15px;
   }
 }

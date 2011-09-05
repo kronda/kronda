@@ -498,12 +498,15 @@ div.menu ul {
 /* @group =Responsive Structure for home page */
 
 /* iPad [portrait + landscape] */
-@media only screen and (min-width: 768px) and (max-width: 1024px) {
+@media (min-width: 650px) and (max-width: 1024px) {
   .home #content {
     padding-top: 20px;
   }
   .home #masthead {
     width: 90%;
+  }
+  .home #object-container {
+    top: -0.5;
   }
   .home #masthead #header_img {
     left: 0;
@@ -531,10 +534,60 @@ div.menu ul {
   }
   
 }
-/* iPhone [portrait + landscape] */
-@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
-  
-
-}
-  
+ 
+@media (max-width: 649px) {
+  .home #masthead #header_img {
+    display: none;
+  }
+  .home header #object-container #object {
+    height: auto;
+    width: 95%;
+    font-family: Monaco, sans-serif !important;
+    font-size: 1em;
+    top: -20px;
+    left: 10px;
+  }
+  .home #content {
+    padding-top: 20px;
+  }
+  .home #masthead {
+    width: 100%;
+  }
+  .home #object-container {
+    /*top: -0.5;*/
+  }
+  .home #masthead #header_img {
+    width: 100%;
+    right: 0;
+  }
+  .home .flex-control-nav {
+    float: left;
+    width: auto;
+  }
+  .home .flex-control-nav li {
+    margin-left: 20px;
+    padding: 0;
+  }
+  .home .column1 #porfolio {
+    width: 80%;
+    height: 30px;
+    clear: both;
+    margin: 0 auto 20px auto;
+  }
+  .home .listContainer1 {
+    padding: 0;
+  }
+  .home .slide_column {
+  }
+  .home .desc p {
+    padding: 10px 10%;
+  }
+  .home .listContainer1 > .flex-control-nav {
+    margin-left: 1%;
+  }
+  .home .checks .row {
+    float: none;
+    font-size: 16px;
+  }
+} 
 

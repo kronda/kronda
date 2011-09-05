@@ -67,7 +67,7 @@
 }
 
 /* iPad [portrait + landscape] */
-@media (max-width: 1024px) {
+@media (min-width: 650px) and (max-width: 1024px) {
   .home #main {
     .column(11);
     margin-top: -40px;
@@ -96,6 +96,54 @@
             }
             .desc { 
               .column(6,11);
+            }
+          
+          }
+        }
+      }
+    }
+  }
+}
+
+/* iPhone [portrait + landscape] */
+@media (max-width: 649px) {
+  .home #main {
+    .column(12);
+    margin-top: -40px;
+    margin-left: 4%;
+  
+    #content {
+      .row(12);
+    
+      .column1 {
+        .column(12,11);
+      }
+    
+      .column2 {
+        .column(12,11);
+      
+        .slides {
+          .row(12);
+        
+          li {
+            .column(12,12);
+            .row(12);
+          
+            .slide_column{
+              .column(12,12);
+              .row(12);
+              margin-left: 6%;
+              
+              .img_holder {
+                .column(7,12);
+              }
+              .checkboxes {
+                .column(5,12);
+              }
+            }
+            .desc { 
+              .column(12,12);
+              margin-top: 15px;
             }
           
           }
