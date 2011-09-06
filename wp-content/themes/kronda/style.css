@@ -559,6 +559,12 @@ div.menu ul {
   html {
     -webkit-text-size-adjust: none!important;
   }
+  .home header ul#object:before,
+  .home header ul#object:after {
+    content: ""; 
+    color: transparent; 
+  }
+ 
   .home #masthead #header_img, 
   .home header ul#object li#work, 
   .home header ul#object li#play {
