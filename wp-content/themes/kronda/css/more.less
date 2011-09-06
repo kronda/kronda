@@ -106,22 +106,34 @@
 }
 
 /* iPhone [portrait + landscape] */
-@media (max-width: 649px) {
+@media (min-width: 320px) and (max-width: 767px) {
+  
+  .home body,
+  .home #wrapper {
+    .column(12);
+    border: 1px solid red;
   .home #main {
     .column(12);
-    margin-top: -40px;
-    margin-left: 4%;
-  
+  }
     #content {
+      .column(12);
       .row(12);
     
       .column1 {
-        .column(12,11);
+        .column(12,12);
+        .row(12);
+        * {
+          padding:0;
+          margin: 0;
+        }
+        li {
+          margin-left: 15px;
+        }
       }
     
       .column2 {
-        .column(12,11);
-      
+        .column(12,12);
+        margin-top: 20px;
         .slides {
           .row(12);
         
@@ -132,18 +144,18 @@
             .slide_column{
               .column(12,12);
               .row(12);
-              margin-left: 6%;
-              
               .img_holder {
                 .column(7,12);
+                margin-left: 15px;
               }
               .checkboxes {
-                .column(5,12);
+                .column(4,12);
               }
             }
             .desc { 
               .column(12,12);
               margin-top: 15px;
+             
             }
           
           }

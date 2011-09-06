@@ -13,7 +13,7 @@ Version: 1.1
 /* @group Global styles 
 -------------------------------------------------------------- */
 .home #access {
-  height: 2.9em;
+  height: 50px;
   padding: 0;
 }
 #access a { 
@@ -32,7 +32,7 @@ Version: 1.1
 /* @group Home page overrides
 -------------------------------------------------------------- */
 .home {
-  font: 1em/1.5em "ff-dagny-web-pro-1", "ff-dagny-web-pro-2", "Trebuchet MS", Verdana, sans-serif;
+  font: 16px/20px "ff-dagny-web-pro-1", "ff-dagny-web-pro-2", "Trebuchet MS", Verdana, sans-serif;
   color: #fbfbfb; /* off white */
   letter-spacing: .22px;
   padding: 0;
@@ -59,7 +59,7 @@ Version: 1.1
 .home a,
 .home small,
 .home .checks dt {
-	font: 1em/1.5em "ff-dagny-web-pro-1", "ff-dagny-web-pro-2", "Trebuchet MS", Verdana, sans-serif;
+	font: 16px/20px "ff-dagny-web-pro-1", "ff-dagny-web-pro-2", "Trebuchet MS", Verdana, sans-serif;
 }
 .home a, 
 .home a:link, 
@@ -78,7 +78,7 @@ Version: 1.1
   list-style: none;
 }
 .home small {
-  font-size: 0.875em;
+  font-size: 13px;
 }
 .home #content .checks dt {
 	color: #FBFBFB;
@@ -95,14 +95,10 @@ Version: 1.1
 .home #site-description {
 	display: none;
 }
-#primary {
-	font-size: 0.9em;
-	line-height: 1.4em;
-}
 .home #access {
   background: #333;
   opacity: 0.8;
-  min-height: 50px;
+  height: 50px;
   margin: 0;
 	float: none;
 	-webkit-box-shadow: none;
@@ -181,9 +177,9 @@ Version: 1.1
 }
 .home header #object-container #object {
   height: 180px;
-  width: 400px;
+  max-width: 400px;
   font-family: Monaco, sans-serif !important;
-  font-size: 1.125em;
+  font-size: 18px;
   position: relative;
   top: -40px;
   left: 0;
@@ -239,7 +235,7 @@ Version: 1.1
 .home #access .menu ul li.current-menu-ancestor > a, 
 .home #access .menu ul li.current-menu-item > a, 
 .home #access .menu ul li.current-menu-parent > a {
-  font-size: 1em;
+  font-size: 13px;
   opacity: 1.0;
   text-transform: uppercase;
 	background: none;
@@ -376,10 +372,6 @@ div.menu ul {
   max-width: 300px;
   overflow: hidden;
   margin: 0 0 10% 3%;
- /* margin-left: 3%;*/
-}
-.home .checkboxes {
-
 }
 .home .checks {
   margin: 0 0 0 0.8em;
@@ -498,7 +490,7 @@ div.menu ul {
 /* @group =Responsive Structure for home page */
 
 /* iPad [portrait + landscape] */
-@media (min-width: 650px) and (max-width: 1024px) {
+@media (min-width: 768px) and (max-width: 1024px) {
   .home #content {
     padding-top: 20px;
   }
@@ -506,7 +498,7 @@ div.menu ul {
     width: 90%;
   }
   .home #object-container {
-    top: -0.5;
+    top: -0.5px;
   }
   .home #masthead #header_img {
     left: 0;
@@ -534,18 +526,34 @@ div.menu ul {
   }
   
 }
- 
-@media (max-width: 649px) {
-  .home #masthead #header_img {
+@media (min-width: 320px) and (max-width: 650px) {
+  
+  .home #masthead #header_img, 
+  .home header ul#object li#work, 
+  .home header ul#object li#play {
     display: none;
+  }
+  .home header {
+    height: 220px;
+  }
+  .home header #object-container {
+    width: 100%;
+    height: auto;
   }
   .home header #object-container #object {
     height: auto;
     width: 95%;
     font-family: Monaco, sans-serif !important;
     font-size: 1em;
-    top: -20px;
-    left: 10px;
+    position: static;
+    margin-top: 1em;
+  }
+  .home header #object-container #object li {
+    font-size: 20px;
+    margin-bottom: 15px;
+  }
+  .home #main {
+    padding: 0;
   }
   .home #content {
     padding-top: 20px;
@@ -554,7 +562,7 @@ div.menu ul {
     width: 100%;
   }
   .home #object-container {
-    /*top: -0.5;*/
+    top: -0.5px;
   }
   .home #masthead #header_img {
     width: 100%;
@@ -569,10 +577,20 @@ div.menu ul {
     padding: 0;
   }
   .home .column1 #porfolio {
-    width: 80%;
-    height: 30px;
-    clear: both;
-    margin: 0 auto 20px auto;
+    width: 100%;
+    height: auto;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    font-size: 12px;
+  }
+  .home #porfolio a, .home #portfolio a:hover {
+    vertical-align: middle;
+    color: #333;
+    font-size: 13px;
+    height: 100%;
+    width: 100%;
+    text-decoration: none;
   }
   .home .listContainer1 {
     padding: 0;
@@ -580,14 +598,18 @@ div.menu ul {
   .home .slide_column {
   }
   .home .desc p {
-    padding: 10px 10%;
+    padding: 0 15px;
+    font-size: 13px;
   }
   .home .listContainer1 > .flex-control-nav {
     margin-left: 1%;
   }
   .home .checks .row {
     float: none;
-    font-size: 16px;
+    width: 97%;
+  }
+  .home .checks .row dt {
+    font-size: 13px;
   }
 } 
 

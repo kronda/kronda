@@ -10,7 +10,7 @@
 			<div class="flexcontrols">
 					<!-- this is populated by the flexslider script -->			
 			</div><!-- flexcontrols -->
-			<a id="porfolio" href="/portfolio">View All Projects</a>
+			<div id="porfolio"><a href="#">View All Projects</a></div>
 		</div><!-- column1 -->
 	
 			<div id="slider" class="flexslider column2">

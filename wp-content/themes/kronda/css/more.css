@@ -171,43 +171,23 @@ body {
   }
 }
 /* iPhone [portrait + landscape] */
-@media (max-width: 649px) {
-  .home #main {
+@media (min-width: 320px) and (max-width: 767px) {
+  .home body, .home #wrapper {
     display: inline;
     float: left;
     overflow: hidden;
     width: 100%;
     margin: 0 0%;
-    margin-top: -40px;
-    margin-left: 4%;
+    border: 1px solid red;
   }
-  .home #main #content {
-    display: inline-block;
+  .home body .home #main, .home #wrapper .home #main {
+    display: inline;
+    float: left;
     overflow: hidden;
     width: 100%;
     margin: 0 0%;
   }
-  .home #main #content .column1 {
-    display: inline;
-    float: left;
-    overflow: hidden;
-    width: 109.09090909090908%;
-    margin: 0 0%;
-  }
-  .home #main #content .column2 {
-    display: inline;
-    float: left;
-    overflow: hidden;
-    width: 109.09090909090908%;
-    margin: 0 0%;
-  }
-  .home #main #content .column2 .slides {
-    display: inline-block;
-    overflow: hidden;
-    width: 100%;
-    margin: 0 0%;
-  }
-  .home #main #content .column2 .slides li {
+  .home body #content, .home #wrapper #content {
     display: inline;
     float: left;
     overflow: hidden;
@@ -218,7 +198,7 @@ body {
     width: 100%;
     margin: 0 0%;
   }
-  .home #main #content .column2 .slides li .slide_column {
+  .home body #content .column1, .home #wrapper #content .column1 {
     display: inline;
     float: left;
     overflow: hidden;
@@ -228,23 +208,66 @@ body {
     overflow: hidden;
     width: 100%;
     margin: 0 0%;
-    margin-left: 6%;
   }
-  .home #main #content .column2 .slides li .slide_column .img_holder {
+  .home body #content .column1 *, .home #wrapper #content .column1 * {
+    padding: 0;
+    margin: 0;
+  }
+  .home body #content .column1 li, .home #wrapper #content .column1 li {
+    margin-left: 15px;
+  }
+  .home body #content .column2, .home #wrapper #content .column2 {
+    display: inline;
+    float: left;
+    overflow: hidden;
+    width: 100%;
+    margin: 0 0%;
+    margin-top: 20px;
+  }
+  .home body #content .column2 .slides, .home #wrapper #content .column2 .slides {
+    display: inline-block;
+    overflow: hidden;
+    width: 100%;
+    margin: 0 0%;
+  }
+  .home body #content .column2 .slides li, .home #wrapper #content .column2 .slides li {
+    display: inline;
+    float: left;
+    overflow: hidden;
+    width: 100%;
+    margin: 0 0%;
+    display: inline-block;
+    overflow: hidden;
+    width: 100%;
+    margin: 0 0%;
+  }
+  .home body #content .column2 .slides li .slide_column, .home #wrapper #content .column2 .slides li .slide_column {
+    display: inline;
+    float: left;
+    overflow: hidden;
+    width: 100%;
+    margin: 0 0%;
+    display: inline-block;
+    overflow: hidden;
+    width: 100%;
+    margin: 0 0%;
+  }
+  .home body #content .column2 .slides li .slide_column .img_holder, .home #wrapper #content .column2 .slides li .slide_column .img_holder {
     display: inline;
     float: left;
     overflow: hidden;
     width: 58.333333333333336%;
     margin: 0 0%;
+    margin-left: 15px;
   }
-  .home #main #content .column2 .slides li .slide_column .checkboxes {
+  .home body #content .column2 .slides li .slide_column .checkboxes, .home #wrapper #content .column2 .slides li .slide_column .checkboxes {
     display: inline;
     float: left;
     overflow: hidden;
-    width: 41.66666666666667%;
+    width: 33.33333333333333%;
     margin: 0 0%;
   }
-  .home #main #content .column2 .slides li .desc {
+  .home body #content .column2 .slides li .desc, .home #wrapper #content .column2 .slides li .desc {
     display: inline;
     float: left;
     overflow: hidden;
