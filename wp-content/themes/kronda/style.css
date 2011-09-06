@@ -450,12 +450,6 @@ div.menu ul {
 }
 
 /* ---- Footer widget areas --- */
-#blogteaser, #tweet {
-	
-}
-.home .footercolumn {
-	
-}
 .home .footercolumn h4 {
 	font-weight: bold;
 }
@@ -685,5 +679,8 @@ div.menu ul {
   .home .widget a {
     font-size: 13px;
   }
+  .home #tweet .tweet_time a {
+    font-size: 13px;
+}
 } 
 
