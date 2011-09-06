@@ -552,12 +552,23 @@ div.menu ul {
   }
   
 }
-@media (min-width: 320px) and (max-width: 650px),
+@media (max-width: 650px),
 (max-device-width: 480px),
 (-webkit-min-device-pixel-ratio: 2) { 
   
   html {
     -webkit-text-size-adjust: none!important;
+  }
+  .home #access {
+    border-bottom: 1px solid #FBFBFB;
+  }
+  .home header #object-container {
+    -webkit-border-radius-bottomright: 0;
+    -moz-border-radius-bottomright: 0;
+    border-bottom-right-radius: 0;
+    -webkit-border-radius-bottomleft: 0;
+    -moz-border-radius-bottomleft: 0;
+    border-bottom-left-radius: 0;
   }
   .home header ul#object:before,
   .home header ul#object:after {
@@ -569,6 +580,9 @@ div.menu ul {
   .home header ul#object li#work, 
   .home header ul#object li#play {
     display: none;
+  }
+  .home #main {
+    margin-top: -90px;
   }
   .home #content {
     -webkit-border-radius-topleft: 0;
