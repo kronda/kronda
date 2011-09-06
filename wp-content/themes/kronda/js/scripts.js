@@ -43,9 +43,9 @@ jQuery(document).ready(function($) {
         username: "ephanypdx",
         join_text: "auto",
         avatar_size: 32,
-        count: 2,
+        count: 3,
         refresh_interval: 300,
-		fetch: 8,
+				fetch: 15,
         loading_text: "loading tweets...",
 		filter: function(t){ return ! /^@\w+/.test(t["tweet_raw_text"]); },
 

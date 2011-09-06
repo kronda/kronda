@@ -171,14 +171,15 @@ body {
   }
 }
 /* iPhone [portrait + landscape] */
-@media (min-width: 320px) and (max-width: 767px) {
+@media (min-width: 320px) and (max-width: 480px),
+(max-device-width: 480px),
+(-webkit-min-device-pixel-ratio: 2) {
   .home body, .home #wrapper {
     display: inline;
     float: left;
     overflow: hidden;
     width: 100%;
     margin: 0 0%;
-    border: 1px solid red;
   }
   .home body .home #main, .home #wrapper .home #main {
     display: inline;
