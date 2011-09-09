@@ -1,4 +1,5 @@
-jQuery(document).ready(function($) {
+jQuery.noConflict()(function($){
+	
 	// start jquery flexislider
 	$('.flexslider').flexslider({
 		animation: "slide",
@@ -65,6 +66,10 @@ jQuery(document).ready(function($) {
     alert('What are ya trapped at work with some old legacy office computer? Upgrade to IE8 or 9 why don\'tcha?');
   }
 
+// slider for contact form
+ $('#text-8 h3').click(function(){
+	$('#colophon .one').slideUp('slow');
+});
 	//noise for background
 	// function generateNoise (opacity) {
 	//     if (!!!document.createElement('canvas').getContext ) {
@@ -93,4 +98,4 @@ jQuery(document).ready(function($) {
 	//     document.getElementById('wrapper').style.backgroundImage = "url(" + canvas.toDataURL("image/png") + ")";
 	//   }
 	//   generateNoise(0.07);
-});
+})(jQuery);

@@ -106,7 +106,12 @@
 
   					<li id="work">
   						<span class="label">Work:</span>
-  						<span id="worksub">Creating standards based websites using HTML, CSS &amp; Javascript<span id="semicolon">;</span></span>
+  						<span id="worksub">
+								<span>Creating standards based</span>
+								<span>websites using HTML,</span> 
+											CSS &amp; Javascript
+								<span id="semicolon">;</span>
+							</span>
   					</li>
 
   					<li id="play">
