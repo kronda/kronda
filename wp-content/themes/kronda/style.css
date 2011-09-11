@@ -475,17 +475,56 @@ div.menu ul {
   border-top: 1px solid #212121;
   border-bottom: 1px solid #212121;
 }
+#contact a:hover {
+  text-decoration: none;
+}
+#contact .center {
+  width: 65%;
+  margin: 0 auto;
+  padding-left: 10%;
+}
+#contact ul {
+  margin: 0;
+}
 #contact ul li {
   float: left;
+  margin-top: 10px;
 }
 #contact ul li p {
   position: absolute !important;    
   clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
   clip: rect(1px, 1px, 1px, 1px); 
 }
-#resumelink, #contactformlink {
-  height: 50px;
-  display: inline-block;
+#socialicons,
+#resumelink, 
+#contactformlink {
+  float: left;
+  width: auto;
+}
+
+#resumelink, 
+#contactformlink {
+  min-height: 50px;
+  margin: 2px 0 0 0;
+}
+#resumelink a,
+#contactformlink a {
+  text-transform: uppercase;
+	color: #202629;
+	background: #a1c4e0;
+	display: block;
+	margin-top: 15px;
+	text-align: center;
+	border: 2px solid #fbfbfb;
+	font-weight: bold;
+	padding: 3px 1em;
+	-webkit-border-radius: 5px;
+	-khtml-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+#contact #socialicons + li a {
+  text-align: center;
 }
 .home footer {
   background: #333;

@@ -12,37 +12,39 @@
 
 	</div><!-- #main -->
 	
-	<aside id="contact" class="orange-gradient">
-		<ul>
-			<li>
-				</a><p>LinkedIn</p><a href="http://www.linkedin.com/krondaadair">
-				<img src="<?php echo CHILD_TEMPLATE_DIRECTORY;?>	/images/socialmedia/linkedin.png" width="50" height="50" alt="Linkedin"></a>
-			</li>
-			<li>
-				<p>Twitter</p>
-				<a href="http://www.twitter.com/ephanypdx"><img src="<?php echo CHILD_TEMPLATE_DIRECTORY;?>/images/socialmedia/twitter.png" width="50" height="50" alt="Twitter"></a>
-			</li>
-			<li>
-				<p>Google+</p>
-				<a href="https://plus.google.com/115239154121685812568"><img src="<?php echo CHILD_TEMPLATE_DIRECTORY;?>/images/socialmedia/google.png" width="50" height="50" alt="Google+"></a>
-			</li>
-			<li>
-				<p>Flickr</p>
-				<a href="http://www.flickr.com/photos/ephany"><img src="<?php echo CHILD_TEMPLATE_DIRECTORY;?>/images/socialmedia/flickr.png" width="50" height="50" alt="Flickr"></a>
-			</li>
-			<li>
-				<p>Tumblr</p>
-				<a href="http://kronda.tumblr.com/" title="140+"><img src="<?php echo CHILD_TEMPLATE_DIRECTORY;?>/images/socialmedia/tumblr.png" width="50" height="50" alt="Tumblr"></a>
-			</li>
-		</ul>
+	<aside id="contact" class="orange-gradient floatcontainer">
+		<div class="center">
 		
-		<div id="resumelink"><a href="#">Download my Resume</a></div>
-		<div id="contactformlink">Drop me a line</div>
-		
+			<ul id="socialicons" class="floatcontainer">
+				<li>
+					</a><p>LinkedIn</p><a href="http://www.linkedin.com/in/krondaadair">
+					<img src="<?php echo CHILD_TEMPLATE_DIRECTORY;?>	/images/socialmedia/linkedin.png" width="50" height="50" alt="Linkedin"></a>
+				</li>
+				<li>
+					<p>Twitter</p>
+					<a href="http://www.twitter.com/ephanypdx"><img src="<?php echo CHILD_TEMPLATE_DIRECTORY;?>/images/socialmedia/twitter.png" width="50" height="50" alt="Twitter"></a>
+				</li>
+				<li>
+					<p>Google+</p>
+					<a href="https://plus.google.com/115239154121685812568"><img src="<?php echo CHILD_TEMPLATE_DIRECTORY;?>/images/socialmedia/google.png" width="50" height="50" alt="Google+"></a>
+				</li>
+				<li>
+					<p>Flickr</p>
+					<a href="http://www.flickr.com/photos/ephany"><img src="<?php echo CHILD_TEMPLATE_DIRECTORY;?>/images/socialmedia/flickr.png" width="50" height="50" alt="Flickr"></a>
+				</li>
+				<li>
+					<p>Tumblr</p>
+					<a href="http://kronda.tumblr.com/" title="140+"><img src="<?php echo CHILD_TEMPLATE_DIRECTORY;?>/images/socialmedia/tumblr.png" width="50" height="50" alt="Tumblr"></a>
+				</li>
+			</ul>
+
+			<div id="resumelink"><a href="#">Download my resume</a></div>
+			<div id="contactformlink"><a href="#">Drop me a line</a></div>
+		</div><!-- center -->
 	</aside><!-- contact -->
 	
 	<footer id="colophon" role="contentinfo">
-
+			
 			<?php
 				/* A sidebar in the footer? Yep. You can can customize
 				 * your footer with three columns of widgets.

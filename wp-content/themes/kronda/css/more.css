@@ -87,6 +87,19 @@ body {
     margin: 0 0%;
     padding-left: 240px;
   }
+  /*#contact {
+        .column(12);
+      }
+      #contact .center {
+        .column(7);
+        margin-left: 20%; 
+      }
+      #socialicons, #resumelink, #contactformlink {
+        .column(2.333,7);
+       display: inline-block;
+       vertical-align: middle;
+       
+      }*/
   .home #colophon {
     display: inline;
     float: left;
