@@ -54,6 +54,7 @@ Version: 1.1
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#db8318', endColorstr='#ff941c',GradientType=0 ); /* IE6-9 */
   background: linear-gradient(top, rgba(219,131,24,1) 0%,rgba(255,148,28,1) 100%); /* W3C */
 }
+
 /* @end Global styles */
 
 /* @group Home page overrides
@@ -219,7 +220,7 @@ Version: 1.1
   position: absolute;
   top: 0;
   right: 0;
-  height: 190px;
+  height: 160px;
   width: 450px;
   -webkit-border-radius-bottomright: 15px;
   -moz-border-radius-bottomright: 15px;
@@ -259,7 +260,7 @@ Version: 1.1
 }
 .home header #worksub span {
   display: block;
-  margin-bottom: 5px;
+  margin: 5px 0;
 }
 .home header #object #work #worksub #semicolon {
  	display: inline;
@@ -468,6 +469,24 @@ div.menu ul {
 /* @end Busy meter button */
 
 /* @group Footer Home page overrides */
+#contact {
+  clear: both;
+  width: 100%;
+  border-top: 1px solid #212121;
+  border-bottom: 1px solid #212121;
+}
+#contact ul li {
+  float: left;
+}
+#contact ul li p {
+  position: absolute !important;    
+  clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+  clip: rect(1px, 1px, 1px, 1px); 
+}
+#resumelink, #contactformlink {
+  height: 50px;
+  display: inline-block;
+}
 .home footer {
   background: #333;
   opacity: 0.8;
