@@ -110,7 +110,7 @@ Version: 1.1
 	padding: 0;
 	background: #FFF; /* was DEDEDE light gray */
 }
-.home #site-info {
+#site-info {
 	display: none;
 }
 .home #site-description {
@@ -522,7 +522,7 @@ div.menu ul {
 #contactformlink a:hover {
   color: #A1C4E0;
 }
-.home footer {
+footer {
   font-size: .95em;
   background-color: #202629;
   background-image: -webkit-gradient(linear, left top, left bottom, from(#202629), to(#2a2b2b)); 
@@ -537,7 +537,7 @@ div.menu ul {
 .home #supplementary {
   border-top: none;
 }
-.home #site-generator {
+#site-generator {
 	display: none;
 }
 
@@ -832,21 +832,9 @@ body {
   position: relative;
 }
 .not-home #branding #object-container {
-  width: 415px;
-  height: 175px;
+  display: none;
 }
-.not-home #branding #object-container #object {
-  top: -80px;
-}
-.not-home #branding #object-container #object li {
-  margin: 0;
-}
-.not-home #branding #object-container #object span {
-  margin-bottom: 0;
-}
-.not-home #branding #worksub span {
-  margin-bottom: 0;
-}
+
 .not-home #access .menu ul {
   width: 83.33333333333334%;
   padding-left: 140px;
@@ -872,6 +860,15 @@ body {
   padding: 0 .7em;
   font-size: 36px;
   font-weight: normal;
+}
+.not-home .only-search {
+  position: absolute;
+  top: -46px;
+  left: 95%;
+  width: 20em;
+}
+.not-home #branding .only-search #s {
+  border-color: #FBFBFB;
 }
 /* @end */ 
 
