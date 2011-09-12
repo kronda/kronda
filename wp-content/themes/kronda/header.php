@@ -82,7 +82,14 @@
 				<div class="skip-link"><a class="assistive-text" href="#secondary" title="<?php esc_attr_e( 'Skip to secondary content', 'twentyeleven' ); ?>"><?php _e( 'Skip to secondary content', 'twentyeleven' ); ?></a></div>
 				<?php /* Our navigation menu.  If one isn't filled out, wp_nav_menu falls back to wp_page_menu. The menu assiged to the primary position is the one used. If none is assigned, the menu with the lowest ID is used. */ ?>
 				<?php wp_nav_menu( array( 'theme_location' => 'primary' ) ); ?>
-			  </nav><!-- #access -->
+				
+				<?php if ( !is_front_page() ): ?>
+				<div id="logo">
+					<p><span>{</span>Kronda Adair<span>}</span></p>					
+				</div><!-- logo -->
+				<?php endif; ?>
+				
+			</nav><!-- #access -->
 	  	
 			<div id="masthead">
 		    <!-- custom header image -->

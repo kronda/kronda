@@ -61,7 +61,7 @@ Version: 1.1
   letter-spacing: .22px;
   padding: 0;
 }
-.home #page {
+#page {
   margin: 0 auto;
 	max-width: 100%;
 	background: #fff;
@@ -116,7 +116,7 @@ Version: 1.1
 .home #site-description {
 	display: none;
 }
-.home #access {
+#access {
   background: #333;
   opacity: 0.8;
   height: 50px;
@@ -165,13 +165,12 @@ Version: 1.1
 }
 .featuredpost {
   font-size: 100%;
-  /*padding: 0 2em;*/
 }
 /* @end Home page overrides */
 
-/* @group Home page header
+/* @group Page header
 -------------------------------------------------------------- */
-.home header {
+#branding {
   height: 300px;
   background: transparent url(images/header_bg.png) no-repeat center top;
   width: 100%;
@@ -193,28 +192,25 @@ Version: 1.1
   top: 3px;
   left: 24%;
 }
-
-/*hide this on everything but the first page*/
-#object-container {
-  display: none;
-}
-.home header ul#object:before {
+#branding #object:before {
   content: "{";
   font-size: 1.625em;
   color: #ff941c; /*orange*/
   position: relative;
-  top: 10px;
+  top: 30px;
   left: -25px;
 }
-.home header ul#object:after {
+
+#branding #object:after {
   content: "}";
   font-size: 1.625em;
   color: #ff941c; /*orange*/
   position: relative;
-  bottom: 18px;
+  bottom: 35px;
   left: -20px;
 }
-.home header #object-container {
+
+#branding #object-container {
 	display: block;
   background: #333;
   opacity: 0.8;
@@ -230,7 +226,7 @@ Version: 1.1
   -moz-border-radius-bottomleft: 15px;
   border-bottom-left-radius: 15px;
 }
-.home header #object-container #object {
+#branding #object-container #object {
   height: 180px;
   max-width: 400px;
   font-family: Monaco, sans-serif !important;
@@ -239,7 +235,7 @@ Version: 1.1
   top: -40px;
   left: 0;
 }
-.home header #object .label {
+#branding #object .label {
 	display: block;
 	float: left;
 	color: #D9D9CF; /*off-white*/
@@ -247,23 +243,23 @@ Version: 1.1
 	text-align: right;
 	padding-right: 10px;
 }
-.home header ul#object li {
+#branding ul#object li {
   margin-bottom: 7px;
 	margin-left: 20px;
 	display: block;
 }
-.home header ul#object li span {
+#branding ul#object li span {
   color: #a1c4e0;
 }
-.home header ul#object li #worksub {
+#branding ul#object li #worksub {
   display: block;
   margin-left: 80px;
 }
-.home header #worksub span {
+#branding #worksub span {
   display: block;
   margin: 5px 0;
 }
-.home header #object #work #worksub #semicolon {
+#branding #object #work #worksub #semicolon {
  	display: inline;
 	color: #fff;
 	margin: 0 0 0 -10px;
@@ -272,14 +268,13 @@ Version: 1.1
 
 /* @group Menu 
 -------------------------------------------------------------- */
-.home #access .menu {
+#access .menu {
   height: 100%;
 }
-.home #access .menu ul {
+#access .menu ul {
 	width: 100%;
-/*  padding-left: 15em;*/
 }
-.home #access .menu ul:after {
+#access .menu ul:after {
   content: "."; 
   display: block; 
   height: 0; 
@@ -287,13 +282,13 @@ Version: 1.1
   clear: both; 
   visibility:hidden; 
 }
-.home #access .menu li a, 
-.home #access .menu li a:hover, 
-.home #access .menu li a:visited,
-.home #access .menu ul li.current_page_item > a, 
-.home #access .menu ul li.current-menu-ancestor > a, 
-.home #access .menu ul li.current-menu-item > a, 
-.home #access .menu ul li.current-menu-parent > a {
+#access .menu li a, 
+#access .menu li a:hover, 
+#access .menu li a:visited,
+#access .menu ul li.current_page_item > a, 
+#access .menu ul li.current-menu-ancestor > a, 
+#access .menu ul li.current-menu-item > a, 
+#access .menu ul li.current-menu-parent > a {
   font-size: 13px;
   opacity: 1.0;
   text-transform: uppercase;
@@ -302,25 +297,25 @@ Version: 1.1
 	line-height: 1.4em;
 	padding: 1.3em;
 }
-.home #access .menu ul li.current_page_item {
+#access .menu ul li.current_page_item {
   background-color: #FFF;
 }
-.home #access .menu ul li.current_page_item a {
+#access .menu ul li.current_page_item a {
   color: #333;
 }
-.home #access .menu li a:hover {
+#access .menu li a:hover {
 	text-decoration: none;
 	background: #FFF;
 	color: #333;
 }
 /* overriding parent styles */
-.home #access .menu-header,
+#access .menu-header,
 div.menu {
 	font-size: .875em;
 	margin: 0;
 	width: 100%;
 }
-.home #access .menu-header ul,
+#access .menu-header ul,
 div.menu ul {
 	list-style: none;
 	margin: 0;
@@ -813,4 +808,72 @@ div.menu ul {
     font-size: 16px;
 }
 } 
+
+/* @group Blog Styles */
+.not-home #branding {
+  background: transparent url(images/header_bg3.png) no-repeat center top;
+}
+body {
+  padding: 0;
+}
+.not-home #main {
+  /*max-width: 1000px;
+  border: 1px solid #ddd;*/
+}
+.not-home #contact,
+.not-home #supplementary #first {
+  display: none;
+}
+.not-home #masthead {
+  background: transparent;
+  height: 250px;
+  width: 60%; /*was 960px*/
+  margin: 0 auto;
+  position: relative;
+}
+.not-home #branding #object-container {
+  width: 415px;
+  height: 175px;
+}
+.not-home #branding #object-container #object {
+  top: -80px;
+}
+.not-home #branding #object-container #object li {
+  margin: 0;
+}
+.not-home #branding #object-container #object span {
+  margin-bottom: 0;
+}
+.not-home #branding #worksub span {
+  margin-bottom: 0;
+}
+.not-home #access .menu ul {
+  width: 83.33333333333334%;
+  padding-left: 140px;
+}
+#logo {
+  width: auto;
+  height: 30px;
+  background: #8ebfe9;
+  text-align: center;
+  padding: 0 0 20px 0;
+  position: absolute;
+  top: 0px;
+  left: 47%;
+  font-size: 24px;
+  color: #333;
+  font-weight: bold;
+}
+#logo p {
+  margin-top: -8px
+}
+#logo span {
+  color: #ff941c; /*orange*/
+  padding: 0 .7em;
+  font-size: 36px;
+  font-weight: normal;
+}
+/* @end */ 
+
+
 
