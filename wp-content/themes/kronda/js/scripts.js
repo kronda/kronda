@@ -65,11 +65,18 @@ jQuery.noConflict()(function($){
   if (jQuery.browser.version == 7.0) {
     alert('What are ya trapped at work with some old legacy office computer? Upgrade to IE8 or 9 why don\'tcha?');
   }
-
+	
 // slider for contact form
- $('#text-8 h3').click(function(){
-	$('#colophon .one').slideUp('slow');
-});
+	$('#contactformlink').click(function(e) {
+		
+		var $form = $('#text-8');
+		e.preventDefault();
+		
+		$.when ( $form.slideToggle() ).done(function() {
+			$.scrollTo( $('#contact'),{ duration:500, axis:"y" });
+		});
+	});
+
 	//noise for background
 	// function generateNoise (opacity) {
 	//     if (!!!document.createElement('canvas').getContext ) {

@@ -14,32 +14,33 @@
 	
 	<aside id="contact" class="orange-gradient floatcontainer">
 		<div class="center">
+			<div id="resumelink" class="three"><a href="#">Download my resume</a></div>
+			<div id="socialicons" class="three">
+					<ul  class="floatcontainer">
+						<li>
+							</a><p>LinkedIn</p><a href="http://www.linkedin.com/in/krondaadair">
+							<img src="<?php echo CHILD_TEMPLATE_DIRECTORY;?>	/images/socialmedia/linkedin.png" alt="Linkedin"></a>
+						</li>
+						<li>
+							<p>Twitter</p>
+							<a href="http://www.twitter.com/ephanypdx"><img src="<?php echo CHILD_TEMPLATE_DIRECTORY;?>/images/socialmedia/twitter.png" alt="Twitter"></a>
+						</li>
+						<li>
+							<p>Google+</p>
+							<a href="https://plus.google.com/115239154121685812568"><img src="<?php echo CHILD_TEMPLATE_DIRECTORY;?>/images/socialmedia/google.png" alt="Google+"></a>
+						</li>
+						<li>
+							<p>Flickr</p>
+							<a href="http://www.flickr.com/photos/ephany"><img src="<?php echo CHILD_TEMPLATE_DIRECTORY;?>/images/socialmedia/flickr.png" alt="Flickr"></a>
+						</li>
+						<li>
+							<p>Tumblr</p>
+							<a href="http://kronda.tumblr.com/" title="140+"><img src="<?php echo CHILD_TEMPLATE_DIRECTORY;?>/images/socialmedia/tumblr.png" alt="Tumblr"></a>
+						</li>
+				</ul>
+			</div><!-- socialicons -->
 		
-			<ul id="socialicons" class="floatcontainer">
-				<li>
-					</a><p>LinkedIn</p><a href="http://www.linkedin.com/in/krondaadair">
-					<img src="<?php echo CHILD_TEMPLATE_DIRECTORY;?>	/images/socialmedia/linkedin.png" width="50" height="50" alt="Linkedin"></a>
-				</li>
-				<li>
-					<p>Twitter</p>
-					<a href="http://www.twitter.com/ephanypdx"><img src="<?php echo CHILD_TEMPLATE_DIRECTORY;?>/images/socialmedia/twitter.png" width="50" height="50" alt="Twitter"></a>
-				</li>
-				<li>
-					<p>Google+</p>
-					<a href="https://plus.google.com/115239154121685812568"><img src="<?php echo CHILD_TEMPLATE_DIRECTORY;?>/images/socialmedia/google.png" width="50" height="50" alt="Google+"></a>
-				</li>
-				<li>
-					<p>Flickr</p>
-					<a href="http://www.flickr.com/photos/ephany"><img src="<?php echo CHILD_TEMPLATE_DIRECTORY;?>/images/socialmedia/flickr.png" width="50" height="50" alt="Flickr"></a>
-				</li>
-				<li>
-					<p>Tumblr</p>
-					<a href="http://kronda.tumblr.com/" title="140+"><img src="<?php echo CHILD_TEMPLATE_DIRECTORY;?>/images/socialmedia/tumblr.png" width="50" height="50" alt="Tumblr"></a>
-				</li>
-			</ul>
-
-			<div id="resumelink"><a href="#">Download my resume</a></div>
-			<div id="contactformlink"><a href="#">Drop me a line</a></div>
+			<div id="contactformlink" class="three"><a href="">Drop me a line</a></div>
 		</div><!-- center -->
 	</aside><!-- contact -->
 	
@@ -84,38 +85,20 @@
 				</div><!-- busymeter -->
 				
 				
-				<div id="supplementary" class="three"> 
-					
-				
+				<div id="supplementary" class="two"> 
+
 					<div id="first" class="widget-area" role="complementary"> 
-						<aside id="social" class="widget">		
-								<h3>My Hangouts</h3>
-								<ul>
-									<li class="first"><a href="http://twitter.com/ephanypdx">Twitter</a></li>
-									<li><a href="http://www.linkedin.com/in/krondaadair">LinkedIn</a></li>
-									<li><a href="http://kronda.tumblr.com/">Tumblr</a></li>
-									<li class="last"><a href="http://flickr.com/photos/ephany">Flickr</a></li>
-
-								</ul>
-						</aside><!-- social -->
-		 			</div><!-- #first .widget-area --> 
-		
-		
-
-					<div id="second" class="widget-area" role="complementary"> 
 						<aside id="blogteaser" class="widget widget_tag_cloud">
 							<h3>From The Blog</h3>
 							<?php show_featured_post($PreFeature = '', $PostFeature = '', $AlwaysShow = false); ?>					
 						</aside><!-- blogteaser -->
-					</div><!-- #second .widget-area --> 
+					</div><!-- #first .widget-area --> 
 					
-					
-
-					<div id="third" class="widget-area" role="complementary"> 
+					<div id="second" class="widget-area" role="complementary"> 
 						<aside id="tweet" class="widget">
 							<h3>What Is She Talking About?</h3>
 						</aside><!-- tweet -->
-					</div><!-- #third .widget-area --> 
+					</div><!-- #second .widget-area --> 
 					
 				</div><!-- #supplementary -->
 				<?php endif; ?>

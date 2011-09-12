@@ -29,7 +29,7 @@ Version: 1.1
 }
 .wpcf7-submit {
   border: 1px solid #AEAEAE;
-  width: 100%;
+  width: 91%;
   height: 50px;
   cursor: pointer;
   font-size: 24px;
@@ -39,10 +39,6 @@ Version: 1.1
      -moz-box-shadow: 1px 3px 4px #333; 
           box-shadow: 1px 3px 4px #333; 
 
-}
-#text-8 h3 {
-  border: 1px solid white;
-  cursor: pointer;
 }
 .orange-gradient  {
   background: rgb(219,131,24); /* Old browsers */
@@ -61,7 +57,7 @@ Version: 1.1
 -------------------------------------------------------------- */
 .home {
   font: 14px/18px "ff-dagny-web-pro-1", "ff-dagny-web-pro-2", "Trebuchet MS", Verdana, sans-serif;
-  color: #fbfbfb; /* off white */
+  color: #FBFBFB; /* off white */
   letter-spacing: .22px;
   padding: 0;
 }
@@ -93,13 +89,10 @@ Version: 1.1
 .home a:link, 
 .home a:visited {
   text-decoration: none;
-  color: #a1c4e0; /* light blue */
+  color: #A1C4E0; /* light blue */
 }
 .home a:hover, a:focus, a:active {
   text-decoration: underline;
-}
-.home .column1 #porfolio {
-  /*color: red;*/
 }
 .home ul,
 .home li {
@@ -161,10 +154,18 @@ Version: 1.1
   float: left;
   margin-right: 5px;
 }
+.home #tweet .tweet_list li {
+  padding: 0 25px;
+}
 .home .tweet_list li {
   clear: both;
   margin-bottom: 15px;
-  font-size: 16px;
+  font-size: 100%;
+  color: #FBFBFB;
+}
+.featuredpost {
+  font-size: 100%;
+  /*padding: 0 2em;*/
 }
 /* @end Home page overrides */
 
@@ -478,58 +479,56 @@ div.menu ul {
 #contact a:hover {
   text-decoration: none;
 }
-#contact .center {
-  width: 65%;
+#socialicons ul {
   margin: 0 auto;
-  padding-left: 10%;
+  text-align: left;
+  width: 250px;
 }
-#contact ul {
-  margin: 0;
-}
-#contact ul li {
+#socialicons ul li {
   float: left;
-  margin-top: 10px;
+  margin: 10px 0 0 0;
 }
 #contact ul li p {
   position: absolute !important;    
   clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
   clip: rect(1px, 1px, 1px, 1px); 
 }
-#socialicons,
-#resumelink, 
-#contactformlink {
-  float: left;
-  width: auto;
-}
-
-#resumelink, 
-#contactformlink {
+#contact .three {
   min-height: 50px;
-  margin: 2px 0 0 0;
+  text-align: center;
 }
 #resumelink a,
 #contactformlink a {
+  width: 250px;
   text-transform: uppercase;
-	color: #202629;
-	background: #a1c4e0;
+  cursor: pointer;
+	color: #FFF;
+	background: #202629;
 	display: block;
-	margin-top: 15px;
+	margin: 15px auto 0 auto;
 	text-align: center;
-	border: 2px solid #fbfbfb;
 	font-weight: bold;
-	padding: 3px 1em;
+	padding: .45em 1em;
 	-webkit-border-radius: 5px;
 	-khtml-border-radius: 5px;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
 }
-#contact #socialicons + li a {
-  text-align: center;
+#resumelink a:hover,
+#contactformlink a:hover {
+  color: #A1C4E0;
 }
 .home footer {
-  background: #333;
-  opacity: 0.8;
   font-size: .95em;
+  background-color: #202629;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#202629), to(#2a2b2b)); 
+  background-image: -webkit-linear-gradient(top, #202629, #2a2b2b); 
+  background-image:    -moz-linear-gradient(top, #202629, #2a2b2b); 
+  background-image:     -ms-linear-gradient(top, #202629, #2a2b2b); 
+  background-image:      -o-linear-gradient(top, #202629, #2a2b2b); 
+  background-image:         linear-gradient(top, #202629, #2a2b2b);
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#202629', EndColorStr='#2a2b2b'); 
+ EndColorStr='#0d1e26'); 
 }
 .home #supplementary {
   border-top: none;
@@ -578,22 +577,51 @@ div.menu ul {
   margin-top: -3px;
   width: 100px;
 }
+/* @group Contact Form */
+.home #text-8 {
+  display: none;
+}
+.home #text-8 h3 {
+  cursor: pointer;
+  color: #FBFBFB;
+}
+.home .wpcf7-form {
+  font-size: 12px;
+  color: #888;
+}
+.home .wpcf7-form input[type=text],
+.home .wpcf7-form input[type=password],
+.home .wpcf7-form textarea {
+	background: #FBFBFB;
+	-moz-box-shadow: inset 0 1px 1px rgba(0,0,0,0.1);
+	-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.1);
+	box-shadow: inset 0 1px 1px rgba(0,0,0,0.1);
+	border: 2px solid #333;
+	color: #888;
+	-webkit-border-radius: 5px;
+  -khtml-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
 
-/* Social Links */
-.home #social ul {
-	padding-left: 10px;
-  padding-right: 10px;
 }
-.home #social .first {
-	border-top: 2px dashed #8895ac;
+.home .wpcf7-form input[type=text]:focus,
+.home .wpcf7-form textarea:focus {
+	color: #373737;
 }
-.home #social li { 
-	border-bottom: 2px dashed #8895ac;
-  font-size: 1.2em;
-  padding-bottom: .75em;
-  padding-top: .75em;
-  text-align: center;
+
+.home .wpcf7-form textarea {
+	padding-left: 3px;
+	width: 90%;
 }
+.home .wpcf7-form input[type=text] {
+	padding: 3px;
+}
+.home .wpcf7-form .quizyour {
+  display: block;
+  padding: 0 0 0 3px;
+}
+/* @end Contact Form*/
+
 /* @end Footer homepage overrides */
 
 /* @group =Responsive Structure for home page */
@@ -773,7 +801,7 @@ div.menu ul {
     font-size: 13px;
   }
   .home #tweet .tweet_time a {
-    font-size: 13px;
+    font-size: 16px;
 }
 } 
 

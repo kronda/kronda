@@ -34,6 +34,11 @@ function add_custom_js() {
 		       '/wp-content/themes/kronda/js/less.min.js',
 		       array('jquery'),
 		       '1.1.3');
+		
+		wp_register_script('jquery.scrollTo-min',
+		       '/wp-content/themes/kronda/js/jquery.scrollTo-min.js',
+		       array('jquery'),
+		       '1.4.2');
 			
 		wp_register_script('scripts',
 		       '/wp-content/themes/kronda/js/scripts.js',
@@ -49,7 +54,9 @@ function add_custom_js() {
 		wp_enqueue_script('jquery.tweet');
 		wp_enqueue_script('jquery.easyListSplitter');
 		wp_enqueue_script('less.min');	
+		wp_enqueue_script('jquery.scrollTo-min');
 		wp_enqueue_script('scripts');
+		
 	
 	}
 } 

@@ -1,6 +1,6 @@
 span.wpcf7-not-valid-tip {
 	left: auto;
-	right: 20%;
+	right: 0%;
 	direction: rtl;
 }
 span.wpcf7-not-valid-tip-no-ajax {
@@ -8,5 +8,5 @@ span.wpcf7-not-valid-tip-no-ajax {
 }
 span.wpcf7-list-item {
 	margin-left: 0;
-	margin-right: 0.5em;
+	margin-right: 0;
 }

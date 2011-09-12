@@ -87,19 +87,28 @@ body {
     margin: 0 0%;
     padding-left: 240px;
   }
-  /*#contact {
-        .column(12);
-      }
-      #contact .center {
-        .column(7);
-        margin-left: 20%; 
-      }
-      #socialicons, #resumelink, #contactformlink {
-        .column(2.333,7);
-       display: inline-block;
-       vertical-align: middle;
-       
-      }*/
+  #contact {
+    display: inline;
+    float: left;
+    overflow: hidden;
+    width: 100%;
+    margin: 0 0%;
+  }
+  #contact .center {
+    display: inline;
+    float: left;
+    overflow: hidden;
+    width: 75%;
+    margin: 0 0%;
+    margin-left: 11%;
+  }
+  #contact .center .three {
+    display: inline;
+    float: left;
+    overflow: hidden;
+    width: 33.33333333333333%;
+    margin: 0 0%;
+  }
   .home #colophon {
     display: inline;
     float: left;
