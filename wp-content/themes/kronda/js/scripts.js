@@ -77,6 +77,12 @@ jQuery.noConflict()(function($){
 		});
 	});
 
+//Add a class to non-home pages
+if ( !$('body').hasClass('home') ) {
+	$('body').addClass('not-home');
+}
+
+
 	//noise for background
 	// function generateNoise (opacity) {
 	//     if (!!!document.createElement('canvas').getContext ) {
