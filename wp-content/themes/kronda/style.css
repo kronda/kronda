@@ -488,6 +488,15 @@ div.menu ul {
   float: left;
   margin: 10px 0 0 0;
 }
+#socialicons ul li a {
+  width: 50px;
+  height: 50px;
+  overflow: hidden;
+  float: left;
+}
+#socialicons ul li a:hover img {
+  margin-top: -50px;
+}
 #contact ul li p {
   position: absolute !important;    
   clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
