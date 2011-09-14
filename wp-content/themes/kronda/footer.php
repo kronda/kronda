@@ -14,7 +14,7 @@
 	
 	<aside id="contact" class="orange-gradient floatcontainer">
 		<div class="center">
-			<div id="resumelink" class="three"><a href="#">Download my resume</a></div>
+			<div id="resumelink" class="three"><a href="<?php echo get_bloginfo('url'); ?>/wp-content/uploads/2011/09/kronda_adair_resume.pdf">Download my resume</a></div>
 			<div id="socialicons" class="three">
 					<ul  class="floatcontainer">
 						<li>
@@ -101,19 +101,22 @@
 					</div><!-- #second .widget-area --> 
 					
 				</div><!-- #supplementary -->
-				<?php endif; ?>
+				<?php endif; ?>			
 				
-				<div id="site-info">
-					<a href="<?php echo home_url( '/' ) ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home">
-						<?php bloginfo( 'name' ); ?>
-					</a>
-				</div><!-- #site-info -->
-					
 			<div id="site-generator">
 				<?php do_action( 'twentyeleven_credits' ); ?>
 				<a href="<?php echo esc_url( __( 'http://wordpress.org/', 'twentyeleven' ) ); ?>" title="<?php esc_attr_e( 'Semantic Personal Publishing Platform', 'twentyeleven' ); ?>" rel="generator"><?php printf( __( 'Proudly powered by %s', 'twentyeleven' ), 'WordPress' ); ?></a>
 			</div><!-- site-generator -->
 
+			<div id="site-info">
+				<p><span>Credits:</span>
+					<?php if (is_front_page() ) : ?>
+						Author photo by <a href="http://www.linkedin.com/in/jakobferrier" title="Jakob Ferrier  | LinkedIn">Jakob Ferrier</a>
+						<?php endif; ?>
+						</p>
+				<p>&copy; Kronda Adair 2011</p>
+				<?php wp_nav_menu( array( 'theme_location' => 'primary' ) ); ?>
+			</div><!-- #site-info -->
 			
 	</footer><!-- #colophon -->
 </div><!-- #page -->

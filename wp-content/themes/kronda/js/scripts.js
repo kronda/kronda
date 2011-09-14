@@ -18,8 +18,7 @@ jQuery.noConflict()(function($){
     pauseOnAction: false,            //Pause the slideshow when interacting with control elements, highly recommended. (true/false)
     pauseOnHover: true,            //Pause the slideshow when hovering over slider, then resume when no longer hovering (true/false)
 	});
-	
-	
+
 	function addThumbnails() {
 		var element = $('.flex-control-nav li a');
 		var baseurl = window.location.href;
@@ -81,7 +80,10 @@ jQuery.noConflict()(function($){
 if ( !$('body').hasClass('home') ) {
 	$('body').addClass('not-home');
 }
-
+	
+	$('#wdig img').hover(function(){
+		console.log($(this));
+	})
 
 	// noise for background
 	// function generateNoise (opacity) {

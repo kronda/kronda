@@ -108,7 +108,7 @@
 		    <!-- custom header image -->
   			<div id="header_img">
   				<?php if ( is_front_page() ): ?>
-  				<img src="<?php echo CHILD_TEMPLATE_DIRECTORY;?>/images/me_bigger.png"  width="380" height="231" alt="Me, my laptop and my favorite cargo bike, geeking out on the go">
+  				<img src="<?php echo CHILD_TEMPLATE_DIRECTORY;?>/images/me_bigger.png"  width="380" height="231" alt="Me, my laptop and my favorite cargo bike, geeking out on the go" title="Photo by Jakob Ferrier">
   			</div><!-- header_img -->
   			
   			<!-- insert custom header element -->
