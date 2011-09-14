@@ -682,7 +682,8 @@ footer {
 /* @group =Responsive Structure for home page */
 
 /* iPad [portrait + landscape] */
-@media (max-width: 1024px) and (max-device-width: 1024px) {
+@media (max-width: 1024px),
+(max-device-width: 1024px) {
   
   html {
     -webkit-text-size-adjust: none!important;
@@ -697,7 +698,8 @@ footer {
     top: -0.5px;
   }
   .home #masthead #header_img {
-    left: 0;
+    top: 0;
+    left: 14%;
   }
   .home .flex-control-nav {
     float: left;

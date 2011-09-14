@@ -1,4 +1,4 @@
-.home body {
+body {
   width: 100%;
   float: left;
 }
@@ -129,14 +129,15 @@
   
 }
 /* iPad [portrait + landscape] */
-@media (max-width: 1024px) and (max-device-width: 1024px) {
+@media (max-width: 1024px),
+(min-device-width: 768) and (max-device-width: 1024px) {
   .home #main {
     display: inline;
     float: left;
     overflow: hidden;
     width: 91.66666666666666%;
     margin: 0 0%;
-    margin-top: -40px;
+    margin-top: -33px;
     margin-left: 4%;
   }
   .home #main #content {
@@ -191,9 +192,24 @@
     width: 54.54545454545454%;
     margin: 0 0%;
   }
+  .home #contact .center {
+    display: inline;
+    float: left;
+    overflow: hidden;
+    width: 100%;
+    margin: 0 0%;
+    margin-left: 0;
+  }
+  .home #contact .center .three {
+    display: inline;
+    float: left;
+    overflow: hidden;
+    width: 33.33333333333333%;
+    margin: 0 0%;
+  }
 }
 /* iPhone [portrait + landscape] */
-@media (max-width: 480px),
+@media (max-width: 640px),
 (max-device-width: 480px),
 (-webkit-min-device-pixel-ratio: 2) {
   .home body, .home #wrapper {
