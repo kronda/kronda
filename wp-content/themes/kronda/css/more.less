@@ -80,10 +80,11 @@
 }
 
 /* iPad [portrait + landscape] */
-@media(max-width: 1024px) and (max-device-width: 1024px) {
+@media(max-width: 1024px),
+(min-device-width: 768) and (max-device-width: 1024px) {
   .home #main {
     .column(11);
-    margin-top: -40px;
+    margin-top: -33px;
     margin-left: 4%;
   
     #content {
@@ -116,10 +117,21 @@
       }
     }
   }
+  .home #contact { 
+    
+    .center {
+      .column(12);
+      margin-left: 0;
+      
+      .three {
+        .column(3,9);
+      }
+    }
+  }
 }
 
 /* iPhone [portrait + landscape] */
-@media (max-width: 480px),
+@media (max-width: 640px),
 (max-device-width: 480px),
 (-webkit-min-device-pixel-ratio: 2) {
   

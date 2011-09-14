@@ -109,13 +109,12 @@
 			</div><!-- site-generator -->
 
 			<div id="site-info">
-				<p><span>Credits:</span>
+				
 					<?php if (is_front_page() ) : ?>
-						Author photo by <a href="http://www.linkedin.com/in/jakobferrier" title="Jakob Ferrier  | LinkedIn">Jakob Ferrier</a>
-						<?php endif; ?>
-						</p>
-				<p>&copy; Kronda Adair 2011</p>
-				<?php wp_nav_menu( array( 'theme_location' => 'primary' ) ); ?>
+						<p class="photocredit">Author photo by <a href="http://www.linkedin.com/in/jakobferrier" title="Jakob Ferrier  | LinkedIn">Jakob Ferrier</a></p>
+						<?php endif; ?>				
+						<p class="copyright">&copy; Kronda Adair 2011</p>
+					<?php wp_nav_menu( array( 'theme_location' => 'primary' ) ); ?>
 			</div><!-- #site-info -->
 			
 	</footer><!-- #colophon -->
