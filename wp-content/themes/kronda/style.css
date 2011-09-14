@@ -131,27 +131,36 @@ blockquote cite,
 }
 #site-info {
 	clear: both;
-  padding: 0 2em;
-  text-align: center;
-  max-width: 55%;
+  padding: 0 1em 1em 0;
+  text-align: left;
   margin: 0 auto 20px auto;
 }
-#site-info span {
-  margin: 0 1em 0 0;
+#site-info .photocredit,
+#site-info .photocredit a,
+#site-info .copyright {
+  font-size: 10px;
 }
-#site-info p,
-#site-info div {
+.not-home #site-info .copyright {
+  color: #FBFBFB;
+  margin: 0 0 0 6em;
+}
+#site-info p {
   display: inline;
-  margin-left: 1.5em;
-}
-#site-info div ul {
-  margin: 0;
-  padding: 0;
-  float: right;
-}
-#site-info div ul li {
+  margin-left: 1em;
   float: left;
-  margin-right: 1em;
+}
+#site-info .menu {
+  margin: 0 auto 20px auto;
+  width: 17em;
+}
+#site-info .menu ul {
+  margin: 0 auto 0 0;
+  padding: 0;
+}
+#site-info .menu ul li {
+  float: left;
+  margin: 0 1em 0 0;
+  list-style: none;
 }
 .home #site-description {
 	/*display: none;*/
@@ -495,6 +504,10 @@ blockquote cite,
 /* @end Busy meter button */
 
 /* @group Footer Home page overrides */
+
+#colophon {
+  padding-bottom: 10px;
+}
 #contact {
   clear: both;
   width: 100%;
@@ -575,6 +588,9 @@ footer {
 }
 
 /* ---- Footer widget areas --- */
+.home .featuredpost p + a {
+  color: #FF941C; /*orange*/
+}
 .home .footercolumn h4 {
 	font-weight: bold;
 }
@@ -933,10 +949,17 @@ body {
   top: 0;
   left: -9999px;
 }
+.page-template-page-about-php .wp-caption {
+  background: none;
+}
+.page-template-page-about-php .wp-caption a img {
+  border: none;
+}
 .page-template-page-about-php .intro {
   font-size: 28px;
   font-weight: 700;
   line-height: 34px;
+  margin-top: 25px;
 }
 .page-template-page-about-php .entry-content {
   width: 80%;

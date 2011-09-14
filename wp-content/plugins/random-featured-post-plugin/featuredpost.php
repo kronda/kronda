@@ -228,7 +228,7 @@ function show_featured_post($PreFeature = '', $PostFeature = '', $AlwaysShow = f
 					echo apply_filters('the_content', substr($thepost->post_content,0,$moreposition));
                         }
 				if ($moreposition != 0) {   // we have a more tag, partial post displayed
-		   			echo "<a href=\"";
+		   			echo "<a class=\"featured-more\" href=\"";
 					echo get_permalink($myID);
 					echo "\" title=\"";
 					echo apply_filters('the_title', $thepost->post_title);
