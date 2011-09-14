@@ -89,15 +89,28 @@
 				</div><!-- logo -->
 				<?php endif; ?>
 				
+				<?php
+					// Has the text been hidden?
+					if ( 'blank' == get_header_textcolor() ) :
+				?>
+					<div class="only-search<?php if ( ! empty( $header_image ) ) : ?> with-image<?php endif; ?>">
+					<?php get_search_form(); ?>
+					</div>
+				<?php
+					else :
+				?>
+					<?php get_search_form(); ?>
+				<?php endif; ?>
 			</nav><!-- #access -->
 	  	
 			<div id="masthead">
+				
 		    <!-- custom header image -->
   			<div id="header_img">
   				<?php if ( is_front_page() ): ?>
   				<img src="<?php echo CHILD_TEMPLATE_DIRECTORY;?>/images/me_bigger.png"  width="380" height="231" alt="Me, my laptop and my favorite cargo bike, geeking out on the go">
   			</div><!-- header_img -->
-  			<?php endif ?>
+  			
   			<!-- insert custom header element -->
   			<div id="object-container">
   				<ul id="object">
@@ -127,7 +140,7 @@
   					</li>
   				</ul>
   			</div><!-- object-container -->
-        
+        <?php endif ?>
 			
 			<hgroup>
 				<h1 id="site-title"><span><a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></span></h1>
@@ -159,18 +172,6 @@
 			<?php endif; // end check for removed header image ?>
       <?php endif; // end check for front page ?> 
       
-			<?php
-				// Has the text been hidden?
-				if ( 'blank' == get_header_textcolor() ) :
-			?>
-				<div class="only-search<?php if ( ! empty( $header_image ) ) : ?> with-image<?php endif; ?>">
-				<?php get_search_form(); ?>
-				</div>
-			<?php
-				else :
-			?>
-				<?php get_search_form(); ?>
-			<?php endif; ?>
 			</div><!-- masthead -->
 	</header><!-- #branding -->
 
