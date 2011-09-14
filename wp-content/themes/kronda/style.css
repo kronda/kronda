@@ -163,7 +163,7 @@ blockquote cite,
   list-style: none;
 }
 .home #site-description {
-	/*display: none;*/
+	display: none;
 }
 .home #searchform {
   display: none;
