@@ -90,12 +90,12 @@ get_header(); ?>
 						
 						<div class="description">
 							<p>Finding myself in need of another class project, I approached Ryan of Che Cafe and made him an offer he couldn't refuse. The new site was my attempt to reverse everything I hate about bad restaurant websites and focuses on the goods: Where are you, when are you open and what's on the menu? Twitter integration and a responsive layout were no-brainers.</p>
-							<a href="http://waronpink.kronda.com" class="visit external_link" target="_blank">Visit Site</a>
+							<a href="http://www.checafepdx.com" class="visit external_link" target="_blank">Visit Site</a>
 						</div>	
 					</li>
 					
 					<li class="floatcontainer">
-						<h2>Che Cafe Food Cart</h2>
+						<h2>War on Pink: A Custom Blog</h2>
 						<img src="<?php echo CHILD_TEMPLATE_DIRECTORY;?>/images/portfolio/waronpink.jpg" alt="War on Pink: a custom blog project">
 						<div class="technologies">
 							<ul>
@@ -110,7 +110,7 @@ get_header(); ?>
 						
 						<div class="description">
 							<p>In my first PHP class, I took on the challenge of coding my own custom blog from scratch. It includes an admin area to create new posts and takes comments from visitors. In 10 weeks I went from zero PHP knowledge to a functional blog. Doing everything on my own, gave me even more respect for the fine developers at Wordpress.</p>
-							<a href="http://www.checafepdx.com" class="visit external_link" target="_blank">Visit Site</a>
+							<a href="http://waronpink.kronda.com" class="visit external_link" target="_blank">Visit Site</a>
 						</div>	
 					</li>
 					

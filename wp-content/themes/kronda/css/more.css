@@ -24,6 +24,7 @@ body {
     width: 58.333333333333336%;
     margin: 0 0%;
     margin-left: 20%;
+    margin-top: -33px;
   }
   .home #main #content {
     display: inline-block;
@@ -75,9 +76,6 @@ body {
     overflow: hidden;
     width: 60%;
     margin: 0 0%;
-  }
-  .home #main {
-    margin-top: -40px;
   }
   .home #access ul {
     display: inline;
@@ -209,8 +207,8 @@ body {
   }
 }
 /* iPhone [portrait + landscape] */
-@media (max-width: 640px),
-(max-device-width: 480px),
+@media (max-width: 680px),
+/*(max-device-width: 480px),*/
 (-webkit-min-device-pixel-ratio: 2) {
   .home body, .home #wrapper {
     display: inline;
@@ -219,7 +217,7 @@ body {
     width: 100%;
     margin: 0 0%;
   }
-  .home body .home #main, .home #wrapper .home #main {
+  .home body #main, .home #wrapper #main {
     display: inline;
     float: left;
     overflow: hidden;

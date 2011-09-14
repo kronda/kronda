@@ -28,9 +28,9 @@ Version: 1.1
   font-size: 24px;
   border-radius: 5px;
   
-/*  -webkit-box-shadow: 1px 3px 1px #333; 
-     -moz-box-shadow: 1px 3px 1px #333; 
-          box-shadow: 1px 3px 1px #333;*/
+  -webkit-box-shadow: 1px 3px 1px rgba(0, 0, 0, 0.4); 
+     -moz-box-shadow: 1px 3px 1px rgba(0, 0, 0, 0.4); 
+          box-shadow: 1px 3px 1px rgba(0, 0, 0, 0.4);
   background: rgb(219,131,24); /* Old browsers */
   background: -moz-linear-gradient(top, rgba(219,131,24,1) 0%, rgba(255,148,28,1) 100%); /* FF3.6+ */
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(219,131,24,1)), color-stop(100%,rgba(255,148,28,1))); /* Chrome,Safari4+ */
@@ -128,6 +128,9 @@ blockquote cite,
 	margin: 0;
 	padding: 0;
 	background: #FFF; /* was DEDEDE light gray */
+}
+.home #logo {
+  display: none;
 }
 #site-info {
 	clear: both;
@@ -588,8 +591,9 @@ footer {
 }
 
 /* ---- Footer widget areas --- */
-.home .featuredpost p + a {
+.home .featuredpost p + a.visit {
   color: #FF941C; /*orange*/
+  letter-spacing: 1em;
 }
 .home .footercolumn h4 {
 	font-weight: bold;
@@ -734,20 +738,20 @@ footer {
   .home #access {
     border-bottom: 1px solid #FBFBFB;
   }
-  .home header #object-container {
-    -webkit-border-radius-bottomright: 0;
-    -moz-border-radius-bottomright: 0;
-    border-bottom-right-radius: 0;
-    -webkit-border-radius-bottomleft: 0;
-    -moz-border-radius-bottomleft: 0;
-    border-bottom-left-radius: 0;
+  .home #logo {
+    display: block;
+    position: absolute;
+    top: 51px;
+    left: 0;
+    width: 100%;
   }
-  .home header ul#object:before,
-  .home header ul#object:after {
-    content: ""; 
-    color: transparent; 
+  .home #logo p {
+    font-size: 24px;
   }
- 
+  .home #branding #object-container,
+  .home #branding #object {
+    display: none;
+  }
   .home #masthead #header_img, 
   .home header ul#object li#work, 
   .home header ul#object li#play {
@@ -759,6 +763,7 @@ footer {
   .home #content {
     -webkit-border-radius-topleft: 0;
     -moz-border-radius-topleft: 0;
+    border-radius-topleft: 0;
     border-top-left-radius: 0;
     -webkit-border-radius-bottomright: 0;
     -moz-border-radius-bottomright: 0;
@@ -767,8 +772,8 @@ footer {
   .home #wrapper #main #content {
     font-size: 80%;
   }
-  .home header {
-    height: 220px;
+  .home #branding {
+    height: 100px;
   }
   .home header #object-container {
     width: 100%;
@@ -794,9 +799,6 @@ footer {
   }
   .home #masthead {
     width: 100%;
-  }
-  .home #object-container {
-    top: -0.5px;
   }
   .home #masthead #header_img {
     width: 100%;
@@ -835,7 +837,7 @@ footer {
   }
   .home .desc p {
     padding: 0 15px;
-    font-size: 13px;
+    font-size: 16px;
   }
   .home .listContainer1 > .flex-control-nav {
     margin-left: 1%;
@@ -848,14 +850,14 @@ footer {
     font-size: 13px;
   }
   .home aside h3 {
-    font-size: 15px;
+    font-size: 20px;
     text-align: center;
     margin-bottom: 10px;
   }
   .home #blogteaser p,
   .home .widget ul li,
   .home .widget a {
-    font-size: 13px;
+    font-size: 16px;
   }
   .home #tweet .tweet_time a {
     font-size: 16px;
@@ -1020,7 +1022,6 @@ body {
   float: left;
   margin-right: 25px;
   color: #FBFBFB;
-  font-weight: bold;
   list-style: disc;
 }
 .page-template-showcase-custom-portfolio-php .portfolio p {

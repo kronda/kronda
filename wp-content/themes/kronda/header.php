@@ -83,11 +83,9 @@
 				<?php /* Our navigation menu.  If one isn't filled out, wp_nav_menu falls back to wp_page_menu. The menu assiged to the primary position is the one used. If none is assigned, the menu with the lowest ID is used. */ ?>
 				<?php wp_nav_menu( array( 'theme_location' => 'primary' ) ); ?>
 				
-				<?php if ( !is_front_page() ): ?>
 				<div id="logo">
 					<p><span>{</span>Kronda Adair<span>}</span></p>					
 				</div><!-- logo -->
-				<?php endif; ?>
 				
 				<?php
 					// Has the text been hidden?

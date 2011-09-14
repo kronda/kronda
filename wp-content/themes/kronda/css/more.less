@@ -13,7 +13,7 @@
   .home #main {
     .column(7);
     margin-left: 20%;
-  
+    margin-top: -33px;
     #content {
       .row(7);
     
@@ -43,9 +43,6 @@
       }
     }
   }
-  .home #main {
-    margin-top: -40px;
-  }
   .home #access ul {
     .column(10);
     padding-left: @column-width * 4px;
@@ -62,9 +59,7 @@
       }
     }
   }
-     
-      
-      
+
   .home #colophon {
     .column(12);
   }
@@ -131,16 +126,17 @@
 }
 
 /* iPhone [portrait + landscape] */
-@media (max-width: 640px),
-(max-device-width: 480px),
+@media (max-width: 680px),
+/*(max-device-width: 480px),*/
 (-webkit-min-device-pixel-ratio: 2) {
   
   .home body,
   .home #wrapper {
     .column(12);
-  .home #main {
+    
+    #main {
     .column(12);
-  }
+    }
     #content {
       .column(12);
       .row(12);
