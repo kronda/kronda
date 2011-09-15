@@ -312,4 +312,26 @@ body {
     margin: 0 0%;
     margin-top: 15px;
   }
+  .home #contact {
+    display: inline;
+    float: left;
+    overflow: hidden;
+    width: 100%;
+    margin: 0 0%;
+  }
+  .home #contact .center {
+    display: inline;
+    float: left;
+    overflow: hidden;
+    width: 100%;
+    margin: 0 0%;
+    margin-left: 0;
+  }
+  .home #contact .center .three {
+    display: inline;
+    float: left;
+    overflow: hidden;
+    width: 100%;
+    margin: 0 0%;
+  }
 }

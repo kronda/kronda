@@ -134,33 +134,36 @@ blockquote cite,
 }
 #site-info {
 	clear: both;
-  padding: 0 1em 1em 0;
-  text-align: left;
+  padding: 0 1em 1em 4em;
+  text-align: center;
   margin: 0 auto 20px auto;
 }
 #site-info .photocredit,
 #site-info .photocredit a,
 #site-info .copyright {
-  font-size: 10px;
+  font-size: 11px;
+}
+#site-info .photocredit {
+  margin-left: -50px;
 }
 .not-home #site-info .copyright {
   color: #FBFBFB;
-  margin: 0 0 0 6em;
+  margin-left: -95px;
 }
 #site-info p {
   display: inline;
   margin-left: 1em;
   float: left;
 }
-#site-info .menu {
+#colophon .menu {
   margin: 0 auto 20px auto;
   width: 17em;
 }
-#site-info .menu ul {
+#colophon .menu ul {
   margin: 0 auto 0 0;
   padding: 0;
 }
-#site-info .menu ul li {
+#colophon .menu ul li {
   float: left;
   margin: 0 1em 0 0;
   list-style: none;
@@ -683,9 +686,178 @@ footer {
 
 /* @end Footer homepage overrides */
 
+/* @group Non Home Page Styles */
+.not-home html {
+  max-width: 100%;
+}
+.not-home #page {
+  max-width: 1000px;
+}
+.not-home #branding {
+  background: transparent url(images/header_bg3.png) no-repeat center top;
+  height: 150px;
+}
+body {
+  padding: 0;
+}
+.not-home #main {
+ padding: 0;
+}
+.not-home #contact,
+.not-home #supplementary #first {
+  display: none;
+}
+.not-home #masthead {
+  background: transparent;
+  height: 100px;
+  width: 60%; /*was 960px*/
+  margin: 0 auto;
+  position: relative;
+}
+.not-home #branding #object-container {
+  display: none;
+}
+#primary,
+.not-home footer {
+  -webkit-box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.6);
+  box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.6);
+}
+#branding {
+  border-bottom: none;
+}
+#logo {
+  width: auto;
+  height: 30px;
+  background: #8ebfe9;
+  text-align: center;
+  padding: 0 0 20px 0;
+  position: absolute;
+  top: 0px;
+  right: 26%;
+  font-size: 24px;
+  color: #333;
+  font-weight: bold;
+}
+#logo p {
+  margin-top: 8px;
+}
+#logo span {
+  color: #ff941c; /*orange*/
+  padding: 0 .7em;
+  font-size: 36px;
+  font-weight: normal;
+}
+.not-home #access .only-search {
+  position: absolute;
+  top: 2px;
+  right: -5%;
+  width: 100%;
+}
+.not-home #access .only-search #s {
+  border-color: #FBFBFB;
+}
+.singular.page .hentry {
+  padding: 0;
+}
+/* @end */ 
+
+/* @group About Page */
+
+.page-template-page-about-php h2,
+.page-template-page-about-php h3 {
+  font-size: 24px;
+  text-transform: upper;
+}
+.page-template-page-about-php .entry-header {
+  position: absolute;
+  top: 0;
+  left: -9999px;
+}
+.page-template-page-about-php .wp-caption {
+  background: none;
+}
+.page-template-page-about-php .wp-caption a img {
+  border: none;
+}
+.page-template-page-about-php .intro {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 34px;
+  margin-top: 25px;
+}
+.page-template-page-about-php .entry-content {
+  width: 80%;
+}
+.page-template-page-about-php #content {
+  margin-top: -42px;
+}
+.page-template-page-about-php .entry-content .wp-caption {
+  margin-top: -50px;
+}
+
+/* @end */
+
+/* @group Portfolio page */
+
+.page-template-showcase-custom-portfolio-php #content {
+  margin: 0;
+}
+.page-template-showcase-custom-portfolio-php h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0 0 1.5em 0;
+  color: #202629; /* dark gray */
+  position: absolute;
+  top: -38px;
+  left: 1em; 
+  z-index: 10;
+}
+.page-template-showcase-custom-portfolio-php .portfolio {
+  list-style: none;
+  margin: 0;
+}
+.page-template-showcase-custom-portfolio-php .portfolio li {
+  background: #202629;
+  position: relative; 
+  padding: 1em;
+  margin: 0 0 6em 0;
+  width: auto;
+  padding: 0 0 1.5em 0;
+}
+.page-template-showcase-custom-portfolio-php .portfolio .description {
+  padding-top: 1.5em;
+}
+.page-template-showcase-custom-portfolio-php img {
+  max-width: 97.5%;
+  float: left;
+  padding: 2em;
+}
+.page-template-showcase-custom-portfolio-php .technologies ul {
+  clear: both;
+  float: left;
+  margin-bottom: 10px;
+  max-height: 25px;
+  padding-left: 1em;
+}
+.page-template-showcase-custom-portfolio-php .technologies ul li {
+  float: left;
+  margin-right: 25px;
+  color: #FBFBFB;
+  list-style: disc;
+}
+.page-template-showcase-custom-portfolio-php .portfolio p {
+  color: #FBFBFB;
+  padding: 0 1.8em;
+}
+.page-template-showcase-custom-portfolio-php .portfolio a {
+  font-weight: bold;
+}
+/* @end */
+
 /* @group =Responsive Structure for home page */
 
-/* iPad [portrait + landscape] */
+/* iPad [landscape] */
 @media (max-width: 1024px),
 (max-device-width: 1024px) {
   
@@ -727,6 +899,15 @@ footer {
     padding: 0 0 0 10%;
   }
   
+}
+@media (max-width: 800px) {
+  .not-home #access .only-search {
+    top: 60px;
+    right: 0;
+  }
+  #logo {
+    right: 0;
+  }
 }
 @media (max-width: 650px),
 (max-device-width: 480px),
@@ -861,174 +1042,32 @@ footer {
   }
   .home #tweet .tweet_time a {
     font-size: 16px;
+  }
+  #site-info .menu {
+    width: 100%;
+    margin: 0;
+    border: 1px solid white;
+  }
+  #site-info .menu ul {
+    width: 100%;
+    float: none;
+    clear: both;
+    text-align: center;
+    margin: 0 auto;
+    text-align: center;
+    border: 1px solid red;
+  }
+  #site-info .menu ul:after {
+    content: "."; 
+    display: block; 
+    height: 0; 
+    font-size:0; 
+    clear: both; 
+    visibility:hidden;
+  }
+  #site-info .menu ul li {
+    text-align: center;
+  }
+  
 }
-} 
-
-/* @group Non Home Page Styles */
-.not-home html {
-  max-width: 100%;
-}
-.not-home #page {
-  max-width: 1000px;
-}
-.not-home #branding {
-  background: transparent url(images/header_bg3.png) no-repeat center top;
-  height: 150px;
-}
-body {
-  padding: 0;
-}
-.not-home #main {
- padding: 0;
-}
-.not-home #contact,
-.not-home #supplementary #first {
-  display: none;
-}
-.not-home #masthead {
-  background: transparent;
-  height: 100px;
-  width: 60%; /*was 960px*/
-  margin: 0 auto;
-  position: relative;
-}
-.not-home #branding #object-container {
-  display: none;
-}
-#primary,
-.not-home footer {
-  -webkit-box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.6);
-  -moz-box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.6);
-  box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.6);
-}
-#branding {
-  border-bottom: none;
-}
-#logo {
-  width: auto;
-  height: 30px;
-  background: #8ebfe9;
-  text-align: center;
-  padding: 0 0 20px 0;
-  position: absolute;
-  top: 0px;
-  left: 47%;
-  font-size: 24px;
-  color: #333;
-  font-weight: bold;
-}
-#logo p {
-  margin-top: 8px;
-}
-#logo span {
-  color: #ff941c; /*orange*/
-  padding: 0 .7em;
-  font-size: 36px;
-  font-weight: normal;
-}
-.not-home #access .only-search {
-  position: absolute;
-  top: 2px;
-  right: -50px;
-  width: 100%;
-}
-.not-home #access .only-search #s {
-  border-color: #FBFBFB;
-}
-.singular.page .hentry {
-  padding: 0;
-}
-/* @end */ 
-
-/* @group About Page */
-
-.page-template-page-about-php h2,
-.page-template-page-about-php h3 {
-  font-size: 24px;
-  text-transform: upper;
-}
-.page-template-page-about-php .entry-header {
-  position: absolute;
-  top: 0;
-  left: -9999px;
-}
-.page-template-page-about-php .wp-caption {
-  background: none;
-}
-.page-template-page-about-php .wp-caption a img {
-  border: none;
-}
-.page-template-page-about-php .intro {
-  font-size: 28px;
-  font-weight: 700;
-  line-height: 34px;
-  margin-top: 25px;
-}
-.page-template-page-about-php .entry-content {
-  width: 80%;
-}
-.page-template-page-about-php #content {
-  margin-top: -42px;
-}
-.page-template-page-about-php .entry-content .wp-caption {
-  margin-top: -50px;
-}
-
-/* @end */
-
-/* @group Portfolio page */
-
-.page-template-showcase-custom-portfolio-php #content {
-  margin: 0;
-}
-.page-template-showcase-custom-portfolio-php h2 {
-  font-size: 24px;
-  font-weight: bold;
-  margin: 0 0 1.5em 0;
-  color: #202629; /* dark gray */
-  position: absolute;
-  top: -38px;
-  left: 1em; 
-  z-index: 10;
-}
-.page-template-showcase-custom-portfolio-php .portfolio {
-  list-style: none;
-  margin: 0;
-}
-.page-template-showcase-custom-portfolio-php .portfolio li {
-  background: #202629;
-  position: relative; 
-  padding: 1em;
-  margin: 0 0 6em 0;
-  width: auto;
-  padding: 0 0 1.5em 0;
-}
-.page-template-showcase-custom-portfolio-php .portfolio .description {
-  padding-top: 1.5em;
-}
-.page-template-showcase-custom-portfolio-php img {
-  max-width: 97.5%;
-  float: left;
-  padding: 2em;
-}
-.page-template-showcase-custom-portfolio-php .technologies ul {
-  clear: both;
-  float: left;
-  margin-bottom: 10px;
-  max-height: 25px;
-  padding-left: 1em;
-}
-.page-template-showcase-custom-portfolio-php .technologies ul li {
-  float: left;
-  margin-right: 25px;
-  color: #FBFBFB;
-  list-style: disc;
-}
-.page-template-showcase-custom-portfolio-php .portfolio p {
-  color: #FBFBFB;
-  padding: 0 1.8em;
-}
-.page-template-showcase-custom-portfolio-php .portfolio a {
-  font-weight: bold;
-}
-/* @end */
+/* @end Responsive styles */

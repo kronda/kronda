@@ -108,13 +108,13 @@
 				<a href="<?php echo esc_url( __( 'http://wordpress.org/', 'twentyeleven' ) ); ?>" title="<?php esc_attr_e( 'Semantic Personal Publishing Platform', 'twentyeleven' ); ?>" rel="generator"><?php printf( __( 'Proudly powered by %s', 'twentyeleven' ), 'WordPress' ); ?></a>
 			</div><!-- site-generator -->
 
-			<div id="site-info">
-				
+			<?php wp_nav_menu( array( 'theme_location' => 'primary' ) ); ?>
+			
+			<div id="site-info">	
 					<?php if (is_front_page() ) : ?>
-						<p class="photocredit">Author photo by <a href="http://www.linkedin.com/in/jakobferrier" title="Jakob Ferrier  | LinkedIn">Jakob Ferrier</a></p>
+						<span class="photocredit">Author photo by <a href="http://www.linkedin.com/in/jakobferrier" title="Jakob Ferrier  | LinkedIn">Jakob Ferrier</a></span>
 						<?php endif; ?>				
-						<p class="copyright">&copy; Kronda Adair 2011</p>
-					<?php wp_nav_menu( array( 'theme_location' => 'primary' ) ); ?>
+						<span class="copyright">kronda.com is &copy; Kronda Adair 2011</span>
 			</div><!-- #site-info -->
 			
 	</footer><!-- #colophon -->
