@@ -748,13 +748,13 @@ body {
   font-size: 36px;
   font-weight: normal;
 }
-.not-home #access .only-search {
+.not-home #branding .only-search {
   position: absolute;
   top: 2px;
   right: -5%;
   width: 100%;
 }
-.not-home #access .only-search #s {
+.not-home #branding .only-search #s {
   border-color: #FBFBFB;
 }
 .singular.page .hentry {
@@ -908,6 +908,9 @@ body {
   #logo {
     right: 0;
   }
+  .not-home #access .menu ul {
+    width: 100%;
+  }
 }
 @media (max-width: 650px),
 (max-device-width: 480px),
@@ -916,17 +919,26 @@ body {
   html {
     -webkit-text-size-adjust: none!important;
   }
-  .home #access {
+  #access {
     border-bottom: 1px solid #FBFBFB;
   }
-  .home #logo {
+  .not-home #access .only-search {
+    top: 110px;
+  }
+  .not-home #branding #searchform {
+    width: 90%;
+  }
+  .not-home #access .menu ul {
+    width: 100%;
+  }
+  #logo {
     display: block;
     position: absolute;
     top: 51px;
     left: 0;
     width: 100%;
   }
-  .home #logo p {
+  #logo p {
     font-size: 24px;
   }
   .home #branding #object-container,
@@ -1043,30 +1055,39 @@ body {
   .home #tweet .tweet_time a {
     font-size: 16px;
   }
-  #site-info .menu {
+  .page-template-page-about-php #main #content {
+    margin-top: -15px;
     width: 100%;
     margin: 0;
-    border: 1px solid white;
   }
-  #site-info .menu ul {
+  #main #content {
+    margin-top: 15px;
+  }
+  .page-template-showcase-custom-portfolio-php #main #content {
+    margin: 75px 0 0 0;
     width: 100%;
+  }
+  .page-template-showcase-custom-portfolio-php .portfolio {
+    padding-top: 40px;
+  }
+  .page-template-showcase-custom-portfolio-php .portfolio h2 {
+    top: -60px;
+    line-height: 30px;
+  }
+  .page-template-showcase-custom-portfolio-php img {
+    padding: 0.3em;
     float: none;
-    clear: both;
-    text-align: center;
-    margin: 0 auto;
-    text-align: center;
-    border: 1px solid red;
   }
-  #site-info .menu ul:after {
-    content: "."; 
-    display: block; 
-    height: 0; 
-    font-size:0; 
-    clear: both; 
-    visibility:hidden;
+  .page-template-showcase-custom-portfolio-php .portfolio ul {
+    width: 95%;
+    float: none;
+    /*margin: 0;*/
+    padding: 0;
   }
-  #site-info .menu ul li {
-    text-align: center;
+  .page-template-showcase-custom-portfolio-php .portfolio ul li {
+    float: none;
+    margin: 0;
+    padding: 0;
   }
   
 }
