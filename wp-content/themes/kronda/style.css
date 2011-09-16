@@ -1060,6 +1060,15 @@ body {
     width: 100%;
     margin: 0;
   }
+  .page-template-page-about-php .intro {
+    font-size: 24px;
+    line-height: 30px;
+  }
+  .page-template-page-about-php .intro h2, 
+  .page-template-page-about-php .intro h3 {
+    font-size: 20px;
+    line-height: 24px;
+  }
   #main #content {
     margin-top: 15px;
   }
@@ -1086,8 +1095,15 @@ body {
   }
   .page-template-showcase-custom-portfolio-php .portfolio ul li {
     float: none;
-    margin: 0;
+    margin: 0 0 5px 0;
     padding: 0;
+  }
+  .page-template-showcase-custom-portfolio-php .portfolio .description {
+    padding: 0;
+    margin-top: 90px;
+  }
+  .page-template-showcase-custom-portfolio-php .portfolio a {
+    margin: 0 0 0 1.5em;
   }
   
 }
