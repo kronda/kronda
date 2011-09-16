@@ -912,6 +912,19 @@ body {
   .not-home #access .menu ul {
     width: 100%;
   }
+  #main #content {
+    width: 100%;
+    margin: 0;
+  }
+  .page-template-showcase-custom-portfolio-php img {
+    float: none;
+  }
+  .page-template-showcase-custom-portfolio-php .portfolio .description {
+    padding-top: 2.5em;
+  }
+  .page-template-showcase-custom-portfolio-php .portfolio .visit {
+    margin-left: 2em;
+  }
 }
 @media (max-width: 650px) and (orientation: portrait),
 (max-device-width: 480px),
@@ -1056,6 +1069,9 @@ body {
   }
   .home #tweet .tweet_time a {
     font-size: 16px;
+  }
+  .not-home #access .menu, .not-home #access .menu ul {
+    width: 100%;
   }
   .page-template-page-about-php #main #content {
     margin-top: -15px;
