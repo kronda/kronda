@@ -94,7 +94,7 @@ get_header(); ?>
 						</div>	
 					</li>
 					
-					<li class="floatcontainer">
+					<li id="waronpink" class="floatcontainer">
 						<h2>War on Pink: A Custom Blog</h2>
 						<img src="<?php echo CHILD_TEMPLATE_DIRECTORY;?>/images/portfolio/waronpink.jpg" alt="War on Pink: a custom blog project">
 						<div class="technologies">

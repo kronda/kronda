@@ -850,6 +850,9 @@ body {
   color: #FBFBFB;
   padding: 0 1.8em;
 }
+.page-template-showcase-custom-portfolio-php #waronpink .description p {
+  padding-top: 40px;
+}
 .page-template-showcase-custom-portfolio-php .portfolio a {
   font-weight: bold;
 }
@@ -931,7 +934,8 @@ body {
   .not-home #access .menu ul {
     width: 100%;
   }
-  #logo {
+  #logo,
+  .home #logo {
     display: block;
     position: absolute;
     top: 51px;
@@ -1084,19 +1088,19 @@ body {
     line-height: 30px;
   }
   .page-template-showcase-custom-portfolio-php img {
-    padding: 0.3em;
+    padding: 20px 0.3em 0.3em 0.3em;
     float: none;
   }
   .page-template-showcase-custom-portfolio-php .portfolio ul {
     width: 95%;
     float: none;
-    /*margin: 0;*/
     padding: 0;
   }
   .page-template-showcase-custom-portfolio-php .portfolio ul li {
     float: none;
     margin: 0 0 5px 0;
     padding: 0;
+    list-style-image: url('images/chk_gradient.png');
   }
   .page-template-showcase-custom-portfolio-php .portfolio .description {
     padding: 0;
