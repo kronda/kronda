@@ -841,7 +841,8 @@ body {
   float: left;
   margin-right: 25px;
   color: #FBFBFB;
-  list-style: disc;
+  list-style-image: url('images/chk_gradient.png');
+  margin-right: 2em;
 }
 .page-template-showcase-custom-portfolio-php .portfolio p {
   color: #FBFBFB;
@@ -859,7 +860,7 @@ body {
 
 /* iPad [landscape] */
 @media (max-width: 1024px),
-(max-device-width: 1024px) {
+(max-device-width: 1024px) and (orientation:landscape) {
   
   html {
     -webkit-text-size-adjust: none!important;
@@ -912,7 +913,7 @@ body {
     width: 100%;
   }
 }
-@media (max-width: 650px),
+@media (max-width: 650px) and (orientation: portrait),
 (max-device-width: 480px),
 (-webkit-min-device-pixel-ratio: 2) { 
   
