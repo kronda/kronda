@@ -1,8 +1,11 @@
-body {
+.home body {
   width: 100%;
   float: left;
 }
 @media only screen and (min-width: 1025px) {
+  .home #header_img {
+    left: 60;
+  }
   .home #wrapper {
     display: inline;
     float: left;
