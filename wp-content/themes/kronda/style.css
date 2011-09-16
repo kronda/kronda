@@ -218,9 +218,6 @@ blockquote cite,
   position: relative;
   color: #fbfbfb;
 	padding: 0;
-  -webkit-box-shadow: 2px -3px 5px 0 rgba(0, 0, 0, 0.6);
-  -moz-box-shadow: 2px -3px 5px 0 rgba(0, 0, 0, 0.6);
-  box-shadow: 2px -3px 5px 0 rgba(0, 0, 0, 0.6);
 }
 .home #masthead {
   background: transparent;
@@ -717,12 +714,6 @@ body {
 .not-home #branding #object-container {
   display: none;
 }
-#primary,
-.not-home footer {
-  -webkit-box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.6);
-  -moz-box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.6);
-  box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.6);
-}
 #branding {
   border-bottom: none;
 }
@@ -763,7 +754,13 @@ body {
 /* @end */ 
 
 /* @group About Page */
-
+.page-template-page-about-php #easteregg {
+  color: #202020;
+}
+.page-template-page-about-php #easteregg:hover {
+  border-bottom: 1px dotted #999;
+  text-decoration: none;
+}
 .page-template-page-about-php h2,
 .page-template-page-about-php h3 {
   font-size: 24px;
