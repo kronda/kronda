@@ -1,1 +1,0 @@
-<p><?php _e( 'This will erase all saved values', 'developer-tools' ) ?></p>
