@@ -1,0 +1,39 @@
+/*
+* jQuery FlexSlider v1.4
+* http://flex.madebymufffin.com
+*
+* Copyright 2011, Tyler Smith
+* Free to use under the MIT license.
+* http://www.opensource.org/licenses/mit-license.php
+*/
+
+/* FlexSlider Necessary Styles
+*********************************/
+.flexslider {
+  width: 70%;
+  margin: 0;
+  padding: 0;
+}
+.flexslider .slides li {
+  display: none;
+}
+/* Hide the slides before the JS is loaded. Avoids image jumping */
+.flexslider .slides img {
+  max-width: 100%;
+  display: block;
+}
+
+/* Browser Resets */
+.flexslider a {
+  outline: none;
+}
+.slides,
+.flex-control-nav,
+.flex-direction-nav {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+/* @end Browser Resets */
+
+

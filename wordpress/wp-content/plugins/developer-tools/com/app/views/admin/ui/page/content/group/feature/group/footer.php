@@ -1,0 +1,1 @@
+</div><!-- #<?php print $view['name'] ?>-<?php print $view['counter'] ?> -->

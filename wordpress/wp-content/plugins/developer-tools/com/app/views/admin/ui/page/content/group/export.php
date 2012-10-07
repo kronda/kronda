@@ -1,0 +1,2 @@
+<p><?php _e( 'Export settings', 'developer-tools' ) ?></p>
+<p><?php _e( 'Any uploaded files will need to be manually transfered. All files uploaded by the Developer Tools plugin are located in the uploads directory.', 'developer-tools' ) ?></p>

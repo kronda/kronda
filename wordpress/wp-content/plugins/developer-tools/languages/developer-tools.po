@@ -1,0 +1,2045 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: WordPress Developer Tools v1.0.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-02-26 16:28-0600\n"
+"PO-Revision-Date: 2011-02-26 16:32-0600\n"
+"Last-Translator: kjmeath <kj@kjmeath.com>\n"
+"Language-Team: kjmeath <kj@kjmeath.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../Application.php:70
+#, php-format
+msgid "The Developer Tools plugin requires WordPress 3.0.0 or greater. The version of WordPress installed is %s."
+msgstr ""
+
+#: ../Application.php:201
+msgid "Developer Tools"
+msgstr ""
+
+#: ../Application.php:272
+msgid "The &s feature class, as defined in the features group model, does not exist."
+msgstr ""
+
+#: ../Application.php:280
+msgid "method does not exist."
+msgstr ""
+
+#: ../Application.php:351
+msgid "property does not exist."
+msgstr ""
+
+#: ../Application.php:529
+msgid "view does not exists."
+msgstr ""
+
+#: ../Application.php:534
+msgid "Developer Tools security failure: Error code: 1"
+msgstr ""
+
+#: ../Application.php:542
+msgid "Developer Tools security failure: Error code: 2"
+msgstr ""
+
+#: ../Application.php:553
+msgid "Options saved."
+msgstr ""
+
+#: ../Application.php:555
+msgid "No values were set."
+msgstr ""
+
+#: ../Application.php:559
+msgid "Developer Tools security failure: Error code: 3"
+msgstr ""
+
+#: ../Application.php:561
+msgid "Options reset."
+msgstr ""
+
+#: ../Application.php:564
+msgid "Developer Tools security failure: Error code: 4"
+msgstr ""
+
+#: ../Application.php:570
+msgid "Developer Tools security failure: Error code: 5"
+msgstr ""
+
+#: ../Application.php:573
+msgid "What are you trying to do?  I do not like the way you are trying to upload this file."
+msgstr ""
+
+#: ../Application.php:641
+msgid "Trying to save an array as a value for"
+msgstr ""
+
+#: ../Application.php:673
+msgid "Invalid import file."
+msgstr ""
+
+#: ../Application.php:685
+msgid "Options imported."
+msgstr ""
+
+#: ../DeveloperTools.php:40
+#, php-format
+msgid "The Developer Tools plugin requires PHP5 or greater. The version of PHP installed is %s."
+msgstr ""
+
+#: ../com/app/includes/controllers/Field.php:74
+msgid "Advanced"
+msgstr ""
+
+#: ../com/app/includes/controllers/Field.php:85
+msgid "This is a required field"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/AddImageSize.php:6
+msgid "Add image size"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/AddImageSize.php:12
+msgid "Registers a new image size. This means that WordPress will create a copy of the post thumbnail with the specified dimensions when you upload a new thumbnail."
+msgstr ""
+
+#: ../com/app/includes/controllers/features/AddImageSize.php:16
+#: ../com/app/includes/controllers/features/AddMenu.php:16
+#: ../com/app/includes/controllers/features/AddMetaBoxes.php:16
+#: ../com/app/includes/controllers/features/AddPostType.php:16
+#: ../com/app/includes/controllers/features/AddTaxonomy.php:19
+msgid "Unique identifier"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/AddImageSize.php:24
+msgid "Set thumbnail width"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/AddImageSize.php:29
+#: ../com/app/includes/controllers/features/AddImageSize.php:38
+msgid "Pixel interger"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/AddImageSize.php:33
+msgid "Set thumbnail height"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/AddImageSize.php:42
+msgid "Crop image to exact dimensions"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/AddMenu.php:6
+msgid "Add menu"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/AddMenu.php:8
+msgid "Once enabled, menus appear under the \"Appearance\" -> \"Menus\" admin tab.  From there you create a new menu, and assign that menu under the \"Theme Locations\" panel."
+msgstr ""
+
+#: ../com/app/includes/controllers/features/AddMenu.php:24
+msgid "Name"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/AddMenu.php:30
+msgid "CSS container class"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/AddMetaBoxes.php:6
+msgid "Add meta box"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/AddMetaBoxes.php:12
+msgid "Registers a new, custom meta box (custom field)."
+msgstr ""
+
+#: ../com/app/includes/controllers/features/AddPostType.php:6
+msgid "Add post type"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/AddPostType.php:25
+#: ../com/app/includes/controllers/features/AddTaxonomy.php:28
+msgid "Singular name"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/AddPostType.php:32
+#: ../com/app/includes/controllers/features/AddTaxonomy.php:35
+msgid "Plural name"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/AddPostType.php:38
+msgid "Menu position"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/AddPostType.php:42
+msgid "5 - below Posts (Default), 10 - below Media, 20 - below Pages, 60 - below first separator, 100 - below second separator"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/AddPostType.php:47
+msgid "Meta boxes"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/AddPostType.php:53
+msgid "Taxonomies"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/AddPostType.php:63
+msgid "Title (Default)"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/AddPostType.php:64
+msgid "Body (Default, TinyMCE Editor)"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/AddPostType.php:65
+msgid "Author"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/AddPostType.php:66
+msgid "Sticky"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/AddPostType.php:67
+#: ../com/app/includes/controllers/features/DisablePostPageMetaBoxes.php:44
+msgid "Excerpt"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/AddPostType.php:68
+#: ../com/app/includes/controllers/features/DisablePostPageMetaBoxes.php:45
+msgid "Trackbacks"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/AddPostType.php:69
+#: ../com/app/includes/controllers/features/DisablePostPageMetaBoxes.php:46
+#: ../com/app/includes/controllers/features/DisablePostPageMetaBoxes.php:60
+msgid "Custom Fields"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/AddPostType.php:70
+#: ../com/app/includes/controllers/features/DisablePostPageMetaBoxes.php:47
+#: ../com/app/includes/controllers/features/DisablePostPageMetaBoxes.php:61
+msgid "Comments"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/AddPostType.php:71
+msgid "Revision"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/AddPostType.php:72
+msgid "Page Attributes (Templates and post-type order)"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/AddPostType.php:73
+msgid "Featured Image Thumbnail (Must also be enabled below)"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/AddPostType.php:100
+#: ../com/app/includes/controllers/features/AddTaxonomy.php:83
+msgid "Add New "
+msgstr ""
+
+#: ../com/app/includes/controllers/features/AddPostType.php:101
+#: ../com/app/includes/controllers/features/AddTaxonomy.php:81
+msgid "Edit "
+msgstr ""
+
+#: ../com/app/includes/controllers/features/AddPostType.php:102
+#: ../com/app/includes/controllers/features/AddTaxonomy.php:84
+msgid "New "
+msgstr ""
+
+#: ../com/app/includes/controllers/features/AddPostType.php:103
+msgid "View "
+msgstr ""
+
+#: ../com/app/includes/controllers/features/AddPostType.php:104
+#: ../com/app/includes/controllers/features/AddTaxonomy.php:76
+msgid "Search "
+msgstr ""
+
+#: ../com/app/includes/controllers/features/AddPostType.php:105
+#: ../com/app/includes/controllers/features/AddPostType.php:106
+msgid "No "
+msgstr ""
+
+#: ../com/app/includes/controllers/features/AddSidebar.php:6
+msgid "Add sidebar"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/AddSidebar.php:15
+msgid "Unique name"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/AddTaxonomy.php:6
+msgid "Add taxonomy"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/AddTaxonomy.php:10
+msgid "Comma separated list"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/AddTaxonomy.php:11
+msgid "Object"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/AddTaxonomy.php:43
+msgid "Hierarchical"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/AddTaxonomy.php:44
+msgid "Checked: will act like categories. Unchecked: will act like tags."
+msgstr ""
+
+#: ../com/app/includes/controllers/features/AddTaxonomy.php:48
+msgid "Assign to post types"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/AddTaxonomy.php:77
+msgid "Popular "
+msgstr ""
+
+#: ../com/app/includes/controllers/features/AddTaxonomy.php:78
+msgid "All "
+msgstr ""
+
+#: ../com/app/includes/controllers/features/AddTaxonomy.php:79
+#: ../com/app/includes/controllers/features/AddTaxonomy.php:80
+msgid "Parent "
+msgstr ""
+
+#: ../com/app/includes/controllers/features/AddTaxonomy.php:82
+msgid "Update "
+msgstr ""
+
+#: ../com/app/includes/controllers/features/AddTaxonomy.php:85
+msgid "Separate "
+msgstr ""
+
+#: ../com/app/includes/controllers/features/AddTaxonomy.php:86
+msgid "Add or remove "
+msgstr ""
+
+#: ../com/app/includes/controllers/features/AddTaxonomy.php:87
+msgid "Choose from the most used "
+msgstr ""
+
+#: ../com/app/includes/controllers/features/CustomLoginImage.php:6
+msgid "Custom admin login image"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/CustomLoginImage.php:9
+#: ../com/app/includes/controllers/features/CustomLoginImage.php:16
+msgid "Should be 310px wide by 70px tall."
+msgstr ""
+
+#: ../com/app/includes/controllers/features/CustomLoginImage.php:15
+msgid "Choose image to upload"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/DisableAdminMenuItems.php:6
+msgid "Hide admin menu items"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/DisableAdminMenuItems.php:18
+msgid "Do not disable for user account"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/DisableDashboardWidgets.php:6
+msgid "Disable dashboard widgets"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/DisableDashboardWidgets.php:10
+msgid "Left column dashboard widgets"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/DisableDashboardWidgets.php:16
+msgid "Right column dashboard widgets"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/DisableDashboardWidgets.php:32
+msgid "Right Now"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/DisableDashboardWidgets.php:33
+msgid "Recent Comments"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/DisableDashboardWidgets.php:34
+msgid "Incoming Links"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/DisableDashboardWidgets.php:35
+msgid "Plugins"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/DisableDashboardWidgets.php:42
+msgid "QuickPress"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/DisableDashboardWidgets.php:43
+msgid "Recent Drafts"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/DisableDashboardWidgets.php:44
+msgid "WordPress Blog"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/DisableDashboardWidgets.php:45
+msgid "Other WordPress News"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/DisablePluginUpdates.php:6
+msgid "Disable all plugin updates"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/DisablePostPageMetaBoxes.php:7
+msgid "Disable meta boxes"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/DisablePostPageMetaBoxes.php:8
+msgid "Disable meta boxes on the post and page post-types."
+msgstr ""
+
+#: ../com/app/includes/controllers/features/DisablePostPageMetaBoxes.php:13
+msgid "Blog post meta boxes"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/DisablePostPageMetaBoxes.php:19
+msgid "Page meta boxes"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/DisablePostPageMetaBoxes.php:48
+msgid "Post Revisions"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/DisablePostPageMetaBoxes.php:49
+#: ../com/app/includes/controllers/features/DisablePostPageMetaBoxes.php:63
+msgid "Discussion"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/DisablePostPageMetaBoxes.php:50
+#: ../com/app/includes/controllers/features/DisablePostPageMetaBoxes.php:64
+msgid "Slug"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/DisablePostPageMetaBoxes.php:51
+msgid "Post Author"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/DisablePostPageMetaBoxes.php:52
+msgid "Categories"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/DisablePostPageMetaBoxes.php:53
+msgid "Tags"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/DisablePostPageMetaBoxes.php:62
+msgid "Page Revisions"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/DisablePostPageMetaBoxes.php:65
+msgid "Page Author"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/DisablePostPageMetaBoxes.php:66
+msgid "Page Attributes"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/DisableTinyMceAutoFormatting.php:6
+msgid "Disable TinyMCE Auto-formatting"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/DisableWpCoreUpdates.php:6
+msgid "Disable WordPress Core Updates"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/DtMaxUploadSize.php:7
+msgid "Maximum file upload size"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/DtMaxUploadSize.php:8
+msgid "This is the maximum upload file size for the Developer Tools features. Default: 5MB"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/DtMaxUploadSize.php:14
+msgid "integer in MegaBytes"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/EnableCufon.php:6
+#: ../com/app/includes/controllers/features/EnableDdBelatedPngFix.php:6
+#: ../com/app/includes/controllers/features/EnabledHtml5shiv.php:6
+#: ../com/app/includes/controllers/features/EnabledHtml5shiv.php:12
+#: ../com/app/includes/controllers/features/EnableGoogleAnalytics.php:6
+#: ../com/app/includes/controllers/features/EnableJavascriptRequiredMessage.php:11
+#: ../com/app/includes/controllers/features/EnableJqueryImageReflection.php:6
+#: ../com/app/includes/controllers/features/EnableSifr.php:6
+#: ../com/app/includes/controllers/features/EnableSwfObject.php:6
+#: ../com/app/includes/controllers/features/HideDefaultAdmin.php:13
+#: ../com/app/includes/controllers/features/HidePlugin.php:13
+msgid "Enable"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/EnableCufon.php:8
+msgid "allows you to use custom fonts on the web. This will automatically load jQuery."
+msgstr ""
+
+#: ../com/app/includes/controllers/features/EnableCufon.php:8
+#: ../com/app/includes/controllers/features/EnableSifr.php:7
+#: ../com/app/includes/controllers/features/EnableSwfObject.php:8
+msgid "API details"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/EnableCufon.php:11
+msgid "Use the"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/EnableCufon.php:11
+#, php-format
+msgid "font generator at the %s website"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/EnableCufon.php:16
+#: ../com/app/includes/controllers/features/EnableSifr.php:16
+#: ../com/app/includes/controllers/features/EnableSwfObject.php:16
+msgid "Choose File"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/EnableCufon.php:22
+#: ../com/app/includes/controllers/features/EnableDdBelatedPngFix.php:11
+#: ../com/app/includes/controllers/features/EnableJqueryImageReflection.php:11
+#: ../com/app/includes/controllers/features/EnableSifr.php:22
+msgid "Enter CSS selector(s)"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/EnableCufon.php:26
+#: ../com/app/includes/controllers/features/EnableDdBelatedPngFix.php:14
+#: ../com/app/includes/controllers/features/EnableJqueryImageReflection.php:12
+#: ../com/app/includes/controllers/features/EnableSifr.php:26
+msgid "Separate with commas for multiple"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/EnableCufon.php:30
+msgid "Hover ( As object parameters )"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/EnableCufon.php:33
+msgid "Do NOT include the { }'s."
+msgstr ""
+
+#: ../com/app/includes/controllers/features/EnableCufon.php:33
+#, php-format
+msgid "%s styling"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/EnableDdBelatedPngFix.php:7
+msgid "This is a JavaScript library that sandwiches PNG image support into IE6 without much fuss."
+msgstr ""
+
+#: ../com/app/includes/controllers/features/EnabledHtml5shiv.php:7
+msgid "This is a JavaScript library that forces older versions of Internet Explorer to acknowledge HTML5 tags."
+msgstr ""
+
+#: ../com/app/includes/controllers/features/EnableFeaturedImageThumbnails.php:6
+msgid "Enable featured thumbnail images"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/EnableFeaturedImageThumbnails.php:7
+msgid "If a new post type was created, you must save first before it becomes available below."
+msgstr ""
+
+#: ../com/app/includes/controllers/features/EnableFeaturedImageThumbnails.php:8
+msgid "For all custom post types that have been created above, you must enable the \"Feature Image Thumbnail\" meta box for that post type, as well as enable it below."
+msgstr ""
+
+#: ../com/app/includes/controllers/features/EnableFeaturedImageThumbnails.php:11
+msgid "Simple"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/EnableFeaturedImageThumbnails.php:12
+msgid "Advanced ( Define height, width and css class. Do not add \"px\" to the end of height or width. )"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/EnableFeaturedImageThumbnails.php:12
+msgid "Width"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/EnableFeaturedImageThumbnails.php:12
+msgid "Height"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/EnableFeaturedImageThumbnails.php:12
+msgid "Add CSS class name here"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/EnableFeaturedImageThumbnails.php:13
+msgid "Other featured image thumbnail functions"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/EnableFeaturedImageThumbnails.php:21
+msgid "Select post types to enable featured image thumbnails"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/EnableFeaturedImageThumbnails.php:27
+msgid "Thumbnail width"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/EnableFeaturedImageThumbnails.php:36
+msgid "Thumbnail height"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/EnableGoogleAnalytics.php:7
+msgid "Where can I find my tracking code and account number?"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/EnableGoogleAnalytics.php:7
+msgid "here"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/EnableGoogleAnalytics.php:11
+msgid "Enter Google Analytics tracking number"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/EnableGoogleAnalytics.php:15
+msgid "Format"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/EnableGoogleAnalytics.php:19
+msgid "Don't track logged in users"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/EnableImageQuality.php:6
+msgid "Image upload quality"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/EnableImageQuality.php:7
+msgid "This setting is for resized images. Default is 75 percent."
+msgstr ""
+
+#: ../com/app/includes/controllers/features/EnableImageQuality.php:11
+msgid "Percentage"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/EnableImageQuality.php:14
+msgid "Example: 100 for 100 percent"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/EnableJavascriptRequiredMessage.php:6
+msgid "\"JavaScript required\" message"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/EnableJavascriptRequiredMessage.php:7
+msgid "For users who have JavaScript disabled."
+msgstr ""
+
+#: ../com/app/includes/controllers/features/EnableJavascriptRequiredMessage.php:7
+#: ../com/app/includes/controllers/features/EnableJavascriptRequiredMessage.php:42
+msgid "JavaScript must be enabled to use this site"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/EnableJavascriptRequiredMessage.php:16
+msgid "Message"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/EnableJavascriptRequiredMessage.php:19
+msgid "^ Defaults to \"JavaScript must be enabled to use this site\""
+msgstr ""
+
+#: ../com/app/includes/controllers/features/EnableJavascriptRequiredMessage.php:23
+#: ../com/app/includes/controllers/features/EnableSwfObject.php:22
+msgid "CSS container ID:"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/EnableJavascriptRequiredMessage.php:27
+msgid "This will negate all inline styles so you can define the styles in your theme's stylesheet"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/EnableJqueryImageReflection.php:7
+msgid "Allows you to add instantaneous reflection effects to your images in modern browsers, in less than 2 KB. This will automatically load jQuery."
+msgstr ""
+
+#: ../com/app/includes/controllers/features/EnableSifr.php:7
+msgid "is an open source JavaScript and Adobe Flash dynamic web fonts implementation, enabling the replacement of text elements on HTML web pages with Flash equivalents. If possible, use Cuf&oacute;n over sIFR, as it is seemingly no longer supported."
+msgstr ""
+
+#: ../com/app/includes/controllers/features/EnableSifr.php:30
+msgid "CSS styles"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/EnableSifr.php:38
+msgid "Selectable"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/EnableSwfObject.php:8
+msgid "SWFObject is an open-source JavaScript library used to embed Adobe Flash content onto Web pages."
+msgstr ""
+
+#: ../com/app/includes/controllers/features/EnableSwfObject.php:11
+msgid "Upload the swf."
+msgstr ""
+
+#: ../com/app/includes/controllers/features/EnableSwfObject.php:26
+msgid "The DOM element to be replaced"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/EnableSwfObject.php:30
+msgid "Swf width"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/EnableSwfObject.php:39
+msgid "Swf height"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/EnableSwfObject.php:48
+msgid "Minimum flash version"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/EnableSwfObject.php:53
+msgid "Example: 9.0.0"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/EnableSwfObject.php:57
+msgid "Alternate content"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/EnableSwfObject.php:60
+msgid "This text appears if the swf is unable to load."
+msgstr ""
+
+#: ../com/app/includes/controllers/features/EnableSwfObject.php:64
+msgid "Flashvars"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/EnableSwfObject.php:67
+#: ../com/app/includes/controllers/features/EnableSwfObject.php:81
+msgid "As comma-delimited object properties. Do NOT include the { }'s."
+msgstr ""
+
+#: ../com/app/includes/controllers/features/EnableSwfObject.php:71
+msgid "Parameters"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/EnableSwfObject.php:74
+msgid "As comma-delimited object properties. Do NOT include the { }'s.<br />For a transparent background use:"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/EnableSwfObject.php:78
+msgid "Attributes"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/ExcerptLength.php:6
+msgid "Excerpt length"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/ExcerptLength.php:10
+msgid "Character length"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/HideDefaultAdmin.php:7
+msgid "Hide default admin"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/HideDefaultAdmin.php:8
+msgid "Hide user account:"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/HideDefaultAdmin.php:8
+msgid "from all other admin user accounts."
+msgstr ""
+
+#: ../com/app/includes/controllers/features/HidePlugin.php:7
+msgid "Hide Developer Tools plugin"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/HidePlugin.php:8
+msgid "Only allow user account:"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/HidePlugin.php:8
+msgid "to access to the Developer Tools plugin."
+msgstr ""
+
+#: ../com/app/includes/controllers/features/LoadWpCoreJavascriptLibraries.php:6
+msgid "Load JavaScript libraries"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/LoadWpCoreJavascriptLibraries.php:7
+msgid "These are only loaded on the front-end."
+msgstr ""
+
+#: ../com/app/includes/controllers/features/LoadWpCoreJavascriptLibraries.php:8
+msgid "Full details about all these scripts can be found"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/LoadWpCoreJavascriptLibraries.php:13
+msgid "Commonly used"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/LoadWpCoreJavascriptLibraries.php:19
+msgid "Less commonly used"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/OpenExternalLinksInNewWindow.php:6
+msgid "Open external links in a new window / tab"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/OpenExternalLinksInNewWindow.php:7
+msgid "Automatically open external links in a new window / tab. This will automatically load jQuery if it has not already been loaded."
+msgstr ""
+
+#: ../com/app/includes/controllers/features/OpenExternalLinksInNewWindow.php:13
+msgid "This also adds the CSS class \"external_link\" to the anchor tags."
+msgstr ""
+
+#: ../com/app/includes/controllers/features/RemoveAdminMenuBar.php:7
+msgid "Remove admin menu bar"
+msgstr ""
+
+#: ../com/app/includes/controllers/features/RemoveAdminMenuBar.php:8
+msgid "Remove the WordPress admin menu bar that appears on the front-end for logged in users."
+msgstr ""
+
+#: ../com/app/includes/controllers/fields/Checkbox.php:29
+#: ../com/app/includes/controllers/fields/NestedCheckboxGroups.php:16
+#: ../com/app/includes/controllers/fields/NestedCheckboxGroups.php:37
+#: ../com/app/includes/controllers/fields/NestedCheckboxGroups.php:59
+msgid "Checkbox"
+msgstr ""
+
+#: ../com/app/includes/controllers/fields/SelectList.php:31
+msgid "Select list"
+msgstr ""
+
+#: ../com/app/includes/controllers/fields/TextArea.php:17
+msgid "Textarea"
+msgstr ""
+
+#: ../com/app/includes/controllers/fields/TextInput.php:16
+msgid "Text input"
+msgstr ""
+
+#: ../com/app/includes/controllers/fields/extends/MultipleCheckboxes.php:32
+msgid "Multiple checkboxes"
+msgstr ""
+
+#: ../com/app/includes/controllers/fields/extends/SelectListUploader.php:42
+msgid "File uploader with select list"
+msgstr ""
+
+#: ../com/app/includes/controllers/fields/extends/SelectListUploader.php:44
+msgid "Select file"
+msgstr ""
+
+#: ../com/app/includes/controllers/fields/extends/SelectListUploader.php:45
+#: ../com/app/includes/controllers/fields/extends/SingleImageUploader.php:25
+msgid "Upload new"
+msgstr ""
+
+#: ../com/app/includes/controllers/fields/extends/SingleImageUploader.php:24
+msgid "Image uploader"
+msgstr ""
+
+#: ../com/app/includes/controllers/fields/extends/SingleImageUploader.php:26
+msgid "Image preview"
+msgstr ""
+
+#: ../com/app/includes/libs/CreateDirectory.php:19
+msgid "is not writable"
+msgstr ""
+
+#: ../com/app/includes/libs/CreateDirectory.php:25
+msgid "PHP is running in safe mode. If possible, disable this configuration."
+msgstr ""
+
+#: ../com/app/includes/libs/CreateDirectory.php:26
+msgid "You must create the directory"
+msgstr ""
+
+#: ../com/app/includes/libs/CreateDirectory.php:33
+msgid "Unable to make directory"
+msgstr ""
+
+#: ../com/app/includes/libs/CreateDirectory.php:37
+msgid "Unable to change permissions for directory"
+msgstr ""
+
+#: ../com/app/includes/libs/SetUploadsDirectory.php:30
+#: ../com/app/includes/libs/SetUploadsDirectory.php:37
+#: ../com/app/includes/libs/SetUploadsDirectory.php:38
+#: ../com/app/includes/libs/SetUploadsDirectory.php:44
+msgid "Developer Tools plugin error:"
+msgstr ""
+
+#: ../com/app/includes/libs/SetUploadsDirectory.php:30
+#: ../com/app/includes/libs/SetUploadsDirectory.php:44
+msgid " is not writable."
+msgstr ""
+
+#: ../com/app/includes/libs/SetUploadsDirectory.php:38
+msgid "The uploads directory is not writable."
+msgstr ""
+
+#: ../com/app/includes/models/FeaturesGroupModel.php:16
+msgid "Front-end"
+msgstr ""
+
+#: ../com/app/includes/models/FeaturesGroupModel.php:17
+msgid "Back-end"
+msgstr ""
+
+#: ../com/app/includes/models/FeaturesGroupModel.php:18
+msgid "View all"
+msgstr ""
+
+#: ../com/app/includes/models/FeaturesGroupModel.php:21
+msgid "Why hello there..."
+msgstr ""
+
+#: ../com/app/includes/models/FeaturesGroupModel.php:34
+msgid "Plugin settings"
+msgstr ""
+
+#: ../com/app/includes/models/FeaturesGroupModel.php:41
+#: ../com/app/includes/models/FeaturesGroupModel.php:58
+#: ../com/app/includes/models/FeaturesGroupModel.php:81
+#: ../com/app/includes/models/FeaturesGroupModel.php:102
+#: ../com/app/includes/models/FeaturesGroupModel.php:129
+msgid "Save"
+msgstr ""
+
+#: ../com/app/includes/models/FeaturesGroupModel.php:51
+msgid "Theme Libraries"
+msgstr ""
+
+#: ../com/app/includes/models/FeaturesGroupModel.php:74
+msgid "Front-end Configurations"
+msgstr ""
+
+#: ../com/app/includes/models/FeaturesGroupModel.php:95
+msgid "Back-end Features"
+msgstr ""
+
+#: ../com/app/includes/models/FeaturesGroupModel.php:122
+msgid "Back-end Configurations"
+msgstr ""
+
+#: ../com/app/includes/models/FeaturesGroupModel.php:147
+msgid "Enabled features"
+msgstr ""
+
+#: ../com/app/includes/models/FeaturesGroupModel.php:157
+msgid "Server"
+msgstr ""
+
+#: ../com/app/includes/models/FeaturesGroupModel.php:167
+#: ../com/app/includes/models/FeaturesGroupModel.php:174
+msgid "Reset"
+msgstr ""
+
+#: ../com/app/includes/models/FeaturesGroupModel.php:185
+#: ../com/app/includes/models/FeaturesGroupModel.php:192
+msgid "Import"
+msgstr ""
+
+#: ../com/app/includes/models/FeaturesGroupModel.php:203
+#: ../com/app/includes/models/FeaturesGroupModel.php:210
+msgid "Export"
+msgstr ""
+
+#: ../com/app/includes/models/FeaturesGroupModel.php:221
+msgid "Database"
+msgstr ""
+
+#: ../com/app/includes/models/FeaturesGroupModel.php:237
+msgid "Debug"
+msgstr ""
+
+#: ../com/app/includes/models/fieldData/PostTypesModel.php:20
+msgid "Page"
+msgstr ""
+
+#: ../com/app/includes/models/fieldData/PostTypesModel.php:21
+msgid "Post"
+msgstr ""
+
+#: ../com/app/views/admin/ui/page/footer.php:2
+msgid "JavaScript must be enabled to use this plugin"
+msgstr ""
+
+#: ../com/app/views/admin/ui/page/content/group/database.php:6
+msgid "Login"
+msgstr ""
+
+#: ../com/app/views/admin/ui/page/content/group/export.php:1
+msgid "Export settings"
+msgstr ""
+
+#: ../com/app/views/admin/ui/page/content/group/header.php:12
+msgid "Click to toggle"
+msgstr ""
+
+#: ../com/app/views/admin/ui/page/content/group/import.php:1
+msgid "Import settings"
+msgstr ""
+
+#: ../com/app/views/admin/ui/page/content/group/reset.php:1
+msgid "This will erase all saved values"
+msgstr ""
+
+#: ../com/app/views/admin/ui/page/content/group/server.php:6
+msgid "Original"
+msgstr ""
+
+#: ../com/app/views/admin/ui/page/content/group/server.php:12
+msgid "WordPress"
+msgstr ""
+
+#: ../com/app/views/admin/ui/page/content/group/server.php:17
+msgid "PHP"
+msgstr ""
+
+#: ../com/app/views/admin/ui/page/content/group/server.php:22
+msgid "MySQL"
+msgstr ""
+
+#: ../com/app/views/admin/ui/page/content/group/welcome.php:32
+msgid "When this plugin is enabled, you have access to"
+msgstr ""
+
+#: ../com/app/views/admin/ui/page/content/group/welcome.php:32
+msgid "in the theme files. Instead of using"
+msgstr ""
+
+#: ../com/app/views/admin/ui/page/content/group/welcome.php:32
+msgid "or"
+msgstr ""
+
+#: ../com/app/views/admin/ui/page/content/group/welcome.php:32
+msgid "to debug PHP variables, use"
+msgstr ""
+
+#: ../com/app/views/admin/ui/page/content/group/welcome.php:33
+msgid "Find a bug? Having issues? Want other features?"
+msgstr ""
+
+#: ../com/app/views/admin/ui/page/content/group/welcome.php:33
+msgid "Go to the"
+msgstr ""
+
+#: ../com/app/views/admin/ui/page/content/group/welcome.php:33
+msgid "support forum."
+msgstr ""
+
+#: ../com/app/views/admin/ui/page/content/group/feature/buttons.php:4
+msgid "Advanced Fields"
+msgstr ""
+
+#: ../com/app/views/admin/ui/page/content/group/feature/buttons.php:8
+msgid "Template Code"
+msgstr ""
+
+#: ../com/app/views/admin/ui/page/content/group/feature/buttons.php:12
+msgid "Remove"
+msgstr ""
+
+#: ../com/app/views/admin/ui/page/content/group/feature/code.php:2
+msgid "Close"
+msgstr ""
+
+#: ../com/app/views/admin/ui/page/content/group/feature/code.php:12
+msgid "Code placement:"
+msgstr ""
+
+#: ../com/app/views/admin/ui/page/content/group/feature/code.php:16
+msgid "Inside"
+msgstr ""
+
+#: ../com/app/views/admin/ui/page/content/group/feature/code.php:19
+msgid "Right before"
+msgstr ""
+
+#: ../com/app/views/admin/ui/page/content/group/feature/code.php:22
+msgid "Outside"
+msgstr ""
+
+#: ../com/app/views/admin/ui/page/content/group/feature/code.php:24
+msgid "the WordPress loop"
+msgstr ""
+
+#: ../com/app/views/admin/ui/page/content/group/feature/code.php:29
+msgid "More info here"
+msgstr ""
+
+#: ../com/app/views/admin/ui/page/content/group/feature/footer.php:4
+msgid "Add another"
+msgstr ""
+
+#: ../com/app/views/admin/ui/page/content/group/feature/title.php:2
+msgid "Feature enabled"
+msgstr ""
+
+#: ../com/app/views/admin/ui/page/content/group/feature/title.php:3
+msgid "Feature information"
+msgstr ""
+
+#: ../com/app/views/admin/ui/page/content/group/feature/title.php:5
+msgid "Hide"
+msgstr ""
+
+#: ../com/app/views/admin/ui/page/content/group/feature/uploader.php:4
+msgid "Upload new file"
+msgstr ""
+
+#: ../com/app/views/admin/ui/page/content/group/feature/uploader.php:7
+msgid "File Upload Progress"
+msgstr ""
+
+#: ../com/app/views/admin/ui/page/content/group/feature/uploader.php:13
+msgid "Instructions"
+msgstr ""
+
+#: ../libs/sqlbuddy/ajaxfulltext.php:55
+msgid "binary data"
+msgstr ""
+
+#: ../libs/sqlbuddy/ajaximportfile.php:131
+msgid "Either the file could not be read or it was empty"
+msgstr ""
+
+#: ../libs/sqlbuddy/ajaximportfile.php:144
+msgid "The following errors were reported"
+msgstr ""
+
+#: ../libs/sqlbuddy/dboverview.php:102
+msgid "Error performing operation"
+msgstr ""
+
+#: ../libs/sqlbuddy/dboverview.php:124
+#: ../libs/sqlbuddy/edituser.php:155
+msgid "Select"
+msgstr ""
+
+#: ../libs/sqlbuddy/dboverview.php:124
+#: ../libs/sqlbuddy/export.php:523
+#: ../libs/sqlbuddy/export.php:555
+msgid "All"
+msgstr ""
+
+#: ../libs/sqlbuddy/dboverview.php:124
+#: ../libs/sqlbuddy/export.php:523
+#: ../libs/sqlbuddy/export.php:555
+msgid "None"
+msgstr ""
+
+#: ../libs/sqlbuddy/dboverview.php:125
+msgid "With selected"
+msgstr ""
+
+#: ../libs/sqlbuddy/dboverview.php:125
+msgid "Empty"
+msgstr ""
+
+#: ../libs/sqlbuddy/dboverview.php:125
+#: ../libs/sqlbuddy/edituser.php:182
+msgid "Drop"
+msgstr ""
+
+#: ../libs/sqlbuddy/dboverview.php:128
+msgid "Optimize"
+msgstr ""
+
+#: ../libs/sqlbuddy/dboverview.php:143
+msgid "Table"
+msgstr ""
+
+#: ../libs/sqlbuddy/dboverview.php:145
+msgid "Rows"
+msgstr ""
+
+#: ../libs/sqlbuddy/dboverview.php:149
+#: ../libs/sqlbuddy/dboverview.php:273
+#: ../libs/sqlbuddy/dboverview.php:325
+#: ../libs/sqlbuddy/dboverview.php:428
+#: ../libs/sqlbuddy/home.php:187
+msgid "Charset"
+msgstr ""
+
+#: ../libs/sqlbuddy/dboverview.php:151
+#: ../libs/sqlbuddy/dboverview.php:154
+msgid "Overhead"
+msgstr ""
+
+#: ../libs/sqlbuddy/dboverview.php:241
+#: ../libs/sqlbuddy/edituser.php:229
+#: ../libs/sqlbuddy/export.php:624
+#: ../libs/sqlbuddy/export.php:648
+#: ../libs/sqlbuddy/import.php:68
+msgid "Options"
+msgstr ""
+
+#: ../libs/sqlbuddy/dboverview.php:243
+#, php-format
+msgid "Drop the '%s' database"
+msgstr ""
+
+#: ../libs/sqlbuddy/dboverview.php:263
+msgid "Edit database"
+msgstr ""
+
+#: ../libs/sqlbuddy/dboverview.php:289
+#: ../libs/sqlbuddy/dboverview.php:543
+#: ../libs/sqlbuddy/edit.php:193
+#: ../libs/sqlbuddy/editcolumn.php:174
+#: ../libs/sqlbuddy/edituser.php:237
+#: ../libs/sqlbuddy/export.php:671
+#: ../libs/sqlbuddy/home.php:217
+#: ../libs/sqlbuddy/import.php:80
+#: ../libs/sqlbuddy/insert.php:220
+#: ../libs/sqlbuddy/login.php:210
+#: ../libs/sqlbuddy/query.php:54
+msgid "Submit"
+msgstr ""
+
+#: ../libs/sqlbuddy/dboverview.php:308
+msgid "Create a new table"
+msgstr ""
+
+#: ../libs/sqlbuddy/dboverview.php:346
+msgid "Setup the fields for the table below"
+msgstr ""
+
+#: ../libs/sqlbuddy/dboverview.php:356
+#: ../libs/sqlbuddy/functions.php:395
+msgid "New field"
+msgstr ""
+
+#: ../libs/sqlbuddy/dboverview.php:373
+#: ../libs/sqlbuddy/dboverview.php:469
+msgid "Type"
+msgstr ""
+
+#: ../libs/sqlbuddy/dboverview.php:389
+msgid "Values"
+msgstr ""
+
+#: ../libs/sqlbuddy/dboverview.php:395
+msgid "Enter in the format: ('1','2')"
+msgstr ""
+
+#: ../libs/sqlbuddy/dboverview.php:400
+#: ../libs/sqlbuddy/dboverview.php:486
+msgid "Size"
+msgstr ""
+
+#: ../libs/sqlbuddy/dboverview.php:406
+#: ../libs/sqlbuddy/dboverview.php:492
+msgid "Key"
+msgstr ""
+
+#: ../libs/sqlbuddy/dboverview.php:411
+#: ../libs/sqlbuddy/dboverview.php:497
+msgid "primary"
+msgstr ""
+
+#: ../libs/sqlbuddy/dboverview.php:412
+msgid "unique"
+msgstr ""
+
+#: ../libs/sqlbuddy/dboverview.php:413
+msgid "index"
+msgstr ""
+
+#: ../libs/sqlbuddy/dboverview.php:419
+#: ../libs/sqlbuddy/dboverview.php:503
+msgid "Default"
+msgstr ""
+
+#: ../libs/sqlbuddy/dboverview.php:447
+#: ../libs/sqlbuddy/dboverview.php:513
+msgid "Other"
+msgstr ""
+
+#: ../libs/sqlbuddy/dboverview.php:450
+#: ../libs/sqlbuddy/editcolumn.php:160
+msgid "Unsigned"
+msgstr ""
+
+#: ../libs/sqlbuddy/dboverview.php:451
+#: ../libs/sqlbuddy/editcolumn.php:161
+msgid "Binary"
+msgstr ""
+
+#: ../libs/sqlbuddy/dboverview.php:452
+#: ../libs/sqlbuddy/dboverview.php:516
+#: ../libs/sqlbuddy/editcolumn.php:162
+msgid "Not Null"
+msgstr ""
+
+#: ../libs/sqlbuddy/dboverview.php:453
+#: ../libs/sqlbuddy/dboverview.php:523
+msgid "Auto Increment"
+msgstr ""
+
+#: ../libs/sqlbuddy/dboverview.php:517
+msgid "Unique"
+msgstr ""
+
+#: ../libs/sqlbuddy/dboverview.php:546
+msgid "Add field"
+msgstr ""
+
+#: ../libs/sqlbuddy/dboverview.php:568
+#: ../libs/sqlbuddy/functions.php:433
+#: ../libs/sqlbuddy/functions.php:445
+#: ../libs/sqlbuddy/insert.php:242
+msgid "Oops"
+msgstr ""
+
+#: ../libs/sqlbuddy/dboverview.php:569
+#: ../libs/sqlbuddy/functions.php:434
+msgid "For some reason, the database parameter was not included with your request."
+msgstr ""
+
+#: ../libs/sqlbuddy/edit.php:187
+msgid "Save changes to original"
+msgstr ""
+
+#: ../libs/sqlbuddy/edit.php:188
+msgid "Insert as new row"
+msgstr ""
+
+#: ../libs/sqlbuddy/edit.php:193
+#: ../libs/sqlbuddy/editcolumn.php:174
+#: ../libs/sqlbuddy/edituser.php:237
+#: ../libs/sqlbuddy/functions.php:403
+msgid "Cancel"
+msgstr ""
+
+#: ../libs/sqlbuddy/editcolumn.php:67
+msgid "Name:"
+msgstr ""
+
+#: ../libs/sqlbuddy/editcolumn.php:73
+msgid "Type:"
+msgstr ""
+
+#: ../libs/sqlbuddy/editcolumn.php:103
+msgid "Values:"
+msgstr ""
+
+#: ../libs/sqlbuddy/editcolumn.php:113
+msgid "Size:"
+msgstr ""
+
+#: ../libs/sqlbuddy/editcolumn.php:119
+msgid "Default:"
+msgstr ""
+
+#: ../libs/sqlbuddy/editcolumn.php:130
+msgid "Charset:"
+msgstr ""
+
+#: ../libs/sqlbuddy/editcolumn.php:157
+msgid "Other:"
+msgstr ""
+
+#: ../libs/sqlbuddy/edituser.php:94
+msgid "User"
+msgstr ""
+
+#: ../libs/sqlbuddy/edituser.php:98
+msgid "Change password"
+msgstr ""
+
+#: ../libs/sqlbuddy/edituser.php:109
+msgid "Allow access to"
+msgstr ""
+
+#: ../libs/sqlbuddy/edituser.php:111
+msgid "All databases"
+msgstr ""
+
+#: ../libs/sqlbuddy/edituser.php:112
+msgid "Selected databases"
+msgstr ""
+
+#: ../libs/sqlbuddy/edituser.php:143
+msgid "Give user"
+msgstr ""
+
+#: ../libs/sqlbuddy/edituser.php:145
+msgid "All privileges"
+msgstr ""
+
+#: ../libs/sqlbuddy/edituser.php:146
+msgid "Selected privileges"
+msgstr ""
+
+#: ../libs/sqlbuddy/edituser.php:150
+msgid "User privileges"
+msgstr ""
+
+#: ../libs/sqlbuddy/edituser.php:158
+#: ../libs/sqlbuddy/functions.php:367
+msgid "Insert"
+msgstr ""
+
+#: ../libs/sqlbuddy/edituser.php:163
+msgid "Update"
+msgstr ""
+
+#: ../libs/sqlbuddy/edituser.php:166
+msgid "Delete"
+msgstr ""
+
+#: ../libs/sqlbuddy/edituser.php:171
+msgid "Index"
+msgstr ""
+
+#: ../libs/sqlbuddy/edituser.php:174
+msgid "Alter"
+msgstr ""
+
+#: ../libs/sqlbuddy/edituser.php:179
+msgid "Create"
+msgstr ""
+
+#: ../libs/sqlbuddy/edituser.php:187
+msgid "Temp tables"
+msgstr ""
+
+#: ../libs/sqlbuddy/edituser.php:193
+msgid "Administrator privileges"
+msgstr ""
+
+#: ../libs/sqlbuddy/edituser.php:198
+#: ../libs/sqlbuddy/import.php:42
+msgid "File"
+msgstr ""
+
+#: ../libs/sqlbuddy/edituser.php:201
+msgid "Process"
+msgstr ""
+
+#: ../libs/sqlbuddy/edituser.php:206
+msgid "Reload"
+msgstr ""
+
+#: ../libs/sqlbuddy/edituser.php:209
+msgid "Shutdown"
+msgstr ""
+
+#: ../libs/sqlbuddy/edituser.php:214
+msgid "Super"
+msgstr ""
+
+#: ../libs/sqlbuddy/edituser.php:231
+msgid "Grant option"
+msgstr ""
+
+#: ../libs/sqlbuddy/edituser.php:245
+msgid "User not found!"
+msgstr ""
+
+#: ../libs/sqlbuddy/export.php:83
+msgid "You must export either structure, data, or both"
+msgstr ""
+
+#: ../libs/sqlbuddy/export.php:85
+msgid "Please select the databases that you would like to export"
+msgstr ""
+
+#: ../libs/sqlbuddy/export.php:87
+msgid "Please select the tables that you would like to export"
+msgstr ""
+
+#: ../libs/sqlbuddy/export.php:360
+#: ../libs/sqlbuddy/export.php:405
+#, php-format
+msgid "Table `%s` is empty"
+msgstr ""
+
+#: ../libs/sqlbuddy/export.php:479
+msgid "Results:"
+msgstr ""
+
+#: ../libs/sqlbuddy/export.php:479
+msgid "Select all"
+msgstr ""
+
+#: ../libs/sqlbuddy/export.php:485
+msgid "The file could not be opened"
+msgstr ""
+
+#: ../libs/sqlbuddy/export.php:488
+msgid "Could not write to file"
+msgstr ""
+
+#: ../libs/sqlbuddy/export.php:491
+msgid "Successfully wrote content to file"
+msgstr ""
+
+#: ../libs/sqlbuddy/export.php:491
+#: ../libs/sqlbuddy/home.php:76
+msgid "Download"
+msgstr ""
+
+#: ../libs/sqlbuddy/export.php:491
+msgid "Note"
+msgstr ""
+
+#: ../libs/sqlbuddy/export.php:491
+msgid "If this is a public server, you should delete this file from the server after you download it"
+msgstr ""
+
+#: ../libs/sqlbuddy/export.php:523
+msgid "Tables"
+msgstr ""
+
+#: ../libs/sqlbuddy/export.php:555
+#: ../libs/sqlbuddy/functions.php:316
+msgid "Databases"
+msgstr ""
+
+#: ../libs/sqlbuddy/export.php:590
+#: ../libs/sqlbuddy/import.php:54
+msgid "SQL"
+msgstr ""
+
+#: ../libs/sqlbuddy/export.php:591
+#: ../libs/sqlbuddy/import.php:55
+msgid "CSV"
+msgstr ""
+
+#: ../libs/sqlbuddy/export.php:614
+#: ../libs/sqlbuddy/functions.php:366
+msgid "Structure"
+msgstr ""
+
+#: ../libs/sqlbuddy/export.php:615
+msgid "Data"
+msgstr ""
+
+#: ../libs/sqlbuddy/export.php:626
+msgid "Compact inserts"
+msgstr ""
+
+#: ../libs/sqlbuddy/export.php:627
+msgid "Complete inserts"
+msgstr ""
+
+#: ../libs/sqlbuddy/export.php:639
+msgid "Delimiter"
+msgstr ""
+
+#: ../libs/sqlbuddy/export.php:641
+msgid "Comma"
+msgstr ""
+
+#: ../libs/sqlbuddy/export.php:642
+msgid "Tab"
+msgstr ""
+
+#: ../libs/sqlbuddy/export.php:643
+msgid "Semicolon"
+msgstr ""
+
+#: ../libs/sqlbuddy/export.php:644
+msgid "Space"
+msgstr ""
+
+#: ../libs/sqlbuddy/export.php:650
+msgid "Print field names on first line"
+msgstr ""
+
+#: ../libs/sqlbuddy/export.php:660
+msgid "If you are exporting a large number of rows, it is recommended that you output the results to a text file"
+msgstr ""
+
+#: ../libs/sqlbuddy/export.php:664
+msgid "Output to"
+msgstr ""
+
+#: ../libs/sqlbuddy/export.php:666
+msgid "Browser"
+msgstr ""
+
+#: ../libs/sqlbuddy/export.php:667
+msgid "Text file"
+msgstr ""
+
+#: ../libs/sqlbuddy/functions.php:273
+#: ../libs/sqlbuddy/functions.php:399
+msgid "Loading..."
+msgstr ""
+
+#: ../libs/sqlbuddy/functions.php:278
+msgid "Logout"
+msgstr ""
+
+#: ../libs/sqlbuddy/functions.php:295
+#: ../libs/sqlbuddy/functions.php:305
+#: ../libs/sqlbuddy/functions.php:357
+msgid "Home"
+msgstr ""
+
+#: ../libs/sqlbuddy/functions.php:296
+#: ../libs/sqlbuddy/functions.php:358
+msgid "Users"
+msgstr ""
+
+#: ../libs/sqlbuddy/functions.php:297
+#: ../libs/sqlbuddy/functions.php:306
+#: ../libs/sqlbuddy/functions.php:359
+msgid "Query"
+msgstr ""
+
+#: ../libs/sqlbuddy/functions.php:363
+msgid "Overview"
+msgstr ""
+
+#: ../libs/sqlbuddy/functions.php:365
+msgid "Browse"
+msgstr ""
+
+#: ../libs/sqlbuddy/functions.php:369
+msgid "Your changes were saved to the database."
+msgstr ""
+
+#: ../libs/sqlbuddy/functions.php:371
+msgid "delete this row"
+msgstr ""
+
+#: ../libs/sqlbuddy/functions.php:372
+msgid "delete these rows"
+msgstr ""
+
+#: ../libs/sqlbuddy/functions.php:373
+msgid "empty this table"
+msgstr ""
+
+#: ../libs/sqlbuddy/functions.php:374
+msgid "empty these tables"
+msgstr ""
+
+#: ../libs/sqlbuddy/functions.php:375
+msgid "drop this table"
+msgstr ""
+
+#: ../libs/sqlbuddy/functions.php:376
+msgid "drop these tables"
+msgstr ""
+
+#: ../libs/sqlbuddy/functions.php:377
+msgid "delete this column"
+msgstr ""
+
+#: ../libs/sqlbuddy/functions.php:378
+msgid "delete these columns"
+msgstr ""
+
+#: ../libs/sqlbuddy/functions.php:379
+msgid "delete this index"
+msgstr ""
+
+#: ../libs/sqlbuddy/functions.php:380
+msgid "delete these indexes"
+msgstr ""
+
+#: ../libs/sqlbuddy/functions.php:381
+msgid "delete this user"
+msgstr ""
+
+#: ../libs/sqlbuddy/functions.php:382
+msgid "delete these users"
+msgstr ""
+
+#: ../libs/sqlbuddy/functions.php:383
+msgid "Are you sure you want to"
+msgstr ""
+
+#: ../libs/sqlbuddy/functions.php:385
+msgid "The following query will be run:"
+msgstr ""
+
+#: ../libs/sqlbuddy/functions.php:386
+msgid "The following queries will be run:"
+msgstr ""
+
+#: ../libs/sqlbuddy/functions.php:388
+msgid "Confirm"
+msgstr ""
+
+#: ../libs/sqlbuddy/functions.php:389
+#, php-format
+msgid "Are you sure you want to empty the '%s' table? This will delete all the data inside of it. The following query will be run:"
+msgstr ""
+
+#: ../libs/sqlbuddy/functions.php:390
+#, php-format
+msgid "Are you sure you want to drop the '%s' table? This will delete the table and all data inside of it. The following query will be run:"
+msgstr ""
+
+#: ../libs/sqlbuddy/functions.php:391
+#, php-format
+msgid "Are you sure you want to drop the database '%s'? This will delete the database, the tables inside the database, and all data inside of the tables. The following query will be run:"
+msgstr ""
+
+#: ../libs/sqlbuddy/functions.php:393
+msgid "Successfully saved changes"
+msgstr ""
+
+#: ../libs/sqlbuddy/functions.php:397
+msgid "Full Text"
+msgstr ""
+
+#: ../libs/sqlbuddy/functions.php:400
+msgid "Redirecting..."
+msgstr ""
+
+#: ../libs/sqlbuddy/functions.php:402
+msgid "Okay"
+msgstr ""
+
+#: ../libs/sqlbuddy/functions.php:405
+msgid "Error"
+msgstr ""
+
+#: ../libs/sqlbuddy/functions.php:406
+msgid "There was an error receiving data from the server"
+msgstr ""
+
+#: ../libs/sqlbuddy/functions.php:446
+msgid "For some reason, the table parameter was not included with your request."
+msgstr ""
+
+#: ../libs/sqlbuddy/home.php:24
+msgid "Welcome to SQL Buddy!"
+msgstr ""
+
+#: ../libs/sqlbuddy/home.php:37
+#, php-format
+msgid "You are connected to MySQL %s with the user %s."
+msgstr ""
+
+#: ../libs/sqlbuddy/home.php:41
+#, php-format
+msgid "You are connected to %s."
+msgstr ""
+
+#: ../libs/sqlbuddy/home.php:70
+msgid "Updates"
+msgstr ""
+
+#: ../libs/sqlbuddy/home.php:76
+msgid "A new version of SQL Buddy is available!"
+msgstr ""
+
+#: ../libs/sqlbuddy/home.php:78
+msgid "There are no updates available"
+msgstr ""
+
+#: ../libs/sqlbuddy/home.php:92
+msgid "Language"
+msgstr ""
+
+#: ../libs/sqlbuddy/home.php:119
+msgid "Theme"
+msgstr ""
+
+#: ../libs/sqlbuddy/home.php:145
+msgid "Getting started"
+msgstr ""
+
+#: ../libs/sqlbuddy/home.php:152
+msgid "Help"
+msgstr ""
+
+#: ../libs/sqlbuddy/home.php:153
+msgid "Translations"
+msgstr ""
+
+#: ../libs/sqlbuddy/home.php:154
+msgid "Contact"
+msgstr ""
+
+#: ../libs/sqlbuddy/home.php:166
+msgid "Create a new database"
+msgstr ""
+
+#: ../libs/sqlbuddy/home.php:232
+msgid "Did you know..."
+msgstr ""
+
+#: ../libs/sqlbuddy/home.php:240
+msgid "There is an easier way to select a large group of items when browsing table rows. Check the first row, hold the shift key, and check the final row. The checkboxes between the two rows will be automatically checked for you."
+msgstr ""
+
+#: ../libs/sqlbuddy/home.php:241
+msgid "The columns in the browse and query tabs are resizable. Adjust them to as wide or narrow as you like."
+msgstr ""
+
+#: ../libs/sqlbuddy/home.php:242
+msgid "The login page is based on a default user of root@localhost. By editing config.php, you can change the default user and host to whatever you want."
+msgstr ""
+
+#: ../libs/sqlbuddy/home.php:254
+msgid "Keyboard shortcuts"
+msgstr ""
+
+#: ../libs/sqlbuddy/home.php:262
+msgid "Press this key..."
+msgstr ""
+
+#: ../libs/sqlbuddy/home.php:263
+msgid "...and this will happen"
+msgstr ""
+
+#: ../libs/sqlbuddy/home.php:267
+msgid "select all"
+msgstr ""
+
+#: ../libs/sqlbuddy/home.php:271
+msgid "select none"
+msgstr ""
+
+#: ../libs/sqlbuddy/home.php:275
+msgid "edit selected items"
+msgstr ""
+
+#: ../libs/sqlbuddy/home.php:279
+msgid "delete selected items"
+msgstr ""
+
+#: ../libs/sqlbuddy/home.php:283
+msgid "refresh page"
+msgstr ""
+
+#: ../libs/sqlbuddy/home.php:287
+msgid "load the query tab"
+msgstr ""
+
+#: ../libs/sqlbuddy/home.php:291
+msgid "browse tab - go to first page of results"
+msgstr ""
+
+#: ../libs/sqlbuddy/home.php:295
+msgid "browse tab - go to last page of results"
+msgstr ""
+
+#: ../libs/sqlbuddy/home.php:299
+msgid "browse tab - go to previous page of results"
+msgstr ""
+
+#: ../libs/sqlbuddy/home.php:303
+msgid "browse tab - go to next page of results"
+msgstr ""
+
+#: ../libs/sqlbuddy/home.php:307
+msgid "optimize selected tables"
+msgstr ""
+
+#: ../libs/sqlbuddy/import.php:35
+msgid "Choose a .sql file to import"
+msgstr ""
+
+#: ../libs/sqlbuddy/import.php:70
+msgid "Ignore first line"
+msgstr ""
+
+#: ../libs/sqlbuddy/import.php:80
+msgid "Importing..."
+msgstr ""
+
+#: ../libs/sqlbuddy/insert.php:79
+msgid "Your data has been inserted into the database."
+msgstr ""
+
+#: ../libs/sqlbuddy/insert.php:243
+#, php-format
+msgid "There was a bit of trouble locating the \"%s\" table."
+msgstr ""
+
+#: ../libs/sqlbuddy/login.php:86
+msgid "There was a problem logging you in."
+msgstr ""
+
+#: ../libs/sqlbuddy/login.php:133
+msgid "Unsupported browser"
+msgstr ""
+
+#: ../libs/sqlbuddy/login.php:133
+#: ../libs/sqlbuddy/login.php:146
+msgid "Help!"
+msgstr ""
+
+#: ../libs/sqlbuddy/login.php:136
+msgid "We're sorry, but currently only Internet Explorer 7 is supported. It is available as a free download on Microsoft's website. Other free browsers are also supported, including Firefox, Safari, and Opera."
+msgstr ""
+
+#: ../libs/sqlbuddy/login.php:153
+msgid "Your session has timed out. Please login again."
+msgstr ""
+
+#: ../libs/sqlbuddy/login.php:173
+msgid "SQLite"
+msgstr ""
+
+#: ../libs/sqlbuddy/login.php:189
+msgid "Host"
+msgstr ""
+
+#: ../libs/sqlbuddy/login.php:193
+msgid "Username"
+msgstr ""
+
+#: ../libs/sqlbuddy/login.php:197
+msgid "Password"
+msgstr ""
+
+#: ../libs/sqlbuddy/login.php:242
+msgid "You don't appear to have cookies enabled. For sessions to work, most php installations require cookies."
+msgstr ""
+
+#: ../libs/sqlbuddy/query.php:29
+#, php-format
+msgid "Run a query on the %s database"
+msgstr ""
+
+#: ../libs/sqlbuddy/structure.php:90
+#: ../libs/sqlbuddy/structure.php:395
+#: ../libs/sqlbuddy/structure.php:578
+msgid "Columns"
+msgstr ""
+
+#: ../libs/sqlbuddy/structure.php:93
+#: ../libs/sqlbuddy/users.php:170
+#: ../libs/sqlbuddy/includes/browse.php:118
+msgid "Edit"
+msgstr ""
+
+#: ../libs/sqlbuddy/structure.php:174
+#: ../libs/sqlbuddy/structure.php:637
+msgid "Add a column"
+msgstr ""
+
+#: ../libs/sqlbuddy/structure.php:268
+msgid "Insert this column"
+msgstr ""
+
+#: ../libs/sqlbuddy/structure.php:269
+msgid "At end of table"
+msgstr ""
+
+#: ../libs/sqlbuddy/structure.php:270
+msgid "At beginning of table"
+msgstr ""
+
+#: ../libs/sqlbuddy/structure.php:274
+msgid "After"
+msgstr ""
+
+#: ../libs/sqlbuddy/structure.php:288
+#: ../libs/sqlbuddy/structure.php:697
+msgid "Edit table"
+msgstr ""
+
+#: ../libs/sqlbuddy/structure.php:362
+msgid "Indexes"
+msgstr ""
+
+#: ../libs/sqlbuddy/structure.php:454
+msgid "Add an index"
+msgstr ""
+
+#: ../libs/sqlbuddy/structure.php:471
+msgid "Column(s)"
+msgstr ""
+
+#: ../libs/sqlbuddy/structure.php:483
+#, php-format
+msgid "Show %d more..."
+msgstr ""
+
+#: ../libs/sqlbuddy/structure.php:512
+#: ../libs/sqlbuddy/structure.php:733
+msgid "Empty table"
+msgstr ""
+
+#: ../libs/sqlbuddy/structure.php:513
+#: ../libs/sqlbuddy/structure.php:734
+msgid "Drop table"
+msgstr ""
+
+#: ../libs/sqlbuddy/structure.php:514
+msgid "Optimize table"
+msgstr ""
+
+#: ../libs/sqlbuddy/structure.php:527
+#: ../libs/sqlbuddy/structure.php:743
+msgid "Table Information"
+msgstr ""
+
+#: ../libs/sqlbuddy/structure.php:533
+msgid "Storage engine"
+msgstr ""
+
+#: ../libs/sqlbuddy/users.php:266
+msgid "Add a new user"
+msgstr ""
+
+#: ../libs/sqlbuddy/users.php:422
+msgid "You do not have enough permissions to create new users."
+msgstr ""
+
+#: ../libs/sqlbuddy/users.php:430
+msgid "You do not have enough permissions to view or manage users."
+msgstr ""
+
+#: ../libs/sqlbuddy/includes/browse.php:120
+msgid "Refresh"
+msgstr ""
+
+#: ../libs/sqlbuddy/includes/browse.php:123
+msgid "No primary key defined"
+msgstr ""
+
+#: ../libs/sqlbuddy/includes/browse.php:134
+msgid "First"
+msgstr ""
+
+#: ../libs/sqlbuddy/includes/browse.php:135
+msgid "Prev"
+msgstr ""
+
+#: ../libs/sqlbuddy/includes/browse.php:172
+msgid "Next"
+msgstr ""
+
+#: ../libs/sqlbuddy/includes/browse.php:173
+msgid "Last"
+msgstr ""
+
+#: ../libs/sqlbuddy/includes/browse.php:186
+#: ../libs/sqlbuddy/includes/browse.php:395
+#, php-format
+msgid "(%.4f seconds)"
+msgstr ""
+
+#: ../libs/sqlbuddy/includes/browse.php:189
+#, php-format
+msgid "Note: To avoid crashing your browser, only the first %d results have been displayed"
+msgstr ""
+
+#: ../libs/sqlbuddy/includes/browse.php:382
+#, php-format
+msgid "Your query affected %d rows."
+msgstr ""
+
+#: ../libs/sqlbuddy/includes/browse.php:395
+msgid "Your query did not return any results."
+msgstr ""
+
