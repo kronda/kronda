@@ -14,9 +14,21 @@
  * @package WordPress
  */
 
-// ** MySQL settings - You can get this info from your web host ** //
-/** The name of the database for WordPress */
-define('DB_NAME', 'krondaco_wrdp1');
+
+/** 
+*
+* YOU SHOULD BE EDITING local-config.php !!!!!
+*
+* DON'T SET ENVIRONMENT SPECIFC SETTINGS IN THIS FILE, THEY BELONG IN local-config.php 
+*
+**/
+
+if ( file_exists( dirname( __FILE__ ) . '/local-config.php' ) ) {
+    include( dirname( __FILE__ ) . '/local-config.php' );
+} else {
+  // ** MySQL settings - You can get this info from your web host ** //
+  /** The name of the database for WordPress */
+  define('DB_NAME', 'krondaco_wrdp1');
 
 /** MySQL database username */
 define('DB_USER', 'krondaco_wrdp1');
@@ -32,6 +44,7 @@ define('DB_CHARSET', 'utf8');
 
 /** The Database Collate type. Don't change this if in doubt. */
 define('DB_COLLATE', '');
+}
 
 /**#@+
  * Authentication Unique Keys and Salts.
