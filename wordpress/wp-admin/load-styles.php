@@ -21,7 +21,6 @@ function __() {}
  */
 function _x() {}
 
-
 /**
  * @ignore
  */
@@ -105,7 +104,7 @@ if ( empty($load) )
 $compress = ( isset($_GET['c']) && $_GET['c'] );
 $force_gzip = ( $compress && 'gzip' == $_GET['c'] );
 $rtl = ( isset($_GET['dir']) && 'rtl' == $_GET['dir'] );
-$expires_offset = 31536000;
+$expires_offset = 31536000; // 1 year
 $out = '';
 
 $wp_styles = new WP_Styles();
@@ -121,11 +120,16 @@ foreach( $load as $handle ) {
 	$content = get_file($path) . "\n";
 
 	if ( $rtl && isset($style->extra['rtl']) && $style->extra['rtl'] ) {
-		$rtl_path = is_bool($style->extra['rtl']) ? str_replace( '.css', '-rtl.css', $path ) : ABSPATH . $style->extra['rtl'];
+		$rtl_path = is_bool($style->extra['rtl']) ? str_replace( '.min.css', '-rtl.min.css', $path ) : ABSPATH . $style->extra['rtl'];
 		$content .= get_file($rtl_path) . "\n";
 	}
 
-	$out .= str_replace( '../images/', 'images/', $content );
+	if ( strpos( $style->src, '/wp-includes/css/' ) === 0 ) {
+		$content = str_replace( '../images/', '../wp-includes/images/', $content );
+		$out .= str_replace( '../js/tinymce/', '../wp-includes/js/tinymce/', $content );
+	} else {
+		$out .= str_replace( '../images/', 'images/', $content );
+	}
 }
 
 header('Content-Type: text/css');
