@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: Advanced Excerpt
-Plugin URI: http://sparepencil.com/code/advanced-excerpt/
+Plugin URI: http://basvd.com/code/advanced-excerpt/
 Description: Several improvements over WP's default excerpt. The size of the excerpt can be limited using character or word count, and HTML markup is not removed.
-Version: 4.0
+Version: 4.1.1
 Author: Bas van Doren
-Author URI: http://sparepencil.com/
+Author URI: http://basvd.com/
 
 Copyright 2007 Bas van Doren
 
@@ -27,19 +27,24 @@ if (!class_exists('AdvancedExcerpt')):
   class AdvancedExcerpt
   {
     // Plugin configuration
-    var $name;
-    var $text_domain;
-    var $mb;
-
-    var $default_options;
-    var $custom_options;
-
-    // Tricky variable
-    var $skip_next_call;
-
-    // Reference arrays
-    // Basic HTML tags (determines which tags are in the checklist)
-    var $options_basic_tags = array
+    public $name;
+    public $text_domain;
+    public $options;
+    public $default_options = array(
+      'length' => 40,
+      'use_words' => 1,
+      'no_custom' => 1,
+      'no_shortcode' => 1,
+      'finish_word' => 0,
+      'finish_sentence' => 0,
+      'ellipsis' => '&hellip;',
+      'read_more' => 'Read the rest',
+      'add_link' => 0,
+      'allowed_tags' => array('_all')
+    );
+    
+    // Basic HTML tags (determines which tags are in the checklist by default)
+    public static $options_basic_tags = array
     (
       'a', 'abbr', 'acronym', 'b', 'big',
       'blockquote', 'br', 'center', 'cite', 'code', 'dd', 'del', 'div', 'dl', 'dt',
@@ -48,9 +53,8 @@ if (!class_exists('AdvancedExcerpt')):
       'sup', 'table', 'td', 'th', 'tr', 'u', 'ul'
     );
 
-    // HTML tags allowed in <body>
-    // <style> is <head>-only, but usage is often non-standard, so it's included here
-    var $options_body_tags = array(
+    // Almost all HTML tags (extra options)
+    public static $options_all_tags = array(
       'a', 'abbr', 'acronym', 'address', 'applet',
       'area', 'b', 'bdo', 'big', 'blockquote', 'br', 'button', 'caption', 'center',
       'cite', 'code', 'col', 'colgroup', 'dd', 'del', 'dfn', 'dir', 'div', 'dl',
@@ -62,36 +66,29 @@ if (!class_exists('AdvancedExcerpt')):
       'tbody', 'td', 'textarea', 'tfoot', 'th', 'thead', 'tr', 'tt', 'u', 'ul',
       'var'
     );
-
-    // (not used) HTML tags which may have content that should not be considered actual text
-    // TODO: Implement a way to remove tag + content if tag is not allowed (low priority)
-    var $non_text_tags = array(
-      'applet', 'noframes', 'noscript', 'object', 'select', 'script', 'style'
-    );
-
-
-    function AdvancedExcerpt()
+    
+    // Singleton
+    private static $inst = null;
+    public static function Instance($new = false)
     {
-      $this->name           = strtolower(get_class($this));
-      $this->text_domain    = $this->name;
-      $this->skip_next_call = false;
-      $this->charset        = get_bloginfo('charset');
-
+      if (self::$inst == null || $new)
+      {
+        self::$inst = new AdvancedExcerpt();
+      }
+      return self::$inst;
+    }
+    
+    private function __construct()
+    {
+      $this->name = strtolower(get_class());
+      $this->text_domain = $this->name;
       $this->load_options();
-
-      // Carefully support multibyte languages
-      if (extension_loaded('mbstring') && function_exists('mb_list_encodings'))
-        $this->mb = in_array($this->charset, mb_list_encodings());
-
-      load_plugin_textdomain($this->text_domain, PLUGINDIR . '/advanced-excerpt/');
-
-      // __FILE__ doesn't seem to work
-      $file = ABSPATH . PLUGINDIR . '/advanced-excerpt/advanced-excerpt.php';
-      register_activation_hook($file, array(
+      
+      load_plugin_textdomain($this->text_domain, false, dirname(plugin_basename(__FILE__)));
+      register_activation_hook(__FILE__, array(
         &$this,
         'install'
       ));
-
       //register_deactivation_hook($file, array(&$this, 'uninstall'));
 
       add_action('admin_menu', array(
@@ -100,162 +97,150 @@ if (!class_exists('AdvancedExcerpt')):
       ));
 
       // Replace the default filter (see /wp-includes/default-filters.php)
-      remove_filter('get_the_excerpt', 'wp_trim_excerpt');
+      //remove_filter('get_the_excerpt', 'wp_trim_excerpt');
+      // Replace everything
+      remove_all_filters('get_the_excerpt');
       add_filter('get_the_excerpt', array(
         &$this,
         'filter'
       ));
     }
 
-    // Deprecated: php-4 support
-    function __construct()
+    public function filter($text)
     {
-      self::AdvancedExcerpt();
-    }
-
-    function filter($text, $options = null)
-    {
-      // Merge options
-      if (is_array($options))
-        $r = array_merge($this->default_options, $options);
-      else
-        $r = $this->default_options;
-
-      extract($r, EXTR_SKIP);
-
-      // Only make the excerpt if it does not exist or 'No Custom Excerpt' is set to true
-      if ('' == $text || $no_custom)
+      // Extract options (skip collisions)
+      if (is_array($this->options))
       {
-        // Get the full content and filter it
-        $text = get_the_content('');
-        if (1 == $no_shortcode)
-          $text = strip_shortcodes($text);
-        $text = apply_filters('the_content', $text);
-
-        // From the default wp_trim_excerpt():
-        // Some kind of precaution against malformed CDATA in RSS feeds I suppose
-        $text = str_replace(']]>', ']]&gt;', $text);
-
-        // Strip HTML if allow-all is not set
-        if (!in_array('_all', $allowed_tags))
-        {
-          if (count($allowed_tags) > 0)
-            $tag_string = '<' . implode('><', $allowed_tags) . '>';
-          else
-            $tag_string = '';
-          $text = strip_tags($text, $tag_string);
-        }
-
-        $tokens = array();
-        $out = '';
-        $w = 0;
-        // Divide the string into tokens; HTML tags, or words, followed by any whitespace
-        // (<[^>]+>|[^<>\s]+\s*)
-        preg_match_all('/(<[^>]+>|[^<>\s]+)\s*/u', $text, $tokens);
-        foreach($tokens[0] as $t)
-        { // Parse each token
-          if($w >= $length && !$finish_sentence)
-          { // Limit reached
-            break;
-          }
-          if($t[0] != '<')
-          { // Token is not a tag
-            if($w >= $length && $finish_sentence && preg_match('/[\?\.\!]\s*$/uS', $t) == 1)
-            { // Limit reached, continue until ? . or ! occur at the end
-              $out .= trim($t);
-              break;
-            }
-            if(1 == $use_words)
-            { // Count words
-              $w++;
-            }
-            else
-            { // Count/trim characters
-              $chars = trim($t); // Remove surrounding space
-              $c = $this->strlen($chars);
-              if($c + $w > $length && !$finish_sentence)
-              { // Token is too long
-                $c = ($finish_word) ? $c : $length - $w; // Keep token to finish word
-                $t = $this->substr($t, 0, $c);
-              }
-              $w += $c;
-            }
-          }
-          // Append what's left of the token
-          $out .= $t;
-        }
-
-        $text = trim(force_balance_tags($out));
-
-        // New filter in WP2.9, seems unnecessary for now
-        //$ellipsis = apply_filters('excerpt_more', $ellipsis);
-
-        // Read more
-        if ($add_link)
-        {
-          $ellipsis = $ellipsis . sprintf(' <a href="%s" class="read_more">%s</a>', get_permalink(), $read_more);
-        }
-
-        // Adding the ellipsis
-        $pos = strpos($text, '</p>', max(0, strlen($text) - 7));
-        if ($pos !== false)
-        {
-          // Stay inside the last paragraph (if it's in the last 6 characters)
-          $text = substr_replace($text, $ellipsis, $pos, 0);
-        }
-        else
-        {
-          // If <p> is an allowed tag,
-          // wrap the ellipsis for consistency with excerpt markup
-          if (in_array('_all', $allowed_tags) || in_array('p', $allowed_tags))
-            $ellipsis = '<p>' . $ellipsis . '</p>';
-
-          $text = $text . $ellipsis;
-        }
+        extract($this->options, EXTR_SKIP);
+        $this->options = null; // Reset
       }
+      extract($this->default_options, EXTR_SKIP);
+      
+      // Avoid custom excerpts
+      if (!empty($text) && !$no_custom)
+        return $text;
+
+      // Get the full content and filter it
+      $text = get_the_content('');
+      if (1 == $no_shortcode)
+        $text = strip_shortcodes($text);
+      $text = apply_filters('the_content', $text);
+
+      // From the default wp_trim_excerpt():
+      // Some kind of precaution against malformed CDATA in RSS feeds I suppose
+      $text = str_replace(']]>', ']]&gt;', $text);
+
+      // Determine allowed tags
+      if(!isset($allowed_tags))
+        $allowed_tags = self::$options_all_tags;
+      
+      if(isset($exclude_tags))
+        $allowed_tags = array_diff($allowed_tags, $exclude_tags);
+      
+      // Strip HTML if allow-all is not set
+      if (!in_array('_all', $allowed_tags))
+      {
+        if (count($allowed_tags) > 0)
+          $tag_string = '<' . implode('><', $allowed_tags) . '>';
+        else
+          $tag_string = '';
+        $text = strip_tags($text, $tag_string);
+      }
+
+      // Create the excerpt
+      $text = $this->text_excerpt($text, $length, $use_words, $finish_word, $finish_sentence);
+
+      // Add the ellipsis or link
+      $text = $this->text_add_more($text, $ellipsis, ($add_link) ? $read_more : false);
 
       return $text;
     }
-
-    function install()
+    
+    public function text_excerpt($text, $length, $use_words, $finish_word, $finish_sentence)
     {
-      add_option($this->name . '_length', 40);
-      add_option($this->name . '_use_words', 1);
-      add_option($this->name . '_no_custom', 0);
-      add_option($this->name . '_no_shortcode', 1);
-      add_option($this->name . '_finish_word', 0);
-      add_option($this->name . '_finish_sentence', 0);
-      add_option($this->name . '_ellipsis', '&hellip;');
-      add_option($this->name . '_read_more', 'Read the rest');
-      add_option($this->name . '_add_link', 0);
-      add_option($this->name . '_allowed_tags', $this->options_basic_tags);
+      $tokens = array();
+      $out = '';
+      $w = 0;
+      
+      // Divide the string into tokens; HTML tags, or words, followed by any whitespace
+      // (<[^>]+>|[^<>\s]+\s*)
+      preg_match_all('/(<[^>]+>|[^<>\s]+)\s*/u', $text, $tokens);
+      foreach ($tokens[0] as $t)
+      { // Parse each token
+        if ($w >= $length && !$finish_sentence)
+        { // Limit reached
+          break;
+        }
+        if ($t[0] != '<')
+        { // Token is not a tag
+          if ($w >= $length && $finish_sentence && preg_match('/[\?\.\!]\s*$/uS', $t) == 1)
+          { // Limit reached, continue until ? . or ! occur at the end
+            $out .= trim($t);
+            break;
+          }
+          if (1 == $use_words)
+          { // Count words
+            $w++;
+          } else
+          { // Count/trim characters
+            $chars = trim($t); // Remove surrounding space
+            $c = strlen($chars);
+            if ($c + $w > $length && !$finish_sentence)
+            { // Token is too long
+              $c = ($finish_word) ? $c : $length - $w; // Keep token to finish word
+              $t = substr($t, 0, $c);
+            }
+            $w += $c;
+          }
+        }
+        // Append what's left of the token
+        $out .= $t;
+      }
+      
+      return trim(force_balance_tags($out));
+    }
+    
+    public function text_add_more($text, $ellipsis, $read_more)
+    {
+      // New filter in WP2.9, seems unnecessary for now
+      //$ellipsis = apply_filters('excerpt_more', $ellipsis);
+      
+      if ($read_more)
+        $ellipsis .= sprintf(' <a href="%s" class="read_more">%s</a>', get_permalink(), $read_more);
 
-      //$this->load_options();
+      $pos = strrpos($text, '</');
+      if ($pos !== false)
+        // Inside last HTML tag
+        $text = substr_replace($text, $ellipsis, $pos, 0);
+      else
+        // After the content
+        $text .= $ellipsis;
+      
+      return $text;
     }
 
-    function uninstall()
+    public function install()
+    {
+      foreach($this->default_options as $k => $v)
+      {
+        add_option($this->name . '_' . $k, $v);
+      }
+    }
+
+    public function uninstall()
     {
       // Nothing to do (note: deactivation hook is also disabled)
     }
 
-    function load_options()
+    private function load_options()
     {
-      $this->default_options = array(
-        'length' => get_option($this->name . '_length'),
-        'use_words' => get_option($this->name . '_use_words'),
-        'no_custom' => get_option($this->name . '_no_custom'),
-        'no_shortcode' => get_option($this->name . '_no_shortcode'),
-        'finish_word' => get_option($this->name . '_finish_word'),
-        'finish_sentence' => get_option($this->name . '_finish_sentence'),
-        'ellipsis' => get_option($this->name . '_ellipsis'),
-        'read_more' => get_option($this->name . '_read_more'),
-        'add_link' => get_option($this->name . '_add_link'),
-        'allowed_tags' => (array) get_option($this->name . '_allowed_tags')
-      );
+      foreach($this->default_options as $k => $v)
+      {
+        $this->default_options[$k] = get_option($this->name . '_' . $k, $v);
+      }
     }
 
-
-    function update_options()
+    private function update_options()
     {
       $length       = (int) $_POST[$this->name . '_length'];
       $use_words    = ('on' == $_POST[$this->name . '_use_words']) ? 1 : 0;
@@ -265,6 +250,7 @@ if (!class_exists('AdvancedExcerpt')):
       $finish_sentence = ('on' == $_POST[$this->name . '_finish_sentence']) ? 1 : 0;
       $add_link     = ('on' == $_POST[$this->name . '_add_link']) ? 1 : 0;
 
+      // TODO: Drop magic quotes (deprecated in php 5.3)
       $ellipsis  = (get_magic_quotes_gpc() == 1) ? stripslashes($_POST[$this->name . '_ellipsis']) : $_POST[$this->name . '_ellipsis'];
       $read_more = (get_magic_quotes_gpc() == 1) ? stripslashes($_POST[$this->name . '_read_more']) : $_POST[$this->name . '_read_more'];
 
@@ -287,7 +273,7 @@ if (!class_exists('AdvancedExcerpt')):
     <?php
     }
 
-    function page_options()
+    public function page_options()
     {
       if ('POST' == $_SERVER['REQUEST_METHOD'])
       {
@@ -297,12 +283,10 @@ if (!class_exists('AdvancedExcerpt')):
 
       extract($this->default_options, EXTR_SKIP);
 
-      // HTML entities for textbox
       $ellipsis  = htmlentities($ellipsis);
       $read_more = htmlentities($read_more);
 
-      // Basic tags + enabled tags
-      $tag_list = $this->set_union($this->options_basic_tags, $allowed_tags);
+      $tag_list = array_unique(self::$options_basic_tags + $allowed_tags);
       sort($tag_list);
       $tag_cols = 5;
 ?>
@@ -439,7 +423,7 @@ if (!class_exists('AdvancedExcerpt')):
                     More tags:
                     <select name="<?php echo $this->name; ?>_more_tags" id="<?php echo $this->name; ?>_more_tags">
 <?php
-      foreach ($this->options_body_tags as $tag):
+      foreach (self::$options_all_tags as $tag):
 ?>
                         <option value="<?php echo $tag; ?>"><?php echo $tag; ?></option>
 <?php
@@ -457,14 +441,14 @@ if (!class_exists('AdvancedExcerpt')):
 <?php
     }
 
-    function page_script()
+    public function page_script()
     {
       wp_enqueue_script($this->name . '_script', WP_PLUGIN_URL . '/advanced-excerpt/advanced-excerpt.js', array(
         'jquery'
       ));
     }
 
-    function add_pages()
+    public function add_pages()
     {
       $options_page = add_options_page(__("Advanced Excerpt Options", $this->text_domain), __("Excerpt", $this->text_domain), 'manage_options', 'options-' . $this->name, array(
         &$this,
@@ -477,77 +461,35 @@ if (!class_exists('AdvancedExcerpt')):
         'page_script'
       ));
     }
-
-    // Careful multibyte support (fallback to normal functions if not available)
-
-    function substr($str, $start, $length = null)
-    {
-      $length = (is_null($length)) ? $this->strlen($str) : $length;
-      if ($this->mb)
-        return mb_substr($str, $start, $length, $this->charset);
-      else
-        return substr($str, $start, $length);
-    }
-
-    function strlen($str)
-    {
-      if ($this->mb)
-        return mb_strlen($str, $this->charset);
-      else
-        return strlen($str);
-    }
-
-    // Some utility functions
-
-    function set_complement($a, $b)
-    {
-      $c = array_diff($a, $b);
-      return array_unique($c);
-    }
-
-    function set_union($a, $b)
-    {
-      $c = array_merge($a, $b);
-      return array_unique($c);
-    }
   }
-
-  $advancedexcerpt = new AdvancedExcerpt();
+  
+  AdvancedExcerpt::Instance();
 
   // Do not use outside the Loop!
-  function the_advanced_excerpt($args = '', $get = true)
+  function the_advanced_excerpt($args = '', $get = false)
   {
-    global $advancedexcerpt;
-
-    $r = wp_parse_args($args);
-
-    if (isset($r['ellipsis']))
-      $r['ellipsis'] = urldecode($r['ellipsis']);
-
-    // TODO: Switch to 'allowed_tags' (compatibility code)
-    if (isset($r['allow_tags']))
+    if (!empty($args) && !is_array($args))
     {
-      $r['allowed_tags'] = $r['allow_tags'];
-      unset($r['allow_tags']);
+      $args = wp_parse_args($args);
+
+      // Parse query style parameters
+      if (isset($args['ellipsis']))
+        $args['ellipsis'] = urldecode($args['ellipsis']);
+
+      if (isset($args['allowed_tags']))
+        $args['allowed_tags'] = preg_split('/[\s,]+/', $args['allowed_tags']);
+
+      if (isset($args['exclude_tags']))
+      {
+        $args['exclude_tags'] = preg_split('/[\s,]+/', $args['exclude_tags']);
+      }
     }
-
-    if (isset($r['allowed_tags']))
-      $r['allowed_tags'] = preg_split('/[\s,]+/', $r['allow_tags']);
-
-    if (isset($r['exclude_tags']))
-    {
-      $r['exclude_tags'] = preg_split('/[\s,]+/', $r['exclude_tags']);
-      // {all_tags} - {exclude_tags}
-      $r['allowed_tags'] = $advancedexcerpt->set_complement($advancedexcerpt->options_body_tags, $r['exclude_tags']);
-      unset($r['exclude_tags']);
-    }
-
-    // Set custom options (discard after use)
-    $advancedexcerpt->custom_options = $r;
+    // Set temporary options
+    AdvancedExcerpt::Instance()->options = $args;
+    
     if ($get)
-      echo get_the_excerpt();
+      return get_the_excerpt();
     else
       the_excerpt();
-    $advancedexcerpt->custom_options = null;
   }
 endif;
