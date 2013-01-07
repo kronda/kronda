@@ -7,7 +7,7 @@ define('DB_NAME', 'wp_kronda');
 define('DB_USER', 'kronda');
 
 /** MySQL database password */
-define('DB_PASSWORD', 'xanderoz');
+define('DB_PASSWORD', 'sid82ksd9');
 
 /** MySQL hostname */
 define('DB_HOST', 'localhost');

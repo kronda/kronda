@@ -1,12 +1,12 @@
  # The project repo name. (one word: no spaces, dashes, or underscores)
-set :application, "basewp"
+set :application, "kronda"
 
 # Legacy from porting from drupal, best to just leave this as "default"
 set :domains, ["default"]
 
 # Set the repository type and location to deploy from.
 set :scm, :git
-set :repository,  "git@github.com:metaltoad/#{application}.git"
+set :repository,  "git@github.com:kronda/#{application}.git"
 # set :scm, :subversion
 # set :repository,  "https://svn.example.com/svn/#{application}/trunk/"
 # set(:scm_password) { Capistrano::CLI.password_prompt("SCM Password: ") }
@@ -21,7 +21,7 @@ set :app_root, "wordpress"
 
 # Use a remote cache to speed things up
 set :deploy_via, :remote_cache
-ssh_options[:user] = 'deploy'
+ssh_options[:user] = 'krondaco'
 
 # Multistage support - see config/deploy/[STAGE].rb for specific configs
 set :default_stage, "dev"
@@ -38,4 +38,4 @@ set :httpd_group, 'apache'
 
 
 #set this to where you have installed your wp site locally (http://[local_domain]/wp-admin/ should exist. )
-set :local_domain, 'basewp.chrisbot'
+set :local_domain, 'kronda'
