@@ -60,11 +60,7 @@ jQuery.noConflict()(function($){
 		jQuery('#busymeter').slideUp('fast');
 	});
 	
-  //alert(jQuery.browser.version);
-  if (jQuery.browser.version == 7.0) {
-    alert('What are ya trapped at work with some old legacy office computer? Upgrade to IE8 or 9 why don\'tcha?');
-  }
-	
+  	
 // slider for contact form
 	$('#contactformlink').click(function(e) {
 		

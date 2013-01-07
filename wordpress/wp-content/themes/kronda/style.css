@@ -758,7 +758,7 @@ body {
   color: #202020;
   border-bottom: 1px dotted #999;
 }
-.page-template-page-about-php #easteregg:hover {
+.page-template-page-about-php #easteregg:hover { 
   text-decoration: none;
 }
 .page-template-page-about-php h2,
