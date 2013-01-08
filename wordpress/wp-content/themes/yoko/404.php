@@ -6,12 +6,11 @@
 
 get_header(); ?>
 
-
 <div id="wrap">
 <div id="main">
 
 	<div id="content">
-		<article id="page>
+		<article id="page">
 			<header class="page-entry-header">
 				<h1 class="entry-title"><?php _e( 'Not Found', 'yoko' ); ?></h1>
 			</header><!-- end page-entry-header -->

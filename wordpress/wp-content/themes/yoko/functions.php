@@ -297,7 +297,7 @@ add_action( 'widgets_init', 'yoko_remove_recent_comments_style' );
 function yoko_smoothscroll_init() {
     if ( !is_admin() ) {
         wp_enqueue_script( 'jquery' );
-        wp_enqueue_script( 'smoothscroll', get_template_directory_uri() . '/js/smoothscroll.js', array( 'jquery'), '1.0', true ); 
+        wp_enqueue_script( 'smoothscroll', get_template_directory_uri() . '/js/smoothscroll.js', array( 'jquery'), '1.0' ); 
     }
 }
 // works also for WP < version 3.0
@@ -453,7 +453,9 @@ class Yoko_SocialLinks_Widget extends WP_Widget {
 		$twitter_title = empty($instance['twitter_title']) ? ' ' : apply_filters('widget_twitter_title', $instance['twitter_title']);	
 		$twitter_url = empty($instance['twitter_url']) ? ' ' : apply_filters('widget_twitter_url', $instance['twitter_url']);		
 		$fb_title = empty($instance['fb_title']) ? ' ' : apply_filters('widget_fb_title', $instance['fb_title']);
-		$fb_url = empty($instance['fb_url']) ? ' ' : apply_filters('widget_fb_url', $instance['fb_url']);	
+		$fb_url = empty($instance['fb_url']) ? ' ' : apply_filters('widget_fb_url', $instance['fb_url']);
+$googleplus_title = empty($instance['googleplus_title']) ? ' ' : apply_filters('widget_googleplus_title', $instance['googleplus_title']);
+		$googleplus_url = empty($instance['googleplus_url']) ? ' ' : apply_filters('widget_googleplus_url', $instance['googleplus_url']);		
 		$flickr_title = empty($instance['flickr_title']) ? ' ' : apply_filters('widget_flickr_title', $instance['flickr_title']);
 		$flickr_url = empty($instance['flickr_url']) ? ' ' : apply_filters('widget_flickr_url', $instance['flickr_url']);
 		$vimeo_title = empty($instance['vimeo_title']) ? ' ' : apply_filters('widget_vimeo_title', $instance['vimeo_title']);
@@ -465,13 +467,14 @@ class Yoko_SocialLinks_Widget extends WP_Widget {
 		
 		if ( !empty( $title ) ) { echo $before_title . $title . $after_title; };
 		echo '<ul>';
-	if($rss_title == ' ') { echo ''; } else {  echo  '<li class="widget_sociallinks"><a href="'. $rss_url .'" class="rss">'. $rss_title .'</a></li>'; }
-		if($twitter_title == ' ') { echo ''; } else {  echo  '<li class="widget_sociallinks"><a href="'. $twitter_url .'" class="twitter">'. $twitter_title .'</a></li>'; }
-		if($fb_title == ' ') { echo ''; } else {  echo  '<li class="widget_sociallinks"><a href="'. $fb_url .'" class="facebook">'. $fb_title .'</a></li>'; }
-		if($flickr_title == ' ') { echo ''; } else {  echo  '<li class="widget_sociallinks"><a href="'. $flickr_url .'" class="flickr">'. $flickr_title .'</a></li>'; }
-		if($vimeo_title == ' ') { echo ''; } else {  echo  '  <li class="widget_sociallinks"><a href="'. $vimeo_url .'" class="vimeo">'. $vimeo_title .'</a></li>'; }
-		if($linkedin_title == ' ') { echo ''; } else {  echo  '<li class="widget_sociallinks"><a href="'. $linkedin_url .'" class="linkedin">'. $linkedin_title .'</a></li>'; }
-		if($delicious_title == ' ') { echo ''; } else {  echo  '<li class="widget_sociallinks"><a href="'. $delicious_url .'" class="delicious">'. $delicious_title .'</a></li>'; }
+	if($rss_title == ' ') { echo ''; } else {  echo  '<li class="widget_sociallinks"><a href="'. $rss_url .'" class="rss" target="_blank">'. $rss_title .'</a></li>'; }
+		if($twitter_title == ' ') { echo ''; } else {  echo  '<li class="widget_sociallinks"><a href="'. $twitter_url .'" class="twitter" target="_blank">'. $twitter_title .'</a></li>'; }
+		if($fb_title == ' ') { echo ''; } else {  echo  '<li class="widget_sociallinks"><a href="'. $fb_url .'" class="facebook" target="_blank">'. $fb_title .'</a></li>'; }
+		if($googleplus_title == ' ') { echo ''; } else {  echo  '<li class="widget_sociallinks"><a href="'. $googleplus_url .'" class="googleplus" target="_blank">'. $googleplus_title .'</a></li>'; }
+		if($flickr_title == ' ') { echo ''; } else {  echo  '<li class="widget_sociallinks"><a href="'. $flickr_url .'" class="flickr" target="_blank">'. $flickr_title .'</a></li>'; }
+		if($vimeo_title == ' ') { echo ''; } else {  echo  '  <li class="widget_sociallinks"><a href="'. $vimeo_url .'" class="vimeo" target="_blank">'. $vimeo_title .'</a></li>'; }
+		if($linkedin_title == ' ') { echo ''; } else {  echo  '<li class="widget_sociallinks"><a href="'. $linkedin_url .'" class="linkedin" target="_blank">'. $linkedin_title .'</a></li>'; }
+		if($delicious_title == ' ') { echo ''; } else {  echo  '<li class="widget_sociallinks"><a href="'. $delicious_url .'" class="delicious" target="_blank">'. $delicious_title .'</a></li>'; }
 		echo '</ul>';
 		echo $after_widget;
 		
@@ -486,6 +489,8 @@ class Yoko_SocialLinks_Widget extends WP_Widget {
 		$instance['twitter_url'] = strip_tags($new_instance['twitter_url']);
 		$instance['fb_title'] = strip_tags($new_instance['fb_title']);
 		$instance['fb_url'] = strip_tags($new_instance['fb_url']);
+		$instance['googleplus_title'] = strip_tags($new_instance['googleplus_title']);
+		$instance['googleplus_url'] = strip_tags($new_instance['googleplus_url']);
 		$instance['flickr_title'] = strip_tags($new_instance['flickr_title']);
 		$instance['flickr_url'] = strip_tags($new_instance['flickr_url']);		
 		$instance['vimeo_title'] = strip_tags($new_instance['vimeo_title']);
@@ -506,6 +511,8 @@ class Yoko_SocialLinks_Widget extends WP_Widget {
 			'twitter_url' => '',
 			'fb_title' => '',
 			'fb_url' => '',
+			'googleplus_title' => '',
+			'googleplus_url' => '',
 			'flickr_title' => '',
 			'flickr_url' => '',
 			'vimeo_title' => '',
@@ -522,6 +529,8 @@ class Yoko_SocialLinks_Widget extends WP_Widget {
 		$twitter_url = strip_tags($instance['twitter_url']);
 		$fb_title = strip_tags($instance['fb_title']);
 		$fb_url = strip_tags($instance['fb_url']);
+		$googleplus_title = strip_tags($instance['googleplus_title']);
+		$googleplus_url = strip_tags($instance['googleplus_url']);
 		$flickr_title = strip_tags($instance['flickr_title']);
 		$flickr_url = strip_tags($instance['flickr_url']);
 		$vimeo_title = strip_tags($instance['vimeo_title']);
@@ -540,7 +549,9 @@ class Yoko_SocialLinks_Widget extends WP_Widget {
 			<p><label for="<?php echo $this->get_field_id('twitter_title'); ?>"><?php _e( 'Twitter Text:', 'yoko' ); ?> <input class="widefat" id="<?php echo $this->get_field_id('twitter_title'); ?>" name="<?php echo $this->get_field_name('twitter_title'); ?>" type="text" value="<?php echo esc_attr($twitter_title); ?>" /></label></p>	
 			<p><label for="<?php echo $this->get_field_id('twitter_url'); ?>"><?php _e( 'Twitter  URL:', 'yoko' ); ?> <input class="widefat" id="<?php echo $this->get_field_id('twitter_url'); ?>" name="<?php echo $this->get_field_name('twitter_url'); ?>" type="text" value="<?php echo esc_attr($twitter_url); ?>" /></label></p>
 			<p><label for="<?php echo $this->get_field_id('fb_title'); ?>"><?php _e( 'Facebook Text:', 'yoko' ); ?> <input class="widefat" id="<?php echo $this->get_field_id('fb_title'); ?>" name="<?php echo $this->get_field_name('fb_title'); ?>" type="text" value="<?php echo esc_attr($fb_title); ?>" /></label></p>
-			<p><label for="<?php echo $this->get_field_id('fb_url'); ?>"><?php _e( 'Facebook URL:', 'yoko' ); ?> <input class="widefat" id="<?php echo $this->get_field_id('fb_url'); ?>" name="<?php echo $this->get_field_name('fb_url'); ?>" type="text" value="<?php echo esc_attr($fb_url); ?>" /></label></p>	
+			<p><label for="<?php echo $this->get_field_id('fb_url'); ?>"><?php _e( 'Facebook URL:', 'yoko' ); ?> <input class="widefat" id="<?php echo $this->get_field_id('fb_url'); ?>" name="<?php echo $this->get_field_name('fb_url'); ?>" type="text" value="<?php echo esc_attr($fb_url); ?>" /></label></p>
+			<p><label for="<?php echo $this->get_field_id('googleplus_title'); ?>"><?php _e( 'Google+ Text:', 'yoko' ); ?> <input class="widefat" id="<?php echo $this->get_field_id('googleplus_title'); ?>" name="<?php echo $this->get_field_name('googleplus_title'); ?>" type="text" value="<?php echo esc_attr($googleplus_title); ?>" /></label></p>
+			<p><label for="<?php echo $this->get_field_id('googleplus_url'); ?>"><?php _e( 'Google+ URL:', 'yoko' ); ?> <input class="widefat" id="<?php echo $this->get_field_id('googleplus_url'); ?>" name="<?php echo $this->get_field_name('googleplus_url'); ?>" type="text" value="<?php echo esc_attr($googleplus_url); ?>" /></label></p>
 			<p><label for="<?php echo $this->get_field_id('flickr_title'); ?>"><?php _e( 'Flickr Text:', 'yoko' ); ?> <input class="widefat" id="<?php echo $this->get_field_id('flickr_title'); ?>" name="<?php echo $this->get_field_name('flickr_title'); ?>" type="text" value="<?php echo esc_attr($flickr_title); ?>" /></label></p>
 			<p><label for="<?php echo $this->get_field_id('flickr_url'); ?>"><?php _e( 'Flickr URL:', 'yoko' ); ?> <input class="widefat" id="<?php echo $this->get_field_id('flickr_url'); ?>" name="<?php echo $this->get_field_name('flickr_url'); ?>" type="text" value="<?php echo esc_attr($flickr_url); ?>" /></label></p>
 			<p><label for="<?php echo $this->get_field_id('vimeo_title'); ?>"><?php _e( 'Vimeo Text:', 'yoko' ); ?> <input class="widefat" id="<?php echo $this->get_field_id('vimeo_title'); ?>" name="<?php echo $this->get_field_name('vimeo_title'); ?>" type="text" value="<?php echo esc_attr($vimeo_title); ?>" /></label></p>	
