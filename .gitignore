@@ -7,8 +7,8 @@ wordpress/local-config.php
 .buildpath
 .project
 .settings
-db
-dev
+db/
+dev/
 static_files
 backups
 webroot
