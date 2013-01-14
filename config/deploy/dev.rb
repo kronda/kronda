@@ -12,4 +12,4 @@ role :db, "kronda.com", :primary => true
 set :wp, "cd #{current_path}/#{app_root} ; /usr/bin/wp"
 
 # The username on the target system, if different from your local username
-ssh_options[:user] = 'deploy'
+ssh_options[:user] = 'krondaco'
