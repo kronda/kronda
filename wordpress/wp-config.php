@@ -28,13 +28,13 @@ if ( file_exists( dirname( __FILE__ ) . '/local-config.php' ) ) {
 } else {
   // ** MySQL settings - You can get this info from your web host ** //
   /** The name of the database for WordPress */
-  define('DB_NAME', 'krondaco_wrdp1');
+define('DB_NAME', 'database_name_here');
 
 /** MySQL database username */
-define('DB_USER', 'krondaco_wrdp1');
+define('DB_USER', 'username_here');
 
 /** MySQL database password */
-define('DB_PASSWORD', 'cL4oEoZjcs2nN20qb');
+define('DB_PASSWORD', 'password_here');
 
 /** MySQL hostname */
 define('DB_HOST', 'localhost');

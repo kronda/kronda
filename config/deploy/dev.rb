@@ -1,5 +1,5 @@
 # Set the deployment directory on the target hosts.
-set :deploy_to, "/home/krondaco/public_html/dev.kronda.com"
+set :deploy_to, "/home/krondaco/capistrano"
 
 # The hostnames to deploy to.
 role :web, "kronda.com"
