@@ -13,5 +13,4 @@ RewriteRule . /index.php [L]
 
 # END WordPress
 
-AddHandler application/x-httpd-php53 .php
-~                                          
+# AddHandler application/x-httpd-php53 .php
