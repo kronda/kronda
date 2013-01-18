@@ -4,6 +4,7 @@ wordpress/wp-content/w3tc
 wordpress/wp-content/avatars
 wordpress/wp-content/cache
 wordpress/local-config.php
+wordpress/.htaccess
 .buildpath
 .project
 .settings
