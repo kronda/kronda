@@ -112,9 +112,9 @@ namespace :db do
       temp = "/tmp/#{release_name}_#{application}_#{filename}"
       run "touch #{temp} && chmod 600 #{temp}"
       run_locally "mkdir -p db"
-      run "cd #{deploy_to}/current/webroot && #{wp} db export --file=#{temp} && cd -"
+      run "source /home/krondaco/.bash_profile && cd #{deploy_to}/current/webroot && #{wp} db export #{temp}"
       download("#{temp}", "db/#{filename}", :via=> :scp)
-      search = "#{application}-#{stage}.metaltoad.com"
+      search = "#{application}.com"
       replace = local_domain
       puts "searching (#{search}) and replacing (#{replace}) domain information"
       run_locally "sed -e 's/#{search}/#{replace}/g' -i .bak db/#{filename}"
@@ -136,12 +136,17 @@ namespace :db do
       filename = "#{domain}_#{stage}.sql"
       temp = "/tmp/#{release_name}_#{application}_#{filename}"
       run "touch #{temp} && chmod 600 #{temp}"
-      replace = "#{application}-#{stage}.metaltoad.com"
+      if "#{stage}" == "prod"
+        replace = "kronda.com"
+      else
+        replace = "#{stage}.kronda.com"
+      end
+      
       search = local_domain
       puts "searching (#{search}) and replacing (#{replace}) domain information"
       run_locally "sed -e 's/#{search}/#{replace}/g' -i .bak db/#{filename}"
       upload("db/#{filename}", "#{temp}", :via=> :scp)
-      run "cd #{deploy_to}/current/webroot/ && #{wp} db import --file=#{temp}"
+      run "source /home/krondaco/.bash_profile && cd #{deploy_to}/current/webroot && #{wp} db import #{temp}"
       run "rm #{temp}"
     end
   end
