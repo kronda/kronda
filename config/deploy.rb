@@ -38,4 +38,4 @@ set :httpd_group, 'apache'
 
 
 #set this to where you have installed your wp site locally (http://[local_domain]/wp-admin/ should exist. )
-set :local_domain, 'http://kronda.kdev.com'
+set :local_domain, 'kronda.kdev.com'
