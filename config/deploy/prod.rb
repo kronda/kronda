@@ -1,6 +1,9 @@
 # Set the deployment directory on the target hosts.
 set :deploy_to, "/home/krondaco/wordpress"
 
+# Use the correct branch on github
+set :branch, "prod"
+
 # The hostnames to deploy to.
 role :web, "kronda.com"
 

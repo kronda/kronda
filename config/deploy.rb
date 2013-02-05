@@ -1,4 +1,4 @@
- # The project repo name. (one word: no spaces, dashes, or underscores)
+# The project repo name. (one word: no spaces, dashes, or underscores)
 set :application, "kronda"
 
 # Legacy from porting from drupal, best to just leave this as "default"
