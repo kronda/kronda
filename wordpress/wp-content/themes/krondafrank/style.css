@@ -64,7 +64,7 @@ audio:not([controls]) {
  *    user zoom.
  */
 html {
-  font-family: proxima-nova, sans-serif;
+  font-family: sans-serif;
   /* 1 */
   -webkit-text-size-adjust: 100%;
   /* 2 */

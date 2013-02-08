@@ -1,8 +1,8 @@
 # Require any additional compass plugins here.
 
 # Set this to the root of your project when deployed:
-http_path = "/"
-css_dir = "../."
+http_path = "http://kronda.kdev.com"
+css_dir = ""
 sass_dir = "stylesheets/scss"
 images_dir = "images"
 javascripts_dir = "javascripts"
