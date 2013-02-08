@@ -1,8 +1,10 @@
 @media print {
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/Kronda\/Sites\/kronda\/wordpress\/wp-content\/themes\/krondafrank\/stylesheets\/scss\/print\.scss}line{font-family:\000034}}
   body {
     font-size: 10pt;
   }
 
+@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/Kronda\/Sites\/kronda\/wordpress\/wp-content\/themes\/krondafrank\/stylesheets\/scss\/print\.scss}line{font-family:\000036}}
   a {
     color: #999999;
   }

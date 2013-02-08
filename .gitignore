@@ -1,4 +1,5 @@
 # !wordpress/wp-content
+*.sass-cache/
 wordpress/wp-content/uploads
 wordpress/wp-content/w3tc
 wordpress/wp-content/avatars

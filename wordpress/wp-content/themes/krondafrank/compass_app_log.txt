@@ -1,0 +1,32 @@
+2013-02-08 14:44:41     error stylesheets/scss/comments.scss (Line 4: Undefined variable: "$row-height".)
+2013-02-08 14:44:41    create comments.css 
+2013-02-08 14:44:41     error stylesheets/scss/footer.scss (Line 2: Undefined variable: "$color-midtone".)
+2013-02-08 14:44:41    create footer.css 
+2013-02-08 14:44:41     error stylesheets/scss/forms.scss (Line 3: Undefined variable: "$font-weight-bold".)
+2013-02-08 14:44:41    create forms.css 
+2013-02-08 14:44:42     error stylesheets/scss/fourohfour.scss (Line 7: Undefined variable: "$row-height".)
+2013-02-08 14:44:42    create fourohfour.css 
+2013-02-08 14:44:42     error stylesheets/scss/global.scss (Line 2: Undefined variable: "$typeface-primary".)
+2013-02-08 14:44:42    create global.css 
+2013-02-08 14:44:42    create grid.css 
+2013-02-08 14:44:43     error stylesheets/scss/header.scss (Line 2: Undefined variable: "$row-height".)
+2013-02-08 14:44:43    create header.css 
+2013-02-08 14:44:43    create ie7.css 
+2013-02-08 14:44:43     error stylesheets/scss/index.scss (Line 4: Undefined variable: "$row-height".)
+2013-02-08 14:44:43    create index.css 
+2013-02-08 14:44:43    create mobile.css 
+2013-02-08 14:44:43    create page.css 
+2013-02-08 14:44:44    create reset.css 
+2013-02-08 14:44:44     error stylesheets/scss/sidebar.scss (Line 4: Undefined variable: "$three-columns".)
+2013-02-08 14:44:44    create sidebar.css 
+2013-02-08 14:44:44     error stylesheets/scss/single.scss (Line 3: Undefined variable: "$row-height".)
+2013-02-08 14:44:44    create single.css 
+2013-02-08 14:44:44    create transitions.css 
+2013-02-08 14:44:45    create variables.css 
+2013-02-08 14:44:45     error stylesheets/scss/widgets.scss (Line 2: Undefined variable: "$font-size-x-small".)
+2013-02-08 14:44:45    create widgets.css 
+2013-02-08 14:51:35 overwrite style.css 
+2013-02-08 15:19:06    create editor-style.css 
+2013-02-08 15:19:09 identical style.css 
+2013-02-08 15:19:21    create ie.css 
+2013-02-08 15:19:49    create print.css 
