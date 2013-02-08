@@ -1,0 +1,14 @@
+/* TODO: Use class selectors */
+#sidebar {
+	@extend .column;
+	width: $three-columns;
+	margin-top: 10px;
+	
+	.widget {
+		margin-right:0;
+	}
+	
+	.widget-title:first-child { 
+		margin-top: 0 !important; 
+	}
+}
