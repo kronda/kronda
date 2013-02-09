@@ -1,9 +1,9 @@
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/Kronda\/Sites\/kronda\/wordpress\/wp-content\/themes\/krondafrank\/stylesheets\/scss\/ie\.scss}line{font-family:\000032}}
+/* line 2, stylesheets/scss/ie.scss */
 img {
   -ms-interpolation-mode: bicubic;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/Kronda\/Sites\/kronda\/wordpress\/wp-content\/themes\/krondafrank\/stylesheets\/scss\/ie\.scss}line{font-family:\000034}}
+/* line 4, stylesheets/scss/ie.scss */
 .chromeframe {
   background: #f0eceb;
   color: #050000;
@@ -12,80 +12,80 @@ img {
   text-align: center;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/Kronda\/Sites\/kronda\/wordpress\/wp-content\/themes\/krondafrank\/stylesheets\/scss\/ie\.scss}line{font-family:\0000312}}
+/* line 12, stylesheets/scss/ie.scss */
 #top_bar {
   background: #050000;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/Kronda\/Sites\/kronda\/wordpress\/wp-content\/themes\/krondafrank\/stylesheets\/scss\/ie\.scss}line{font-family:\0000315}}
+/* line 15, stylesheets/scss/ie.scss */
 #content.single {
   padding-bottom: 45px;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/Kronda\/Sites\/kronda\/wordpress\/wp-content\/themes\/krondafrank\/stylesheets\/scss\/ie\.scss}line{font-family:\0000319}}
+/* line 19, stylesheets/scss/ie.scss */
 #sub_header .widget-4, #sub_header .widget-7 {
   clear: left;
   margin-left: 0;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/Kronda\/Sites\/kronda\/wordpress\/wp-content\/themes\/krondafrank\/stylesheets\/scss\/ie\.scss}line{font-family:\0000325}}
+/* line 25, stylesheets/scss/ie.scss */
 .post-group {
   position: relative;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/Kronda\/Sites\/kronda\/wordpress\/wp-content\/themes\/krondafrank\/stylesheets\/scss\/ie\.scss}line{font-family:\0000330}}
+/* line 30, stylesheets/scss/ie.scss */
 .post-group.twoup .post-3, .post-group.twoup .post-5, .post-group.twoup .post-7, .post-group.twoup .post-9, .post-group.twoup .post-11, .post-group.twoup .post-13, .post-group.twoup .post-15, .post-group.twoup .post-17, .post-group.twoup .post-19 {
   clear: left !important;
   margin-left: 0 !important;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/Kronda\/Sites\/kronda\/wordpress\/wp-content\/themes\/krondafrank\/stylesheets\/scss\/ie\.scss}line{font-family:\0000337}}
+/* line 37, stylesheets/scss/ie.scss */
 .post-group.threeup .post-4, .post-group.threeup .post-7, .post-group.threeup .post-10, .post-group.threeup .post-13, .post-group.threeup .post-16, .post-group.threeup .post-19, .post-group.threeup .post-22, .post-group.threeup .post-25, .post-group.threeup .post-28 {
   clear: left !important;
   margin-left: 0 !important;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/Kronda\/Sites\/kronda\/wordpress\/wp-content\/themes\/krondafrank\/stylesheets\/scss\/ie\.scss}line{font-family:\0000344}}
+/* line 44, stylesheets/scss/ie.scss */
 .post-group.fourup .post-5, .post-group.fourup .post-9, .post-group.fourup .post-13, .post-group.fourup .post-17, .post-group.fourup .post-21, .post-group.fourup .post-25, .post-group.fourup .post-29, .post-group.fourup .post-33, .post-group.fourup .post-37 {
   clear: left !important;
   margin-left: 0 !important;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/Kronda\/Sites\/kronda\/wordpress\/wp-content\/themes\/krondafrank\/stylesheets\/scss\/ie\.scss}line{font-family:\0000351}}
+/* line 51, stylesheets/scss/ie.scss */
 #page-footer .widget-3, #page-footer .widget-5, #page-footer .widget-7 {
   clear: left;
   margin-left: 0;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/Kronda\/Sites\/kronda\/wordpress\/wp-content\/themes\/krondafrank\/stylesheets\/scss\/ie\.scss}line{font-family:\0000358}}
+/* line 58, stylesheets/scss/ie.scss */
 #post-footer .widget-4, #post-footer .widget-7, #post-footer .widget-10 {
   clear: left;
   margin-left: 0;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/Kronda\/Sites\/kronda\/wordpress\/wp-content\/themes\/krondafrank\/stylesheets\/scss\/ie\.scss}line{font-family:\0000365}}
+/* line 65, stylesheets/scss/ie.scss */
 #comments-container #commentform label {
   display: block;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/Kronda\/Sites\/kronda\/wordpress\/wp-content\/themes\/krondafrank\/stylesheets\/scss\/ie\.scss}line{font-family:\0000368}}
+/* line 68, stylesheets/scss/ie.scss */
 #comments-container #commentform #comment-form-info label {
   text-align: right;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/Kronda\/Sites\/kronda\/wordpress\/wp-content\/themes\/krondafrank\/stylesheets\/scss\/ie\.scss}line{font-family:\0000370}}
+/* line 70, stylesheets/scss/ie.scss */
 #comments-container #commentform #comment-form-info input[type=text] {
   margin-bottom: 15px;
 }
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/Kronda\/Sites\/kronda\/wordpress\/wp-content\/themes\/krondafrank\/stylesheets\/scss\/ie\.scss}line{font-family:\0000372}}
+/* line 72, stylesheets/scss/ie.scss */
 #comments-container #commentform textarea {
   height: 137px;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/Kronda\/Sites\/kronda\/wordpress\/wp-content\/themes\/krondafrank\/stylesheets\/scss\/ie\.scss}line{font-family:\0000375}}
+/* line 75, stylesheets/scss/ie.scss */
 #comment-form-content dl {
   text-align: left;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/Kronda\/Sites\/kronda\/wordpress\/wp-content\/themes\/krondafrank\/stylesheets\/scss\/ie\.scss}line{font-family:\0000378}}
+/* line 78, stylesheets/scss/ie.scss */
 .clearfix:after {
   content: ".";
   display: block;
@@ -95,17 +95,17 @@ img {
   height: 0;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/Kronda\/Sites\/kronda\/wordpress\/wp-content\/themes\/krondafrank\/stylesheets\/scss\/ie\.scss}line{font-family:\0000386}}
+/* line 86, stylesheets/scss/ie.scss */
 .clearfix {
   display: inline-block;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/Kronda\/Sites\/kronda\/wordpress\/wp-content\/themes\/krondafrank\/stylesheets\/scss\/ie\.scss}line{font-family:\0000389}}
+/* line 89, stylesheets/scss/ie.scss */
 html[xmlns] .clearfix {
   display: block;
 }
 
-@media -sass-debug-info{filename{font-family:file\:\/\/\/Users\/Kronda\/Sites\/kronda\/wordpress\/wp-content\/themes\/krondafrank\/stylesheets\/scss\/ie\.scss}line{font-family:\0000392}}
+/* line 92, stylesheets/scss/ie.scss */
 * html .clearfix {
   height: 1%;
 }
