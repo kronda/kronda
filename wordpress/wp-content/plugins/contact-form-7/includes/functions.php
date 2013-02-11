@@ -168,11 +168,15 @@ function wpcf7_upload_dir( $type = false ) {
 	&& ( ! isset( $switched ) || $switched === false ) ) {
 		$dir = ABSPATH . UPLOADS;
 		$url = trailingslashit( $siteurl ) . UPLOADS;
+	}
 
-		if ( is_multisite() && defined( 'BLOGUPLOADDIR' ) ) {
+	if ( is_multisite() && ! $main_override
+	&& ( ! isset( $switched ) || $switched === false ) ) {
+
+		if ( defined( 'BLOGUPLOADDIR' ) )
 			$dir = untrailingslashit( BLOGUPLOADDIR );
-			$url = str_replace( UPLOADS, 'files', $url );
-		}
+
+		$url = str_replace( UPLOADS, 'files', $url );
 	}
 
 	$uploads = apply_filters( 'wpcf7_upload_dir', array( 'dir' => $dir, 'url' => $url ) );
