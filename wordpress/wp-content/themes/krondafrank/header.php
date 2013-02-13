@@ -32,9 +32,9 @@
 	<![endif]-->
 <div class="container">
 	<header id="page-header" class="row">
-		<hgroup id="site-title-description">
+		<hgroup id="site-title-description" class="three columns">
 			<h1 id="site-title"><a href="<?php echo home_url(); ?>"><?php bloginfo('name'); ?></a></h1>
-			<h2 id="site-description"><?php bloginfo('description'); ?></h2>
+			<h2 id="site-description" class="visually-hidden"><?php bloginfo('description'); ?></h2>
 		</hgroup>
 
 

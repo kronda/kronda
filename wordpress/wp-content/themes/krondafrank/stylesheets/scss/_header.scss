@@ -11,11 +11,10 @@
 }
 #site-nav {
 	.menu {
-		@extend .clearfix;
+		float: right;
 	}
 	
-	margin:$row-height auto $row-height * 2 auto; 
-	border-bottom:$border-break;
+	margin:$row-height auto 0 auto; 
 	ul { 
 		margin:0 0 $row-height 0;
 		list-style: none;
@@ -114,6 +113,8 @@
 }
 #page-header {
 	position: relative;
+	border-bottom:$border-break;
+	margin-bottom: $row-height;
 }
 
 #sub_header {
