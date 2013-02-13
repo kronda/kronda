@@ -70,16 +70,10 @@
 		<?php
 				if ( 'blank' == get_header_textcolor() ) :
 			?>
-				<div class="only-search<?php if ( $header_image ) : ?> with-image<?php endif; ?>">
-				<?php get_search_form(); ?>
-				</div>
-			<?php
-				else :
-			?>
-				<?php get_search_form(); ?>
+				
 			<?php endif; ?>
 
-		<nav id="site-nav">
+		<nav id="site-nav" class="nine columns">
 			<?php if ( !dynamic_sidebar("Navigation") ) : ?>
 				<?php wp_nav_menu( array('theme_location' => 'frank_primary_navigation', 'container' => false ) ); ?>	
 			<?php endif; ?> 
