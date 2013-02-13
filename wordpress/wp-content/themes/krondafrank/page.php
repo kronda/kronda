@@ -17,7 +17,7 @@
 			</section>
 		</article>
 		<?php endwhile; endif; ?>
-		<?php comments_template(); ?>
+		
 	</div>
 	<?php get_sidebar(); ?>
 	</div>
