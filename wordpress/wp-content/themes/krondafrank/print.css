@@ -1,11 +1,1 @@
-@media print {
-  /* line 4, stylesheets/scss/print.scss */
-  body {
-    font-size: 10pt;
-  }
-
-  /* line 6, stylesheets/scss/print.scss */
-  a {
-    color: #999999;
-  }
-}
+@media print{body{font-size:10pt}a{color:#999999}}
