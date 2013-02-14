@@ -112,7 +112,7 @@ namespace :db do
       temp = "/tmp/#{release_name}_#{application}_#{filename}"
       run "touch #{temp} && chmod 600 #{temp}"
       run_locally "mkdir -p db"
-      run "source /home/krondaco/.bash_profile && cd #{deploy_to}/current/webroot && #{wp} db export #{temp}"
+      run "source /home/krondaco/.bash_profile && cd #{deploy_to}/current/wordpress && #{wp} db export #{temp}"
       download("#{temp}", "db/#{filename}", :via=> :scp)
       search = "#{application}.com"
       replace = local_domain
