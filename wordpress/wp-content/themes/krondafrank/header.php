@@ -32,7 +32,7 @@
 	<![endif]-->
 <div class="container">
 	<header id="page-header" class="row">
-			<h1 id="site-title" class="five columns"><a href="<?php echo home_url(); ?>"><?php bloginfo('name'); ?></a></h1>
+			<h1 id="site-title" class="four columns"><a href="<?php echo home_url(); ?>"><?php bloginfo('name'); ?></a></h1>
 
 		<?php
 			$header_image = get_header_image();
@@ -69,7 +69,7 @@
 				
 			<?php endif; ?>
 
-		<nav id="site-nav" class="seven columns">
+		<nav id="site-nav" class="eight columns">
 			<?php if ( !dynamic_sidebar("Navigation") ) : ?>
 				<?php wp_nav_menu( array('theme_location' => 'frank_primary_navigation', 'container' => false ) ); ?>	
 			<?php endif; ?> 

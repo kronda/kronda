@@ -1606,30 +1606,31 @@ button, .button, input[type=submit] {
   font-size: 24px;
   margin: 0 5px 5px 0;
   display: inline;
+  float: left;
 }
 
-/* line 9, stylesheets/scss/_header.scss */
+/* line 10, stylesheets/scss/_header.scss */
 #site-description {
   margin-top: 0;
   font-size: 13px;
 }
 
-/* line 13, stylesheets/scss/_header.scss */
+/* line 14, stylesheets/scss/_header.scss */
 #site-nav {
   float: right;
   position: relative;
   margin: 10px auto 0 auto;
 }
-/* line 16, stylesheets/scss/_header.scss */
+/* line 17, stylesheets/scss/_header.scss */
 #site-nav .menu {
   float: right;
 }
-/* line 21, stylesheets/scss/_header.scss */
+/* line 22, stylesheets/scss/_header.scss */
 #site-nav ul {
   margin: 0 0 15px 0;
   list-style: none;
 }
-/* line 24, stylesheets/scss/_header.scss */
+/* line 25, stylesheets/scss/_header.scss */
 #site-nav ul ul {
   background: #fff;
   background: rgba(255, 255, 255, 0);
@@ -1639,101 +1640,96 @@ button, .button, input[type=submit] {
   margin: 0;
   left: -9999px;
 }
-/* line 33, stylesheets/scss/_header.scss */
+/* line 34, stylesheets/scss/_header.scss */
 #site-nav ul ul li {
   float: none;
   margin: 0;
   border-bottom: 1px solid #fffefe;
 }
-/* line 37, stylesheets/scss/_header.scss */
+/* line 38, stylesheets/scss/_header.scss */
 #site-nav ul ul li:first-child {
   margin-top: 10px;
 }
-/* line 40, stylesheets/scss/_header.scss */
+/* line 41, stylesheets/scss/_header.scss */
 #site-nav ul ul li:last-child {
   border-bottom: 0;
   margin-bottom: 10px;
 }
-/* line 45, stylesheets/scss/_header.scss */
+/* line 46, stylesheets/scss/_header.scss */
 #site-nav ul ul a {
   padding: 5px 10px;
   white-space: nowrap;
 }
-/* line 49, stylesheets/scss/_header.scss */
+/* line 50, stylesheets/scss/_header.scss */
 #site-nav ul ul ul {
   position: relative;
   margin-top: 0;
 }
-/* line 52, stylesheets/scss/_header.scss */
+/* line 53, stylesheets/scss/_header.scss */
 #site-nav ul ul ul li:first-child {
   margin-top: 0;
 }
-/* line 55, stylesheets/scss/_header.scss */
+/* line 56, stylesheets/scss/_header.scss */
 #site-nav ul ul ul li:last-child {
   margin-bottom: 0;
 }
-/* line 58, stylesheets/scss/_header.scss */
+/* line 59, stylesheets/scss/_header.scss */
 #site-nav ul ul ul a {
   padding: 7px 30px 7px 30px;
 }
-/* line 65, stylesheets/scss/_header.scss */
+/* line 66, stylesheets/scss/_header.scss */
 #site-nav li {
-  margin: 0 10px 0 0;
+  margin-right: 30px;
   float: left;
   position: relative;
 }
-/* line 70, stylesheets/scss/_header.scss */
-#site-nav li:hover {
-  border-top: 1px solid #5d504f;
-  margin-top: -1px;
-}
-/* line 73, stylesheets/scss/_header.scss */
+/* line 72, stylesheets/scss/_header.scss */
 #site-nav li:hover ul {
   left: 0;
   border-top: 2px solid #3d302f;
   border-bottom: 1px solid #5d504f;
   background: #f7f4f4;
 }
-/* line 80, stylesheets/scss/_header.scss */
+/* line 79, stylesheets/scss/_header.scss */
 #site-nav li:hover ul a:hover {
   background: #e5dedc;
 }
-/* line 84, stylesheets/scss/_header.scss */
+/* line 83, stylesheets/scss/_header.scss */
 #site-nav li:hover ul a {
   font-weight: 400;
   padding: 7px 30px 7px 10px;
   white-space: nowrap;
 }
-/* line 89, stylesheets/scss/_header.scss */
+/* line 88, stylesheets/scss/_header.scss */
 #site-nav li:hover ul ul {
   border: 0;
 }
-/* line 91, stylesheets/scss/_header.scss */
+/* line 90, stylesheets/scss/_header.scss */
 #site-nav li:hover ul ul a {
   padding: 7px 30px 7px 15px;
 }
-/* line 96, stylesheets/scss/_header.scss */
+/* line 95, stylesheets/scss/_header.scss */
 #site-nav li:hover li {
   margin-top: 0;
   border: none;
 }
-/* line 104, stylesheets/scss/_header.scss */
+/* line 103, stylesheets/scss/_header.scss */
 #site-nav li.last {
   margin-right: 0;
 }
-/* line 107, stylesheets/scss/_header.scss */
+/* line 106, stylesheets/scss/_header.scss */
 #site-nav a {
   padding: 0;
   display: block;
   color: #050000;
   font: 700 11px Sans-Serif;
 }
-/* line 112, stylesheets/scss/_header.scss */
+/* line 111, stylesheets/scss/_header.scss */
 #site-nav a:hover {
-  color: #5d504f;
+  color: #ea0000;
 }
 
-/* line 118, stylesheets/scss/_header.scss */
+/* line 117, stylesheets/scss/_header.scss */
 #page-header {
   position: relative;
   border-bottom: 2px solid #f0eceb;
@@ -1741,29 +1737,29 @@ button, .button, input[type=submit] {
   padding-bottom: 15px;
 }
 
-/* line 125, stylesheets/scss/_header.scss */
+/* line 124, stylesheets/scss/_header.scss */
 #sub_header {
   border-bottom: 2px solid #f0eceb;
   padding-bottom: 15px;
   margin-bottom: 30px;
 }
-/* line 129, stylesheets/scss/_header.scss */
+/* line 128, stylesheets/scss/_header.scss */
 #sub_header p {
   margin-top: 0;
 }
 
 @media only screen and (max-width: 420px) {
-  /* line 139, stylesheets/scss/_header.scss */
+  /* line 138, stylesheets/scss/_header.scss */
   #site-nav li a {
     font-size: 11px;
     padding: 0;
   }
-  /* line 143, stylesheets/scss/_header.scss */
+  /* line 142, stylesheets/scss/_header.scss */
   #site-nav li:last-child {
     border-bottom: 0;
   }
 
-  /* line 148, stylesheets/scss/_header.scss */
+  /* line 147, stylesheets/scss/_header.scss */
   #site-nav ul ul {
     display: none;
   }

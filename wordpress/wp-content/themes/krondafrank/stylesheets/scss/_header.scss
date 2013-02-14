@@ -4,7 +4,8 @@
 #site-title { 
 	font-size: $font-size-x-large; 
 	margin: 0 5px 5px 0;
-	display: inline
+	display: inline;
+	float: left;
 }
 #site-description { 
 	margin-top:0; 
@@ -64,12 +65,10 @@
 	
 	li {
 		@extend .reset;
-		margin: 0 10px 0 0;
+		margin-right: 30px;
 		float: left;
 		position:relative;
 		&:hover {
-			border-top:1px solid $color-midtone;
-			margin-top:-1px;
 			ul {
 
 				left:0; 
@@ -110,7 +109,7 @@
 		color: $color-off-black;
 		font: #{$font-weight-bold} #{$font-size-x-small} #{$typeface-secondary};
 		&:hover { 
-			color: $color-midtone; 
+			color: $color-accent; 
 		} 	
 	}
 }
