@@ -61,12 +61,19 @@ Depends, but most likely yes.
 
 == Changelog ==
 
-= TODO =
-* autoplay maybe
+= 1.9beta =
+* added youtubes modestbranding mode
+* added missing veoh id detection
+* fixed vimeo id detection
+* added now custom thumbnail feature
+* fixed the align class creation
+* renamed the shortcode dialog
+* removed the text field for teh fixed width option (beginning of the removal process)
 
 = 1.8beta =
 * added new tinymce botton with dialog to detect ids from URL's and embed codes and automatically create shortcodes
 * removed the image resizer (Faster and more secure for servers), now uses just CSS. Polyfill for for IE to support 'background-size' included.
+* changed the play overlay image to a bigger one
 * added comedycentral, spike
 * removed google video, it died
 * lots of improvements and fixes
