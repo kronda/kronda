@@ -20,5 +20,5 @@ return array(
 	'minify.error.notification' => '',
 	'minify.error.notification.last' => 0,
 	'minify.error.file' => '',
-	'notes.remove_w3tc' => true,
+	'notes.remove_w3tc' => false,
 );
