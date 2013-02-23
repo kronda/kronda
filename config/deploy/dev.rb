@@ -1,5 +1,5 @@
 # Set the deployment directory on the target hosts.
-set :deploy_to, "/home/krondaco/capistrano"
+set :deploy_to, "/home/krondaco/sites/#{application}-#{stage}"
 
 # Use the correct branch on github
 set :branch, "dev"

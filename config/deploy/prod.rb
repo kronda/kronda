@@ -1,5 +1,5 @@
 # Set the deployment directory on the target hosts.
-set :deploy_to, "/home/krondaco/wordpress"
+set :deploy_to, "/home/krondaco/sites/#{application}.com"
 
 # Use the correct branch on github
 set :branch, "prod"
