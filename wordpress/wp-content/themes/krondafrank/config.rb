@@ -24,4 +24,4 @@ environment = :development
 # sass-convert -R --from scss --to sass stylesheets/scss scss && rm -rf sass && mv scss sass
 
 
-output_style = :compressed # by Compass.app 
+output_style = :expanded # by Compass.app 
