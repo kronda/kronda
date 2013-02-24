@@ -126,7 +126,7 @@ namespace :db do
   task :pull, :roles => :db, :only => { :primary => true } do
     domains.each do |domain|
       filename = "#{domain}_#{stage}.sql"
-      system "cd #{app_root} ; #{wp} db import --file=#{filename}"
+      system "cd #{app_root} ; #{wp} db import #{filename}"
     end
   end
 
