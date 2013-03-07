@@ -13,6 +13,7 @@ wp-content/themes/krondafrank/.sass-cache/*
 .project
 .settings
 db/
+docs/
 dev/
 static_files
 backups
