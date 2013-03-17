@@ -41,15 +41,17 @@ class ArveButton
 					<th>
 						<label for="arve-url">URL</label><br>
 						<small class="description">
-							<?php _e('For Blip.tv, Videojug, Movieweb, Gametrailers and Comedycentral paste the embed code, for all others paste the URL!<br>', 'arve-plugin'); ?><br>
+							<?php _e('For Blip.tv, Videojug, Movieweb, Gametrailers, Yahoo!, Spike and Comedycentral paste the embed code, for all others paste the URL!', 'arve-plugin'); ?><br>
 							<a href="#" id="arve-open-url-info"><?php _e('More info', 'arve-plugin'); ?></a>
 						</small>
 
 						<div id="arve-url-info" style="display: none; padding: 0 15px;">
-							<?php _e('<p>Paste the URL of the video here.</p>
-							<p>Exeption: for blip.tv, videojug, movieweb, gametrailers, spike and comedycentral you <strong>must</strong> paste the embed code here!</p>
-							<p>Ustream: If your Address bar URL not contains a number. Click Share->URL-icon and paste the URL you get there here.</p>
-							<p>For Youtube, Archiveorg, Metacafe and Viddler embed codes and URLs should work.</p>', 'arve-plugin'); ?>
+							<p>
+								<?php _e('Ustream: If your Address bar URL not contains a number. Click Share->URL-icon and paste the URL you get there here.', 'arve-plugin'); ?>
+							</p>
+							<p>
+								<?php _e("For Youtube, Archiveorg, Metacafe and Viddler embed codes and URL's should work.", 'arve-plugin'); ?>
+							</p>
 						</div>
 					</th>
 					<td>
@@ -59,13 +61,13 @@ class ArveButton
 				<tr>
 					<th>
 						<label for="arve-mode"><?php _e('Mode', 'arve-plugin'); ?></label><br>
-						<small class="description"><?php _e('Only use it of you want some vidoes have a mode that differs from the one you set in the options.');?></small>
+						<small class="description"><?php _e('Only use it of you want some vidoes have a mode that differs from the one you set in the options.', 'arve-plugin');?></small>
 					</th>
 					<td>
 						<select id="arve-mode">
 							<option value=""></option>
 							<option value="normal"><?php _e('Normal', 'arve-plugin'); ?></option>
-							<option value="thumbnail"><?php _e('Thumbnail'); ?></option>
+							<option value="thumbnail"><?php _e('Thumbnail', 'arve-plugin'); ?></option>
 						</select>
 					</td>				
 				</tr>
@@ -91,8 +93,8 @@ class ArveButton
 				</tr>
 				<tr style="display: none;" class="arve-hidden">
 					<th>
-						<label for="arve-maxw">Maximal width</label><br>
-						<small class="description">Only use it of you want some vidoes have a maximal width that differs from the one you set in the options.</small>
+						<label for="arve-maxw"><?php _e('Maximal width', 'arve-plugin'); ?></label><br>
+						<small class="description"><?php _e('Only use it of you want some vidoes have a maximal width that differs from the one you set in the options.', 'arve-plugin'); ?></small>
 					</th>
 					<td>
 						<input type="text" id="arve-maxw" />	
@@ -100,24 +102,23 @@ class ArveButton
 				</tr>
 				<tr style="display: none;" class="arve-hidden">
 					<th>
-						<label for="arve-provider">Provider</label>
+						<label for="arve-provider"><?php _e('Provider', 'arve-plugin'); ?></label>
 					</th>
 					<td>
 						<select id="arve-provider">
 							<option value=""></option>
 							<?php
 							$options = get_option('arve_options');
-							$providers = arve_filter_shortcode_options( $options );
-							foreach( $providers as $provider )
-								echo '<option value="' . $provider . '">' . $provider . '</option>';
+							foreach( $options['shortcodes'] as $key => $val )
+								echo '<option value="' . esc_attr( $val ) . '">' . esc_html( $key ) . '</option>';
 							?>
 						</select>
 					</td>
 				</tr>
 				<tr style="display: none;" class="arve-hidden">
 					<th>
-						<label for="arve-id">Video ID</label><br>
-						<small class="description">If not filled in automatically after pasting the url above you have to insert the video ID in here.</small>
+						<label for="arve-id"><?php _e('Video ID', 'arve-plugin'); ?></label><br>
+						<small class="description"><?php _e('If not filled in automatically after pasting the url above you have to insert the video ID in here.', 'arve-plugin'); ?></small>
 					</th>
 					<td>
 						<input type="text" id="arve-id" value="" /><br>
@@ -129,7 +130,9 @@ class ArveButton
 					</td>
 				</tr>	
 				<tr>
-					<th><label for="arve-submit">Ready?</label></th>
+					<th>
+						<label for="arve-submit"><?php _e('Ready?', 'arve-plugin'); ?></label>
+					</th>
 					<td>
 						<input type="button" id="arve-submit" class="button-primary" value="Insert Shortcode" name="submit" />
 					</td>

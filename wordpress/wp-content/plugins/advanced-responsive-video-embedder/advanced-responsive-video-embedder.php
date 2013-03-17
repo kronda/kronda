@@ -5,7 +5,7 @@
 Plugin Name: Advanced Responsive Video Embedder
 Plugin URI: http://nextgenthemes.com/plugins/advanced-responsive-video-embedder/
 Description: Embed Videos with simple shortcodes from many providers in full resonsible sizes. Generate thumbnails of videos to open them in colorbox.
-Version: 1.9beta
+Version: 2.3-beta
 Author: Nicolas Jonas
 Author URI: http://nextgenthemes.com
 Licence: GPL v3
@@ -24,9 +24,64 @@ if ( ! defined( 'ABSPATH' ) )
 
 require_once( plugin_dir_path( __FILE__ ) . 'tinymce.php' );
 
-load_plugin_textdomain('arve-plugin', false, basename( dirname( __FILE__ ) ) . '/languages' );
+add_action('plugins_loaded', 'arve_action_plugins_loeaded');
 
-register_activation_hook(__FILE__, 'arve_options');
+function arve_action_plugins_loeaded() {
+	load_plugin_textdomain( 'arve-plugin', false, dirname( plugin_basename( __FILE__ ) ) . '/lang/' );
+}
+
+register_activation_hook(__FILE__, 'arve_update_to_21');
+
+function arve_update_to_21() {
+
+	$old_tags = array(
+		'archiveorg',
+		'bliptv',
+		'break',			
+		'collegehumor',
+		'comedycentral',
+		'dailymotion',
+		'dailymotionlist',
+		'flickr',
+		'funnyordie',
+		'gametrailers',	
+		'liveleak',
+		'metacafe',   
+		'movieweb',
+		'myspace',
+		'myvideo',
+		'snotr',
+		'spike',
+		'ustream',
+		'veoh',
+		'viddler',
+		'videojug',
+		'vimeo',
+		'youtube',
+		'yahoo',
+		'youtubelist'
+	);
+
+	$options = get_option( 'arve_options', array() );
+
+	foreach($old_tags as $key => $val) {
+
+		if( ! array_key_exists($val . '_tag', $options))
+			continue;
+
+		$options['shortcodes'][$val] = $options[$val . '_tag'];
+		unset($options[$val . '_tag']);
+
+	}
+
+	update_option( 'arve_options', $options, '', 'yes' );
+
+}
+
+// add_action( 'admin_notices', function(){
+// 	$options = get_option( 'arve_options', array() );
+// 	var_dump($options);
+// } );
 
 add_action( 'init', 'arve_options' );
 
@@ -38,35 +93,37 @@ function arve_options( $reset = false ) {
 	'thumb_width'           => 300,
 	'thumb_height'          => 180,
 	'custom_thumb_image'    => '',
-	'video_width'           => 0,
-	'video_height'          => 0,
 	'video_maxwidth'        => 0,
+	'autoplay'              => false,
 	
-	'archiveorg_tag'      => 'archiveorg',
-	'bliptv_tag'          => 'bliptv',
-	'break_tag'           => 'break',			
-	'collegehumor_tag'    => 'collegehumor',
-	'comedycentral_tag'   => 'comedycentral',
-	'dailymotion_tag'     => 'dailymotion',
-	'dailymotionlist_tag' => 'dailymotionlist',
-	'flickr_tag'          => 'flickr',
-	'funnyordie_tag'      => 'funnyordie',
-	'gametrailers_tag'    => 'gametrailers',	
-	'liveleak_tag'        => 'liveleak',
-	'metacafe_tag'        => 'metacafe',   
-	'movieweb_tag'        => 'movieweb',
-	'myspace_tag'         => 'myspace',
-	'myvideo_tag'         => 'myvideo',
-	'snotr_tag'           => 'snotr',
-	'spike_tag'           => 'spike',
-	'ustream_tag'         => 'ustream',
-	'veoh_tag'            => 'veoh',
-	'viddler_tag'         => 'viddler',
-	'videojug_tag'        => 'videojug',
-	'vimeo_tag'           => 'vimeo',
-	'youtube_tag'         => 'youtube',
-	'youtubelist_tag'     => 'youtubelist',
-	
+	'shortcodes'            => array(
+		'archiveorg'        => 'archiveorg',
+		'bliptv'            => 'bliptv',
+		'break'             => 'break',
+		'collegehumor'      => 'collegehumor',
+		'comedycentral'     => 'comedycentral',
+		'dailymotion'       => 'dailymotion',
+		'dailymotionlist'   => 'dailymotionlist',
+		'flickr'            => 'flickr',
+		'funnyordie'        => 'funnyordie',
+		'gametrailers'      => 'gametrailers',	
+		'iframe'            => 'iframe',
+		'liveleak'          => 'liveleak',
+		'metacafe'          => 'metacafe',   
+		'movieweb'          => 'movieweb',
+		'myspace'           => 'myspace',
+		'myvideo'           => 'myvideo',
+		'snotr'             => 'snotr',
+		'spike'             => 'spike',
+		'ustream'           => 'ustream',
+		'veoh'              => 'veoh',
+		'viddler'           => 'viddler',
+		'videojug'          => 'videojug',
+		'vimeo'             => 'vimeo',
+		'yahoo'             => 'yahoo',
+		'youtube'           => 'youtube',
+		'youtubelist'       => 'youtubelist',
+		)
 	);
 	
 	if ( $reset ){
@@ -75,26 +132,38 @@ function arve_options( $reset = false ) {
 
 	$options = get_option( 'arve_options', array() );
 	
-	// remove (old) options that are not needed (not in defaults array)
-	foreach( $options as $key => $val ) {
-		if ( ! array_key_exists($key, $defaults) )
-			unset($options['$key']);
-	}
+	//remove (old) options that are not needed (not in defaults array)
+
+	// foreach( $options as $key => $val ) {
+	// 	if ( ! array_key_exists($key, $defaults) )
+	// 		unset($options[$key]);
+	// }
+
+	// foreach( $options['shortcodes'] as $key => $val ) {
+	// 	if ( ! array_key_exists($key, $defaults['shortcodes']) )
+	// 		unset($options['shortcodes'][$key]);
+	// }
 
 	$options = wp_parse_args($options, $defaults);
+
+	ksort( $options['shortcodes'] );
 
 	update_option( 'arve_options', $options, '', 'yes' );
 }
 
-add_action('admin_init', 'arve_init' );
+add_action('admin_init', 'arve_admin_init' );
 
-function arve_init(){
+function arve_admin_init(){
 	register_setting( 'arve_plugin_options', 'arve_options', 'arve_validate_options' );
 }
 
 // Sanitize and validate input. Accepts an array, return a sanitized array.
 function arve_validate_options( $input ) {
 	
+	// simply returning nothing will cause the reset uf all options
+	if( isset( $input['reset'] ) )
+		return;
+
 	// I get errors when I just unset the options so when a shortcode entered is to small i just put current option back in
 	$options = get_option('arve_options');
 
@@ -102,35 +171,29 @@ function arve_validate_options( $input ) {
 
 	$output['mode'] = wp_filter_nohtml_kses( $input['mode'] );
 	$output['custom_thumb_image'] = esc_url_raw( $input['custom_thumb_image'] );
-	
-	$output['fakethumb']      = (int) $input['fakethumb'];
-	$output['thumb_width']    = (int) $input['thumb_width'];
-	$output['thumb_height']   = (int) $input['thumb_height'];
-	//$output['video_width']    = (int) $input['video_width'];
-	//$output['video_height']   = (int) $input['video_height'];
-	$output['video_maxwidth'] = (int) $input['video_maxwidth'];
-	
-	if( $input['thumb_width'] < 50)
-		$output['thumb_width'] = 200;
-		
-	if( $input['thumb_height'] < 50)
-		$output['thumb_height'] = 130;
-	
-	$shortcodes = arve_filter_shortcode_options( $input );
 
-	foreach ( $shortcodes as $key => $var ) {
+	$output['fakethumb']      = isset( $input['fakethumb'] );
+	$output['autoplay']       = isset( $input['autoplay'] );
+	
+	if( (int) $input['thumb_width'] > 50 )
+		$output['thumb_width'] = (int) $input['thumb_width'];
+		
+	if( (int) $input['thumb_height'] > 50 )
+		$output['thumb_height'] = (int) $input['thumb_height'];
+
+	if( (int) $input['video_maxwidth'] > 50 )
+		$output['video_maxwidth'] = (int) $input['video_maxwidth'];
+
+	foreach ( $input['shortcodes'] as $key => $var ) {
 	
 		$var = preg_replace('/[_]+/', '_', $var );	// remove multiple underscores
 		$var = preg_replace('/[^A-Za-z0-9_]/', '', $var );	// strip away everything except a-z,0-9 and underscores
 		
-		if ( strlen($var) < 3 ) {
-			$shortcodes[$key] = $options[$key]; // feels bad
+		if ( strlen($var) < 3 )
 			continue;
-		}
-		$shortcodes[$key] = $var;
+		
+		$output['shortcodes'][$key] = $var;
 	}
-	
-	$output = array_merge( $input, $shortcodes );
 	
 	return $output;
 }
@@ -156,11 +219,11 @@ function arve_add_options_page() {
 function arve_render_form() {
 	
 	$options = get_option('arve_options');
-	$shortcodes = arve_filter_shortcode_options( $options );
 	?>
 	
 	<div class="wrap">
-	<h2>Advanced Responsive Video Embedder Settings</h2>
+	<div class="icon32" id="icon-options-general"><br></div>
+	<h2><?php _e('Advanced Responsive Video Embedder Settings', 'arve-plugin'); ?></h2>
 	
 	<form method="post" action="options.php">
 	<?php settings_fields('arve_plugin_options'); ?>
@@ -169,71 +232,88 @@ function arve_render_form() {
 			<th scope="row">Default Mode:</th>
 			<td>
 				<select name="arve_options[mode]" size="1">
-				  <option<?php selected( $options['mode'], 'normal'); ?> value="normal">Normal</option>
-				  <option<?php selected( $options['mode'], 'thumbnail');  ?> value="thumbnail">Thumbnail</option>
+				  <option<?php selected( $options['mode'], 'normal'); ?> value="normal"><?php _e('Normal', 'arve-plugin'); ?></option>
+				  <option<?php selected( $options['mode'], 'thumbnail'); ?> value="thumbnail"><?php _e('Thumbnail', 'arve-plugin'); ?></option>
 				</select>
 			</td>
 		</tr>
 		<tr valign="top">
-			<th scope="row"><label for="video_maxwidth">Video Maximal Width: </label></th>
+			<th scope="row"><label for="video_maxwidth"><?php _e('Video Maximal Width', 'arve-plugin'); ?></label></th>
 			<td>
 				<input name="arve_options[video_maxwidth]" type="text" value="<?php echo $options['video_maxwidth'] ?>" class="small-text"><br>
-				<span class='description'><?php _e('Not needed, if u set this to "0" your videos will me the maximum size of the container they are in. If your Page has a big width you might want to set this.'); ?></span>
+				<span class='description'><?php _e('Not needed, if you set this to "0" your videos will me the maximum size of the container they are in. If your Page has a big width you might want to set this.', 'arve-plugin'); ?></span>
 			</td>
 		</tr>
 		<tr valign="top">
-			<th scope="row"><label for="fakethumb">Fake Thumbnails: </label></th>
+			<th scope="row"><label for="fakethumb"><?php _e('Fake Thumbnails', 'arve-plugin'); ?></label></th>
 			<td>
-				<input name="arve_options[fakethumb]" type="checkbox" value="1" <?php checked( 1, $options['fakethumb'] ); ?> /><br/>
-				<span class='description'><?php _e('Loads the actual Videoplayer as \'background image\' to for thumbnails to emulate the feature Youtube, Dailymotion and Bliptv have. If not enabled thumbnails are displayed black.'); ?></span>
+				<input name="arve_options[fakethumb]" type="checkbox" value="1" <?php checked( 1, $options['fakethumb'] ); ?> /><br>
+				<span class='description'><?php _e('Loads the actual Videoplayer as background image" to for thumbnails to emulate the feature Youtube, Dailymotion,  and Bliptv have. If not enabled thumbnails are displayed black.', 'arve-plugin'); ?></span>
 			</td>
 		</tr>
 		<tr valign="top">
-			<th scope="row"><label>Thumbnail Size:</label></th>
+			<th scope="row"><label for="autoplay"><?php _e('Autoplay', 'arve-plugin'); ?></label></th>
 			<td>
-				<label for="arve_options[thumb_width]">Width</label>
-				<input name="arve_options[thumb_width]" type="text" value="<?php echo $options['thumb_width'] ?>" class="small-text"><br/>
-				<label for="arve_options[thumb_height]">Height</label>
-				<input name="arve_options[thumb_height]" type="text" value="<?php echo $options['thumb_height'] ?>" class="small-text"><br/>
-				<span class="description"><?php _e('Needed! Must be 50+ to work.'); ?></span>
+				<input name="arve_options[autoplay]" type="checkbox" value="1" <?php checked( 1, $options['autoplay'] ); ?> /><br>
 			</td>
 		</tr>
 		<tr valign="top">
-			<th scope="row"><label for="custom_thumb_image">Custom Thumbnail Image: </label></th>
+			<th scope="row"><label><?php _e('Thumbnail Size', 'arve-plugin'); ?></label></th>
+			<td>
+				<label for="arve_options[thumb_width]"><?php _e('Width', 'arve-plugin'); ?></label>
+				<input name="arve_options[thumb_width]" type="text" value="<?php echo $options['thumb_width'] ?>" class="small-text"><br>
+
+				<label for="arve_options[thumb_height]"><?php _e('Height', 'arve-plugin'); ?></label>
+				<input name="arve_options[thumb_height]" type="text" value="<?php echo $options['thumb_height'] ?>" class="small-text"><br>
+				<span class="description"><?php _e('Needed! Must be 50+ to work.', 'arve-plugin'); ?></span>
+			</td>
+		</tr>
+		<tr valign="top">
+			<th scope="row"><label for="custom_thumb_image"><?php _e('Custom Thumbnail Image', 'arve-plugin'); ?></label></th>
 			<td>
 				<input name="arve_options[custom_thumb_image]" type="text" value="<?php echo $options['custom_thumb_image'] ?>" class="large-text"><br>
-				<span class='description'><?php _e('To be used instead of black background. Upload a 16:10 Image with a size bigger or equal the thumbnials size you want to use into your WordPress and paste the URL of it here.'); ?></span>
+				<span class='description'><?php _e('To be used instead of black background. Upload a 16:10 Image with a size bigger or equal the thumbnials size you want to use into your WordPress and paste the URL of it here.', 'arve-plugin'); ?></span>
+			</td>
+		</tr>
+		<tr>
+			<th>
+				<?php submit_button(); ?>
+			</th>
+			<td>
+				<?php submit_button( __('Reset options', 'arve-plugin'), 'secondary', 'arve_options[reset]' ); ?>
 			</td>
 		</tr>
 	</table>
 	
-	<p class="submit">
-		<input type="submit" class="button-primary" value="<?php _e('Save Changes') ?>" />
+	<h3><?php _e('Change shortcode tags', 'arve-plugin'); ?></h3>
+	<p>
+		<?php _e('You might need this to prevent conflicts with other plugins you want to use. At least 3 alphanumec characters with optional underscores are needed!', 'arve-plugin'); ?>
 	</p>
-	
-	<h3>Change shortcode tags</h3>
-	<p><?php _e('You might need this to prevent conflicts with other plugins you want to use. At least 3 alphanumec characters with optional underscores are needed!'); ?></p>
 	
 	<table class="form-table">
-	<?php
-	
-	foreach ( $shortcodes as $key => $val ) {
-	
-		$title = str_replace( '_', ' ', $key );
-		$title = ucwords( $title );
+		<?php
 		
-		echo '
-		<tr valign="top">
-			<th scope="row"><label for="arve_options[' . $key . ']">' . $title . '</label></th>
-			<td><input type="text" name="arve_options[' . $key . ']"  value="' . $val . '"></td>
-		</tr>' . "\n";
-	}
-	
-	?>
+		foreach ( $options['shortcodes'] as $key => $val ) {
+		
+			$title = ucwords( $key ) . ' tag';
+			
+			echo '
+			<tr valign="top">
+				<th scope="row"><label for="arve_options[shortcodes][' . $key . ']">' . $title . '</label></th>
+				<td><input type="text" name="arve_options[shortcodes][' . $key . ']" value="' . $val . '"></td>
+			</tr>';
+		}
+		
+		?>
+
+		<tr>
+			<th></th>
+			<td>
+				<?php submit_button(); ?>
+			</td>
+		</tr>
 	</table>
-	<p class="submit">
-		<input type="submit" class="button-primary" value="<?php _e('Save Changes') ?>" />
-	</p>
+
 	</form>
 	<?php
 	
@@ -242,37 +322,23 @@ function arve_render_form() {
 add_action( 'wp_enqueue_scripts', 'arve_jquery_args' );
 
 function arve_jquery_args() {
-	wp_enqueue_script( 'arve-colorbox-args', plugin_dir_url( __FILE__ ) . 'js/colorbox.args.js', array( 'colorbox' ), '1.0', true );
+	wp_enqueue_script( 'arve-colorbox-args', plugin_dir_url( __FILE__ ) . 'js/colorbox.args.js', array( 'colorbox' ), false, true );
 }
 
-add_action( 'wp_enqueue_scripts', 'arve_style');
+add_action( 'wp_print_styles', 'arve_style');
 
 function arve_style() {
 	$options = get_option('arve_options');
 
-	$max_width = $options["video_maxwidth"];
+	$maxwidth = '';
+	if ( (int) $options["video_maxwidth"] > 0 )
+		$maxwidth = 'max-width: ' . (int) $options["video_maxwidth"] . 'px;';
 
-	$width  = $options["video_width"];
-	$height = $options["video_height"];
-
-	$thumb_width  = $options['thumb_width'];
-	$thumb_height = $options['thumb_height'];
-
-	$output = '';
-
-	if ( $max_width > 0 )
-		$output .= '.arve-maxwidth-wrapper { width: 100%; max-width: ' . $max_width . 'px; }';
-
-	if ( ( $width > 50 ) && ( $height > 50 ) ) {
-		$output .= 
-			'.arve-fixedsize {
-				width: ' . $width . 'px;
-				height: ' . $height . 'px;
-				margin-bottom: 20px;
-			}';
+	$css = '
+	.arve-maxwidth-wrapper { 
+		width: 100%;
+		' . $maxwidth . '
 	}
-
-	$output .= '
 	.arve-embed-container {
 		position: relative;
 		padding-bottom: 56.25%; /* 16/9 ratio */
@@ -305,8 +371,8 @@ function arve_style() {
 		behavior: url(' . plugin_dir_url( __FILE__ ) . 'js/backgroundsize.min.htc); /** IE polyfill for background size */
 		background-size: cover;
 		background-color: #000;
-		width: ' . $thumb_width . 'px;
-		height: ' . $thumb_height . 'px;
+		width: ' . (int) $options['thumb_width'] . 'px;
+		height: ' . (int) $options['thumb_height'] . 'px;
 		position: relative;
 		margin-bottom: 20px;
 	}
@@ -325,27 +391,11 @@ function arve_style() {
 	}
 	';
 
-	$output = str_replace( array( "\n", "\t", "\r" ), '', $output );
+	$css = str_replace( "\t", '', $css );
+	$css = str_replace( array( "\n", "\r" ), ' ', $css );
 
-	echo '<style type="text/css">' . $output . '</style>' ."\n";
+	echo '<style type="text/css">' . $css . '</style>' . "\n";
 }
-
-function arve_filter_shortcode_options( $options ){
-
-	$tag_options = array();
-
-	foreach( $options as $key => $value ) {
-
-		if ( substr($key,-4) != '_tag')
-			continue; 
-
-		$tag_options[$key] = $value;
-	}
-
-	return $tag_options;
-}
-
-
 
 // shortcode handling
 
@@ -355,10 +405,11 @@ class ArveMakeShortcodes {
 	
 	function create_shortcode(){
 		$options = get_option('arve_options');
-		add_shortcode( $options[$this->shortcode . '_tag'], array( $this, 'do_shortcode' ) );
+		add_shortcode( $options['shortcodes'][$this->shortcode], array( $this, 'do_shortcode' ) );
 	}
 	
 	function do_shortcode( $atts ) {
+
 		extract( shortcode_atts( array(
 			'id' => '',
 			'align' => '',
@@ -389,7 +440,7 @@ add_action('init', 'arve_shortcode_init');
 function arve_shortcode_init() {
 	$options = get_option('arve_options');
 
-	add_shortcode( $options['youtube_tag'], 'arve_do_youtube_shortcode');
+	add_shortcode( $options['shortcodes']['youtube'], 'arve_do_youtube_shortcode');
 
 	$metacafe = new ArveMakeShortcodes();
 	$metacafe->shortcode = 'metacafe';
@@ -479,12 +530,20 @@ function arve_shortcode_init() {
 	$comedycentral->shortcode = 'comedycentral';
 	$comedycentral->create_shortcode();
 
-	$comedycentral = new ArveMakeShortcodes();
-	$comedycentral->shortcode = 'spike';
-	$comedycentral->create_shortcode();
+	$spike = new ArveMakeShortcodes();
+	$spike->shortcode = 'spike';
+	$spike->create_shortcode();
+
+	$yahoo = new ArveMakeShortcodes();
+	$yahoo->shortcode = 'yahoo';
+	$yahoo->create_shortcode();
+
+	$iframe = new ArveMakeShortcodes();
+	$iframe->shortcode = 'iframe';
+	$iframe->create_shortcode();
 }
 
-function arve_build_embed( $id, $provider, $align = null, $mode = null, $maxwidth = null, $width = null, $height = null, $time = null ) {
+function arve_build_embed( $id, $provider, $align = null, $mode = null, $maxwidth = null, $autoplay = null, $time = null ) {
 
 $output = '';
 $thumbnail = null;
@@ -492,9 +551,8 @@ $randid = substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWX
 $options = get_option('arve_options');
 
 $fakethumb = $options['fakethumb'];
-$thumb_width = $options['thumb_width'];
-$thumb_height = $options['thumb_height'];
-$custom_thumb_image = $options['custom_thumb_image'];
+// $thumb_width = (int) $options['thumb_width'];
+// $thumb_height = (int) $options['thumb_height'];
 
 $flashvars = '';
 $flashvars_autoplay = '';
@@ -510,12 +568,12 @@ $flashvars_autoplay = '';
 
 switch ($id) {
 	case '':
-		return "<p><p><strong>ARVE Error:</strong> no video ID</p>";
+		return "<p><strong>ARVE Error:</strong> no video ID</p>";
 		break;
 	case ( mb_detect_encoding( $id, 'ASCII', true ) == true ):
 		break;
 	default:
-		return "<p><p><strong>ARVE Error:</strong> id '$id' not valid.</p>";
+		return "<p><strong>ARVE Error:</strong> id '$id' not valid.</p>";
 		break;
 }
 
@@ -528,50 +586,6 @@ switch ($provider) {
 	default:
 		return "<p><strong>ARVE Error:</strong> provider '$provider' not valid.</p>";
 		break;
-}
-
-switch ($width) {
-	case '':
-		$width = $options['video_width'];
-		break;
-	case ( ! preg_match("/^[0-9]{1,4}$/", $width) ):
-	default:
-		return "<p><strong>ARVE Error:</strong> width (w) '$width' not valid.</p>";
-		break;
-	case ( $width > 50 ):
-		$customwidth = $width . "px";
-		break;
-}
-
-switch ($height) {
-	case '':
-		$height = $options['video_height'];
-		break;
-	case ( ! preg_match("/^[0-9]{1,4}$/", $height) ):
-	default:
-		return "<p><strong>ARVE Error:</strong> height (h) '$height' not valid.</p>";
-		break;
-	case ( $height > 50 ):
-		$customheight = $height . "px";
-		break;
-}
-
-$customsize_inline_css = '';
-$customsize_class = '';
-if ( isset( $customwidth ) && ! isset( $customheight ) )
-		return "<p><strong>ARVE Error:</strong> You need to set custom width and height in the shortcode.</p>";
-if ( isset( $customheight ) && ! isset( $customwidth ) )
-		return "<p><strong>ARVE Error:</strong> You need to set custom width and height in the shortcode.</p>";
-
-if ( isset( $customwidth ) && isset( $customheight ) ) {
-	unset( $maxwidth_options );
-	unset( $maxwidth_shortcode );
-	$mode = 'fixed';
-	$customsize_inline_css = "style='width: $customwidth; height: $customheight; margin-bottom: 20px;' ";
-} elseif ( $mode == 'fixed'  ) {
-	unset( $maxwidth_options );
-	unset( $maxwidth_shortcode );
-	$customsize_class = "arve-fixedsize";
 }
 
 switch ($mode) {
@@ -598,16 +612,16 @@ switch ($mode) {
 switch ($maxwidth) {
 	case '':
 		if ( $options['video_maxwidth'] > 0)
-			$maxwidth_options = $options['video_maxwidth'];
+			$maxwidth_options = true;
 		break;
-	case ( ! preg_match("/^[0-9]{1,4}$/", $maxwidth) ):
+	case ( ! preg_match("/^[0-9]{2,4}$/", $maxwidth) ):
 	default:
 		return "<p><strong>ARVE Error:</strong> maxwidth (maxw) '$maxwidth' not valid.</p>";
 		break;
 	case ( $maxwidth > 50 ):
 		if ($mode != 'normal')
 			return "<p><strong>ARVE Error:</strong> for the maxwidth (maxw) option you need to have normal mode enabled, either for all videos in the plugins options or through shortcode '[youbube id=your_id <strong>mode=normal</strong> maxw=999 ]'.</p>";
-		$maxwidth_shortcode = 'style="width: 100%; max-width: ' . $maxwidth. 'px;"';
+		$maxwidth_shortcode = $maxwidth;
 		break;
 }
 
@@ -628,6 +642,25 @@ switch ($align) {
 		break;
 }
 
+switch ($autoplay) {
+	case '':
+		$autoplay = (bool) $options['autoplay'];
+		break;
+	case 'true':
+	case '1':
+	case 'yes':
+		$autoplay = true;
+		break;
+	case 'false':
+	case '0':
+	case 'no':
+		$autoplay = false;
+		break;
+	default:
+		return "<p><strong>ARVE Error:</strong> Autoplay '$autoplay' not valid.</p>";
+		break;
+}
+
 switch ($time) {
 	case '':
 		break;
@@ -636,7 +669,7 @@ switch ($time) {
 		return "<p><strong>ARVE Error:</strong> Time '$time' not valid.</p>";
 		break;
 	case ( $time > 0 ):
-		$time = "&amp;start=".$time;
+		$time = "&start=".$time;
 		break;
 }
 
@@ -676,141 +709,152 @@ $no_wmode_transparent[] = 'myvideo';
 $no_wmode_transparent[] = 'snotr';
 $no_wmode_transparent[] = 'viddler';
 $no_wmode_transparent[] = 'ustream';
+$no_wmode_transparent[] = 'iframe';
 
 if ( in_array($provider, $no_wmode_transparent) )
 	$fakethumb = false;
 
 switch ($provider) {
 case 'youtube':
-	$urlcode = 'http://www.youtube-nocookie.com/embed/' . $id . '?rel=0&amp;autohide=1&amp;hd=1&amp;iv_load_policy=3&amp;wmode=transparent&amp;modestbranding=1' . $time;
-	$param_no_autoplay = '&amp;autoplay=0';
-	$param_autoplay = '&amp;autoplay=1';
+	$urlcode = 'http://www.youtube-nocookie.com/embed/' . $id . '?rel=0&autohide=1&hd=1&iv_load_policy=3&wmode=transparent&modestbranding=1' . $time;
+	$param_no_autoplay = '&autoplay=0';
+	$param_do_autoplay = '&autoplay=1';
 	break;
 case 'metacafe':
 	$urlcode = 'http://www.metacafe.com/fplayer/' . $id . '/.swf';
 	$param_no_autoplay = '';
-	$param_autoplay = '';
+	$param_do_autoplay = '';
 	$flashvars_autoplay = '<param name="flashVars" value="playerVars=autoPlay=yes" /><!-- metacafee -->';
 	break;
 case 'liveleak':
 	$urlcode = 'http://www.liveleak.com/e/' . $id . '?wmode=transparent';
 	$param_no_autoplay = '';
-	$param_autoplay = '';
+	$param_do_autoplay = '';
 	break;
 case 'myspace':
 	$urlcode = 'http://mediaservices.myspace.com/services/media/embed.aspx/m=' . $id . ',t=1,mt=video';
-	$param_no_autoplay = '';
-	$param_autoplay = '';
+	$param_no_autoplay = ',ap=0';
+	$param_do_autoplay = ',ap=1';
 	break;
 case 'bliptv':
-	$urlcode = 'http://blip.tv/play/' . $id . '.html?p=1&amp;backcolor=0x000000&amp;lightcolor=0xffffff';
-	$param_no_autoplay = '&amp;autoStart=false';
-	$param_autoplay = '&amp;autoStart=true';
+	$urlcode = 'http://blip.tv/play/' . $id . '.html?p=1&backcolor=0x000000&lightcolor=0xffffff';
+	$param_no_autoplay = '&autoStart=false';
+	$param_do_autoplay = '&autoStart=true';
 	break;
 case 'collegehumor':
 	$urlcode = 'http://www.collegehumor.com/e/' . $id;
 	$param_no_autoplay = '';
-	$param_autoplay = '';
+	$param_do_autoplay = '';
 	break;
 case 'videojug':
 	$urlcode = 'http://www.videojug.com/film/player?id=' . $id;
 	$param_no_autoplay = '';
-	$param_autoplay = '';
+	$param_do_autoplay = '';
 	break;
 case 'veoh':
-	$urlcode = 'http://www.veoh.com/swf/webplayer/WebPlayer.swf?version=AFrontend.5.7.0.1396&amp;permalinkId=' . $id . '&amp;player=videodetailsembedded&amp;id=anonymous';
-	$param_no_autoplay = '&amp;videoAutoPlay=0';
-	$param_autoplay = '&amp;videoAutoPlay=1';
+	$urlcode = 'http://www.veoh.com/swf/webplayer/WebPlayer.swf?version=AFrontend.5.7.0.1396&permalinkId=' . $id . '&player=videodetailsembedded&id=anonymous';
+	$param_no_autoplay = '&videoAutoPlay=0';
+	$param_do_autoplay = '&videoAutoPlay=1';
 	break;
 case 'break':
 	$urlcode = 'http://embed.break.com/' . $id;
 	$param_no_autoplay = '';
-	$param_autoplay = '';
+	$param_do_autoplay = '';
 	$flashvars = '<param name="flashvars" value="playerversion=12" /><!-- break -->';
 	break;
 case 'dailymotion':
-	$urlcode = 'http://www.dailymotion.com/embed/video/' . $id . '?logo=0&amp;hideInfos=1&amp;forcedQuality=hq';
-	$param_no_autoplay = '&amp;autoPlay=0';
-	$param_autoplay = '&amp;autoPlay=1';
+	$urlcode = 'http://www.dailymotion.com/embed/video/' . $id . '?logo=0&hideInfos=1&forcedQuality=hq';
+	$param_no_autoplay = '&autoPlay=0';
+	$param_do_autoplay = '&autoPlay=1';
 	break;
 case 'movieweb':
 	$urlcode = 'http://www.movieweb.com/v/' . $id;
 	$param_no_autoplay = '';
-	$param_autoplay = '';
+	$param_do_autoplay = '';
 	break;
 case 'myvideo':
 	$urlcode = 'http://www.myvideo.de/movie/' . $id;
 	$param_no_autoplay = '';
-	$param_autoplay = '';
+	$param_do_autoplay = '';
 	break;
 case 'vimeo':
-	$urlcode = 'http://player.vimeo.com/video/' . $id . '?title=0&amp;byline=0&amp;portrait=0';
-	$param_no_autoplay = '&amp;autoplay=0';
-	$param_autoplay = '&amp;autoplay=1';
+	$urlcode = 'http://player.vimeo.com/video/' . $id . '?title=0&byline=0&portrait=0';
+	$param_no_autoplay = '&autoplay=0';
+	$param_do_autoplay = '&autoplay=1';
 	break;
 case 'gametrailers':
 	$urlcode = 'http://media.mtvnservices.com/embed/mgid:arc:video:gametrailers.com:' . $id;
 	$param_no_autoplay = '';
-	$param_autoplay = '';
+	$param_do_autoplay = '';
 	break;
 case 'comedycentral':
 	$urlcode = 'http://media.mtvnservices.com/embed/mgid:arc:video:comedycentral.com:' . $id;
 	$param_no_autoplay = '';
-	$param_autoplay = '';
+	$param_do_autoplay = '';
 	break;
 case 'spike':
 	$urlcode = 'http://media.mtvnservices.com/embed/mgid:arc:video:spike.com:' . $id;
 	$param_no_autoplay = '';
-	$param_autoplay = '';
+	$param_do_autoplay = '';
 	break;
 case 'viddler':
-	$urlcode = 'http://www.viddler.com/player/' . $id . '/?f=1&amp;disablebranding=1&amp;wmode=transparent';
-	$param_no_autoplay = '&amp;autoplay=0';
-	$param_autoplay = '&amp;autoplay=1';
+	$urlcode = 'http://www.viddler.com/player/' . $id . '/?f=1&disablebranding=1&wmode=transparent';
+	$param_no_autoplay = '&autoplay=0';
+	$param_do_autoplay = '&autoplay=1';
 	break;
 case 'snotr':
 	$urlcode = 'http://www.snotr.com/embed/' . $id;
 	$param_no_autoplay = '';
-	$param_autoplay = '?autoplay';
+	$param_do_autoplay = '?autoplay';
 	break;
 case 'funnyordie':
 	$urlcode = 'http://www.funnyordie.com/embed/' . $id;
 	$param_no_autoplay = '';
-	$param_autoplay = '';
+	$param_do_autoplay = '';
 	break;
 case 'youtubelist':
-	$urlcode = 'http://www.youtube-nocookie.com/embed/videoseries?list=' . $id . '&amp;wmode=transparent&amp;rel=0&amp;autohide=1&amp;hd=1&amp;iv_load_policy=3';
-	$param_no_autoplay = '&amp;autoplay=0';
-	$param_autoplay = '&amp;autoplay=1';
+	$urlcode = 'http://www.youtube-nocookie.com/embed/videoseries?list=' . $id . '&wmode=transparent&rel=0&autohide=1&hd=1&iv_load_policy=3';
+	$param_no_autoplay = '&autoplay=0';
+	$param_do_autoplay = '&autoplay=1';
 	break;
 case 'dailymotionlist':
 // http://www.dailymotion.com/widget/jukebox?list[]=%2Fplaylist%2Fx24nxa
-	$urlcode = 'http://www.dailymotion.com/widget/jukebox?list[]=%2Fplaylist%2F' . $id . '&amp;skin=slayer';
-	$param_no_autoplay = '&amp;autoplay=0';
-	$param_autoplay = '&amp;autoplay=1';
+	$urlcode = 'http://www.dailymotion.com/widget/jukebox?list[]=%2Fplaylist%2F' . $id . '&skin=slayer';
+	$param_no_autoplay = '&autoplay=0';
+	$param_do_autoplay = '&autoplay=1';
 	break;
 case 'archiveorg':
 	$urlcode = 'http://www.archive.org/embed/' . $id . '/';
 	$param_no_autoplay = '';
-	$param_autoplay = '';
+	$param_do_autoplay = '';
 	break;
 case 'flickr':
 	$urlcode = 'http://www.flickr.com/apps/video/stewart.swf?v=109786';
 	$param_no_autoplay = '';
-	$param_autoplay = '';
+	$param_do_autoplay = '';
 	$flashvars = '<param name="flashvars" value="intl_lang=en-us&photo_secret=9da70ced92&photo_id=' . $id . '"></param>';
 	break;
 case 'ustream':
-	$urlcode = 'http://www.ustream.tv/embed/' . $id . '?v=3&amp;wmode=transparent';
-	$param_no_autoplay = '&amp;autoplay=false';
-	$param_autoplay = '&amp;autoplay=true';
+	$urlcode = 'http://www.ustream.tv/embed/' . $id . '?v=3&wmode=transparent';
+	$param_no_autoplay = '&autoplay=false';
+	$param_do_autoplay = '&autoplay=true';
+	break;
+case 'yahoo':
+	$urlcode = 'http://' . $id . '.html?format=embed';
+	$param_no_autoplay = '&player_autoplay=false';
+	$param_do_autoplay = '&player_autoplay=true';
+	break;
+case 'iframe':
+	$urlcode = $id;
+	$param_no_autoplay = '';
+	$param_do_autoplay = '';
 	break;
 default:
 	$output .= 'ARVE Error: No provider';
 }
 
 if ( $iframe == true ) {
-	$href = $urlcode.$param_autoplay;
+	$href = esc_url( $urlcode.$param_do_autoplay );
 	$fancybox_class = 'fancybox arve_iframe iframe';
 	//$href = "#inline_".$randid;
 	//$fancybox_class = 'fancybox';	
@@ -819,51 +863,26 @@ if ( $iframe == true ) {
 	$fancybox_class = 'fancybox inline';
 }
 
-if ( $mode == 'fixed' ) {
-	if ( $iframe == true ) {
-		$output .= "<iframe src='$urlcode$param_no_autoplay' frameborder='0' $customsize_inline_css class='$customsize_class $align' webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>";
-	} else {
-		$output .= '
-		<object type="application/x-shockwave-flash" data="' . $urlcode . $param_no_autoplay . '" class="' . $customsize_class . ' ' . $align . '" ' . $customsize_inline_css . ' >
-			<param name="movie" value="$urlcode$param_autoplay" />
-			<param name="quality" value="high" />
-			<param name="wmode" value="transparent" />
-			<param name="allowFullScreen" value="true" />
-			' . $flashvars . '
-		</object>' . "";
-	}
-	
-//
-// normal
-//	
-} elseif ( $mode == 'normal' ) {
+if ( $autoplay == 'true' )
+	$param_autoplay = $param_do_autoplay;
+else
+	$param_autoplay = $param_no_autoplay;
+
+if ( $mode == 'normal' ) {
 
 	if ( isset( $maxwidth_shortcode ) )
-		$output .= "<div $maxwidth_shortcode class='$align'>";
+		$output .= '<div class="arve-maxwidth-wrapper ' . esc_attr( $align ) . '" style="max-width:' . (int) $maxwidth_shortcode . 'px">';
 	elseif ( isset( $maxwidth_options ) )
-		$output .= '<div class="arve-maxwidth-wrapper ' . $align . '">';
-		
-	$output .= '<div class="arve-embed-container">';
+		$output .= '<div class="arve-maxwidth-wrapper ' . esc_attr( $align ) . '">';
 	
-	if ( $iframe == true ) {
-		$output .= '<iframe class="arve-inner" src="' . $urlcode . $param_no_autoplay . '" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';
-	} else {
-		$output .= '
-		<object class="arve-inner" type="application/x-shockwave-flash" data="' . $urlcode . $param_no_autoplay . '">
-			<param name="movie" value="' . $urlcode . $param_no_autoplay . '" />
-			<param name="quality" value="high" />
-			<param name="wmode" value="transparent" />
-			<param name="allowFullScreen" value="true" />
-			' . $flashvars . ' 
-		</object>';
-	}
-	$output .= "</div>";
+	if ( $iframe == true )
+		$output .= '<div class="arve-embed-container">' . arve_create_iframe( $urlcode, $param_autoplay ) . '</div>';
+	else
+		$output .= '<div class="arve-embed-container">' . arve_create_object( $urlcode, $param_autoplay, $flashvars, $flashvars_autoplay ) . '</div>';
+
 	if( isset( $maxwidth_options ) || isset( $maxwidth_shortcode ) )
 		$output .= "</div>";
 
-//
-// thumbnail
-//
 } elseif ( $mode == 'thumbnail' ) {
 
 	if ( $provider == 'youtube' ) {
@@ -894,29 +913,21 @@ if ( $mode == 'fixed' ) {
 	}
 	
 	$thumbnail_background_css = '';
-	if ( $thumbnail ) {
-		$thumbnail_background_css = "style='background-image: url($thumbnail);'";
-	} elseif ( $custom_thumb_image != '' ) {
-		$custom_thumb_image = esc_url( $custom_thumb_image );
-		$thumbnail_background_css = "style='background-image: url($custom_thumb_image);'";
-	}
 
-	$output .= "<div class='arve-thumbsize arve-thumb-wrapper $align' $thumbnail_background_css>";
+	if ( $thumbnail )
+		$thumbnail_background_css = sprintf( ' style="background-image: url(%s); "', esc_url( $thumbnail ) );
+	elseif ( $options['custom_thumb_image'] != '' )
+		$thumbnail_background_css = sprintf( ' style="background-image: url(%s); "', esc_url( $options['custom_thumb_image'] ) );
 
+	$output .= sprintf('<div class="arve-thumbsize arve-thumb-wrapper %s" %s>', esc_attr( $align ), $thumbnail_background_css );
+
+	/** if we not have a real thumbnail by now and fakethumb is enabled */
 	if ( ! $thumbnail && $fakethumb ) {
 
-		if ( $iframe == true ) {
-			$output .= "<iframe class='arve-inner arve-iframe' src='$urlcode$param_no_autoplay' frameborder='0'></iframe>";
-		} else {
-			$output .= '
-			<object class="arve-inner" type="application/x-shockwave-flash" data="' . $urlcode . $param_no_autoplay . '">
-				<param name="movie" value="' . $urlcode . $param_no_autoplay . '" />
-				<param name="quality" value="high" />
-				<param name="wmode" value="transparent" />
-				<param name="allowFullScreen" value="true" />
-				' . $flashvars . '
-			</object>';
-		}
+		if ( $iframe == true )
+			$output .= arve_create_iframe( $urlcode, $param_no_autoplay );
+		else
+			$output .= arve_create_object( $urlcode, $param_no_autoplay, $flashvars, '' );
 
 		$output .= "<a href='$href' class='arve-inner $fancybox_class'>&nbsp;</a>";
 
@@ -924,51 +935,37 @@ if ( $mode == 'fixed' ) {
 		$output .= "<a href='$href' class='arve-inner arve-play-background $fancybox_class'>&nbsp;</a>";
 	}
 	
-	$output .= "</div>";
+	$output .= "</div>"; /** end arve-thumb-wrapper */
 	
-	if ( $iframe == false ) {
-		$output .= '
-		<div class="arve-hidden">
-			<object id="inline_' . $randid . '" type="application/x-shockwave-flash" data="' . $urlcode . $param_autoplay . '" class="arve-hidden-obj" >
-				<param name="movie" value="' . $urlcode . $param_autoplay . '" />
-				<param name="quality" value="high" />
-				<param name="wmode" value="transparent" />
-				<param name="allowFullScreen" value="true" />
-				' . $flashvars . '
-				' . $flashvars_autoplay . '
-			</object>
-		</div>'. "";
-	}
+	if ( $iframe == false )
+		$output .= '<div class="arve-hidden">' . arve_create_object( $urlcode, $param_do_autoplay, $flashvars, $flashvars_autoplay, $randid ) . '</div>';
 }
 
 return $output;
 }
 
-/* Display a notice that can be dismissed */
-add_action('admin_notices', 'arve_admin_notice');
 
-function arve_admin_notice() {
-	global $current_user ;
-        $user_id = $current_user->ID;
-        /* Check that the user hasn't already clicked to ignore the message */
-	if ( ! get_user_meta($user_id, 'arve_ignore_notice') ) {
-        ?>
-        <div class="updated">
-        	<p>
-        	Sorry for this nag but i am planning to remove the fixed mode from the Advanced Responsive Video Embedder Plugin and i suggest you use the max-width feature instead. If you really use/need this feature <a href="https://github.com/nextgenthemes/advanced-responsive-video-embedder/issues">let me know</a> please. Check out the new button in your rich text editor! <a href="?arve_nag_ignore=0">Dismiss</a>
-        	</p>
-    	</div>
-        <?php
-	}
+function arve_create_object( $urlcode, $url_params, $flashvars, $flashvars_autoplay, $id = null ) {
+
+	if ( $id )
+		$class_or_id = "id='inline_$id'";
+	else
+		$class_or_id = 'class="arve-inner"';
+
+	return
+		'<object ' . $class_or_id . ' data="' . esc_url( $urlcode . $url_params ) . '" type="application/x-shockwave-flash">
+			<param name="movie" value="' . esc_url( $urlcode . $url_params ) . '" />
+			<param name="quality" value="high" />
+			<param name="wmode" value="transparent" />
+			<param name="allowFullScreen" value="true" />
+			' . $flashvars . '
+			' . $flashvars_autoplay . '
+		</object>';
+
 }
 
-add_action('admin_init', 'arve_nag_ignore');
+function arve_create_iframe( $urlcode, $url_params ) {
 
-function arve_nag_ignore() {
-	global $current_user;
-        $user_id = $current_user->ID;
-        /* If user clicks to ignore the notice, add that to their user meta */
-        if ( isset($_GET['arve_nag_ignore']) && '0' == $_GET['arve_nag_ignore'] ) {
-             add_user_meta($user_id, 'arve_ignore_notice', 'true', true);
-	}
+	return '<iframe class="arve-inner" src="' . esc_url( $urlcode . $url_params ) . '" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>';
+
 }

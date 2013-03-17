@@ -1,7 +1,7 @@
 === Advanced Responsive Video Embedder ===
 Contributors: nico23
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UNDSCARF3ZPBC
-Tags: responsive, embeds, embed, flash, iframe, minimal, lightweight, simple, simplicity, shortcodes, videos, youtube, blip, bliptv, dailymotion, videojug, collegehumor, veoh, break, movieweb, snotr, gametrailers, vimeo, viddler, funnyordie, myspace, liveleak, metacafe, googlevideo, myvideo, 
+Tags: responsive, embeds, embed, flash, iframe, minimal, lightweight, simple, simplicity, shortcodes, videos, youtube, blip, bliptv, dailymotion, videojug, collegehumor, veoh, break, movieweb, snotr, gametrailers, vimeo, viddler, funnyordie, myspace, liveleak, metacafe, googlevideo, myvideo, yahoo, spike,
 Requires at least: 3.3.1
 Tested up to: 3.5.1
 Stable tag: trunk
@@ -12,7 +12,7 @@ Embed videos with a click of a button from many providers with full responsive s
 
 == Description ==
 
-Simple lightweight plugin lets you embed videos from many providers with full responsive sizes with a click of a button. Show videos as thumbnails and let them open in colorbox. Clean and easy shortcode Syntax.
+Simple lightweight plugin lets you embed videos from many providers with full responsive sizes with a click of a single button for all providers. Show videos as thumbnails and let them open in colorbox. Clean and easy shortcode syntax.
 
 [More info and demo](http://nextgenthemes.com/plugins/advanced-responsive-video-embedder/)
 
@@ -23,6 +23,7 @@ Simple lightweight plugin lets you embed videos from many providers with full re
 * CollegeHumor
 * Dailymotion (inc. playlists)
 * FunnyOrDie
+* Iframes (in general, every provider that supports iframe embed codes)
 * Gametrailers
 * Liveleak
 * Metacafe
@@ -36,18 +37,13 @@ Simple lightweight plugin lets you embed videos from many providers with full re
 * Viddler
 * Videojug
 * Vimeo
+* Yahoo!
 * YouTube (inc. playlists)
 * More in future versions
 
 == Installation ==
 
-1. For most webhosts the usuall way: WP Dashboard -> Plugins -> Add New -> Search `Advanced Responsive Video Embedder` -> Install -> Activate -> Skip to step 5
-2. Manuall install: Extract the zip file
-3. Upload the `advanced-responsive-video-embedder` directory to the `/wp-content/plugins/` directory
-4. Activate the plugin through the 'Plugins' menu in WordPress
-5. Make some Options if you like
-6. If you want to use the `Thumbnail Mode` you need to install the [jQuery Colorbox Plugin](http://wordpress.org/extend/plugins/jquery-colorbox/) or make colorbox load in any way on your WordPress
-6. Click the Video icon in your WordPress rich text editor, enjoy!
+[More info and demo](http://nextgenthemes.com/plugins/advanced-responsive-video-embedder/)
 
 == Frequently Asked Questions ==
 
@@ -57,9 +53,22 @@ Depends, but most likely yes.
 
 == Screenshots ==
 
-1. Options Page
+-
 
 == Changelog ==
+
+= 2.3-beta =
+* fix for maxwidth wrapper no maxwidth option is set
+
+= 2.1-beta =
+* Security and general code improvements
+* Added autoplay option
+
+= 2.0beta =
+* added Yahoo!
+* spike bugfix
+* small improvements to code
+* removed the fixed mode
 
 = 1.9beta =
 * added youtubes modestbranding mode
