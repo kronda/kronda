@@ -16,6 +16,7 @@ db/
 docs/
 dev/
 static_files
+*.sublime*
 backups
 webroot
 vaultpress.zip
