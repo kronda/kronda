@@ -17,11 +17,9 @@ environment = :development
 # line_comments = false
 # color_output = false
 
+
 # If you prefer the indented syntax, you might want to regenerate this
 # project again passing --syntax sass, or you can uncomment this:
 # preferred_syntax = :sass
 # and then run:
 # sass-convert -R --from scss --to sass stylesheets/scss scss && rm -rf sass && mv scss sass
-
-
-output_style = :expanded # by Compass.app 

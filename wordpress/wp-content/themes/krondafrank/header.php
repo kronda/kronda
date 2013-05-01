@@ -32,7 +32,11 @@
 	<![endif]-->
 <div class="container">
 	<header id="page-header" class="row">
-			<h1 id="site-title" class="four columns"><a href="<?php echo home_url(); ?>"><?php bloginfo('name'); ?></a></h1>
+		<hgroup id="site-title-description">
+			<h1 id="site-title"><a href="<?php echo home_url(); ?>"><?php bloginfo('name'); ?></a></h1>
+			<h2 id="site-description"><?php bloginfo('description'); ?></h2>
+		</hgroup>
+
 
 		<?php
 			$header_image = get_header_image();
@@ -66,10 +70,16 @@
 		<?php
 				if ( 'blank' == get_header_textcolor() ) :
 			?>
-				
+				<div class="only-search<?php if ( $header_image ) : ?> with-image<?php endif; ?>">
+				<?php get_search_form(); ?>
+				</div>
+			<?php
+				else :
+			?>
+				<?php get_search_form(); ?>
 			<?php endif; ?>
 
-		<nav id="site-nav" class="eight columns">
+		<nav id="site-nav">
 			<?php if ( !dynamic_sidebar("Navigation") ) : ?>
 				<?php wp_nav_menu( array('theme_location' => 'frank_primary_navigation', 'container' => false ) ); ?>	
 			<?php endif; ?> 

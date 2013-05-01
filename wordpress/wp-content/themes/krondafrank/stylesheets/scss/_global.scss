@@ -195,17 +195,7 @@ em { font-style: italic; }
     text-overflow: ellipsis;
     -o-text-overflow: ellipsis;
 }
-.visually-hidden {
-	position: absolute !important;    
-  clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
-  clip: rect(1px, 1px, 1px, 1px);
-}
-.scaffold-1 {
-	border: 1px solid red;
-}
-.scaffold-2 {
-	border: 1px solid blue;
-}
+
 /*Wordpress Classes*/
 .alignleft, .alignright, .aligncenter {
 	margin:10px 0 $row-height 0;

@@ -12,7 +12,9 @@
 			<header class="post-header">
 				<h1 class="post-title"><?php the_title(); ?></h1>
 			</header>
-			
+			<?php if($post->post_excerpt) : ?>
+				<div id='excerpt'><?php the_excerpt(); ?></div>
+			<?php endif; ?>
 			<div id='content-main' class='row'>
 				<section class='post-content clearfix'>
 					<?php the_post_thumbnail( 'default-thumbnail' ); ?>

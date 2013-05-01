@@ -27,7 +27,7 @@
 	<?php } ?>
 	</header>
 	<div class="posts">
-		<?php while(have_posts()) : the_excerpt(); ?>
+		<?php while(have_posts()) : the_post(); ?>
 			<?php get_template_part('partials/posts/post'); ?>
 		<?php endwhile; ?>
 		</div>
