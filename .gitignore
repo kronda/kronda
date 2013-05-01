@@ -21,3 +21,4 @@ webroot
 vaultpress.zip
 *~
 .DS_Store
+*.sublime*
