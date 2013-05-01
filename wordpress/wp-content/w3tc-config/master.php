@@ -428,7 +428,7 @@ return array(
 	'browsercache.other.etag' => false,
 	'browsercache.other.w3tc' => false,
 	'browsercache.other.replace' => false,
-	'browsercache.timestamp' => '',
+	'browsercache.timestamp' => '1363591635',
 	'mobile.enabled' => false,
 	'mobile.rgroups' => array(
 		'high' => array(
@@ -615,7 +615,7 @@ return array(
 	'widget.pagespeed.enabled' => true,
 	'widget.pagespeed.key' => '',
 	'notes.wp_content_changed_perms' => true,
-	'notes.wp_content_perms' => true,
+	'notes.wp_content_perms' => false,
 	'notes.php_is_old' => true,
 	'notes.theme_changed' => false,
 	'notes.wp_upgraded' => false,

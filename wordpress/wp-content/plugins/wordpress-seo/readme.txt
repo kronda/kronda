@@ -6,7 +6,7 @@ License URI: http://www.gnu.org/licenses/gpl.html
 Tags: seo, SEO, google, meta, meta description, search engine optimization, xml sitemap, xml sitemaps, google sitemap, sitemap, sitemaps, robots meta, rss, rss footer, yahoo, bing, news sitemaps, XML News Sitemaps, WordPress SEO, WordPress SEO by Yoast, yoast, multisite, canonical, nofollow, noindex, keywords, meta keywords, description, webmaster tools, google webmaster tools, seo pack
 Requires at least: 3.3
 Tested up to: 3.5
-Stable tag: 1.4.3
+Stable tag: 1.4.7
 
 Improve your WordPress SEO: Write better content and have a fully optimized WordPress site using the WordPress SEO plugin by Yoast.
 
@@ -141,7 +141,38 @@ rewrite ^/([^/]+?)-sitemap([0-9]+)?\.xml$ /index.php?sitemap=$1&sitemap_n=$2 las
 
 == Changelog ==
 
-= trunk =
+= 1.4.7 =
+
+* Properly fix security bug that should've been fixed in 1.4.5.
+* Move from using several $options arrays in the frontend to 1 class wide option.
+* Instead of firing all plugin options as function within head function, attach them to `wpseo_head` action, allowing easier filtering and changing.
+* Where possible, use larger images for Facebook Opengraph.
+* Add several filters and actions around social settings.
+
+= 1.4.6 =
+
+* Fix a possible fatal error in tracking.
+
+= 1.4.5 =
+
+* Bug fixes:
+    * Fix security issue which allowed any user to reset settings.
+    * Allow saving of SEO metadata for attachments.
+    * Set the max-width of the snippet preview to 520px to look more like Google search results, while still allowing it to work on lower resolutions.
+* Enhancements:
+    * Remove the shortlink http header when the hide shortlink checkbox is checked.
+    * Added a check on focus keyword in the page analysis functionality, checking whether a focus keyword has already been used before.
+    * Update how the tracking class calculates users to improve speed.
+
+= 1.4.4 =
+
+* Fix changelog for 1.4.3
+* Bugfixes
+    * Fix activation bug.
+* i18n
+	* Updated es_ES, id_ID, he_IL.
+
+= 1.4.3 =
 
 * Bugfixes
     * Register core SEO menu at a lower than default prio so other plugins can tie in more easily.
