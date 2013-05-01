@@ -34,15 +34,10 @@
  *
  * For more control over headers, use getHeaders() and getData() and send your
  * own output.
-
  * 
-
  * Note: If you don't need header mgmt, use PHP's native gzencode, gzdeflate, 
-
  * and gzcompress functions for gzip, deflate, and compress-encoding
-
  * respectively.
-
  * 
  * @package Minify
  * @subpackage HTTP
@@ -94,7 +89,6 @@ class HTTP_Encoder {
      * @return null
      */
     public function __construct($spec) 
-
     {
         $this->_content = $spec['content'];
         $this->_headers['Content-Length'] = (string)strlen($this->_content);
@@ -118,7 +112,6 @@ class HTTP_Encoder {
      * return string
      */
     public function getContent() 
-
     {
         return $this->_content;
     }
@@ -138,7 +131,6 @@ class HTTP_Encoder {
      * @return array 
      */
     public function getHeaders()
-
     {
         return $this->_headers;
     }
@@ -155,7 +147,6 @@ class HTTP_Encoder {
      * @return null
      */
     public function sendHeaders()
-
     {
         foreach ($this->_headers as $name => $val) {
             header($name . ': ' . $val);
@@ -174,7 +165,6 @@ class HTTP_Encoder {
      * @return null
      */
     public function sendAll()
-
     {
         $this->sendHeaders();
         echo $this->_content;
@@ -192,13 +182,11 @@ class HTTP_Encoder {
      * compress. Deflate is always smallest and generally faster, but is 
      * rarely sent by servers, so client support could be buggier.
      * 
-
      * @return array two values, 1st is the actual encoding method, 2nd is the
      * alias of that method to use in the Content-Encoding header (some browsers
      * call gzip "x-gzip" etc.)
      */
     public static function getAcceptedEncoding()
-
     {
         // @link http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html
         
@@ -228,16 +216,13 @@ class HTTP_Encoder {
      * 
      * The header "Vary: Accept-Encoding" is added. If encoding is successful, 
      * the Content-Length header is updated, and Content-Encoding is also added.
-
      * 
-
      * @param int $compressionLevel given to zlib functions. If not given, the
      * class default will be used.
      * 
      * @return bool success true if the content was actually compressed
      */
     public function encode($compressionLevel = null)
-
     {
         $this->_headers['Vary'] = 'Accept-Encoding';
         if (null === $compressionLevel) {
@@ -249,11 +234,8 @@ class HTTP_Encoder {
         {
             return false;
         }
-
         if ($this->_encodeMethod[0] === 'deflate') {
-
             $encoded = gzdeflate($this->_content, $compressionLevel);
-
         } elseif ($this->_encodeMethod[0] === 'gzip') {
             $encoded = gzencode($this->_content, $compressionLevel);
         } else {
@@ -275,7 +257,6 @@ class HTTP_Encoder {
      * 
      * @param string $content
      * 
-
      * @param int $compressionLevel given to zlib functions. If not given, the
      * class default will be used.
      * 
@@ -287,15 +268,11 @@ class HTTP_Encoder {
             $compressionLevel = self::$compressionLevel;
         }
         $he = new HTTP_Encoder(array('content' => $content));
-
         $ret = $he->encode($compressionLevel);
-
         $he->sendAll();
         return $ret;
     }
-
     
-
     protected $_content = '';
     protected $_headers = array();
     protected $_encodeMethod = array('', '');
