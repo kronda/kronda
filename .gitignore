@@ -7,8 +7,9 @@ wordpress/wp-content/avatars
 wordpress/wp-content/cache
 wordpress/local-config.php
 wordpress/.htaccess
-wp-content/themes/krondafrank/.sass-cache/
-wp-content/themes/krondafrank/.sass-cache/*
+wordpress/wp-content/debug.log
+wordpress/wp-content/themes/krondafrank/.sass-cache/
+wordpress/wp-content/themes/krondafrank/.sass-cache/*
 .buildpath
 .project
 .settings
