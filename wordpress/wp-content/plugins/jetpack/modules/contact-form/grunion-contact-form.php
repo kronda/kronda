@@ -73,7 +73,7 @@ class Grunion_Contact_Form_Plugin {
 		// custom post type we'll use to keep copies of the feedback items
 		register_post_type( 'feedback', array(
 			'labels'            => array(
-				'name'               => __( 'Feedbacks', 'jetpack' ),
+				'name'               => __( 'Feedback', 'jetpack' ),
 				'singular_name'      => __( 'Feedback', 'jetpack' ),
 				'search_items'       => __( 'Search Feedback', 'jetpack' ),
 				'not_found'          => __( 'No feedback found', 'jetpack' ),
@@ -181,7 +181,7 @@ class Grunion_Contact_Form_Plugin {
 		if ( ! $submission_result ) {
 			header( "HTTP/1.1 500 Server Error", 500, true );
 			echo '<div class="form-error"><ul class="form-errors"><li class="form-error-message">';
-			esc_html_e( 'An error occurred. Please try again later.' );
+			esc_html_e( 'An error occurred. Please try again later.', 'jetpack' );
 			echo '</li></ul></div>';
 		} elseif ( is_wp_error( $submission_result ) ) {
 			header( "HTTP/1.1 400 Bad Request", 403, true );
@@ -189,7 +189,7 @@ class Grunion_Contact_Form_Plugin {
 			echo esc_html( $submission_result->get_error_message() );
 			echo '</li></ul></div>';
 		} else {
-			echo '<h3>' . esc_html__( 'Message Sent' ) . '</h3>' . $submission_result;
+			echo '<h3>' . esc_html__( 'Message Sent', 'jetpack' ) . '</h3>' . $submission_result;
 		}
 
 		die;
@@ -546,11 +546,12 @@ class Grunion_Contact_Form extends Crunion_Contact_Form_Shortcode {
 		}
 
 		$this->defaults = array(
-			'to'           => $default_to,
-			'subject'      => $default_subject,
-			'show_subject' => 'no', // only used in back-compat mode
-			'widget'       => 0,    // Not exposed to the user. Works with Grunion_Contact_Form_Plugin::widget_atts()
-			'id'           => null, // Not exposed to the user. Set above.
+			'to'                 => $default_to,
+			'subject'            => $default_subject,
+			'show_subject'       => 'no', // only used in back-compat mode
+			'widget'             => 0,    // Not exposed to the user. Works with Grunion_Contact_Form_Plugin::widget_atts()
+			'id'                 => null, // Not exposed to the user. Set above.
+			'submit_button_text' => __( 'Submit &#187;', 'jetpack' ),
 		);
 
 		$attributes = shortcode_atts( $this->defaults, $attributes );
@@ -692,7 +693,7 @@ class Grunion_Contact_Form extends Crunion_Contact_Form_Shortcode {
 			$r .= "<form action='" . esc_url( $url ) . "' method='post' class='contact-form commentsblock'>\n";
 			$r .= $form->body;
 			$r .= "\t<p class='contact-submit'>\n";
-			$r .= "\t\t<input type='submit' value='" . esc_attr__( 'Submit &#187;', 'jetpack' ) . "' class='pushbutton-wide'/>\n";
+			$r .= "\t\t<input type='submit' value='" . esc_attr( $form->get_attribute( 'submit_button_text' ) ) . "' class='pushbutton-wide'/>\n";
 			$r .= "\t\t" . wp_nonce_field( 'contact-form_' . $id, '_wpnonce', true, false ) . "\n"; // nonce and referer
 			$r .= "\t\t<input type='hidden' name='contact-form-id' value='$id' />\n";
 			$r .= "\t\t<input type='hidden' name='action' value='grunion-contact-form' />\n";
@@ -997,7 +998,9 @@ class Grunion_Contact_Form extends Crunion_Contact_Form_Shortcode {
 
 		$subject = apply_filters( 'contact_form_subject', $contact_form_subject );
 
-		$time = date_i18n( __( 'l F j, Y \a\t g:i a', 'jetpack' ), current_time( 'timestamp' ) );
+		$date_time_format = _x( '%1$s \a\t %2$s', '{$date_format} \a\t {$time_format}', 'jetpack' );
+		$date_time_format = sprintf( $date_time_format, get_option( 'date_format' ), get_option( 'time_format' ) );
+		$time = date_i18n( $date_time_format, current_time( 'timestamp' ) );
 
 		$extra_content = '';
 
@@ -1419,7 +1422,7 @@ function grunion_delete_old_spam() {
 	# nothing special about 5000 or 11
 	# just trying to periodically recover deleted rows
 	$random_num = mt_rand( 1, 5000 );
-	if ( apply_filters( 'grunion_optimize_table', ( $random_number == 11 ) ) ) {
+	if ( apply_filters( 'grunion_optimize_table', ( $random_num == 11 ) ) ) {
 		$wpdb->query( "OPTIMIZE TABLE $wpdb->posts" );
 	}
 
