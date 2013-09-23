@@ -50,10 +50,10 @@ function add_custom_js() {
 		
 		// enqueue the scripts
 		wp_enqueue_script('jquery.flexslider-min');
-		wp_enqueue_script('flexie.min'); 		
+		wp_enqueue_script('flexie.min');
 		wp_enqueue_script('jquery.tweet');
 		wp_enqueue_script('jquery.easyListSplitter');
-		wp_enqueue_script('less.min');	
+		wp_enqueue_script('less.min');
 		wp_enqueue_script('jquery.scrollTo-min');
 		wp_enqueue_script('scripts');
 		
