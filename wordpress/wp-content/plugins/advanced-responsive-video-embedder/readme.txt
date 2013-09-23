@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: responsive, embeds, embed, flash, iframe, minimal, lightweight, simple, simplicity, shortcodes, videos, youtube, blip, bliptv, dailymotion, videojug, collegehumor, veoh, break, movieweb, snotr, gametrailers, vimeo, viddler, funnyordie, myspace, liveleak, metacafe, googlevideo, myvideo, yahoo, spike,
 Requires at least: 3.3.1
 Tested up to: 3.6
-Stable tag: 2.6.1
+Stable tag: 2.7.0
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -23,8 +23,8 @@ Simple lightweight plugin lets you embed videos from many providers with full re
 * CollegeHumor
 * Dailymotion (inc. playlists)
 * FunnyOrDie
-* Iframes (in general, every provider that supports iframe embed codes)
 * Gametrailers
+* Iframes (in general, every provider that supports iframe embed codes)
 * Liveleak
 * Metacafe
 * Movieweb
@@ -53,14 +53,34 @@ Depends, but most likely yes.
 
 == Screenshots ==
 
--
+1. Options Page.
 
 == Changelog ==
+
+= 2.7.0
+* Fixed admin page capabilities
+* Reintroduced the manual provider and ID input to be used then not detected correctly.
+
+= 2.6.4 =
+* Fix black bar issue. (Dropped IE6 hacks/workarounds)
+
+= 2.6.3 =
+* Fix normal embeds not sizing correctly
+* Added scrolling="no" to Iframes
+* Init shortcodes at a late stage to dominate conflicts
+* Improved Iframe parameter handling
+* Metacafe, Myspace, Videojug are now handled via Iframe
+
+= 2.6.2 =
+* Fix Objects open correctly in Colorbox
+* Fix Iframe autoplay parameters startign with '&'
+* Added screenshot for options page
+* Youtube Videos with now me embedded with the same protocol your website is on, meaning if your website is https youtube embeds will be in https as well.
 
 = 2.6.1 =
 * Fix Colorbox args script not having colorbox in depenency array
 * Fix maxwidth shortcode generotor field now has default value=""
-* Fix blip.tv embed code detection
+* Fix Blip embed code detection
 
 = 2.6.0 =
 * Move to a class structure with help of the great https://github.com/tommcfarlin/WordPress-Plugin-Boilerplate

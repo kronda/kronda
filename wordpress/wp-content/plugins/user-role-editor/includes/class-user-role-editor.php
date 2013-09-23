@@ -19,11 +19,7 @@ class User_Role_Editor {
      */
     function __construct($library) 
     {
-
-        if (!is_admin()) {
-            return false;
-        }
-
+        
         // activation action
         register_activation_hook(URE_PLUGIN_FULL_PATH, array(&$this, 'setup'));
 
@@ -33,10 +29,20 @@ class User_Role_Editor {
         // get plugin specific library object
         $this->lib = $library;
 		
-		// Who may use this plugin
-		$this->key_capability = $this->lib->get_key_capability();
+        // Who may use this plugin
+        $this->key_capability = $this->lib->get_key_capability();
         
-		add_action('admin_init', array(&$this, 'plugin_init'), 1);
+        if ($this->lib->multisite) {
+            // new blog may be registered not at admin back-end only but automatically after new user registration, e.g. 
+            // Gravity Forms User Registration Addon does
+            add_action( 'wpmu_new_blog', array( &$this, 'duplicate_roles_for_new_blog'), 10, 2 );
+        }
+        
+        if (!is_admin()) {
+            return;
+        }
+        
+        add_action('admin_init', array(&$this, 'plugin_init'), 1);
 
         // Add the translation function after the plugins loaded hook.
         add_action('plugins_loaded', array(&$this, 'load_translation'));
@@ -74,7 +80,7 @@ class User_Role_Editor {
     }
 
     // these filters and actions should prevent editing users with administrator role
-    // by other users with URE_KEY_CAPABILITY capability    
+    // by other users with 'edit_users' capability
     if (!$this->lib->user_is_admin($user_id)) {
       // Exclude administrator role from edit list.
       add_filter('editable_roles', array( &$this, 'exclude_admin_role' ) );      
@@ -86,17 +92,15 @@ class User_Role_Editor {
       add_filter('views_users',  array( &$this, 'exclude_admins_view' ) );            
     }
     
-    add_action('admin_enqueue_scripts', array( &$this, 'admin_load_js' ) );
+    add_action( 'admin_enqueue_scripts', array( &$this, 'admin_load_js' ) );
     add_action( 'user_row_actions', array( &$this, 'user_row'), 10, 2 );
-    add_action( 'edit_user_profile', array(&$this, 'edit_user_profile'), 10, 2);
+    add_action( 'edit_user_profile', array(&$this, 'edit_user_profile'), 10, 2 );
     add_filter( 'manage_users_columns', array(&$this, 'user_role_column'), 10, 5 );
     add_filter( 'manage_users_custom_column', array(&$this, 'user_role_row'), 10, 3 );
     add_action( 'profile_update', array(&$this, 'user_profile_update'), 10 );
-
+    add_filter( 'all_plugins', array( &$this, 'exclude_from_plugins_list' ) );
     
-    if ($this->lib->multisite) {
-      add_action( 'wpmu_new_blog', array( &$this, 'duplicate_roles_for_new_blog'), 10, 2 );
-      add_filter( 'all_plugins', array( &$this, 'exclude_from_plugins_list' ) );    
+    if ($this->lib->multisite) {          
       $allow_edit_users_to_not_super_admin = $this->lib->get_option('allow_edit_users_to_not_super_admin', 0);
       if ($allow_edit_users_to_not_super_admin) {
           add_filter( 'map_meta_cap', array($this, 'restore_users_edit_caps'), 1, 4 );
@@ -322,18 +326,18 @@ class User_Role_Editor {
    * @param int $user_id
    *
    */
-  public function duplicate_roles_for_new_blog($blog_id, $user_id) 
+  public function duplicate_roles_for_new_blog($blog_id) 
   {
   
     global $wpdb, $wp_roles;
     
     // get Id of 1st (main) blog
-    $blogIds = $wpdb->get_col("SELECT blog_id FROM $wpdb->blogs order by blog_id asc");
-    if (!isset($blogIds[0])) {
+    $main_blog_id = $this->lib->get_main_blog_id();
+    if ( empty($main_blog_id) ) {
       return;
     }
     $current_blog = $wpdb->blogid;
-    switch_to_blog($blogIds[0]);
+    switch_to_blog( $main_blog_id );
     $main_roles = new WP_Roles();  // get roles from primary blog
     $default_role = get_option('default_role');  // get default role from primary blog
     switch_to_blog($blog_id);  // switch to the new created blog
@@ -353,24 +357,26 @@ class User_Role_Editor {
    * @param type array $plugins plugins list
    * @return type array $plugins updated plugins list
    */
-  public function exclude_from_plugins_list($plugins) 
-  {
-    
-    // if multi-site, then allow plugin activation for network superadmins and, if that's specially defined, - for single site administrators too    
-    if (is_super_admin() || (defined('URE_ENABLE_SIMPLE_ADMIN_FOR_MULTISITE') && URE_ENABLE_SIMPLE_ADMIN_FOR_MULTISITE==1)) {    
-      return $plugins;
-    }
+  public function exclude_from_plugins_list($plugins) {
+        global $current_user;
 
-    // exclude URE from plugins list
-    foreach ($plugins as $key => $value) {
-      if ($key == 'user-role-editor/'.URE_PLUGIN_FILE) {
-        unset($plugins[$key]);
-      }
-    }
+        $ure_key_capability = $this->lib->get_key_capability();
+        // if multi-site, then allow plugin activation for network superadmins and, if that's specially defined, - for single site administrators too    
+        if ($this->lib->user_has_capability($current_user, $ure_key_capability)) {
+            return $plugins;
+        }
 
-    return $plugins;
-  }
-  // end of exclude_from_plugins_list()
+        // exclude URE from plugins list
+        foreach ($plugins as $key => $value) {
+            if ($key == 'user-role-editor/' . URE_PLUGIN_FILE) {
+                unset($plugins[$key]);
+                break;
+            }
+        }
+
+        return $plugins;
+    }
+    // end of exclude_from_plugins_list()
 
   
     /**
@@ -454,11 +460,11 @@ class User_Role_Editor {
                 wp_die('Security check');
             }
 
-			if (defined('URE_SHOW_ADMIN_ROLE') && (URE_SHOW_ADMIN_ROLE==1) ) {
+            if (defined('URE_SHOW_ADMIN_ROLE') && (URE_SHOW_ADMIN_ROLE == 1)) {
                 $show_admin_role = 1;
-			} else {
-				$show_admin_role = $this->lib->get_request_var('show_admin_role', 'checkbox');
-			}
+            } else {
+                $show_admin_role = $this->lib->get_request_var('show_admin_role', 'checkbox');
+            }
             $this->lib->put_option('show_admin_role', $show_admin_role);
             
             $caps_readable = $this->lib->get_request_var('caps_readable', 'checkbox');
@@ -520,13 +526,9 @@ class User_Role_Editor {
         } else {
             $user_id = false;
         }
-        if (!$this->lib->user_is_admin($user_id)) {
-            if (is_multisite()) {
-                $admin = 'SuperAdministrator';
-            } else {
-                $admin = 'Administrator';
-            }
-            die(__('Only', 'ure') . ' ' . $admin . ' ' . __('is allowed to use', 'ure') . ' ' . 'User Role Editor');
+        $ure_key_capability = $this->lib->get_key_capability();
+        if (!$this->lib->user_has_capability($current_user, $ure_key_capability)) {
+            die(__('Insufficient permissions to work with User Role Editor', 'ure'));
         }
 
         $this->lib->editor();
@@ -714,6 +716,7 @@ class User_Role_Editor {
                 }
             }
         }
+                
     }
     // update_user_profile()
 
