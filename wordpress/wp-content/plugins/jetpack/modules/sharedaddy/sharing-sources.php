@@ -162,7 +162,7 @@ abstract class Sharing_Source {
 		}
 		$opts = implode( ',', $opts );
 		?>
-		<script type="text/javascript">
+		<script type="text/javascript" charset="utf-8">
 		jQuery(document).on( 'ready post-load', function(){
 			jQuery( 'a.share-<?php echo $name; ?>' ).on( 'click', function() {
 				window.open( jQuery(this).attr( 'href' ), 'wpcom<?php echo $name; ?>', '<?php echo $opts; ?>' );
@@ -197,7 +197,7 @@ class Share_Email extends Sharing_Source {
 	}
 
 	public function get_name() {
-		return _x( 'Email', 'as sharing source', 'jetpack' );
+		return __( 'Email', 'jetpack' );
 	}
 
 	// Default does nothing
@@ -275,7 +275,7 @@ class Share_Email extends Sharing_Source {
 		$visible = $status = false;
 ?>
 	<div id="sharing_email" style="display: none;">
-		<form action="<?php echo esc_url( $_SERVER['REQUEST_URI'] ); ?>" method="post">
+		<form action="" method="post">
 			<label for="target_email"><?php _e( 'Send to Email Address', 'jetpack' ) ?></label>
 			<input type="text" name="target_email" id="target_email" value="" />
 
@@ -317,9 +317,6 @@ class Share_Email extends Sharing_Source {
 
 class Share_Twitter extends Sharing_Source {
 	var $shortname = 'twitter';
-	// 'https://dev.twitter.com/docs/api/1.1/get/help/configuration' ( 2013/06/24 ) short_url_length is 22
-	var $short_url_length = 24;
-
 	public function __construct( $id, array $settings ) {
 		parent::__construct( $id, $settings );
 
@@ -405,8 +402,8 @@ class Share_Twitter extends Sharing_Source {
 			$sig     = '';
 		}
 
+		$suffix_length = $strlen( " {$post_link}{$sig}" );
 
-		$suffix_length = $this->short_url_length + $strlen( " {$sig}" );
 		// $sig is handled by twitter in their 'via' argument.
 		// $post_link is handled by twitter in their 'url' argument.
 		if ( 140 < $strlen( $post_title ) + $suffix_length ) {
@@ -603,14 +600,28 @@ class Share_LinkedIn extends Sharing_Source {
 
 	public function process_request( $post, array $post_data ) {
 
+		setup_postdata( $post );
+
 		$post_link = $this->get_share_url( $post->ID );
 
-		// Using the same URL as the official button, which is *not* LinkedIn's documented sharing link
-		// http://www.linkedin.com/cws/share?url={url}&token=&isFramed=false
+		// http://www.linkedin.com/shareArticle?mini=true&url={articleUrl}&title={articleTitle}&summary={articleSummary}&source={articleSource}
+
+		$encoded_title = rawurlencode( $post->post_title );
+		if( strlen( $encoded_title ) > 200 )
+			$encoded_title = substr( $encoded_title, 0, 197 ) . '...';
+
+		$encoded_summary = rawurlencode( strip_tags( get_the_excerpt() ) );
+		if( strlen( $encoded_summary ) > 256 )
+			$encoded_summary = substr( $encoded_summary, 0, 253 ) . '...';
+
+		$source = get_bloginfo( 'name' );
 
 		$linkedin_url = add_query_arg( array(
+			'title' => $encoded_title,
 			'url' => rawurlencode( $post_link ),
-		), 'http://www.linkedin.com/cws/share?token=&isFramed=false' );
+			'source' => rawurlencode( $source ),
+			'summary' => $encoded_summary,
+		), 'http://www.linkedin.com/shareArticle?mini=true' );
 
 		// Record stats
 		parent::process_request( $post, $post_data );
@@ -631,8 +642,7 @@ class Share_LinkedIn extends Sharing_Source {
 			    });
 			});
 			jQuery( document.body ).on( 'post-load', function() {
-				if ( typeof IN != 'undefined' )
-					IN.parse();
+				IN.parse();
 			});
 			</script><?php
 		}
@@ -827,7 +837,7 @@ class Share_GooglePlus1 extends Sharing_Source {
 	}
 
 	public function get_name() {
-		return __( 'Google', 'jetpack' );
+		return __( 'Google +1', 'jetpack' );
 	}
 
 	public function has_custom_button_style() {
@@ -838,9 +848,11 @@ class Share_GooglePlus1 extends Sharing_Source {
 		$share_url = $this->get_share_url( $post->ID );
 
 		if ( $this->smart ) {
-			return '<div class="googleplus1_button"><div class="g-plus" data-action="share" data-annotation="bubble" data-href="' . esc_url( $share_url ) . '"></div></div>';
+			return '<div class="googleplus1_button"><div class="g-plusone" data-size="medium" data-callback="sharing_plusone" data-href="' . esc_url( $share_url ) . '"></div></div>';
 		} else {
-			return $this->get_link( get_permalink( $post->ID ), _x( 'Google', 'share to', 'jetpack' ), __( 'Click to share on Google+', 'jetpack' ), 'share=google-plus-1', 'sharing-google-' . $post->ID );
+			//if ( 'icon-text' == $this->button_style || 'text' == $this->button_style )
+				//sharing_register_post_for_share_counts( $post->ID );
+			return $this->get_link( get_permalink( $post->ID ), _x( 'Google +1', 'share to', 'jetpack' ), __( 'Click to share on Google+', 'jetpack' ), 'share=google-plus-1', 'sharing-google-' . $post->ID );
 		}
 	}
 
@@ -866,16 +878,21 @@ class Share_GooglePlus1 extends Sharing_Source {
 		global $post;
 
 		if ( $this->smart ) { ?>
-			<script type="text/javascript">
-			  (function() {
-			    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-			    po.src = 'https://apis.google.com/js/plusone.js';
-			    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-			  })();
+			<script type="text/javascript" charset="utf-8">
+				function sharing_plusone( obj ) {
+					jQuery.ajax( {
+						url: '<?php echo get_permalink( $post->ID ) . '?share=google-plus-1'; ?>',
+						type: 'POST',
+						data: obj
+					} );
+				}
+				jQuery( document.body ).on( 'post-load', function() {
+					gapi.plusone.go();
+				});
 			</script>
-			<?php
+			<script type="text/javascript" src="//apis.google.com/js/plusone.js"></script> <?php
 		} else {
-			$this->js_dialog( 'google-plus-1', array( 'width' => 480, 'height' => 550 ) );
+			$this->js_dialog( 'google-plus-1', array( 'width' => 600, 'height' => 600 ) );
 		}
 	}
 
@@ -1128,14 +1145,12 @@ class Share_Pinterest extends Sharing_Source {
 		$image = '';
 
 		if ( class_exists( 'Jetpack_PostImages' ) ) {
-			// Use the full stack of methods to find an image, except for HTML, which can cause loops
-			$img = Jetpack_PostImages::get_image( $content->ID );
+			global $post;
+			$img = Jetpack_PostImages::from_html( $post->ID );
 			if ( !empty( $img['src'] ) )
 				return $img['src'];
 		}
 
-		// If we have to fall back to the following, we only do a few basic image checks
-		$content = $content->post_content;
 		if ( function_exists('has_post_thumbnail') && has_post_thumbnail() ) {
 			$thumb_id = get_post_thumbnail_id();
 			$thumb = wp_get_attachment_image_src( $thumb_id, 'full' );
@@ -1165,124 +1180,43 @@ class Share_Pinterest extends Sharing_Source {
 
 	public function get_display( $post ) {
 		if ( $this->smart )
-			return '<div class="pinterest_button"><a href="' . esc_url( 'http://pinterest.com/pin/create/button/?url='. rawurlencode( $this->get_share_url( $post->ID ) ) . '&description=' . rawurlencode( $post->post_title ) . '&media=' . rawurlencode( esc_url_raw( $this->get_post_image( $post ) ) ) ) . '" class="pin-it-button" count-layout="horizontal"> '. __( 'Pin It', 'jetpack') .'</a></div>';
+			return '<div class="pinterest_button"><a href="' . esc_url( 'http://pinterest.com/pin/create/button/?url='. rawurlencode( $this->get_share_url( $post->ID ) ) . '&description=' . rawurlencode( $post->post_title ) . '&media=' . rawurlencode( esc_url_raw( $this->get_post_image( $post->post_content ) ) ) ) . '" class="pin-it-button" count-layout="horizontal"> '. __( 'Pin It', 'jetpack') .'</a></div>';
 		else
 			return $this->get_link( get_permalink( $post->ID ), _x( 'Pinterest', 'share to', 'jetpack' ), __( 'Click to share on Pinterest', 'jetpack' ), 'share=pinterest' );
 	}
 
 	public function process_request( $post, array $post_data ) {
+		$pinterest_url = esc_url_raw( 'http://pinterest.com/pin/create/button/?url=' . rawurlencode( $this->get_share_url( $post->ID ) ) . '&description=' . rawurlencode( $post->post_title ) . '&media=' . rawurlencode( esc_url_raw( $this->get_post_image( $post->post_content ) ) ) );
+
 		// Record stats
 		parent::process_request( $post, $post_data );
 
-		// If we're triggering the multi-select panel, then we don't need to redirect to Pinterest
-		if ( !isset( $_GET['js_only'] ) ) {
-			$pinterest_url = esc_url_raw( 'http://pinterest.com/pin/create/button/?url=' . rawurlencode( $this->get_share_url( $post->ID ) ) . '&description=' . rawurlencode( $post->post_title ) . '&media=' . rawurlencode( esc_url_raw( $this->get_post_image( $post ) ) ) );
-			wp_redirect( $pinterest_url );
-		} else {
-			echo '// share count bumped';
-		}
-
+		// Redirect to Pinterest
+		wp_redirect( $pinterest_url );
 		die();
 	}
 
 	public function display_footer() {
-		?>
-		<?php if ( $this->smart ) : ?>
-			<script type="text/javascript">
-				// Pinterest shared resources
-				var s = document.createElement("script");
-				s.type = "text/javascript";
-				s.async = true;
-				s.src = window.location.protocol + "//assets.pinterest.com/js/pinit.js";
-				var x = document.getElementsByTagName("script")[0];
-				x.parentNode.insertBefore(s, x);
-				// if 'Pin it' button has 'counts' make container wider
-				jQuery(window).load( function(){ jQuery( 'li.share-pinterest a span:visible' ).closest( '.share-pinterest' ).width( '80px' ); } );
-			</script>
-		<?php else : ?>
-			<script type="text/javascript">
-			jQuery(document).on('ready', function(){
-				jQuery('body').on('click', 'a.share-pinterest', function(e){
-					e.preventDefault();
-
-					// Load Pinterest Bookmarklet code
-					var s = document.createElement("script");
-					s.type = "text/javascript";
-					s.src = window.location.protocol + "//assets.pinterest.com/js/pinmarklet.js?r=" + ( Math.random() * 99999999 );
-					var x = document.getElementsByTagName("script")[0];
-					x.parentNode.insertBefore(s, x);
-
-					// Trigger Stats
-					var s = document.createElement("script");
-					s.type = "text/javascript";
-					s.src = this + ( this.toString().indexOf( '?' ) ? '&' : '?' ) + 'js_only=1';
-					var x = document.getElementsByTagName("script")[0];
-					x.parentNode.insertBefore(s, x);
-				});
-			});
-			</script>
-		<?php endif;
-	}
-}
-
-class Share_Pocket extends Sharing_Source {
-	var $shortname = 'pocket';
-
-	public function __construct( $id, array $settings ) {
-		parent::__construct( $id, $settings );
-
-		if ( 'official' == $this->button_style )
-			$this->smart = true;
-		else
-			$this->smart = false;
-	}
-
-	public function get_name() {
-		return __( 'Pocket', 'jetpack' );
-	}
-
-	public function process_request( $post, array $post_data ) {
-		// Record stats
-		parent::process_request( $post, $post_data );
-
-		$pocket_url = esc_url_raw( 'https://getpocket.com/save/?url=' . rawurlencode( $this->get_share_url( $post->ID ) ) . '&title=' . rawurlencode( $post->post_title ) );
-		wp_redirect( $pocket_url );
-		exit;
-	}
-
-	public function get_display( $post ) {
-		if ( $this->smart ) {
-			$post_count = 'horizontal';
-
-			$button = '';
-			$button .= '<div class="pocket_button">';
-			$button .= sprintf( '<a href="https://getpocket.com/save" class="pocket-btn" data-lang="%s" data-save-url="%s" data-pocket-count="%s" >%s</a>', 'en', esc_attr( $this->get_share_url( $post->ID ) ), $post_count, esc_attr__( 'Pocket', 'jetpack' ) );
-			$button .= '</div>';
-
-			return $button;
+		if ( !$this->smart ) {
+			$this->js_dialog( $this->shortname, array( 'width' => 650, 'height' => 280 ) );
 		} else {
-			return $this->get_link( get_permalink( $post->ID ), _x( 'Pocket', 'share to', 'jetpack' ), __( 'Click to share on Pocket', 'jetpack' ), 'share=pocket' );
+?>
+	<script type="text/javascript">
+	function pinterest_async_load() {
+		var s = document.createElement("script");
+		s.type = "text/javascript";
+		s.async = true;
+		s.src = window.location.protocol + "//assets.pinterest.com/js/pinit.js";
+		var x = document.getElementsByTagName("script")[0];
+		x.parentNode.insertBefore(s, x);
+	}
+	jQuery(document).on('ready post-load', function() {
+        	pinterest_async_load();
+	});
+	</script>
+<?php
 		}
-
 	}
 
-	function display_footer() {
-		if ( $this->smart ) :
-		?>
-		<script>
-		// Don't use Pocket's default JS as it we need to force init new Pocket share buttons loaded via JS.
-		function jetpack_sharing_pocket_init() {
-			jQuery.getScript( 'https://widgets.getpocket.com/v1/j/btn.js?v=1' );
-		}
-		jQuery( document ).on( 'ready', jetpack_sharing_pocket_init );
-		jQuery( document.body ).on( 'post-load', jetpack_sharing_pocket_init );
-		</script>
-		<?php
-		else :
-			$this->js_dialog( $this->shortname, array( 'width' => 450, 'height' => 450 ) );
-		endif;
-
-	}
 
 }
-

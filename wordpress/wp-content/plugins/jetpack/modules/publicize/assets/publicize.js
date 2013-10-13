@@ -70,9 +70,9 @@ jQuery( function( $ ) {
 
 					$.post( ajaxurl, 'action=publicize_'+ service + '_options_save&connection=' + connection + '&selected_id=' + id + '&token=' + token + '&type=' + type + '&_wpnonce=' + nonce + '&global=' + global_conn + '&global_nonce=' + global_nonce, function( response ) {
 						tb_remove();
-						top.location = 'options-general.php?page=sharing';
+						window.location = 'options-general.php?page=sharing';
 					} );
-
+					
 				} );
 			}
 

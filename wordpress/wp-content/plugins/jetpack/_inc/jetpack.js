@@ -80,7 +80,6 @@ jetpack = {
 			}
 		} );
 
-		jQuery( '#screen-meta, #screen-meta-links' ).wrapAll( '<div class="screen-meta-wrap" />' );
 	},
 
 	level_modules: function() {

@@ -79,12 +79,13 @@ Scroller = function( settings ) {
 
 /**
  * Check whether we should fetch any additional posts.
+ *
+ * By default, checks whether the bottom of the viewport is within one
+ * viewport-height of the bottom of the content.
  */
 Scroller.prototype.check = function() {
 	var bottom = this.window.scrollTop() + this.window.height(),
 		threshold = this.element.offset().top + this.element.outerHeight(false) - this.window.height();
-
-	threshold = Math.round( threshold * 0.75 );
 
 	return bottom > threshold;
 };
@@ -456,7 +457,7 @@ Scroller.prototype.updateURL = function( page ) {
  */
 $( document ).ready( function() {
 	// Check for our variables
-	if ( 'object' != typeof infiniteScroll ) 
+	if ( ! infiniteScroll )
 		return;
 
 	// Set ajaxurl (for brevity)
@@ -472,18 +473,17 @@ $( document ).ready( function() {
 
 	// Initialize the scroller (with the ID of the element from the theme)
 	infiniteScroll.scroller = new Scroller( infiniteScroll.settings );
-
-	/**
-	 * Monitor user scroll activity to update URL to correspond to archive page for current set of IS posts
-	 * IE only supports pushState() in v10 and above, so don't bother if those conditions aren't met.
-	 */
-	if ( ! isIE || ( isIE && IEVersion >= 10 ) ) {
-		$( window ).bind( 'scroll', function() {
-			clearTimeout( timer );
-			timer = setTimeout( infiniteScroll.scroller.determineURL , 100 );
-		});
-	}
 });
 
+/**
+ * Monitor user scroll activity to update URL to correspond to archive page for current set of IS posts
+ * IE only supports pushState() in v10 and above, so don't bother if those conditions aren't met.
+ */
+if ( ! isIE || ( isIE && IEVersion >= 10 ) ) {
+	$( window ).bind( 'scroll', function() {
+		clearTimeout( timer );
+		timer = setTimeout( infiniteScroll.scroller.determineURL , 100 );
+	});
+}
 
 })(jQuery); // Close closure

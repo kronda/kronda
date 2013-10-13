@@ -71,7 +71,7 @@ var WPCOMSharing = {
 
 		// Touchscreen device: use click.
 		// Non-touchscreen device: use click if not already appearing due to a hover event
-		$more_sharing_buttons.on( 'click', function() {
+		$more_sharing_buttons.click( function() {
 			var $more_sharing_button = $( this ),
 			    $more_sharing_pane = $more_sharing_button.parents( 'div:first' ).find( '.inner' );
 
@@ -183,11 +183,6 @@ var WPCOMSharing = {
 
 		// Add click functionality
 		$( '.sharedaddy ul' ).each( function( item ) {
-
-			if ( 'yep' == $( this ).data( 'has-click-events' ) )
-				return;
-			$( this ).data( 'has-click-events', 'yep' );
-
 			printUrl = function ( uniqueId, urlToPrint ) {
 				$( 'body:first' ).append( '<iframe style="position:fixed;top:100;left:100;height:1px;width:1px;border:none;" id="printFrame-' + uniqueId + '" name="printFrame-' + uniqueId + '" src="' + urlToPrint + '" onload="frames[\'printFrame-' + uniqueId + '\'].focus();frames[\'printFrame-' + uniqueId + '\'].print();"></iframe>' )
 			};
@@ -238,7 +233,7 @@ var WPCOMSharing = {
 			} );
 
 			// Email button
-			$( 'a.share-email', this ).on( 'click', function() {
+			$( this ).find( 'a.share-email' ).click( function() {
 				var url = $( this ).attr( 'href' ), key;
 
 				if ( $( '#sharing_email' ).is( ':visible' ) )
@@ -256,7 +251,7 @@ var WPCOMSharing = {
 						key = $( '#recaptcha_public_key' ).val();
 
 					// Update the recaptcha
-					Recaptcha.create( key, 'sharing_recaptcha', { lang : recaptcha_options.lang } );
+					Recaptcha.create( key, 'sharing_recaptcha' );
 
 					// Show dialog
 					$( '#sharing_email' ).css( {

@@ -5,55 +5,65 @@
 
 /* Shortcode handler */
 
-add_action( 'init', 'wpcf7_add_shortcode_select', 5 );
-
-function wpcf7_add_shortcode_select() {
-	wpcf7_add_shortcode( array( 'select', 'select*' ),
-		'wpcf7_select_shortcode_handler', true );
-}
+wpcf7_add_shortcode( 'select', 'wpcf7_select_shortcode_handler', true );
+wpcf7_add_shortcode( 'select*', 'wpcf7_select_shortcode_handler', true );
 
 function wpcf7_select_shortcode_handler( $tag ) {
-	$tag = new WPCF7_Shortcode( $tag );
-
-	if ( empty( $tag->name ) )
+	if ( ! is_array( $tag ) )
 		return '';
 
-	$validation_error = wpcf7_get_validation_error( $tag->name );
+	$type = $tag['type'];
+	$name = $tag['name'];
+	$options = (array) $tag['options'];
+	$values = (array) $tag['values'];
+	$labels = (array) $tag['labels'];
 
-	$class = wpcf7_form_controls_class( $tag->type );
+	if ( empty( $name ) )
+		return '';
 
-	if ( $validation_error )
-		$class .= ' wpcf7-not-valid';
+	$validation_error = wpcf7_get_validation_error( $name );
 
-	$atts = array();
-
-	$atts['class'] = $tag->get_class_option( $class );
-	$atts['id'] = $tag->get_option( 'id', 'id', true );
-	$atts['tabindex'] = $tag->get_option( 'tabindex', 'int', true );
-
-	if ( $tag->is_required() )
-		$atts['aria-required'] = 'true';
+	$atts = $id_att = $tabindex_att = '';
 
 	$defaults = array();
 
-	if ( $matches = $tag->get_first_match_option( '/^default:([0-9_]+)$/' ) )
-		$defaults = explode( '_', $matches[1] );
+	$class_att = wpcf7_form_controls_class( $type );
 
-	$multiple = $tag->has_option( 'multiple' );
-	$include_blank = $tag->has_option( 'include_blank' );
-	$first_as_label = $tag->has_option( 'first_as_label' );
+	if ( $validation_error )
+		$class_att .= ' wpcf7-not-valid';
 
-	$name = $tag->name;
-	$values = $tag->values;
-	$labels = $tag->labels;
+	foreach ( $options as $option ) {
+		if ( preg_match( '%^id:([-0-9a-zA-Z_]+)$%', $option, $matches ) ) {
+			$id_att = $matches[1];
+
+		} elseif ( preg_match( '%^class:([-0-9a-zA-Z_]+)$%', $option, $matches ) ) {
+			$class_att .= ' ' . $matches[1];
+
+		} elseif ( preg_match( '/^default:([0-9_]+)$/', $option, $matches ) ) {
+			$defaults = explode( '_', $matches[1] );
+
+		} elseif ( preg_match( '%^tabindex:(\d+)$%', $option, $matches ) ) {
+			$tabindex_att = (int) $matches[1];
+
+		}
+	}
+
+	if ( $id_att )
+		$atts .= ' id="' . trim( $id_att ) . '"';
+
+	if ( $class_att )
+		$atts .= ' class="' . trim( $class_att ) . '"';
+
+	if ( '' !== $tabindex_att )
+		$atts .= sprintf( ' tabindex="%d"', $tabindex_att );
+
+	$multiple = (bool) preg_grep( '%^multiple$%', $options );
+	$include_blank = (bool) preg_grep( '%^include_blank$%', $options );
 
 	$empty_select = empty( $values );
-
 	if ( $empty_select || $include_blank ) {
 		array_unshift( $labels, '---' );
 		array_unshift( $values, '' );
-	} elseif ( $first_as_label ) {
-		$values[0] = '';
 	}
 
 	$html = '';
@@ -73,28 +83,22 @@ function wpcf7_select_shortcode_handler( $tag ) {
 				$selected = true;
 		}
 
-		$item_atts = array(
-			'value' => $value,
-			'selected' => $selected ? 'selected' : '' );
+		$selected = $selected ? ' selected="selected"' : '';
 
-		$item_atts = wpcf7_format_atts( $item_atts );
+		if ( isset( $labels[$key] ) )
+			$label = $labels[$key];
+		else
+			$label = $value;
 
-		$label = isset( $labels[$key] ) ? $labels[$key] : $value;
-
-		$html .= sprintf( '<option %1$s>%2$s</option>',
-			$item_atts, esc_html( $label ) );
+		$html .= '<option value="' . esc_attr( $value ) . '"' . $selected . '>' . esc_html( $label ) . '</option>';
 	}
 
 	if ( $multiple )
-		$atts['multiple'] = 'multiple';
+		$atts .= ' multiple="multiple"';
 
-	$atts['name'] = $tag->name . ( $multiple ? '[]' : '' );
+	$html = '<select name="' . $name . ( $multiple ? '[]' : '' ) . '"' . $atts . '>' . $html . '</select>';
 
-	$atts = wpcf7_format_atts( $atts );
-
-	$html = sprintf(
-		'<span class="wpcf7-form-control-wrap %1$s"><select %2$s>%3$s</select>%4$s</span>',
-		$tag->name, $atts, $html, $validation_error );
+	$html = '<span class="wpcf7-form-control-wrap ' . $name . '">' . $html . $validation_error . '</span>';
 
 	return $html;
 }
@@ -106,9 +110,8 @@ add_filter( 'wpcf7_validate_select', 'wpcf7_select_validation_filter', 10, 2 );
 add_filter( 'wpcf7_validate_select*', 'wpcf7_select_validation_filter', 10, 2 );
 
 function wpcf7_select_validation_filter( $result, $tag ) {
-	$tag = new WPCF7_Shortcode( $tag );
-
-	$name = $tag->name;
+	$type = $tag['type'];
+	$name = $tag['name'];
 
 	if ( isset( $_POST[$name] ) && is_array( $_POST[$name] ) ) {
 		foreach ( $_POST[$name] as $key => $value ) {
@@ -117,9 +120,8 @@ function wpcf7_select_validation_filter( $result, $tag ) {
 		}
 	}
 
-	if ( $tag->is_required() ) {
-		if ( ! isset( $_POST[$name] )
-		|| empty( $_POST[$name] ) && '0' !== $_POST[$name] ) {
+	if ( 'select*' == $type ) {
+		if ( ! isset( $_POST[$name] ) || empty( $_POST[$name] ) && '0' !== $_POST[$name] ) {
 			$result['valid'] = false;
 			$result['reason'][$name] = wpcf7_get_message( 'invalid_required' );
 		}

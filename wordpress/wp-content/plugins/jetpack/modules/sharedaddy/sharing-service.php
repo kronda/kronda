@@ -54,7 +54,6 @@ class Sharing_Service {
 			'google-plus-1' => 'Share_GooglePlus1',
 			'tumblr'        => 'Share_Tumblr',
 			'pinterest'     => 'Share_Pinterest',
-			'pocket'        => 'Share_Pocket',
 		);
 
 		// Add any custom services in
@@ -417,9 +416,7 @@ function sharing_add_footer() {
 			endif;
 		endif;
 
-		wp_enqueue_script( 'sharing-js' );
-		$recaptcha__options = array( 'lang' => get_base_recaptcha_lang_code() );
-		wp_localize_script('sharing-js', 'recaptcha_options', $recaptcha__options);
+		wp_print_scripts( 'sharing-js' );
 	}
 
 	$sharer = new Sharing_Service();
@@ -455,32 +452,17 @@ function sharing_process_requests() {
 		}
 	}
 }
-add_action( 'template_redirect', 'sharing_process_requests', 9 );
+add_action( 'template_redirect', 'sharing_process_requests' );
 
-function sharing_display( $text = '', $echo = false ) {
+function sharing_display( $text = '' ) {
 	global $post, $wp_current_filter;
-
-	if ( empty( $post ) )
-		return $text;
 
 	if ( is_preview() ) {
 		return $text;
 	}
 
-	// Don't output flair on excerpts
 	if ( in_array( 'get_the_excerpt', (array) $wp_current_filter ) ) {
 		return $text;
-	}
-
-	// Don't allow flair to be added to the_content more than once (prevent infinite loops)
-	$done = false;
-	foreach ( $wp_current_filter as $filter ) {
-		if ( 'the_content' == $filter ) {
-			if ( $done )
-				return $text;
-			else
-				$done = true;
-		}
 	}
 
 	// check whether we are viewing the front page and whether the front page option is checked
@@ -524,7 +506,7 @@ function sharing_display( $text = '', $echo = false ) {
 	$sharing_content = '';
 
 	if ( $show ) {
-		$enabled = apply_filters( 'sharing_enabled', $sharer->get_blog_services() );
+		$enabled = $sharer->get_blog_services();
 
 		if ( count( $enabled['all'] ) > 0 ) {
 			global $post;
@@ -590,7 +572,7 @@ function sharing_display( $text = '', $echo = false ) {
 				$sharing_content .= '<li class="share-end"></li></ul></div></div>';
 			}
 
-			$sharing_content .= '</div></div></div>';
+			$sharing_content .= '<div class="sharing-clear"></div></div></div></div>';
 
 			// Register our JS
 			wp_register_script( 'sharing-js', plugin_dir_url( __FILE__ ).'sharing.js', array( 'jquery' ), '20121205' );
@@ -598,35 +580,8 @@ function sharing_display( $text = '', $echo = false ) {
 		}
 	}
 
-	if ( $echo )
-		echo $text.$sharing_content;
-	else
-		return $text.$sharing_content;
+	return $text.$sharing_content;
 }
 
 add_filter( 'the_content', 'sharing_display', 19 );
 add_filter( 'the_excerpt', 'sharing_display', 19 );
-function get_base_recaptcha_lang_code() {
-
-	$base_recaptcha_lang_code_mapping = array(
-		'en'    => 'en',
-		'nl'    => 'nl',
-		'fr'    => 'fr',
-		'fr-be' => 'fr',
-		'fr-ca' => 'fr',
-		'fr-ch' => 'fr',
-		'de'    => 'de',
-		'pt'    => 'pt',
-		'pt-br' => 'pt',
-		'ru'    => 'ru',
-		'es'    => 'es',
-		'tr'    => 'tr'
-	);
-
-	$blog_lang_code = function_exists( 'get_blog_lang_code' ) ? get_blog_lang_code() : get_bloginfo( 'language' );
-	if( isset( $base_recaptcha_lang_code_mapping[ $blog_lang_code ] ) )
-		return $base_recaptcha_lang_code_mapping[ $blog_lang_code ];
-
-	// if no base mapping is found return default 'en'
-	return 'en';
-}

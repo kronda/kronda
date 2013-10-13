@@ -17,16 +17,6 @@ class AudioShortcode {
 	}
 
 	/**
-	 * Return the $url of the audio
-	 */
-	static function get_audio_id( $atts ) {
-		if ( isset( $atts[0] ) )
-			return $atts[0];
-		else
-			return 0;
-	}
-
-	/**
 	 * Shortcode for audio
 	 * [audio http://wpcom.files.wordpress.com/2007/01/mattmullenweg-interview.mp3|width=180|titles=1|artists=2]
 	 *
@@ -41,12 +31,7 @@ class AudioShortcode {
 		}
 
 		if ( ! isset( $atts[0] ) ) {
-			if ( isset( $atts['src'] ) ) {
-				$atts[0] = $atts['src'];
-				unset( $atts['src'] );
-			} else {
-				return '<!-- Audio shortcode source not set -->';
-			}
+			return '<!-- Audio shortcode source not set -->';
 		}
 
 		// add the special .js
@@ -94,13 +79,6 @@ class AudioShortcode {
 		$data = preg_split( "/\|/", $src );
 		$sound_file = $data[0];
 		$sound_files = explode( ',', $sound_file );
-
-		if ( is_ssl() ) {
-			for ( $i = 0; $i < count( $sound_files ); $i++ ) {
-				$sound_files[ $i ] = preg_replace( '#^http://([^.]+).files.wordpress.com/#', 'https://$1.files.wordpress.com/', $sound_files[ $i ] );
-			}
-		}
-
 		$sound_files = array_map( 'trim', $sound_files );
 		$sound_files = array_map( array( $this, 'rawurlencode_spaces' ), $sound_files );
 		$sound_files = array_map( 'esc_url_raw', $sound_files ); // Ensure each is a valid URL
@@ -254,14 +232,9 @@ CONTROLS;
 		}
 		$html5_audio .= "<span id='wp-as-{$post->ID}_{$ap_playerID}-playing'></span>";
 
-		if ( is_ssl() )
-			$protocol = 'https';
-		else
-			$protocol = 'http';
-
 		$swfurl = apply_filters(
 			'jetpack_static_url',
-			"$protocol://en.wordpress.com/wp-content/plugins/audio-player/player.swf" );
+			'http://en.wordpress.com/wp-content/plugins/audio-player/player.swf' );
 
 		// all the fancy javascript is causing Google Reader to break, just include flash in GReader
 		// override html5 audio code w/ just not supported code

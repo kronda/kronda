@@ -8,16 +8,11 @@
 
 	<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 		<header class="entry-header">
-			<?php if ( '1' == get_option( 'wp_mobile_featured_images' ) && is_home() || is_search() || is_archive() ) : ?>
-				<div class="entry-thumbnail">
-					<a href="<?php the_permalink(); ?>" title="<?php echo esc_attr( sprintf( __( 'Permalink to %s', 'jetpack' ), the_title_attribute( 'echo=0' ) ) ); ?>" rel="<?php the_ID(); ?>" class="minileven-featured-thumbnail"><?php the_post_thumbnail(); ?></a>
-				</div><!-- .entry-thumbnail -->
-			<?php endif; ?>
 			<?php if ( is_sticky() ) : ?>
-				<div class="entry-heading">
+				<hgroup>
 					<h2 class="entry-title"><a href="<?php the_permalink(); ?>" title="<?php echo esc_attr( sprintf( __( 'Permalink to %s', 'jetpack' ), the_title_attribute( 'echo=0' ) ) ); ?>" rel="bookmark"><?php the_title(); ?></a></h2>
 					<h3 class="entry-format"><?php _e( 'Featured', 'jetpack' ); ?></h3>
-				<div>
+				</hgroup>
 			<?php else : ?>
 			<h1 class="entry-title"><a href="<?php the_permalink(); ?>" title="<?php echo esc_attr( sprintf( __( 'Permalink to %s', 'jetpack' ), the_title_attribute( 'echo=0' ) ) ); ?>" rel="bookmark"><?php the_title(); ?></a></h1>
 			<?php endif; ?>
@@ -35,8 +30,8 @@
 		</header><!-- .entry-header -->
 
 		<div class="entry-content">
-		<?php if ( '1' == get_option( 'wp_mobile_excerpt' ) && ( is_home() || is_search() || is_archive() ) ) : ?>
-			<?php echo minileven_excerpt( 300 ); ?>
+		<?php if ( '1' == get_option( 'wp_mobile_excerpt' ) && is_home() || is_search() || is_archive() ) : ?>
+			<?php the_excerpt(); ?>
 		<?php else : ?>
 			<?php the_content( __( 'Continue reading <span class="meta-nav">&rarr;</span>', 'jetpack' ) ); ?>
 		<?php endif; ?>

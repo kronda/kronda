@@ -1,0 +1,41 @@
+.pressgram-links {
+  *zoom: 1; }
+  .pressgram-links:before, .pressgram-links:after {
+    display: table;
+    content: ""; }
+  .pressgram-links:after {
+    clear: both; }
+  .pressgram-links.columns_1 a {
+    width: 100%; }
+  .pressgram-links.columns_2 a {
+    width: 48%; }
+  .pressgram-links.columns_3 a {
+    width: 30.6%; }
+  .pressgram-links.columns_4 a {
+    width: 22%; }
+  .pressgram-links a {
+    display: block;
+    float: left;
+    margin-right: 4%;
+    margin-bottom: 4%;
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
+    opacity: 0.8;
+    -webkit-transition: opacity 0.2s ease;
+    -moz-transition: opacity 0.2s ease;
+    -ms-transition: opacity 0.2s ease;
+    -o-transition: opacity 0.2s ease;
+    transition: opacity 0.2s ease; }
+    .pressgram-links.columns_1 a {
+      margin-right: 0; }
+    .pressgram-links.columns_2 a:nth-child(2n+2) {
+      margin-right: 0; }
+    .pressgram-links.columns_3 a:nth-child(3n+3) {
+      margin-right: 0; }
+    .pressgram-links.columns_4 a:nth-child(4n+4) {
+      margin-right: 0; }
+    .pressgram-links a:hover {
+      filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+      opacity: 1; }
+    .pressgram-links a img {
+      width: 100%;
+      height: auto; }

@@ -5,61 +5,93 @@
 
 /* Shortcode handler */
 
-add_action( 'init', 'wpcf7_add_shortcode_textarea', 5 );
-
-function wpcf7_add_shortcode_textarea() {
-	wpcf7_add_shortcode( array( 'textarea', 'textarea*' ),
-		'wpcf7_textarea_shortcode_handler', true );
-}
+wpcf7_add_shortcode( 'textarea', 'wpcf7_textarea_shortcode_handler', true );
+wpcf7_add_shortcode( 'textarea*', 'wpcf7_textarea_shortcode_handler', true );
 
 function wpcf7_textarea_shortcode_handler( $tag ) {
-	$tag = new WPCF7_Shortcode( $tag );
-
-	if ( empty( $tag->name ) )
+	if ( ! is_array( $tag ) )
 		return '';
 
-	$validation_error = wpcf7_get_validation_error( $tag->name );
+	$type = $tag['type'];
+	$name = $tag['name'];
+	$options = (array) $tag['options'];
+	$values = (array) $tag['values'];
+	$content = $tag['content'];
 
-	$class = wpcf7_form_controls_class( $tag->type );
+	if ( empty( $name ) )
+		return '';
+
+	$validation_error = wpcf7_get_validation_error( $name );
+
+	$atts = '';
+	$id_att = '';
+	$class_att = '';
+	$cols_att = '';
+	$rows_att = '';
+	$tabindex_att = '';
+	$title_att = '';
+
+	$class_att = wpcf7_form_controls_class( $type );
 
 	if ( $validation_error )
-		$class .= ' wpcf7-not-valid';
+		$class_att .= ' wpcf7-not-valid';
 
-	$atts = array();
+	foreach ( $options as $option ) {
+		if ( preg_match( '%^id:([-0-9a-zA-Z_]+)$%', $option, $matches ) ) {
+			$id_att = $matches[1];
 
-	$atts['cols'] = $tag->get_cols_option( '40' );
-	$atts['rows'] = $tag->get_rows_option( '10' );
-	$atts['maxlength'] = $tag->get_maxlength_option();
-	$atts['class'] = $tag->get_class_option( $class );
-	$atts['id'] = $tag->get_option( 'id', 'id', true );
-	$atts['tabindex'] = $tag->get_option( 'tabindex', 'int', true );
+		} elseif ( preg_match( '%^class:([-0-9a-zA-Z_]+)$%', $option, $matches ) ) {
+			$class_att .= ' ' . $matches[1];
 
-	if ( $tag->has_option( 'readonly' ) )
-		$atts['readonly'] = 'readonly';
+		} elseif ( preg_match( '%^([0-9]*)[x/]([0-9]*)$%', $option, $matches ) ) {
+			$cols_att = (int) $matches[1];
+			$rows_att = (int) $matches[2];
 
-	if ( $tag->is_required() )
-		$atts['aria-required'] = 'true';
+		} elseif ( preg_match( '%^tabindex:(\d+)$%', $option, $matches ) ) {
+			$tabindex_att = (int) $matches[1];
 
-	$value = (string) reset( $tag->values );
+		}
+	}
 
-	if ( '' !== $tag->content )
-		$value = $tag->content;
+	$value = (string) reset( $values );
 
-	if ( $tag->has_option( 'placeholder' ) || $tag->has_option( 'watermark' ) ) {
-		$atts['placeholder'] = $value;
+	if ( ! empty( $content ) )
+		$value = $content;
+
+	if ( wpcf7_script_is() && preg_grep( '%^watermark$%', $options ) ) {
+		$class_att .= ' wpcf7-use-title-as-watermark';
+		$title_att .= sprintf( ' %s', $value );
 		$value = '';
 	}
 
-	if ( wpcf7_is_posted() && isset( $_POST[$tag->name] ) )
-		$value = stripslashes_deep( $_POST[$tag->name] );
+	if ( wpcf7_is_posted() && isset( $_POST[$name] ) )
+		$value = stripslashes_deep( $_POST[$name] );
 
-	$atts['name'] = $tag->name;
+	if ( $id_att )
+		$atts .= ' id="' . trim( $id_att ) . '"';
 
-	$atts = wpcf7_format_atts( $atts );
+	if ( $class_att )
+		$atts .= ' class="' . trim( $class_att ) . '"';
 
-	$html = sprintf(
-		'<span class="wpcf7-form-control-wrap %1$s"><textarea %2$s>%3$s</textarea>%4$s</span>',
-		$tag->name, $atts, esc_textarea( $value ), $validation_error );
+	if ( $cols_att )
+		$atts .= ' cols="' . $cols_att . '"';
+	else
+		$atts .= ' cols="40"'; // default size
+
+	if ( $rows_att )
+		$atts .= ' rows="' . $rows_att . '"';
+	else
+		$atts .= ' rows="10"'; // default size
+
+	if ( '' !== $tabindex_att )
+		$atts .= sprintf( ' tabindex="%d"', $tabindex_att );
+
+	if ( $title_att )
+		$atts .= sprintf( ' title="%s"', trim( esc_attr( $title_att ) ) );
+
+	$html = '<textarea name="' . $name . '"' . $atts . '>' . esc_textarea( $value ) . '</textarea>';
+
+	$html = '<span class="wpcf7-form-control-wrap ' . $name . '">' . $html . $validation_error . '</span>';
 
 	return $html;
 }
@@ -71,15 +103,13 @@ add_filter( 'wpcf7_validate_textarea', 'wpcf7_textarea_validation_filter', 10, 2
 add_filter( 'wpcf7_validate_textarea*', 'wpcf7_textarea_validation_filter', 10, 2 );
 
 function wpcf7_textarea_validation_filter( $result, $tag ) {
-	$tag = new WPCF7_Shortcode( $tag );
+	$type = $tag['type'];
+	$name = $tag['name'];
 
-	$type = $tag->type;
-	$name = $tag->name;
-
-	$value = isset( $_POST[$name] ) ? (string) $_POST[$name] : '';
+	$_POST[$name] = (string) $_POST[$name];
 
 	if ( 'textarea*' == $type ) {
-		if ( '' == $value ) {
+		if ( '' == $_POST[$name] ) {
 			$result['valid'] = false;
 			$result['reason'][$name] = wpcf7_get_message( 'invalid_required' );
 		}
@@ -121,22 +151,17 @@ function wpcf7_tg_pane_textarea( &$contact_form ) {
 
 <tr>
 <td><code>cols</code> (<?php echo esc_html( __( 'optional', 'wpcf7' ) ); ?>)<br />
-<input type="number" name="cols" class="numeric oneline option" min="1" /></td>
+<input type="text" name="cols" class="numeric oneline option" /></td>
 
 <td><code>rows</code> (<?php echo esc_html( __( 'optional', 'wpcf7' ) ); ?>)<br />
-<input type="number" name="rows" class="numeric oneline option" min="1" /></td>
-</tr>
-
-<tr>
-<td><code>maxlength</code> (<?php echo esc_html( __( 'optional', 'wpcf7' ) ); ?>)<br />
-<input type="number" name="maxlength" class="numeric oneline option" min="1" /></td>
+<input type="text" name="rows" class="numeric oneline option" /></td>
 </tr>
 
 <tr>
 <td><?php echo esc_html( __( 'Default value', 'wpcf7' ) ); ?> (<?php echo esc_html( __( 'optional', 'wpcf7' ) ); ?>)<br /><input type="text" name="values" class="oneline" /></td>
 
 <td>
-<br /><input type="checkbox" name="placeholder" class="option" />&nbsp;<?php echo esc_html( __( 'Use this text as placeholder?', 'wpcf7' ) ); ?>
+<br /><input type="checkbox" name="watermark" class="option" />&nbsp;<?php echo esc_html( __( 'Use this text as watermark?', 'wpcf7' ) ); ?>
 </td>
 </tr>
 </table>

@@ -1773,28 +1773,28 @@ class GP_Locales {
 		}
 	}
 
-	static function instance() {
+	function &instance() {
 		if ( !isset( $GLOBALS['gp_locales'] ) )
 			$GLOBALS['gp_locales'] = new GP_Locales;
 		return $GLOBALS['gp_locales'];
 	}
 
-	static function locales() {
+	function locales() {
 		$instance = GP_Locales::instance();
 		return $instance->locales;
 	}
 
-	static function exists( $slug ) {
+	function exists( $slug ) {
 		$instance = GP_Locales::instance();
 		return isset( $instance->locales[$slug] );
 	}
 
-	static function by_slug( $slug ) {
+	function by_slug( $slug ) {
 		$instance = GP_Locales::instance();
 		return isset( $instance->locales[$slug] )? $instance->locales[$slug] : null;
 	}
 
-	static function by_field( $field_name, $field_value ) {
+	function by_field( $field_name, $field_value ) {
 		$instance = GP_Locales::instance();
 		$result = false;
 		foreach( $instance->locales() as $locale ) {
