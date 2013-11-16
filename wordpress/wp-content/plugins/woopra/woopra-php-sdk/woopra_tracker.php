@@ -8,6 +8,7 @@
  */
 class WoopraTracker {
 
+	private static $SDK_ID = "php";
 	/**
 	* Default configuration.
 	* KEYS:
@@ -108,29 +109,31 @@ class WoopraTracker {
 		//Tracker is not ready yet
 		$this->tracker_ready = false;
 
-		//Domain has not been set yet
-		$this->domain_was_set = false;
-
 		//Current configuration is Default
 		$this->current_config = WoopraTracker::$default_config;
 
 		//Set the default IP
-		$this->current_config["ip_address"] = $_SERVER["REMOTE_ADDR"];
+		$this->current_config["ip_address"] = $this->get_client_ip();
 		
 		//Set the domain name and the cookie_domain
 		$this->current_config["domain"] = $_SERVER["HTTP_HOST"];
 		$this->current_config["cookie_domain"] = $_SERVER["HTTP_HOST"];
 
-		//Get cookie or generate a random one
-		$this->current_config["cookie_value"] = isset($_COOKIE["wooTracker"]) ? $_COOKIE["wooTracker"] : WoopraTracker::RandomString();
-
-		//We don't have any info on the user yet, so he is up to date by default.
-		$this->user_up_to_date = true;
+		//configure app ID
+		$this->current_config["app"] = WoopraTracker::$SDK_ID;
+		$this->custom_config = array("app" => WoopraTracker::$SDK_ID);
 
 		//If configuration array was passed, configure Woopra
 		if (isset($config_params)) {
 			$this->config($config_params);
 		}
+
+		//Get cookie or generate a random one
+		$this->current_config["cookie_value"] = isset($_COOKIE[$this->current_config["cookie_name"]]) ? $_COOKIE[$this->current_config["cookie_name"]] : WoopraTracker::RandomString();
+
+		//We don't have any info on the user yet, so he is up to date by default.
+		$this->user_up_to_date = true;
+
 	}
 
 	/**
@@ -229,7 +232,7 @@ class WoopraTracker {
 
 		//Just identifying
 		if ( ! $is_tracking ) {
-			$url = $base_url . "identify/" . $config_params . $user_params;
+			$url = $base_url . "identify/" . $config_params . $user_params . "&ce_app=" . WoopraTracker::$SDK_ID;
 
 		//Tracking
 		} else {
@@ -244,19 +247,23 @@ class WoopraTracker {
 			} else {
 				$event_params .= "&ce_name=pv&ce_url=" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 			}
-			$url = $base_url . "ce/" . $config_params . $user_params . $event_params;
+			$url = $base_url . "ce/" . $config_params . $user_params . $event_params . "&ce_app=" . WoopraTracker::$SDK_ID;
 		}
 
-		$opts = array(
-			'http'=>array(
-				'method'=>"GET",
-				'header'=>"User-Agent: ".$_SERVER['HTTP_USER_AGENT']
-		    )
-		);
-		$context = stream_context_create($opts);
-
 		//Send the request
-		file_get_contents( $url, false, $context);
+		if (function_exists('curl_version')) {
+			$this->get_data($url);
+		} else {
+			$opts = array(
+				'http'=>array(
+					'method'=>"GET",
+					'header'=>"User-Agent: ".$_SERVER['HTTP_USER_AGENT']
+			    )
+			);
+			$context = stream_context_create($opts);
+			file_get_contents( $url, false, $context);
+		}
+		
 	}
 
 	/**
@@ -264,7 +271,7 @@ class WoopraTracker {
 	 * @param none
 	 * @return Woopra object
 	 */
-	public function woopra_code() {
+	public function js_code() {
 
 ?>
 	
@@ -303,14 +310,22 @@ class WoopraTracker {
 	*/
 	public function config($args) {
 
-		$this->custom_config = array();
+		if (! isset($this->custom_config)) {
+			$this->custom_config = array();
+		}
 		foreach( $args as $option => $value) {
 
 			if ( array_key_exists($option, WoopraTracker::$default_config) ) {
 
 				if ( gettype($value) == gettype( WoopraTracker::$default_config[$option] ) ) {
-					$this->custom_config[$option] = $value;
+					if ($option != "ip_address" && $option != "cookie_value") {
+						$this->custom_config[$option] = $value;
+					}
 					$this->current_config[$option] = $value;
+					//If the user is customizing the name of the cookie, check again if the user already has one.
+					if ($option == "cookie_name") {
+						$this->current_config["cookie_value"] = isset($_COOKIE[$current_config["cookie_name"]]) ? $_COOKIE[$current_config["cookie_name"]] : $this->current_config["cookie_value"];
+					}
 				}
 				else {
 					trigger_error("Wrong value type in configuration array for parameter ".$option.". Recieved ".gettype($value).", expected ".gettype( WoopraTracker::$default_config[$option] ).".");
@@ -403,7 +418,7 @@ class WoopraTracker {
 		if ( $back_end_processing ) {
 			$this->woopra_http_request(false);
 			$this->user_up_to_date = true;
-		} else {
+		} elseif($this->tracker_ready) {
 
 ?>
 	<script>
@@ -424,6 +439,37 @@ class WoopraTracker {
 	*/
 	public function set_woopra_cookie() {
 		setcookie( $this->current_config["cookie_name"], $this->current_config["cookie_value"], time()+(60*60*24*365*2), $this->current_config["cookie_path"], $this->current_config["cookie_domain"] );
+	}
+
+	/**
+	* Retrieves the user's IP address
+	* @param none
+	* @return String
+	*/
+	private function get_client_ip() {
+		if (isset($_SERVER["HTTP_X_FORWARDED_FOR"])) {
+			$ips = explode(",", $_SERVER["HTTP_X_FORWARDED_FOR"]);
+			return trim($ips[0]);
+		} else {
+			return $_SERVER["REMOTE_ADDR"];
+		}
+	}
+
+	/** 
+	* Gets the data from a URL using CURL
+	* @param String
+	* @return String
+	*/
+	private function get_data($url) {
+		$ch = curl_init();
+		$timeout = 5;
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+		curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
+		$data = curl_exec($ch);
+		curl_close($ch);
+		return $data;
 	}
 }
 

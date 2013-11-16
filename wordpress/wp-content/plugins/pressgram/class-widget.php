@@ -117,25 +117,31 @@ class pressgram_widget extends WP_Widget {
 			echo $before_title . $title . $after_title;
 		}
 
-		// Get the pressgram category
-		$pressgram_category_object = get_category( get_option( 'pressgram_category' ) );
-		$pressgram_category_slug = $pressgram_category_object->slug;
-		$pressgram_options = get_option( 'pressgram_fine_control' );
-
 		// The arguments
 		$args = array(
-			'category'       => $pressgram_category_slug,
+			'post_type'      => get_post_types( array( 'public' => TRUE ) ),
+			'meta_key'       => '_pressgram_post',
+			'meta_value'     => TRUE,
 			'posts_per_page' => $count,
-			'post_type'      => $pressgram_options['post_type'],
 			);
 
 		// Get the posts
 		$pressgram_array = get_posts( $args );
 
-		// The Loop
+		// The Loop to link images to their post
 		foreach ( $pressgram_array as $pressgram_post ) {
-			// Link the image to its post
-			$widget_content .= '<a class="pressgram_widget_text" href="' . get_permalink( $pressgram_post->ID ) . '" title="' . esc_attr( $pressgram_post->post_title ) . '">' . get_the_post_thumbnail( $pressgram_post->ID, $img_size ) . '</a>' ;
+			// Do this if featured image is set
+			if ( '' != get_the_post_thumbnail( $pressgram_post->ID ) ) {
+				$widget_content .= '<a class="pressgram_widget_text" href="' . get_permalink( $pressgram_post->ID ) . '" title="' . esc_attr( $pressgram_post->post_title ) . '">' . get_the_post_thumbnail( $pressgram_post->ID, $img_size ) . '</a>';
+			} else { // Otherwise
+				// Get the first attachment image
+				$attachment = get_children( "post_parent=$pressgram_post->ID&post_type=attachment&post_mime_type=image&numberposts=1" );  // get child attachments of type image
+					
+				// Get post ID of attachment
+				$attachment_ID = current( array_keys( $attachment ) );
+
+				$widget_content .= '<a class="pressgram_widget_text" href="' . get_permalink( $pressgram_post->ID ) . '" title="' . esc_attr( $pressgram_post->post_title ) . '">' . wp_get_attachment_image( $attachment_ID, $img_size, FALSE, array( 'class' => 'wp-post-image' ) ) . '</a>';
+			}
 		}
 
 		// Output content

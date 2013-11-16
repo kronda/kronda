@@ -30,7 +30,7 @@ class Pressgram {
 	 *
 	 * @var     string
 	 */
-	protected $version = '2.0.4';
+	protected $version = '2.0.5';
 
 	/**
 	 * Instance of this class.
@@ -59,6 +59,15 @@ class Pressgram {
 	 */
 	protected $options;
 
+	/**
+	 * Pressgram post.
+	 *
+	 * @since    2.0.5
+	 *
+	 * @var      array
+	 */
+	protected $pressgram_post;
+
 	/*---------------------------------------------------------------------------------*
 	 * Consturctor / The Singleton Pattern
 	 *---------------------------------------------------------------------------------*/
@@ -66,30 +75,12 @@ class Pressgram {
 	/**
 	 * Initialize the plugin by setting localization, filters, and administration functions.
 	 *
-	 * @since     2.0.0
+	 * @since     2.0.5
 	 */
 	private function __construct() {
 
-		// Load plugin text domain
-		add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
-
-		// Load up an administration notice to guide users to the next step
-		add_action( 'admin_notices', array( $this, 'display_plugin_activation_message' ) );
-
-		// Initializes the Pressgram Category setting and field
-		add_filter( 'admin_init', array( $this, 'register_pressgram_fields' ) );
-
-		// Load the administrative Stylesheets and JavaScript
-		add_action( 'admin_enqueue_scripts', array( $this, 'add_stylesheets_and_javascript' ) );
-
-		// Modify query_posts to exclude posts from the Pressgram category
-		add_action( 'pre_get_posts', array( $this, 'exclude_pressgram_category_posts' ) );
-
-		// Add jquery to process selected post type on media settings page
-		add_action( 'admin_footer', array( $this, 'process_selected_post_type' ) );
-
-		// Apply fine control to new posts categorized in selected Pressgram category
-		add_action( 'transition_post_status', array( $this, 'apply_fine_control' ), 10, 3 );
+		// Initialize Pressgram post array
+		$this->pressgram_post = array();
 
 		// Set Pressgram category
 		$this->pressgram_category = get_option( 'pressgram_category' );
@@ -111,6 +102,30 @@ class Pressgram {
 		$this->options['strip']['image'] = isset( $this->options['strip']['image'] ) ? $this->options['strip']['image'] : FALSE;
 		$this->options['show']['home'] = isset( $this->options['show']['home'] ) ? $this->options['show']['home'] : FALSE;
 		$this->options['show']['feed'] = isset( $this->options['show']['feed'] ) ? $this->options['show']['feed'] : FALSE;
+
+		// Load plugin text domain
+		add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
+
+		// Load up an administration notice to guide users to the next step
+		add_action( 'admin_notices', array( $this, 'display_plugin_activation_message' ) );
+
+		// Initializes the Pressgram Category setting and field
+		add_filter( 'admin_init', array( $this, 'register_pressgram_fields' ) );
+
+		// Load the administrative Stylesheets and JavaScript
+		add_action( 'admin_enqueue_scripts', array( $this, 'add_stylesheets_and_javascript' ) );
+
+		// Modify query_posts to exclude posts from the Pressgram category
+		add_action( 'pre_get_posts', array( $this, 'exclude_pressgram_category_posts' ) );
+
+		// Add jquery to process selected post type on media settings page
+		add_action( 'admin_footer', array( $this, 'process_selected_post_type' ) );
+
+		// Set categories, tags, and check power tags, adjusting options as needed
+		add_action( 'transition_post_status', array( $this, 'process_taxonomies' ), 5, 3 );
+
+		// Apply fine control to new posts categorized in selected Pressgram category
+		add_action( 'transition_post_status', array( $this, 'apply_fine_control' ), 15, 3 );
 
 	} // end constructor
 
@@ -152,9 +167,9 @@ class Pressgram {
 	} // end load_plugin_textdomain
 
 	/**
-	 * Displays a plugin message as a soon as the plugin is activated.
+	 * Displays a plugin message as soon as the plugin is activated.
 	 *
-	 * @since    2.0.0
+	 * @since    2.0.5
 	 */
 	public function display_plugin_activation_message() {
 
@@ -233,11 +248,11 @@ class Pressgram {
 	 /**
 	 * Renders the intro to the Pressgram section of the media page.
 	 *
-	 * @since    1.0.0
+	 * @since    2.0.5
 	 */
 	public function display_pressgram_section() {
 		// Echo the section description
-		echo 'Select a category for Pressgram, which will ...<br />&nbsp;&nbsp;&nbsp; (1) be automatically assigned to all Pressgram uploads,<br />&nbsp;&nbsp;&nbsp; (2) hide all associated posts from your site\'s main feed, and<br />&nbsp;&nbsp;&nbsp; (3) enable application of your custom fine control settings.';
+		echo 'Select a category for Pressgram, which will ...<br />&nbsp;&nbsp;&nbsp; (1) be automatically assigned to all Pressgram uploads, and <br />&nbsp;&nbsp;&nbsp; (2) enable application of your custom fine control settings.';
 	}
 
 	/**
@@ -613,212 +628,250 @@ class Pressgram {
 	} // end process_selected_post_type
 
 	/**
+	 * Checks whether published posts are newly created from and originate from an XMLRPC request
+	 * from the Pressgram application
+	 *
+	 * @since    2.0.5
+	 */
+
+	public function do_pressgram( $new_status, $old_status, $post ) {
+
+		// Check if post is transitioning from new or auto-draft to publish
+		if ( ( 'new' == $old_status || 'auto-draft' == $old_status ) && ( 'publish' == $new_status ) && defined('XMLRPC_REQUEST') && strpos( $post->post_content, 'pressgram-image-file' ) ) {
+			return TRUE;
+		} else {
+			return FALSE;
+		}
+	} // end do_pressgram
+
+	/**
+	 * Categorizes Pressgram posts in the Pressgram category and checks for power tags
+	 * resetting options as needed. Sets tags.
+	 *
+	 * @since    2.0.5
+	 */
+
+	public function process_taxonomies( $new_status, $old_status, $post ) {
+
+		// Check if post is in Pressgram category and if it is transitioning from new or auto-draft to publish
+		if ( $this->do_pressgram( $new_status, $old_status, $post ) ) {
+			
+			// Get app assigned categories 
+			$app_categories = wp_get_object_terms( $post->ID, 'category', array( 'fields' => 'all' ) );
+
+			// Add all app categories to array (exclude uncategorized category)
+			$categories = array();
+			foreach ( $app_categories as $key => $category_object ) {
+				'uncategorized' != $category_object->slug ? $categories[ $key ] = $category_object->term_id : FALSE;
+			}
+
+			// Add selected Pressgram category to the array
+			array_push( $categories, $this->pressgram_category );
+
+			// Re-key the array
+			$categories = array_values( $categories );
+
+			// Assign categories to this pressgram post
+			$this->pressgram_post['categories'] = $categories;
+
+			// Get app assigned tags
+			$app_tags = wp_get_object_terms( $post->ID, 'post_tag', array( 'fields' => 'all' ) );
+
+			// Begin processing of tags
+			$tags = array();
+			foreach ( $app_tags as $key => $tag_object ) {
+
+				// Check if tag is power tag
+				$power_tag = preg_match( '/_[tsfialcphr]:/', trim( $tag_object->name ) );
+
+				// Apply power tags
+				if ( $power_tag ) {
+
+					// Get tag ID (single identifying letter)
+					$power_tag_ID = $tag_object->name{1};
+
+					// Get value by trimming first three characters from power tag
+					$power_tag = substr( trim( $tag_object->name ), 3 );
+
+					switch ( $power_tag_ID ) {
+
+						// Apply post type
+						case 't':
+							// If fine control post type is attachment, change post status from inherit to publish
+							if ( 'attachment' == $this->options['post_type'] && 'attachment' != $power_tag ) {
+								$this->options['post_status'] = 'publish';
+							}
+							$this->options['post_type'] = $power_tag;
+							break;
+
+						// Apply post status
+						case 's':
+							$this->options['post_status'] = $power_tag;
+							break;
+
+						// Apply post format
+						case 'f':
+							$this->options['post_format'] = $power_tag;
+							break;
+
+						// Apply featured image
+						case 'i':
+							$this->options['featured_img'] = 't' == $power_tag ? TRUE : FALSE;
+							break;
+
+						// Apply image alignment
+						case 'a':
+							$this->options['img_align'] = $power_tag;
+							break;
+
+						// Apply image link
+						case 'l':
+							$this->options['img_link'] = $power_tag;
+							break;
+						
+						// Apply comment status
+						case 'c':
+							$this->options['comments'] = 't' == $power_tag ? TRUE : FALSE;
+							break;
+						
+						// Apply ping status
+						case 'p':
+							$this->options['pings'] = 't' == $power_tag ? TRUE : FALSE;
+							break;
+						
+						// Apply transferrence of hashtags to post tags
+						case 'h':
+							$this->options['tag_post'] = 't' == $power_tag ? TRUE : FALSE;
+							break;
+						
+						// Apply removal of various content
+						case 'r':
+							'hashtags' == $power_tag ? $this->options['strip']['hashtags'] = TRUE : FALSE;
+							'text' == $power_tag ? $this->options['strip']['text'] = TRUE : FALSE;
+							'image' == $power_tag ? $this->options['strip']['image'] = TRUE : FALSE;
+							'img' == $power_tag ? $this->options['strip']['image'] = TRUE : FALSE;
+							break;
+
+						default:
+							break;
+					}
+
+					// remove power tag from available tags in WordPress
+					wp_delete_term( $tag_object->term_id, 'post_tag' );
+				} else {
+
+					// if not a power tag, add to array
+					$tags[ $key ] = $tag_object->name;
+				}
+			}
+
+			// Set this pressgram post tags
+			$this->pressgram_post['tags'] = $tags;
+		}
+	} // end process_taxonomies
+
+	/**
 	 * Checks whether published posts are newly created from and originiate from an XMLRPC request
 	 * Categorizes such posts in the Pressgram category and filters posts through the fine control settings
 	 *
-	 * @since    2.0.1
+	 * @since    2.0.5
 	 */
 
 	public function apply_fine_control( $new_status, $old_status, $post ) {
 
 		// Check if post is in Pressgram category and if it is transitioning from new or auto-draft to publish
-		if ( ( 'new' == $old_status || 'auto-draft' == $old_status ) && ( 'publish' == $new_status ) ) {
-			
-			// Check that post is from Pressgram
-			if ( defined('XMLRPC_REQUEST') ) {
-				if ( strpos( $post->post_content, 'pressgram-image-file' ) ) {
-					
-					// Get app assigned categories 
-					$app_categories = wp_get_object_terms( $post->ID, 'category', array( 'fields' => 'all' ) );
+		if ( $this->do_pressgram( $new_status, $old_status, $post ) ) {
 
-					// Add all app categories to array (exclude uncategorized category)
-					$categories = array();
-					foreach ( $app_categories as $key => $category_object ) {
-						'uncategorized' != $category_object->slug ? $categories[ $key ] = $category_object->term_id : FALSE;
-					}
+			// Retrieve the new post object
+			$post = get_post( $post->ID );
 
-					// Add selected Pressgram category to the array
-					array_push( $categories, $this->pressgram_category );
+			// Reset post categories, overwriting all existing categories
+			wp_set_post_terms( $post->ID, $this->pressgram_post['categories'], 'category' );
 
-					// Re-key the array
-					$categories = array_values( $categories );
+			// Reset post tags
+			wp_set_post_tags( $post->ID, $this->pressgram_post['tags'], FALSE );
 
-					// Reset post categories, overwriting all existing categories
-					wp_set_post_terms( $post->ID, $categories, 'category' );
+			// Get the first attachment image
+			$attachment = get_children( "post_parent=$post->ID&post_type=attachment&post_mime_type=image&numberposts=1" );  // get child attachments of type image
+				
+			// Get post ID of attachment
+			$attachment_ID = current( array_keys( $attachment ) );
 
-					// Get app assigned tags
-					$app_tags = wp_get_object_terms( $post->ID, 'post_tag', array( 'fields' => 'all' ) );
+			// Parse the content of the post
+			$parsed_content = $this->parse_content( $post->post_content );
 
-					// Begin processing of tags
-					$tags = array();
-					foreach ( $app_tags as $key => $tag_object ) {
+			// Translate hashtags to post tags
+			$supported_taxonomies = get_object_taxonomies( $this->options['post_type'] );
+			( in_array( 'post_tag', $supported_taxonomies ) && $this->options['tag_post'] ) ? wp_set_post_tags( $post->ID, $parsed_content['tags'], TRUE ) : FALSE;
 
-						// Check if tag is power tag
-						$power_tag = preg_match( '/_[tsfialcphr]:/', trim( $tag_object->name ) );
+			// Strip unwanted content of the post
+			$content = $this->strip_content( $post->post_content, $parsed_content );
 
-						// Apply power tags
-						if ( $power_tag ) {
+			// Hyperlink the image
+			switch ( $this->options['img_link'] ) {
+				case 'link':
+					$content = str_replace( $parsed_content['img'], '<a href="' . wp_get_attachment_url( $attachment_ID ) . '">' . $parsed_content['img'] . '</a>', $content );
+					break;
+				
+				case 'post':
+					$content = str_replace( $parsed_content['img'], '<a href="' . get_attachment_link( $attachment_ID ) . '">' . $parsed_content['img'] . '</a>', $content );
+					// Save parsed content to the database
+					break;
+				
+				default:
+					break;
+			}
 
-							// Get tag ID (single identifying letter)
-							$power_tag_ID = $tag_object->name{1};
+			// Set desired alignment
+			$content = str_replace( 'pressgram-image-file', 'pressgram-image-file align' . $this->options['img_align'], $content );
 
-							// Get value by trimming first three characters from power tag
-							$power_tag = substr( trim( $tag_object->name ), 3 );
+			// Check that fine control post type is not set as attachment
+			if ( 'attachment' != $this->options['post_type'] ) {
 
-							switch ( $power_tag_ID ) {
+				// Set the post format (if not standard)
+				'standard' != $this->options['post_format'] ? set_post_format( $post->ID, $this->options['post_format'] ) : FALSE;
 
-								// Apply post type
-								case 't':
-									// If fine control post type is attachment, change post status from inherit to publish
-									if ( 'attachment' == $this->options['post_type'] && 'attachment' != $power_tag ) {
-										$this->options['post_status'] = 'publish';
-									}
-									$this->options['post_type'] = $power_tag;
-									break;
+				// Set featured image (if selected as fine control option)
+				$this->options['featured_img'] ? set_post_thumbnail( $post->ID, $attachment_ID ) : FALSE;
+				
+				// Set post array
+				$post = array(
+					'ID'             => $post->ID,
+					'post_status'    => $this->options['post_status'],
+					'post_content'   => $content,
+					'post_type'      => $this->options['post_type'],
+					'comment_status' => $this->options['comments'] ? 'open' : 'closed',
+					'ping_status'    => $this->options['pings'] ? 'open' : 'closed',
+					);
 
-								// Apply post status
-								case 's':
-									$this->options['post_status'] = $power_tag;
-									break;
+				// Update the post
+				wp_update_post( $post );
 
-								// Apply post format
-								case 'f':
-									$this->options['post_format'] = $power_tag;
-									break;
+				// Add pressgram_post meta
+				add_post_meta( $post['ID'], '_pressgram_post', TRUE, TRUE );
+				// Add pressgram_image meta
+				add_post_meta( $attachment_ID, '_pressgram_image', TRUE, TRUE );
 
-								// Apply featured image
-								case 'i':
-									$this->options['featured_img'] = 't' == $power_tag ? TRUE : FALSE;
-									break;
+				// If post is not published, remove Jetpack publicized flag
+				'publish' != $this->options['post_status'] ? delete_post_meta( $post['ID'], '_wpas_done_all' ) : FALSE;
+			} else {
+				
+				// Set the attachment post array
+				$attachment = array(
+					'ID'           => $attachment_ID,
+					'post_status'  => 'inherit',
+					'post_excerpt' => $content,
+					'post_parent'  => '',
+					);
 
-								// Apply image alignment
-								case 'a':
-									$this->options['img_align'] = $power_tag;
-									break;
+				// Update the attachment post
+				wp_update_post( $attachment );
 
-								// Apply image link
-								case 'l':
-									$this->options['img_link'] = $power_tag;
-									break;
-								
-								// Apply comment status
-								case 'c':
-									$this->options['comments'] = 't' == $power_tag ? TRUE : FALSE;
-									break;
-								
-								// Apply ping status
-								case 'p':
-									$this->options['pings'] = 't' == $power_tag ? TRUE : FALSE;
-									break;
-								
-								// Apply transferrence of hashtags to post tags
-								case 'h':
-									$this->options['tag_post'] = 't' == $power_tag ? TRUE : FALSE;
-									break;
-								
-								// Apply removal of various content
-								case 'r':
-									'hashtags' == $power_tag ? $this->options['strip']['hashtags'] = TRUE : FALSE;
-									'text' == $power_tag ? $this->options['strip']['text'] = TRUE : FALSE;
-									'image' == $power_tag ? $this->options['strip']['image'] = TRUE : FALSE;
-									'img' == $power_tag ? $this->options['strip']['image'] = TRUE : FALSE;
-									break;
+				// Add pressgram_image meta
+				add_post_meta( $attachment['ID'], '_pressgram_image', TRUE, TRUE );
 
-								default:
-									break;
-							}
-
-							// remove power tag from available tags in WordPress
-							wp_delete_term( $tag_object->term_id, 'post_tag' );
-						} else {
-
-							// if not a power tag, add to array
-							$tags[ $key ] = $tag_object->name;
-						}
-					}
-
-					// reset post tags
-					wp_set_post_tags( $post->ID, $tags, FALSE );
-				}
-
-				// if categorized properly
-				if ( in_category( $this->pressgram_category, $post->ID ) ) {
-
-					// Retrieve the new post object
-					$post = get_post( $post->ID );
-
-					// Get the first attachment image
-					$attachment = get_children( "post_parent=$post->ID&post_type=attachment&post_mime_type=image&numberposts=1" );  // get child attachments of type image
-						
-					// Get post ID of attachment
-					$attachment_ID = current( array_keys( $attachment ) );
-
-					// Parse the content of the post
-					$parsed_content = $this->parse_content( $post->post_content );
-
-					// Translate hashtags to post tags
-					$supported_taxonomies = get_object_taxonomies( $this->options['post_type'] );
-					( in_array( 'post_tag', $supported_taxonomies ) && $this->options['tag_post'] ) ? wp_set_post_tags( $post->ID, $parsed_content['tags'], TRUE ) : FALSE;
-
-					// Strip unwanted content of the post
-					$content = $this->strip_content( $post->post_content, $parsed_content );
-
-					// Hyperlink the image
-					switch ( $this->options['img_link'] ) {
-						case 'link':
-							$content = str_replace( $parsed_content['img'], '<a href="' . wp_get_attachment_url( $attachment_ID ) . '">' . $parsed_content['img'] . '</a>', $content );
-							break;
-						
-						case 'post':
-							$content = str_replace( $parsed_content['img'], '<a href="' . get_attachment_link( $attachment_ID ) . '">' . $parsed_content['img'] . '</a>', $content );
-							// Save parsed content to the database
-							break;
-						
-						default:
-							break;
-					}
-
-					// Set desired alignment
-					$content = str_replace( 'pressgram-image-file', 'pressgram-image-file align' . $this->options['img_align'], $content );
-
-					// Check that fine control post type is not set as attachment
-					if ( 'attachment' != $this->options['post_type'] ) {
-
-						// Set the post format (if not standard)
-						'standard' != $this->options['post_format'] ? set_post_format( $post->ID, $this->options['post_format'] ) : FALSE;
-
-						// Set featured image (if selected as fine control option)
-						$this->options['featured_img'] ? set_post_thumbnail( $post->ID, $attachment_ID ) : FALSE;
-						
-						// Set post array
-						$post = array(
-							'ID'             => $post->ID,
-							'post_status'    => $this->options['post_status'],
-							'post_content'   => $content,
-							'post_type'      => $this->options['post_type'],
-							'comment_status' => $this->options['comments'] ? 'open' : 'closed',
-							'ping_status'    => $this->options['pings'] ? 'open' : 'closed',
-							);
-
-						// Update the post
-						wp_update_post( $post );
-					} else {
-						
-						// Set the attachment post array
-						$attachment = array(
-							'ID'           => $attachment_ID,
-							'post_status'  => 'inherit',
-							'post_excerpt' => $content,
-							'post_parent'  => '',
-							);
-
-						// Update the attachment post
-						wp_update_post( $attachment );
-
-						// Delete the published parent post, if attachment post (skip the trash)
-						wp_delete_post( $post->ID, TRUE );
-					}
-				}
+				// Delete the published parent post, if attachment post (skip the trash)
+				wp_delete_post( $post->ID, TRUE );
 			}
 		}
 	}

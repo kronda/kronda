@@ -1,29 +1,55 @@
 === Pressgram ===
 Contributors: pressgram, UaMV
-Donate link: http://pressgr.am/
-Tags: pressgram, photos, filters, instagram, twitter, facebook, pictures, photo sharing
+Donate link: 	
+Tags: pressgram, photos, filters, instagram, twitter, facebook, pictures, photo sharing, publishing
 Requires at least: 3.5.2
-Tested up to: 3.6.0
-Stable tag: 2.0.4
+Tested up to: 3.7.1
+Stable tag: 2.0.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-The official WordPress plugin for <a href="http://pressgr.am/">Pressgram</a>. Automated management of your awesome Pressgram images!
+The official WordPress plugin for Pressgram. Automated management of Pressgram posts helps you publish pictures worth 1,000 words!
 
 == Description ==
 
-The official WordPress plugin for <a href="http://pressgr.am/">Pressgram</a>. De-clutters the home page / home screen from all those awesome images you're posting! Auto-categorizes images uploaded to your site from Pressgram and applies presets  to these posts (post type, post status, post format, featured image control, image alignment, image link, comment status, ping status, hashtag to post tag translation, and removal of specific content). Power tags allow you to control posting options directly from the app. The widget allows you to display your recent images in the sidebar. Oh, and it also encourage digital publishers to be <strong>rebels with a cause</strong>. Viva la revolución!
+Our mission is to publish pictures worth 1,000 words. The official WordPress plugin for <a href="http://pressgr.am/">Pressgram</a> allows you automated management of the many awesome images you post to your own blog from the Pressgram app.
 
-This plugin allows you to select a category that will be used for your Pressgram photos (bottom of Settings Panel >> Media). It will ...
+= What does the plugin do? =
+Once activated and configured, the Pressgram plugin will handle all incoming posts from Pressgram. It will ...
 
-1. auto-categorize all Pressgram posts to this selected category,
-1. remove those photos from showing up on the main feed (homepage) and rss feed of your blog,
-1. apply your custom fine control settings to each Pressgram post, and
-1. allow you to display recent photos via the widget (provided they are set as a featured image).
+* Auto-categorize the post to the category selected during setup.
+* Apply fine control settings according to your custom setup and any powertags you've defined.
+* Feature Pressgram images via a simple and clean Pressgram widget.
+* Write metadata to your database identifying the post and the image as from Pressgram.
 
-Note, that photos will continue to display in your search and in your archives. Options are available to allow photos on your home page and/or in your RSS feed (for yummy SEO inclusion!).
+= How do I set up the plugin? =
+Upon activation, the plugin will prompt you to configure settings for Pressgram management. *(found at Settings > Media)*
 
-Power users can make use of power tags. Use the following tags in posts from app and you can control how your content is published and displayed:
+1. Select a category that will be auto-assigned to your Pressgram posts. *(note: no need to assign this category in-app)*
+1. Define custom fine control settings to handle your Pressgram posts. *(note: override settings in-app via powertags)*
+1. If desired, add the Pressgram widget to sidebars.
+
+= What fine control settings are included? =
+The following fine control presets are customizable to your blog:
+
+* Show/hide Pressgram defined category posts from home page.
+* Show/hide Pressgram defined category posts from rss feeds.
+* Post Type: select from available post types or select 'Unattached Media'
+* Post Status: select from Published, Pending, Draft, or Private
+* Post Format: select from available post formats
+* Featured Image Control: set as featured image *(or not)*
+* Image Alignment: select from Left, Center, Right, or None
+* Image Link: select from Media File, Attachment Page, or None
+* Comment Status: allow or disallow
+* Trackback Status: allow or disallow
+* Hashtag Translation: translate hashtags to post tags
+* Post Content Removal: options to remove hashtags, non-hashtag text, and/or the image
+
+= How does the widget work? =
+The widget allows you to display from 1 to 16 images in a grid of one to four columns. Images link to the associated Pressgram post on your blog.
+
+= What are powertags? =
+Powertags allow you in-app control of how the plugin will process a single Pressgram post. Use the following tags in-app and you control how your content is published and displayed:
 
 * **_t:post-type**  (post-type must be an existing post type slug: ex. post, attachment)
 * **_s:post-status**  (post-status options include: publish, pending, draft, private)
@@ -33,12 +59,53 @@ Power users can make use of power tags. Use the following tags in posts from app
 * **_l:image-link**  (image-link options: link, post, none)
 * **_c:comment-status**  (comment status must be t or f)
 * **_p:ping-status**  (ping status must be t or f)
-* **_h:hashtag-to-post-tag-translation**  (hashtag-to-post-tag must be t or f)
+* **_h:hashtag-translation**  (hashtag-translation must be t or f)
 * **_r:removal-of-content**  (remove content options: hashtags, text, image)
 
 Download the <a href="http://pressgr.am/">mobile app here</a> and support our community with <a href="http://store.pressgr.am/">some official swag</a>!
 
-[youtube http://www.youtube.com/watch?v=7H41GL6EFfI]
+== Other Notes ==
+
+= Tutorial =
+
+A new video showing plugin use (w/ it's recently added feature set) is in the works! Check back soon.
+
+= Understanding the Metadata =
+
+Prior to Version 2.0.5, Pressgram posts and image attachments were not tagged with metadata. However, as of Version 2.0.5, each post and image attachment is tagged with metadata identifying it's source as the Pressgram app. This metadata is now used to query images for display in the Pressgram widget. In future versions, it may be used for other features. If you would like to tag your existing Pressgram posts and image attachments with the necessary metadata, do the following:
+
+1. Insert the following code in your theme's functions.php file.
+1. Define the array containing post IDs.
+1. Define the array containing attachment IDs.
+1. Deactivate the Pressgram plugin.
+1. Reactivate the Pressgram plugin.
+1. Remove the code from your theme's functions.php file.
+
+`/**
+ * Add Pressgram metadata to specific posts
+ * Note: Posts via Pressgram prior to use of v2.0.5 do not contain metadata
+ */
+function add_pressgram_meta() {
+	// Array of post ids which you would like to mark as a Pressgram post
+	// e.g. $post_ids = array( 2, 7, 14, 16, 19 );
+	$post_ids = array(  );
+
+	// Array of attachment ids which you would like to mark as a Pressgram image
+	// e.g. $image_ids = array( 1, 6, 13, 15, 18 );
+	$image_ids = array(  );
+
+	// Loop through posts and add metadata
+	foreach ( $post_ids as $post_id ) {
+		add_post_meta( $post_id, '_pressgram_post', TRUE, TRUE );
+	}
+
+	// Loop through images and add metadata
+	foreach ( $image_ids as $image_id ) {
+		add_post_meta( $image_id, '_pressgram_image', TRUE, TRUE );
+	}
+}
+// Do this on Pressgram plugin activation
+add_action( 'activate_pressgram/pressgram.php', 'add_pressgram_meta' );`
 
 == Installation ==
 
@@ -59,9 +126,15 @@ Download the <a href="http://pressgr.am/">mobile app here</a> and support our co
 
 == Screenshots ==
 
-1. The Pressgram Administration options
+1. Pressgram Administration Options
+2. Pressgram Widget Options
 
 == Changelog ==
+
+= 2.0.5 =
+* Adding metadata to identify Pressgram posts and images
+* Fix to allow publicizing via Jetpack
+* Switching widget query from use of category to post meta
 
 = 2.0.4 =
 * Removing anonymous function in widgets_init() for PHP support < 5.3.0 fixing Parse error: unexpected T_FUNCTION
