@@ -9,6 +9,7 @@ class Jetpack_Tiled_Gallery {
 	public function __construct() {
 		add_action( 'admin_init', array( $this, 'settings_api_init' ) );
 		add_filter( 'jetpack_gallery_types', array( $this, 'jetpack_gallery_types' ), 9 );
+		add_filter( 'jetpack_default_gallery_type', array( $this, 'jetpack_default_gallery_type' ) );
 	}
 
 	public function tiles_enabled() {
@@ -22,7 +23,7 @@ class Jetpack_Tiled_Gallery {
 		$this->atts = shortcode_atts( array(
 			'order'      => 'ASC',
 			'orderby'    => 'menu_order ID',
-			'id'         => $post->ID,
+			'id'         => isset( $post->ID ) ? $post->ID : 0,
 			'include'    => '',
 			'exclude'    => '',
 			'type'       => '',
@@ -58,6 +59,11 @@ class Jetpack_Tiled_Gallery {
 			foreach ( $_attachments as $key => $val ) {
 				$attachments[$val->ID] = $_attachments[$key];
 			}
+		} elseif ( 0 == $id ) {
+			// Should NEVER Happen but infinite_scroll_load_other_plugins_scripts means it does
+			// Querying with post_parent == 0 can generate stupidly memcache sets on sites with 10000's of unattached attachments as get_children puts every post in the cache.
+			// TODO Fix this properly
+			$attachments = array();
 		} elseif ( !empty( $exclude ) ) {
 			$exclude = preg_replace( '/[^0-9,]+/', '', $exclude );
 			$attachments = get_children( array('post_parent' => $id, 'exclude' => $exclude, 'post_status' => 'inherit', 'post_type' => 'attachment', 'post_mime_type' => 'image', 'order' => $order, 'orderby' => $orderby) );
@@ -213,7 +219,14 @@ class Jetpack_Tiled_Gallery {
 
 		$html = '<div '. $this->gallery_classes() . ' data-original-width="' . esc_attr( self::get_content_width() ) . '">';
 		$blog_id = (int) get_current_blog_id();
-		$extra_data = array( 'data-carousel-extra' => array( 'blog_id' => $blog_id, 'permalink' => get_permalink( $post->ID ) ) );
+
+		if ( defined( 'IS_WPCOM' ) && IS_WPCOM ) {
+			$likes_blog_id = $blog_id;
+		} else {
+			$likes_blog_id = Jetpack_Options::get_option( 'id' );
+		}
+
+		$extra_data = array( 'data-carousel-extra' => array( 'blog_id' => $blog_id, 'permalink' => get_permalink( isset( $post->ID ) ? $post->ID : 0 ), 'likes_blog_id' => $likes_blog_id ) );
 
 		foreach ( (array) $extra_data as $data_key => $data_values ) {
 			$html = str_replace( '<div ', '<div ' . esc_attr( $data_key ) . "='" . json_encode( $data_values ) . "' ", $html );
@@ -264,7 +277,7 @@ class Jetpack_Tiled_Gallery {
 	}
 
 	public function gallery_classes() {
-		$classes = 'class="tiled-gallery type-' . esc_attr( $this->atts['type'] ) . '"';
+		$classes = 'class="tiled-gallery type-' . esc_attr( $this->atts['type'] ) . ' tiled-gallery-unresized"';
 		return $classes;
 	}
 
@@ -283,9 +296,7 @@ class Jetpack_Tiled_Gallery {
 	}
 
 	public static function get_content_width() {
-		global $content_width;
-
-		$tiled_gallery_content_width = $content_width;
+		$tiled_gallery_content_width = Jetpack::get_content_width();
 
 		if ( ! $tiled_gallery_content_width )
 			$tiled_gallery_content_width = 500;
@@ -297,10 +308,22 @@ class Jetpack_Tiled_Gallery {
 	 * Media UI integration
 	 */
 	function jetpack_gallery_types( $types ) {
-		$types['rectangular'] = __( 'Tiles', 'jetpack' );
+		if ( get_option( 'tiled_galleries' ) && isset( $types['default'] ) ) {
+			// Tiled is set as the default, meaning that type='default'
+			// will still display the mosaic.
+			$types['thumbnails'] = $types['default'];
+			unset( $types['default'] );
+		}
+
+		$types['rectangular'] = __( 'Tiled Mosaic', 'jetpack' );
 		$types['square'] = __( 'Square Tiles', 'jetpack' );
 		$types['circle'] = __( 'Circles', 'jetpack' );
+
 		return $types;
+	}
+
+	function jetpack_default_gallery_type( $default ) {
+		return ( get_option( 'tiled_galleries' ) ? 'rectangular' : 'default' );
 	}
 
 	/**
@@ -348,8 +371,7 @@ class Jetpack_Tiled_Gallery_Shape {
 	}
 
 	public function is_wide_theme() {
-		global $content_width;
-		return $content_width > 1000;
+		return Jetpack::get_content_width() > 1000;
 	}
 
 	public static function set_last_shape( $last_shape ) {
@@ -411,7 +433,7 @@ class Jetpack_Tiled_Gallery_One_Three extends Jetpack_Tiled_Gallery_Shape {
 	public $shape = array( 1, 3 );
 
 	public function is_possible() {
-		return $this->is_not_as_previous() && $this->images_left >= 3 &&
+		return $this->is_not_as_previous() && $this->images_left > 3 &&
 			$this->images[0]->ratio < 0.8 && $this->images[1]->ratio >=0.9 && $this->images[2]->ratio >= 0.9 && $this->images[3]->ratio >= 0.9;
 	}
 }

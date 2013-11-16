@@ -34,6 +34,7 @@ if ( $post ) :
 		wp_nonce_field( 'wpcf7-save-contact-form_' . $post_id ); ?>
 	<input type="hidden" id="post_ID" name="post_ID" value="<?php echo (int) $post_id; ?>" />
 	<input type="hidden" id="wpcf7-id" name="wpcf7-id" value="<?php echo (int) get_post_meta( $post->id, '_old_cf7_unit_id', true ); ?>" />
+	<input type="hidden" id="wpcf7-locale" name="wpcf7-locale" value="<?php echo esc_attr( $post->locale ); ?>" />
 	<input type="hidden" id="hiddenaction" name="action" value="save" />
 
 	<div id="poststuff" class="metabox-holder">
@@ -64,7 +65,7 @@ if ( $post ) :
 		<?php if ( current_user_can( 'wpcf7_edit_contact_form', $post_id ) && ! $post->initial ) : ?>
 		<div class="actions-link">
 			<?php $copy_nonce = wp_create_nonce( 'wpcf7-copy-contact-form_' . $post_id ); ?>
-			<input type="submit" name="wpcf7-copy" class="copy" value="<?php echo esc_attr( __( 'Copy', 'wpcf7' ) ); ?>"
+			<input type="submit" name="wpcf7-copy" class="copy" value="<?php echo esc_attr( __( 'Duplicate', 'wpcf7' ) ); ?>"
 			<?php echo "onclick=\"this.form._wpnonce.value = '$copy_nonce'; this.form.action.value = 'copy'; return true;\""; ?> />
 			|
 

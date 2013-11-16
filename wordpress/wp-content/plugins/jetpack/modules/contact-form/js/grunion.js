@@ -1,5 +1,5 @@
-if (!window.FB) {
-    window.FB = {};
+if ( ! window.FB ) {
+	window.FB = {};
 }
 
 GrunionFB_i18n = jQuery.extend( {
@@ -426,7 +426,7 @@ FB.ContactForm = function() {
 	function showAndHideMessage (message) {
 		try {
 			var newMessage = (!message) ? GrunionFB_i18n.savedMessage : message;
-			jQuery('#fb-success').html(newMessage);
+			jQuery('#fb-success').text(newMessage);
 			jQuery('#fb-success').slideDown('fast');
 			setTimeout(function () {
 				 jQuery('#fb-success').slideUp('fast');
@@ -463,9 +463,9 @@ FB.ContactForm = function() {
 			var thisLabel = jQuery('#fb-new-label').val();
 			// Update preview
 			if (thisLabel.length === 0) {
-				jQuery('#fb-new-field' + thisId + ' label .label-text').html("New field");
+				jQuery('#fb-new-field' + thisId + ' label .label-text').text( GrunionFB_i18n.newLabel );
 			} else {
-				jQuery('#fb-new-field' + thisId + ' label .label-text').html(thisLabel);
+				jQuery('#fb-new-field' + thisId + ' label .label-text').text( thisLabel );
 			}
 			// Update fbForm object
 			fbForm.fields[thisId].label = thisLabel;
@@ -493,7 +493,7 @@ FB.ContactForm = function() {
 			var thisType = jQuery('#fb-new-type').val();
 			// Update preview
 			if (thisType === "radio") {
-				jQuery('#fb-radio-' + thisId + '-' + thisOptionid + ' span').html(thisOptionValue);
+				jQuery('#fb-radio-' + thisId + '-' + thisOptionid + ' span').text(thisOptionValue);
 			} else {
 				jQuery('#fb-' + thisId + '-' + thisOptionid).text(thisOptionValue);
 			}
@@ -538,7 +538,7 @@ FB.ContactForm = function() {
 			var isLoaded = thisType;
 			var thisId = jQuery('#fb-field-id').val();
 			if (!thisType) { var thisType = jQuery('#fb-new-type').val(); }
-			if (!thisLabelText) { var thisLabelText = jQuery('#fb-new-field' + thisId + ' .label-text').html(); }
+			if (!thisLabelText) { var thisLabelText = jQuery('#fb-new-field' + thisId + ' .label-text').text(); }
 			var isRequired = (thisRequired) ? '<span class="label-required">' + GrunionFB_i18n.requiredLabel + '</span>' : '';
 			var thisLabel = '<label fieldid="' + thisId + '" for="fb-field' +  thisId + '"><span class="label-text">' + FB.esc_html( thisLabelText ) + '</span>' + isRequired + '</label>';
 			var thisRadio = '<input type="radio" name="radio-' + thisId + '" id="fb-field' + thisId + ' "disabled="disabled" />';
@@ -645,6 +645,8 @@ FB.ContactForm = function() {
 				content: contentSource
 			};
 
+			var $doc = jQuery(document);
+
 			jQuery.post(ajaxurl, data, function(response) {
 				// Setup fbForm
 				parseShortcode(jQuery.parseJSON(response));
@@ -666,7 +668,7 @@ FB.ContactForm = function() {
 			jQuery('#fb-new-required').click(function () {
 				updateRequired();
 			});
-			jQuery('.fb-remove').live('click', function () {
+			$doc.on('click', '.fb-remove', function () {
 				showDesc();
 				deleteField(jQuery(this));
 				grabShortcode();
@@ -680,13 +682,13 @@ FB.ContactForm = function() {
 					hidePopup();
 				}
 			});
-			jQuery('#fb-another-option').live('click', function () {
+			$doc.on('click', '#fb-another-option', function () {
 				addOption();
 			});
-			jQuery('.fb-options').live('keyup', function () {
+			$doc.on('keyup', '.fb-options', function () {
 				updateOption(jQuery(this));
 			});
-			jQuery('.fb-remove-option').live('click', function () {
+			$doc.on('click', '.fb-remove-option', function () {
 				removeOption(jQuery(this).attr('optionid'));
 			});
 			jQuery('#tab-preview a').click(function () {
@@ -708,21 +710,21 @@ FB.ContactForm = function() {
 			jQuery('#fb-field-subject').blur(function () {
 				updateSubject();
 			});
-			jQuery('.fb-form-case .fb-new-fields').live('mouseenter', function () {
+			$doc.on('mouseenter', '.fb-form-case .fb-new-fields', function () {
 				hideShowEditLink('show', jQuery(this));
 			});
-			jQuery('.fb-form-case .fb-new-fields').live('mouseleave', function () {
+			$doc.on('mouseleave', '.fb-form-case .fb-new-fields', function () {
 				hideShowEditLink('hide');
 				return false;
 			});
-			jQuery('.fb-edit-field').live('click', function () {
+			$doc.on('click', '.fb-edit-field', function () {
 				editField(jQuery(this));
 				return false;
 			});
-			jQuery('.fb-edit-field .fb-reorder').live('click', function () {
+			$doc.on('click', '.fb-edit-field .fb-reorder', function () {
 				return false;
 			});
-			jQuery('#fb-save-field').live('click', function () {
+			$doc.on('click', '#fb-save-field', function () {
 				showDesc();
 				showAndHideMessage();
 				return false;

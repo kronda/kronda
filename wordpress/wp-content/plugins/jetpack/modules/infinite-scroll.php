@@ -4,6 +4,8 @@
  * Module Description: Automatically pull the next set of posts into view when the reader approaches the bottom of the page.
  * Sort Order: 14
  * First Introduced: 2.0
+ * Requires Connection: No
+ * Auto Activate: No
  */
 
 /**
@@ -136,7 +138,7 @@ class Jetpack_Infinite_Scroll_Extras {
 	/**
 	 * Modify Infinite Scroll configuration information
 	 *
-	 * @uses Jetpack::get_active_modules, is_user_logged_in, stats_get_options, Jetpack::get_option, get_option, JETPACK__API_VERSION, JETPACK__VERSION
+	 * @uses Jetpack::get_active_modules, is_user_logged_in, stats_get_options, Jetpack_Options::get_option, get_option, JETPACK__API_VERSION, JETPACK__VERSION
 	 * @filter infinite_scroll_js_settings
 	 * @return array
 	 */
@@ -154,7 +156,7 @@ class Jetpack_Infinite_Scroll_Extras {
 			}
 
 			// We made it this far, so gather the data needed to track IS views
-			$settings['stats'] = 'blog=' . Jetpack::get_option( 'id' ) . '&host=' . parse_url( get_option( 'home' ), PHP_URL_HOST ) . '&v=ext&j=' . JETPACK__API_VERSION . ':' . JETPACK__VERSION;
+			$settings['stats'] = 'blog=' . Jetpack_Options::get_option( 'id' ) . '&host=' . parse_url( get_option( 'home' ), PHP_URL_HOST ) . '&v=ext&j=' . JETPACK__API_VERSION . ':' . JETPACK__VERSION;
 
 			// Pagetype parameter
 			$settings['stats'] .= '&x_pagetype=infinite';

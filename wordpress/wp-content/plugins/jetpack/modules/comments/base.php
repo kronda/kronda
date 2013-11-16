@@ -102,22 +102,22 @@ class Highlander_Comments_Base {
  	 */
 	function comments_array( $comments ) {
 		global $wpdb, $post;
-	
+
 		$commenter = $this->get_current_commenter();
 
 		if ( !$commenter['user_id'] )
 			return $comments;
-	
+
 		if ( !$commenter['comment_author'] )
 			return $comments;
-	
+
 		$in_moderation_comments = $wpdb->get_results( $wpdb->prepare(
 			"SELECT * FROM `$wpdb->comments` WHERE `comment_post_ID` = %d AND `user_id` = 0 AND `comment_author` = %s AND `comment_author_email` = %s AND `comment_approved` = '0' ORDER BY `comment_date_gmt` /* Highlander_Comments_Base::comments_array() */",
 			$post->ID,
 			wp_specialchars_decode( $commenter['comment_author'], ENT_QUOTES ),
 			$commenter['comment_author_email']
 		) );
-	
+
 		if ( !$in_moderation_comments )
 			return $comments;
 
@@ -180,12 +180,12 @@ class Highlander_Comments_Base {
 	/**
 	 * Allows a logged out user to leave a comment as a facebook or twitter credentialed user.
 	 * Overrides WordPress' core comment_registration option to treat these commenters as "registered" (verified) users.
-	 * 
+	 *
 	 * @since JetpackComments (1.4)
 	 * @return If no
 	 */
 	function allow_logged_out_user_to_comment_as_external() {
-		if ( !$this->is_highlander_comment_post( 'facebook', 'twitter' ) ) {
+		if ( !$this->is_highlander_comment_post( 'facebook', 'twitter', 'googleplus' ) ) {
 			return;
 		}
 
@@ -213,7 +213,7 @@ class Highlander_Comments_Base {
 		}
 
 		// Bail if this is not a guest or external service credentialed request
-		if ( !$this->is_highlander_comment_post( 'guest', 'facebook', 'twitter' ) ) {
+		if ( !$this->is_highlander_comment_post( 'guest', 'facebook', 'twitter', 'googleplus' ) ) {
 			return $comment_data;
 		}
 
@@ -233,12 +233,18 @@ class Highlander_Comments_Base {
 			}
 		}
 
+		$author_change = false;
 		foreach ( array( 'comment_author' => 'author', 'comment_author_email' => 'email', 'comment_author_url' => 'url' ) as $comment_field => $post_field ) {
+			if ( $comment_data[$comment_field] != $_POST[$post_field] && 'url' != $post_field ) {
+				$author_change = true;
+			}
 			$comment_data[$comment_field] = $_POST[$post_field];
 		}
 
-		// Mark as guest comment
-		$comment_data['user_id'] = $comment_data['user_ID'] = 0;
+		// Mark as guest comment if name or email were changed
+		if ( $author_change ) {
+			$comment_data['user_id'] = $comment_data['user_ID'] = 0;
+		}
 
 		return $comment_data;
 	}
@@ -256,12 +262,12 @@ class Highlander_Comments_Base {
 		if ( empty( $comment ) || is_wp_error( $comment ) ) {
 			return;
 		}
-	
+
 		$id_source = $this->is_highlander_comment_post();
 		if ( empty( $id_source ) ) {
 			return;
 		}
-	
+
 		// Set comment author cookies
 		if ( ( 'wordpress' != $id_source ) && is_user_logged_in() ) {
 			$comment_cookie_lifetime = apply_filters( 'comment_cookie_lifetime', 30000000 );

@@ -48,6 +48,9 @@ module.exports = function(grunt) {
 
           '<%= meta.colors %>/schemes/seaweed/admin-colors.css': ['<%= meta.colors %>/schemes/seaweed/colors.scss', '<%= meta.colors %>/schemes/_admin.scss'],
           '<%= meta.colors %>/schemes/seaweed/customizer.css': ['<%= meta.colors %>/schemes/seaweed/colors.scss', '<%= meta.colors %>/schemes/_customizer.scss'],
+          
+          '<%= meta.colors %>/schemes/midnight/admin-colors.css': ['<%= meta.colors %>/schemes/midnight/colors.scss', '<%= meta.colors %>/schemes/_admin.scss'],
+          '<%= meta.colors %>/schemes/midnight/customizer.css': ['<%= meta.colors %>/schemes/midnight/colors.scss', '<%= meta.colors %>/schemes/_customizer.scss'],
         }]
       }
     },

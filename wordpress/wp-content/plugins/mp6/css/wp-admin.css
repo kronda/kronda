@@ -1135,8 +1135,6 @@ form p.submit a.cancel:hover {
 p.submit {
 	text-align: left;
 	max-width: 100%;
-	border-top-width: 1px;
-	border-top-style: solid;
 	margin-top: 20px;
 	padding-top: 10px;
 }
@@ -1240,6 +1238,7 @@ fieldset label,
 	vertical-align: middle;
 }
 
+.options-media-php label[for*="_size_"],
 #misc-publishing-actions label {
 	vertical-align: baseline;
 }
@@ -1250,7 +1249,7 @@ fieldset label,
 	font: normal 20px/1 'dashicons';
 	speak: none;
 	left: -1px;
-	padding: 0 6px 0 0;
+	padding: 0 5px 0 0;
 	position: relative;
 	top: 0;
 	text-decoration: none !important;
@@ -2570,6 +2569,10 @@ html.wp-toolbar {
 	position: relative;
 }
 
+#dashboard-widgets .postbox .inside {
+	margin-bottom: 0;
+}
+
 .postbox .inside > p:last-child,
 .rss-widget ul li:last-child {
 	margin-bottom: 1px !important;
@@ -3004,8 +3007,13 @@ tr .locked-info {
 }
 
 tr.wp-locked .locked-info {
-	height: 22px;
+	margin-top: 8px;
+	height: auto;
 	opacity: 1;
+}
+
+.locked-text {
+	vertical-align: top;
 }
 
 tr.locked-info, tr.wp-locked .locked-info {
@@ -3864,6 +3872,7 @@ td.plugin-title p {
 
 .curtime #timestamp:before {
 	content: '\f145';
+	top: -1px;
 }
 
 #timestampdiv {
@@ -5752,6 +5761,9 @@ span.imgedit-scale-warn {
 	vertical-align: text-top;
 }
 
+#the-comment-list .unapproved th.check-column input {
+	margin-left: 4px;
+}
 
 /*------------------------------------------------------------------------------
   16.0 - Themes
@@ -7436,7 +7448,7 @@ h3:hover .edit-box {
 }
 
 #dashboard-widgets h4 {
-	font-weight: 600;
+	font-weight: normal;
 	font-size: 14px;
 	margin: 0 0 .2em;
 	padding: 0;
@@ -7556,9 +7568,10 @@ h3:hover .edit-box {
 }
 
 #dashboard_recent_comments .comment-meta .approve {
-	font-style: italic;
 	font-family: "Open Sans", sans-serif;
-	font-size: 10px;
+	font-size: 13px;
+	line-height: 1;
+	margin: 0 10px;
 }
 
 #dashboard_recent_comments .subsubsub {
@@ -7596,7 +7609,7 @@ h3:hover .edit-box {
 #the-comment-list .comment-item h4 {
 	line-height: 1.5em;
 	margin-top: 0;
-	color: #777;
+	color: #999;
 }
 
 #the-comment-list .comment-item h4 cite {
@@ -7910,6 +7923,7 @@ a.rsswidget {
 	margin-left: 0;
 	padding: 26px 24px 46px;
 	font-weight: normal;
+	overflow: hidden;
 }
 
 .login form .forgetmenot {
@@ -7927,6 +7941,7 @@ a.rsswidget {
 }
 
 #login form p.submit {
+	margin: 0;
 	padding: 0;
 }
 
@@ -8222,27 +8237,28 @@ body.interim-login {
 	border-top-width: 1px;
 	border-top-style: solid;
 	margin-top: 2em;
-	overflow: hidden;
 }
 
 .menu-settings dl {
 	margin: 0 0 10px;
 	overflow: hidden;
-	position: relative;
 }
 
 .menu-settings dd {
 	float: left;
 	margin: 0;
 	width: 60%;
-	padding-left: 170px;
 }
 
 .menu-settings dt {
+	float: left;
 	clear: both;
-	left: 0;
-	padding: 3px 0 0;
-	position: absolute;
+	width: 18%;
+	padding: 3px 1px 0;
+}
+
+.menu-settings label {
+	vertical-align: baseline;
 }
 
 .menu-edit .checkbox-input {
@@ -9362,7 +9378,7 @@ input.newtag:focus ~ div.taghint {
 	width: 300px;
 }
 
-/* theme-editor */
+/* Theme/Plugin Editor */
 .alignleft h3 {
 	margin: 0;
 }
@@ -9396,7 +9412,7 @@ input.newtag:focus ~ div.taghint {
 
 #templateside ol,
 #templateside ul {
-	margin: .5em;
+	margin: .5em 0;
 	padding: 0;
 }
 
@@ -9404,8 +9420,20 @@ input.newtag:focus ~ div.taghint {
 	margin: 4px 0;
 }
 
-#templateside ul li a span.highlight {
-	display:block;
+#templateside a,
+.theme-editor-php .highlight {
+	display: block;
+	padding: 3px 3px 3px 12px;
+	text-decoration: none;
+}
+
+.theme-editor-php .highlight {
+	margin: -3px 3px -3px -12px;
+}
+
+#templateside .highlight {
+	border: none;
+	font-weight: bold;
 }
 
 .nonessential {
@@ -9414,19 +9442,13 @@ input.newtag:focus ~ div.taghint {
 	padding-left: 12px;
 }
 
-.highlight {
-	padding: 3px 3px 3px 12px;
-	margin-left: -12px;
-	font-weight: 600;
-	border: 0 none;
-}
-
 #documentation {
 	margin-top: 10px;
 }
+
 #documentation label {
 	line-height: 22px;
-	vertical-align: top;
+	vertical-align: baseline;
 	font-weight: 600;
 }
 

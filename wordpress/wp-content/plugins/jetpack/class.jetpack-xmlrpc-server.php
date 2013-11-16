@@ -30,7 +30,7 @@ class Jetpack_XMLRPC_Server {
 				'jetpack.featuresEnabled'   => array( $this, 'features_enabled' ),
 				'jetpack.getPost'           => array( $this, 'get_post' ),
 				'jetpack.getPosts'          => array( $this, 'get_posts' ),
-				'jetpack.getComment'        => array( $this, 'get_comment' ), 
+				'jetpack.getComment'        => array( $this, 'get_comment' ),
 				'jetpack.getComments'       => array( $this, 'get_comments' ),
 			) );
 
@@ -80,24 +80,24 @@ class Jetpack_XMLRPC_Server {
 			return $this->error( new Jetpack_Error( 'verify_secret_1_malformed', sprintf( 'The required "%s" parameter is malformed.', 'secret_1' ), 400 ) );
 		}
 
-		$secrets = Jetpack::get_option( $action );
+		$secrets = Jetpack_Options::get_option( $action );
 		if ( !$secrets || is_wp_error( $secrets ) ) {
-			Jetpack::delete_option( $action );
+			Jetpack_Options::delete_option( $action );
 			return $this->error( new Jetpack_Error( 'verify_secrets_missing', 'Verification took too long', 400 ) );
 		}
 
 		@list( $secret_1, $secret_2, $secret_eol ) = explode( ':', $secrets );
 		if ( empty( $secret_1 ) || empty( $secret_2 ) || empty( $secret_eol ) || $secret_eol < time() ) {
-			Jetpack::delete_option( $action );
+			Jetpack_Options::delete_option( $action );
 			return $this->error( new Jetpack_Error( 'verify_secrets_missing', 'Verification took too long', 400 ) );
 		}
 
 		if ( $verify_secret !== $secret_1 ) {
-			Jetpack::delete_option( $action );
+			Jetpack_Options::delete_option( $action );
 			return $this->error( new Jetpack_Error( 'verify_secrets_mismatch', 'Secret mismatch', 400 ) );
 		}
 
-		Jetpack::delete_option( $action );
+		Jetpack_Options::delete_option( $action );
 
 		return $secret_2;
 	}
@@ -158,7 +158,7 @@ class Jetpack_XMLRPC_Server {
 	function test_connection() {
 		return JETPACK__VERSION;
 	}
-	
+
 	function test_api_user_code( $args ) {
 		$client_id = (int) $args[0];
 		$user_id   = (int) $args[1];
@@ -181,7 +181,7 @@ class Jetpack_XMLRPC_Server {
 		error_log( "VERIFY: $verify" );
 		*/
 
-		$jetpack_token = Jetpack_Data::get_access_token( 1 );
+		$jetpack_token = Jetpack_Data::get_access_token( JETPACK_MASTER_USER );
 
 		$api_user_code = get_user_meta( $user_id, "jetpack_json_api_$client_id", true );
 		if ( !$api_user_code ) {
@@ -279,7 +279,7 @@ class Jetpack_XMLRPC_Server {
 
 		return $sync_data;
 	}
-	
+
 	function update_attachment_parent( $args ) {
 		$attachment_id = (int) $args[0];
 		$parent_id     = (int) $args[1];

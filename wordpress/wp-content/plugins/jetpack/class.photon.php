@@ -51,8 +51,9 @@ class Jetpack_Photon {
 		if ( ! function_exists( 'jetpack_photon_url' ) )
 			return;
 
-		// Images in post content
+		// Images in post content and galleries
 		add_filter( 'the_content', array( __CLASS__, 'filter_the_content' ), 999999 );
+		add_filter( 'get_post_gallery', array( __CLASS__, 'filter_the_content' ), 999999 );
 
 		// Core image retrieval
 		add_filter( 'image_downsize', array( $this, 'filter_image_downsize' ), 10, 3 );
@@ -90,7 +91,7 @@ class Jetpack_Photon {
 	public static function parse_images_from_html( $content ) {
 		$images = array();
 
-		if ( preg_match_all( '#(?:<a[^>]+?href=["|\'](?P<link_url>.+?)["|\'][^>]*?>\s*)?(?P<img_tag><img[^>]+?src=["|\'](?P<img_url>.+?)["|\'].*?>){1}(?:\s*</a>)?#is', $content, $images ) ) {
+		if ( preg_match_all( '#(?:<a[^>]+?href=["|\'](?P<link_url>[^\s]+?)["|\'][^>]*?>\s*)?(?P<img_tag><img[^>]+?src=["|\'](?P<img_url>[^\s]+?)["|\'].*?>){1}(?:\s*</a>)?#is', $content, $images ) ) {
 			foreach ( $images as $key => $unused ) {
 				// Simplify the output as much as possible, mostly for confirming test results.
 				if ( is_numeric( $key ) && $key > 0 )
@@ -135,7 +136,7 @@ class Jetpack_Photon {
 		$images = Jetpack_Photon::parse_images_from_html( $content );
 
 		if ( ! empty( $images ) ) {
-			global $content_width;
+			$content_width = Jetpack::get_content_width();
 
 			$image_sizes = self::image_sizes();
 			$upload_dir = wp_upload_dir();
@@ -282,6 +283,10 @@ class Jetpack_Photon {
 					if ( $src != $photon_url ) {
 						$new_tag = $tag;
 
+						// If present, replace the link href with a Photoned URL for the full-size image.
+						if ( ! empty( $images['link_url'][ $index ] ) && self::validate_image_url( $images['link_url'][ $index ] ) )
+							$new_tag = preg_replace( '#(href=["|\'])' . $images['link_url'][ $index ] . '(["|\'])#i', '\1' . jetpack_photon_url( $images['link_url'][ $index ] ) . '\2', $new_tag, 1 );
+
 						// Supplant the original source value with our Photon URL
 						$photon_url = esc_url( $photon_url );
 						$new_tag = str_replace( $src_orig, $photon_url, $new_tag );
@@ -304,17 +309,10 @@ class Jetpack_Photon {
 
 						// Replace original tag with modified version
 						$content = str_replace( $tag, $new_tag, $content );
-
-						// Overwrite the originally-matched tag if this image is wrapped in a link
-						if ( ! empty( $images['link_url'][ $index ] ) )
-							$tag = $new_tag;
 					}
-				}
+				} elseif ( preg_match( '#^http(s)?://i[\d]{1}.wp.com#', $src ) && ! empty( $images['link_url'][ $index ] ) && self::validate_image_url( $images['link_url'][ $index ] ) ) {
+					$new_tag = preg_replace( '#(href=["|\'])' . $images['link_url'][ $index ] . '(["|\'])#i', '\1' . jetpack_photon_url( $images['link_url'][ $index ] ) . '\2', $tag, 1 );
 
-				// If image is linked to an image (presumably itself, but who knows), pass link href to Photon sans arguments.
-				// This change is only applied to the current tag so remaining matched tags aren't interfered with.
-				if ( ! empty( $images['link_url'][ $index ] ) && false !== strpos( $tag, $images['link_url'][ $index ] ) && self::validate_image_url( $images['link_url'][ $index ] ) ) {
-					$new_tag = str_replace( $images['link_url'][ $index ], jetpack_photon_url( $images['link_url'][ $index ] ), $tag );
 					$content = str_replace( $tag, $new_tag, $content );
 				}
 			}
@@ -373,7 +371,15 @@ class Jetpack_Photon {
 				// Expose determined arguments to a filter before passing to Photon
 				$transform = $image_args['crop'] ? 'resize' : 'fit';
 
-				$photon_args[ $transform ] = $image_args['width'] . ',' . $image_args['height'];
+				// Check specified image dimensions and account for possible zero values; photon fails to resize if a dimension is zero.
+				if ( 0 == $image_args['width'] || 0 == $image_args['height'] ) {
+					if ( 0 == $image_args['width'] && 0 < $image_args['height'] )
+						$photon_args['h'] = $image_args['height'];
+					elseif ( 0 == $image_args['height'] && 0 < $image_args['width'] )
+						$photon_args['w'] = $image_args['width'];
+				} else {
+					$photon_args[ $transform ] = $image_args['width'] . ',' . $image_args['height'];
+				}
 
 				$photon_args = apply_filters( 'jetpack_photon_image_downsize_string', $photon_args, compact( 'image_args', 'image_url', 'attachment_id', 'size', 'transform' ) );
 
@@ -438,7 +444,7 @@ class Jetpack_Photon {
 		) );
 
 		// Bail if scheme isn't http or port is set that isn't port 80
-		if ( 'http' != $url_info['scheme'] || ! in_array( $url_info['port'], array( 80, null ) ) )
+		if ( ( 'http' != $url_info['scheme'] || ! in_array( $url_info['port'], array( 80, null ) ) ) && apply_filters( 'jetpack_photon_reject_https', true ) )
 			return false;
 
 		// Bail if no host is found

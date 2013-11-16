@@ -1081,6 +1081,17 @@ span.mce_ltr:before {
 	position: relative;
 }
 
+#wp-content-editor-tools {
+	position: relative;
+	z-index: 1;
+}
+
+#wp-content-editor-container {
+	clear: both;
+	position: relative;
+	top: -1px;
+}
+
 .wp-editor-area {
 	font-family: Consolas, Monaco, monospace;
 	font-size: 13px;

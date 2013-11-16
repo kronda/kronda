@@ -23,29 +23,36 @@ function mp6_colors_register_schemes() {
 	// Blue
 	mp6_add_admin_colors( 'blue', array(
 		'label' => 'Blue',
-		'palette' => array( '#096484', '#4796b3', '#52accc', '#e5f8ff' ),
+		'palette' => array( '#096484', '#4796b3', '#52accc', '#74B6CE' ),
 		'icon' =>  array( 'base' => '#e5f8ff', 'focus' => '#fff', 'current' => '#fff' ),
 	) );
 
 	// Seaweed
 	mp6_add_admin_colors( 'seaweed', array(
 		'label' => 'Seaweed',
-		'palette' => array( '#15757a', '#a8c274', '#e78229', '#f1f3f3' ),
+		'palette' => array( '#10585C', '#15757a', '#a8c274', '#e78229' ),
 		'icon' => array( 'base' => '#e1f9fa', 'focus' => '#fff', 'current' => '#fff' ),
 	) );
 
 	// Pixel
 	mp6_add_admin_colors( 'pixel', array(
 		'label' => 'Pixel',
-		'palette' => array( '#59524c', '#c7a589', '#9ea476', '#f1f3f3' ),
+		'palette' => array( '#46403C', '#59524c', '#c7a589', '#9ea476' ),
 		'icon' => array( 'base' => '#f3f2f1', 'focus' => '#fff', 'current' => '#fff' ),
 	) );
 
 	// Ghostbusters
 	mp6_add_admin_colors( 'ectoplasm', array(
 		'label' => 'Ectoplasm',
-		'palette' => array( '#523f6d', '#a3b745', '#d46f15', '#f2f1f3' ),
+		'palette' => array( '#413256', '#523f6d', '#a3b745', '#d46f15' ),
 		'icon' => array( 'base' => '#ece6f6', 'focus' => '#fff', 'current' => '#fff' ),
+	) );
+	
+	// Midnight
+	mp6_add_admin_colors( 'midnight', array(
+		'label' => 'Midnight',
+		'palette' => array( '#25282b', '#363b3f', '#69a8bb', '#e14d43' ),
+		'icon' => array( 'base' => '#f1f2f3', 'focus' => '#fff', 'current' => '#fff' ),
 	) );
 
 /*
@@ -183,7 +190,7 @@ function mp6_colors_set_script_colors() {
 add_action( 'admin_enqueue_scripts', 'mp6_colors_enqueue_picker' );
 function mp6_colors_enqueue_picker() {
 
-	if ( ! in_array( get_current_screen()->base, array( 'profile', 'user-edit', 'profile-network', 'user-edit-network' ) ) )
+	if ( ! in_array( get_current_screen()->base, apply_filters( 'mp6_colors_allowed_pages', array( 'profile', 'user-edit', 'profile-network', 'user-edit-network' ) ) ) )
 		return;
 
 	wp_enqueue_style( 'mp6-color-scheme-picker', plugins_url( 'picker/style.css', __FILE__ ) );
@@ -215,6 +222,7 @@ remove_action( 'admin_color_scheme_picker', 'admin_color_scheme_picker' );
 add_action( 'admin_color_scheme_picker', 'mp6_colors_scheme_picker' );
 function mp6_colors_scheme_picker() {
 	global $_wp_admin_css_colors, $user_id;
+	ksort($_wp_admin_css_colors);
 ?>
 
 	<fieldset id="color-picker">

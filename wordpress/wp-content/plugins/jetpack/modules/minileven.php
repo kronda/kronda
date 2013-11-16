@@ -5,6 +5,8 @@
  * Module Description: Automatically optimize your site for mobile devices.
  * Sort Order: 11
  * First Introduced: 1.8
+ * Requires Connection: No
+ * Auto Activate: No
  */
 
 function jetpack_load_minileven() {

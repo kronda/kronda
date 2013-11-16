@@ -131,7 +131,8 @@ strong .post-com-count span {
 
 #adminmenu a:hover,
 #adminmenu li.menu-top:hover,
-#adminmenu li.opensub > a.menu-top {
+#adminmenu li.opensub > a.menu-top,
+#adminmenu li > a.menu-top:focus {
 	color: $menu-highlight-text;
 	background-color: $menu-highlight-background;
 }
@@ -147,7 +148,8 @@ strong .post-com-count span {
 #adminmenu .wp-submenu,
 #adminmenu .wp-has-current-submenu .wp-submenu,
 #adminmenu .wp-has-current-submenu.opensub .wp-submenu,
-.folded #adminmenu .wp-has-current-submenu .wp-submenu {
+.folded #adminmenu .wp-has-current-submenu .wp-submenu,
+#adminmenu a.wp-has-current-submenu:focus + .wp-submenu {
 	background: $menu-submenu-background;
 }
 
@@ -161,22 +163,27 @@ strong .post-com-count span {
 
 #adminmenu .wp-submenu a,
 #adminmenu .wp-has-current-submenu .wp-submenu a,
-.folded #adminmenu .wp-has-current-submenu .wp-submenu a {
+.folded #adminmenu .wp-has-current-submenu .wp-submenu a,
+#adminmenu a.wp-has-current-submenu:focus + .wp-submenu a,
+#adminmenu .wp-has-current-submenu.opensub .wp-submenu a {
 	color: $menu-submenu-text;
-}
-
-#adminmenu .wp-submenu a:hover,
-#adminmenu .wp-has-current-submenu .wp-submenu a:hover,
-.folded #adminmenu .wp-has-current-submenu .wp-submenu a:hover {
-	color: $menu-submenu-focus-text;
+	
+	&:focus, &:hover {
+		color: $menu-submenu-focus-text;
+	}
 }
 
 
 /* Admin Menu: current */
 
-#adminmenu .wp-submenu li.current a,
-#adminmenu .wp-submenu li.current a:hover {
+#adminmenu .wp-submenu li.current a, 
+#adminmenu a.wp-has-current-submenu:focus + .wp-submenu li.current a,
+#adminmenu .wp-has-current-submenu.opensub .wp-submenu li.current a {
 	color: $menu-submenu-current-text;
+
+	&:hover, &:focus {
+		color: $menu-submenu-focus-text;
+	}
 }
 
 ul#adminmenu a.wp-has-current-submenu:after,

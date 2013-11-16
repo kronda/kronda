@@ -1,21 +1,10 @@
 <?php
 
-function menu_alter() {
-    echo '
-	<style>
-	#menu-posts-feedback .wp-menu-image img { display: none; }
-	#adminmenu .menu-icon-feedback:hover div.wp-menu-image, #adminmenu .menu-icon-feedback.wp-has-current-submenu div.wp-menu-image, #adminmenu .menu-icon-feedback.current div.wp-menu-image { background: url("' .GRUNION_PLUGIN_URL . 'images/grunion-menu-hover.png") no-repeat 7px 7px !important; }
-	#adminmenu .menu-icon-feedback div.wp-menu-image, #adminmenu .menu-icon-feedback div.wp-menu-image, #adminmenu .menu-icon-feedback div.wp-menu-image { background: url("' . GRUNION_PLUGIN_URL . 'images/grunion-menu.png") no-repeat 7px 7px !important; }
-	.grunion-menu-button { background: url("' . GRUNION_PLUGIN_URL . 'images/grunion-form.png") no-repeat; width: 13px; height: 13px; display: inline-block; vertical-align: middle; ) }
-	@media only screen and (-moz-min-device-pixel-ratio: 1.5), only screen and (-o-min-device-pixel-ratio: 3/2), only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5) {
-	    #adminmenu .menu-icon-feedback:hover div.wp-menu-image, #adminmenu .menu-icon-feedback.wp-has-current-submenu div.wp-menu-image, #adminmenu .menu-icon-feedback.current div.wp-menu-image { background: url("' .GRUNION_PLUGIN_URL . 'images/grunion-menu-hover-2x.png") no-repeat 7px 7px !important; background-size: 15px 16px !important; }
-		#adminmenu .menu-icon-feedback div.wp-menu-image, #adminmenu .menu-icon-feedback div.wp-menu-image, #adminmenu .menu-icon-feedback div.wp-menu-image { background: url("' . GRUNION_PLUGIN_URL . 'images/grunion-menu-2x.png") no-repeat 7px 7px !important; background-size: 15px 16px !important; }
-	    .grunion-menu-button { background-image: url("' . GRUNION_PLUGIN_URL . 'images/grunion-form-2x.png"); background-size: 13px 12px !important; vertical-align: bottom; }
-	}
-	</style>';
+function grunion_menu_alter() {
+	wp_enqueue_style( 'grunion-menu-alter', plugins_url( 'css/menu-alter.css', __FILE__ ) );
 }
 
-add_action('admin_head', 'menu_alter');
+add_action( 'admin_enqueue_scripts', 'grunion_menu_alter' );
 
 /**
  * Add a contact form button to the post composition screen
@@ -27,8 +16,13 @@ function grunion_media_button( ) {
 	$title = esc_attr( __( 'Add a custom form', 'jetpack' ) );
 	$plugin_url = esc_url( GRUNION_PLUGIN_URL );
 	$site_url = esc_url( admin_url( "/admin-ajax.php?post_id={$iframe_post_id}&action=grunion_form_builder&TB_iframe=true&width=768" ) );
+	?>
 
-	echo '<a href="' . $site_url . '&id=add_form" class="thickbox" title="' . $title . '"><div class="grunion-menu-button" alt="' . $title . '"></div></a>';
+	<a id="insert-jetpack-contact-form" class="button thickbox" title="<?php esc_html_e( 'Add Contact Form', 'jetpack' ); ?>" data-editor="content" href="<?php echo $site_url ?>&id=add_form">
+		<span class="jetpack-contact-form-icon"></span> <?php esc_html_e( 'Add Contact Form', 'jetpack' ); ?>
+	</a>
+
+	<?php
 }
 
 add_action( 'wp_ajax_grunion_form_builder', 'display_form_view' );
@@ -42,14 +36,14 @@ function display_form_view() {
 add_action( 'admin_print_styles', 'grunion_admin_css' );
 function grunion_admin_css() {
 	global $current_screen;
-	if ( 'edit-feedback' != $current_screen->id )
+	if ( ! in_array( $current_screen->id, array( 'edit-feedback', 'jetpack_page_omnisearch', 'dashboard_page_omnisearch' ) ) )
 		return;
 
 	wp_enqueue_script( 'wp-lists' );
 ?>
 
 <style type='text/css'>
-.add-new-h2, .view-switch, body.no-js .tablenav select[name^=action], body.no-js #doaction, body.no-js #doaction2 { 
+.add-new-h2, .view-switch, body.no-js .tablenav select[name^=action], body.no-js #doaction, body.no-js #doaction2 {
 	display: none
 }
 
@@ -90,6 +84,79 @@ color: #D98500;
 <?php
 }
 
+/**
+ * Hack a 'Bulk Spam' option for bulk edit
+ * There isn't a better way to do this until
+ * http://core.trac.wordpress.org/changeset/17297 is resolved
+ */
+add_action( 'admin_head', 'grunion_add_bulk_edit_option' );
+function grunion_add_bulk_edit_option() {
+
+	$screen = get_current_screen();
+
+	if ( 'edit-feedback' != $screen->id
+	|| ( ! empty( $_GET['post_status'] ) && 'spam' == $_GET['post_status'] ) )
+		return;
+
+	$spam_text = __( 'Mark Spam', 'jetpack' );
+	?>
+		<script type="text/javascript">
+			jQuery(document).ready(function($) {
+				$('#posts-filter .actions select[name=action] option:first-child').after('<option value="spam"><?php echo esc_attr( $spam_text ); ?></option>' );
+			})
+		</script>
+	<?php
+}
+
+/**
+ * Handle a bulk spam report
+ */
+add_action( 'admin_init', 'grunion_handle_bulk_spam' );
+function grunion_handle_bulk_spam() {
+	global $pagenow;
+
+	if ( 'edit.php' != $pagenow
+	|| ( empty( $_REQUEST['post_type'] ) || 'feedback' != $_REQUEST['post_type'] ) )
+		return;
+
+	// Slip in a success message
+	if ( ! empty( $_REQUEST['message'] ) && 'marked-spam' == $_REQUEST['message'] )
+		add_action( 'admin_notices', 'grunion_message_bulk_spam' );
+
+	if ( empty( $_REQUEST['action'] ) || 'spam' != $_REQUEST['action'] )
+		return;
+
+	check_admin_referer('bulk-posts');
+
+	if ( empty( $_REQUEST['post'] ) ) {
+		wp_safe_redirect( wp_get_referer() );
+		exit;
+	}
+
+	$post_ids = array_map( 'intval', $_REQUEST['post'] );
+
+	foreach( $post_ids as $post_id ) {
+		if ( ! current_user_can( "edit_page", $post_id ) )
+			wp_die( __( 'You are not allowed to manage this item.', 'jetpack' ) );
+
+		$post = array(
+				'ID'           => $post_id,
+				'post_status'  => 'spam',
+			);
+		$akismet_values = get_post_meta( $post_id, '_feedback_akismet_values', true );
+		wp_update_post( $post );
+		do_action( 'contact_form_akismet', 'spam', $akismet_values );
+	}
+
+	$redirect_url = add_query_arg( 'message', 'marked-spam', wp_get_referer() );
+	wp_safe_redirect( $redirect_url );
+	exit;
+}
+
+function grunion_message_bulk_spam() {
+	echo '<div class="updated"><p>' . __( 'Feedback(s) marked as spam', 'jetpack' ) . '</p></div>';
+}
+
 // remove admin UI parts that we don't support in feedback management
 add_action( 'admin_menu', 'grunion_admin_menu' );
 function grunion_admin_menu() {
@@ -118,7 +185,7 @@ function grunion_admin_view_tabs( $views ) {
 	preg_match( '|post_type=feedback\'( class="current")?\>(.*)\<span class=|', $views['all'], $match );
 	if ( !empty( $match[2] ) )
 		$views['all'] = str_replace( $match[2], 'Messages ', $views['all'] );
-	
+
 	return $views;
 }
 
@@ -263,7 +330,7 @@ jQuery(document).ready( function($) {
 			function( r ) {
 				$('#post-<?php echo $post_id; ?>')
 					.css( {backgroundColor:'#FF7979'} )
-					.fadeOut(350, function() { 
+					.fadeOut(350, function() {
 						$(this).remove();
 						$('.subsubsub').html(r);
 				});
@@ -321,7 +388,7 @@ jQuery(document).ready( function($) {
 			function( r ) {
 				$('#post-<?php echo $post_id; ?>')
 					.css( {backgroundColor:'#59C859'} )
-					.fadeOut(350, function() { 
+					.fadeOut(350, function() {
 						$(this).remove();
 						$('.subsubsub').html(r);
 				});
@@ -335,7 +402,12 @@ jQuery(document).ready( function($) {
 			break;
 
 		case 'feedback_date':
-			echo get_the_date( __( 'Y-m-d @ g:i:s A', 'jetpack' ) );
+
+			$date_time_format = _x( '%1$s \a\t %2$s', '{$date_format} \a\t {$time_format}', 'jetpack' );
+			$date_time_format = sprintf( $date_time_format, get_option( 'date_format' ), get_option( 'time_format' ) );
+			$time = date_i18n( $date_time_format, get_the_time( 'U' ) );
+
+			echo $time;
 			break;
 	}
 }
@@ -400,7 +472,7 @@ function grunion_ajax_shortcode() {
 // and constructs a json object representing its contents and attributes
 function grunion_ajax_shortcode_to_json() {
 	global $post, $grunion_form;
-	
+
 	check_ajax_referer( 'grunion_shortcode_to_json' );
 
 	if ( !isset( $_POST['content'] ) || !is_numeric( $_POST['post_id'] ) ) {
@@ -510,7 +582,7 @@ function grunion_ajax_spam() {
 	$sql = "
 		SELECT post_status,
 			COUNT( * ) AS post_count
-		FROM `{$wpdb->posts}` 
+		FROM `{$wpdb->posts}`
 		WHERE post_type =  'feedback'
 		GROUP BY post_status
 	";
@@ -557,4 +629,13 @@ function grunion_ajax_spam() {
 
 	echo $status_html;
 	exit;
+}
+
+add_action( 'omnisearch_add_providers', 'grunion_omnisearch_add_providers' );
+function grunion_omnisearch_add_providers() {
+	// Feedback uses capability_type 'page'
+	if ( current_user_can( 'edit_pages' ) ) {
+		require_once( GRUNION_PLUGIN_DIR . '/grunion-omnisearch.php' );
+		new Jetpack_Omnisearch_Grunion;
+	}
 }

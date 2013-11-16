@@ -19,7 +19,7 @@
 
 		init : function() {
 
-			this.selector = $( '#adminmenu .wp-menu-image, #wpadminbar .ab-icon' );
+			this.selector = $( '#adminmenu .wp-menu-image, #wpadminbar .ab-item' );
 
 			this.setColors();
 			this.findElements();

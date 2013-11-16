@@ -5,6 +5,8 @@
  * Module Description: Customize the appearance of your site using CSS but without modifying your theme.
  * Sort Order: 11
  * First Introduced: 1.7
+ * Requires Connection: No
+ * Auto Activate: Yes
  */
 
 function jetpack_load_custom_css() {
