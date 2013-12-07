@@ -55,7 +55,7 @@ class Advanced_Responsive_Video_Embedder {
 	 *
 	 * @var     string
 	 */
-	protected $version = '2.7.4';
+	protected $version = '2.7.5';
 
 	/**
 	 * Unique identifier for your plugin.
@@ -105,6 +105,10 @@ class Advanced_Responsive_Video_Embedder {
 		// Load admin style sheet and JavaScript.
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_styles' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ) );
+
+		//* Display a notice that can be dismissed
+		add_action( 'admin_init',    array( $this, 'admin_notice_ignore') );
+		add_action( 'admin_notices', array( $this, 'admin_notice') );
 
 		// Load public-facing style sheet and JavaScript.
 		#add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_styles' ) );
@@ -844,6 +848,42 @@ class Advanced_Responsive_Video_Embedder {
 		$css = str_replace( array( "\n", "\r" ), ' ', $css );
 
 		echo '<style type="text/css">' . $css . '</style>' . "\n";
+	}
+
+	/**
+	 * Display a notice that can be dismissed
+	 *
+	 * @since     3.0.0
+	 */
+	function admin_notice() {
+		global $current_user ;
+		$user_id = $current_user->ID;
+		//* Check that the user hasn't already clicked to ignore the message
+		if ( ! get_user_meta($user_id, 'arve_ignore_admin_notice') ) {
+			echo '<div class="updated"><p>';
+			_e( 'Hey guys, this is Nico the Author of the Advanced Responsive Video Embedder Plugin. I have worked long and hard on version 3.0 of this plugin and not want to abuse all users as beta testers again. I would be glad if some of you can manually install and test the upcoming version and report back. Thanks.', 'ngt-arve' );
+			printf( __( ' <a href="%s" target="_blank">%s</a> | <a href="?arve_nag_ignore=1">%s</a>' ),
+				'https://github.com/nextgenthemes/advanced-responsive-video-embedder/archive/master.zip',
+				__( 'Download Beta', 'ngt-arve' ),
+				__( 'Dismiss', 'ngt-arve' )
+			);
+			echo "</p></div>";
+		}
+	}
+
+	/**
+	 * Maybe dismiss admin Notice
+	 *
+	 * @since     3.0.0
+	 */
+	function admin_notice_ignore() {
+		global $current_user;
+
+		$user_id = $current_user->ID;
+		//* If user clicks to ignore the notice, add that to their user meta
+		if ( isset( $_GET['arve_nag_ignore'] ) && '1' == $_GET['arve_nag_ignore'] ) {
+			add_user_meta( $user_id, 'arve_ignore_admin_notice', 'true', true );
+		}
 	}
 
 }
