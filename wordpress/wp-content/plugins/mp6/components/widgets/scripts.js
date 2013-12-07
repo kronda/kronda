@@ -1,17 +1,24 @@
-;var widgets = ( function( $, window, document, undefined ) {
+( function( $, window, document, undefined ) {
 
 	$(document).ready( function() {
-		$( '#widgets-right .widget-top' ).click( function() {
-			$(this).toggleClass( 'open' );
-		} );
 		$( '#widgets-right .widgets-sortables .sidebar-description' ).each( function(index, element) {
 			$(this).appendTo( $(element).parent().prev() );
 		});
 
-		var no_inactive = $( '#wp_inactive_widgets .widget' ).length;
+		// Available Widget Descriptions
+		$( '#available-widgets .widget-top' ).append( '<div class="more-info"></div>' );
 
-		$( '.inactive-sidebar .sidebar-name h3' ).prepend( no_inactive + ' ' );
-		$( '.inactive-sidebar' ).addClass( 'closed' );
+		$( '#available-widgets .more-info' ).on( 'mouseenter', function() {
+			var $this = $( this ),
+				description = $this.closest( '.widget' ).find('.widget-description'),
+				description_timer = setTimeout( function() {
+					description.fadeIn(200);
+				}, 400 );
+			$this.on( 'mouseleave', function() {
+				clearTimeout( description_timer );
+				description.fadeOut(200);
+			} );
+		} );
 	});
 
 })( jQuery, window, document );
