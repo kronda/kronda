@@ -5,7 +5,7 @@ Author URI: http://joshbroton.com
 License: GPL2
 */
 
-class pressgram_widget extends WP_Widget {
+class Pressgram_Widget extends WP_Widget {
 
 	// constructor
 	public function __construct() {
@@ -20,10 +20,14 @@ class pressgram_widget extends WP_Widget {
 			$title = esc_attr( $instance['title'] );
 			$columns = esc_attr( $instance['columns'] );
 			$count = esc_attr( $instance['count'] );
+			$linkto = esc_attr( $instance['linkto'] );
+			$queryby = esc_attr( $instance['queryby'] );
 		} else {
 			$title = '';
 			$columns = '2';
 			$count = '4';
+			$linkto = 'parent';
+			$queryby = 'image';
 		}
 		?>
 		<div class="wrap">
@@ -125,11 +129,12 @@ class pressgram_widget extends WP_Widget {
 			'posts_per_page' => $count,
 			);
 
-		// Get the posts
+		// Get the pressgram posts
 		$pressgram_array = get_posts( $args );
 
 		// The Loop to link images to their post
 		foreach ( $pressgram_array as $pressgram_post ) {
+
 			// Do this if featured image is set
 			if ( '' != get_the_post_thumbnail( $pressgram_post->ID ) ) {
 				$widget_content .= '<a class="pressgram_widget_text" href="' . get_permalink( $pressgram_post->ID ) . '" title="' . esc_attr( $pressgram_post->post_title ) . '">' . get_the_post_thumbnail( $pressgram_post->ID, $img_size ) . '</a>';
@@ -152,13 +157,13 @@ class pressgram_widget extends WP_Widget {
 }
 
 function pressgram_widget_styles() {
-	wp_enqueue_style( 'pressgram-widget-style', plugin_dir_url( __FILE__ ) . 'css/pressgram-widget.css', array(), '2.0.3', 'screen' );
+	wp_enqueue_style( 'pressgram-widget-style', plugin_dir_url( __FILE__ ) . 'css/pressgram-widget.css', array(), '2.0.6', 'screen' );
 }
 
 add_action( 'wp_enqueue_scripts', 'pressgram_widget_styles' );
 
 function pressgram_register_widget() {
-	register_widget( 'pressgram_widget' );
+	register_widget( 'Pressgram_Widget' );
 }
 
 // register widget

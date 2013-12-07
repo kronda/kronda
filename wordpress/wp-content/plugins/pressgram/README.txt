@@ -4,7 +4,7 @@ Donate link:
 Tags: pressgram, photos, filters, instagram, twitter, facebook, pictures, photo sharing, publishing
 Requires at least: 3.5.2
 Tested up to: 3.7.1
-Stable tag: 2.0.5
+Stable tag: 2.1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -27,6 +27,7 @@ Upon activation, the plugin will prompt you to configure settings for Pressgram 
 
 1. Select a category that will be auto-assigned to your Pressgram posts. *(note: no need to assign this category in-app)*
 1. Define custom fine control settings to handle your Pressgram posts. *(note: override settings in-app via powertags)*
+1. Enable post types for which you would like to allow Pressgram relation.
 1. If desired, add the Pressgram widget to sidebars.
 
 = What fine control settings are included? =
@@ -45,8 +46,8 @@ The following fine control presets are customizable to your blog:
 * Hashtag Translation: translate hashtags to post tags
 * Post Content Removal: options to remove hashtags, non-hashtag text, and/or the image
 
-= How does the widget work? =
-The widget allows you to display from 1 to 16 images in a grid of one to four columns. Images link to the associated Pressgram post on your blog.
+= How do post relations and the widget work? =
+Pressgram post relation is created for all posts made from Pressgram. Post relation can be broken or created for posts by use of the checkbox found in the Publish metabox of posts. The widget allows you to display from 1 to 16 images in a grid of one to four columns for recent posts that are related to Pressgram. Images link to the associated Pressgram post on your blog.
 
 = What are powertags? =
 Powertags allow you in-app control of how the plugin will process a single Pressgram post. Use the following tags in-app and you control how your content is published and displayed:
@@ -72,8 +73,9 @@ A new video showing plugin use (w/ it's recently added feature set) is in the wo
 
 = Understanding the Metadata =
 
-Prior to Version 2.0.5, Pressgram posts and image attachments were not tagged with metadata. However, as of Version 2.0.5, each post and image attachment is tagged with metadata identifying it's source as the Pressgram app. This metadata is now used to query images for display in the Pressgram widget. In future versions, it may be used for other features. If you would like to tag your existing Pressgram posts and image attachments with the necessary metadata, do the following:
+Prior to Version 2.0.5, Pressgram posts and image attachments were not tagged with metadata. However, as of Version 2.0.5, each post and image attachment is tagged with metadata identifying it's source as the Pressgram app. This metadata is now used to query images for display in the Pressgram widget. In future versions, it may be used for other features. If you would like to tag your existing Pressgram posts and image attachments with the necessary metadata, do one of the following:
 
+**Adding _pressgram_post and _pressgram_image metadata:**
 1. Insert the following code in your theme's functions.php file.
 1. Define the array containing post IDs.
 1. Define the array containing attachment IDs.
@@ -107,6 +109,10 @@ function add_pressgram_meta() {
 // Do this on Pressgram plugin activation
 add_action( 'activate_pressgram/pressgram.php', 'add_pressgram_meta' );`
 
+**Adding/Removing _pressgram_post metadata
+As of Version 2.1.0, you can add/remove _pressgram_post metadata by enabling Post Relation on the settings screen and checking/unchecking the Pressgram Post option in the Publish metabox.
+
+
 == Installation ==
 
 = Using The WordPress Dashboard =
@@ -128,8 +134,22 @@ add_action( 'activate_pressgram/pressgram.php', 'add_pressgram_meta' );`
 
 1. Pressgram Administration Options
 2. Pressgram Widget Options
+3. Pressgram Post Relation
 
 == Changelog ==
+
+= 2.1.2 =
+* Fixing horizontal scrolling issue
+
+= 2.1.1 =
+* Fixing accessibility of settings fields
+
+= 2.1.0 =
+* Improving regex for hashtag to post tag translation
+* Fixing auto-categorization following in-app switch from default category of 'Uncategorized' to 'Pressgram'
+* Adding Pressgram-to-post relations for control of posts featured in widget
+* Adding dismissible plugin notices on the settings screen
+* Adding Pressgram branding on the settings screen
 
 = 2.0.5 =
 * Adding metadata to identify Pressgram posts and images

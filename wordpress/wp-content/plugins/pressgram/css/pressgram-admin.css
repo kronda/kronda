@@ -1,0 +1,138 @@
+#pressgram-post-meta:before {
+	content: '\f232';
+	top: -1px;
+}
+
+#pressgram-post-meta:before {
+	font: normal 20px/1 'dashicons';
+	speak: none;
+	display: inline-block;
+	padding: 0 6px 0 0;
+	top: 0;
+	left: -1px;
+	position: relative;
+	vertical-align: top;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-decoration: none !important;
+}
+
+#pressgram-post-meta {
+	padding: 6px 10px 8px;
+	display: inline-block !important;
+	height: auto !important;
+}
+
+/* Pressgram Settings Page */
+#pressgram-section img {
+	float: left;
+	width: 6em;
+	height: 6em;
+	margin-right: 15px;
+}
+
+#pressgram-section #pressgram-outer-container {
+	position: absolute;
+	right: 0px;
+	overflow-x: hidden;
+	margin: 0 auto;
+	width: 62px;
+	height: 600px;
+}
+
+#pressgram-section #pressgram-outer-container .active {
+	overflow: visible;
+}
+
+#pressgram-section #pressgram-container {
+	height: 130px;
+}
+
+	#pressgram-section .pressgram-notice {
+		z-index: 80002;
+		position: absolute;
+		right: -680px;
+		margin-top: 0;
+		margin-right: 0;
+		margin-bottom: 10px;
+		width: 707px;
+		min-width: 700px;
+		zoom: 1;
+		filter: alpha(opacity=60);
+		opacity: 0.60;
+		/*border-left: 4px solid #7ad03a;*/
+	}
+
+		#pressgram-section .pressgram-notice:before {
+		  font-family: dashicons;
+		  font-size: 2em;
+		  /*color: #e78316;*/
+		  display: inline-block;
+		  vertical-align: top;
+		  margin-top: .4em;
+		  margin-right: .5em;
+		}
+
+		#pressgram-section .pressgram-notice p {
+		  display: inline-block;
+		  width: 93%;
+		}
+
+		#pressgram-section .pressgram-notice.info:before {
+		  content: '\f348';
+		}
+
+		#pressgram-section .pressgram-notice.support:before {
+		  content: '\f338';
+		}
+
+		#pressgram-section .pressgram-notice.social:before {
+		  content: '\f319';
+		}
+
+		#pressgram-section .pressgram-notice.review:before {
+		  content: '\f155';
+		}
+
+		#pressgram-section .pressgram-notice.photos:before {
+		  content: '\f328';
+		}
+
+		/* toggled .selected w/jquery accounts for clicks on touch devices */
+		#pressgram-section .pressgram-notice:hover,
+		#pressgram-section .pressgram-notice.selected {
+			right: 0px;
+			zoom: 1;
+			overflow: visible;
+			filter: alpha(opacity=93);
+			opacity: 0.93;
+			-webkit-transition: all 250ms cubic-bezier(0.190, 1.000, 0.220, 1.000); 
+			-moz-transition: all 250ms cubic-bezier(0.190, 1.000, 0.220, 1.000); 
+			-o-transition: all 250ms cubic-bezier(0.190, 1.000, 0.220, 1.000); 
+			transition: all 250ms cubic-bezier(0.190, 1.000, 0.220, 1.000); /* easeOutExpo */
+
+			-webkit-transition-timing-function: cubic-bezier(0.190, 1.000, 0.220, 1.000); 
+			-moz-transition-timing-function: cubic-bezier(0.190, 1.000, 0.220, 1.000); 
+			-o-transition-timing-function: cubic-bezier(0.190, 1.000, 0.220, 1.000); 
+			transition-timing-function: cubic-bezier(0.190, 1.000, 0.220, 1.000); /* easeOutExpo */
+		}
+
+@media only screen and (max-width: 767px) {
+	#pressgram-section .pressgram-notice {
+		/*right: -490px;
+		max-width: 487px;
+		width: 487px;
+		min-width: 480px;
+		border-top: 2px solid #333;*/
+		display: none;
+	}
+
+		#pressgram-section .pressgram-notice:before {
+			display: none;
+		}
+
+		#pressgram-section .pressgram-notice p {
+			width: 93%;
+		}
+
+}

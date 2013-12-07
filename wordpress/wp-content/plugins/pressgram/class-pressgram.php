@@ -12,7 +12,9 @@
 /**
  * Pressgram
  *
- * Allows users to select which category that they want to use as their Pressgram category.
+ * Allows users to select which category that they want to use as their Pressgram category,
+ * configure custom fine control settings and set active post relations. Also applies all
+ * presets on XML-RPC post from the Pressgram application.
  *
  * @package Pressgram
  * @author  yo, gg <info@press.gram>
@@ -30,7 +32,7 @@ class Pressgram {
 	 *
 	 * @var     string
 	 */
-	protected $version = '2.0.5';
+	protected $version = '2.1.2';
 
 	/**
 	 * Instance of this class.
@@ -60,9 +62,18 @@ class Pressgram {
 	protected $options;
 
 	/**
+	 * Pressgram post relations.
+	 *
+	 * @since    2.1.0
+	 *
+	 * @var      array
+	 */
+	protected $pressgram_post_relation;
+
+	/**
 	 * Pressgram post.
 	 *
-	 * @since    2.0.5
+	 * @since    2.1.0
 	 *
 	 * @var      array
 	 */
@@ -75,7 +86,7 @@ class Pressgram {
 	/**
 	 * Initialize the plugin by setting localization, filters, and administration functions.
 	 *
-	 * @since     2.0.5
+	 * @since     2.1.0
 	 */
 	private function __construct() {
 
@@ -103,14 +114,20 @@ class Pressgram {
 		$this->options['show']['home'] = isset( $this->options['show']['home'] ) ? $this->options['show']['home'] : FALSE;
 		$this->options['show']['feed'] = isset( $this->options['show']['feed'] ) ? $this->options['show']['feed'] : FALSE;
 
+		// Set Pressgram post relations
+		$this->pressgram_post_relation = get_option( 'pressgram_post_relation', array() );
+
 		// Load plugin text domain
 		add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
 
 		// Load up an administration notice to guide users to the next step
 		add_action( 'admin_notices', array( $this, 'display_plugin_activation_message' ) );
 
+		// Process responses to the notices
+		add_action( 'admin_init', array( $this, 'process_notice_response' ) );
+
 		// Initializes the Pressgram Category setting and field
-		add_filter( 'admin_init', array( $this, 'register_pressgram_fields' ) );
+		add_action( 'admin_init', array( $this, 'register_pressgram_fields' ) );
 
 		// Load the administrative Stylesheets and JavaScript
 		add_action( 'admin_enqueue_scripts', array( $this, 'add_stylesheets_and_javascript' ) );
@@ -126,6 +143,12 @@ class Pressgram {
 
 		// Apply fine control to new posts categorized in selected Pressgram category
 		add_action( 'transition_post_status', array( $this, 'apply_fine_control' ), 15, 3 );
+
+		// Add misc meta field to Publicize metabox on post edit pages
+		add_action( 'post_submitbox_misc_actions', array( $this, 'post_page_metabox' ) );
+
+		// Save Pressgram post metadata on post save
+		add_action( 'save_post', array( $this, 'save_pressgram_post_metabox_data' ) );
 
 	} // end constructor
 
@@ -169,21 +192,23 @@ class Pressgram {
 	/**
 	 * Displays a plugin message as soon as the plugin is activated.
 	 *
-	 * @since    2.0.5
+	 * @since    2.1.0
 	 */
 	public function display_plugin_activation_message() {
 
-		if ( ! get_option( 'has_activated_plugin' ) ) {
+		if ( ! get_option( 'has_activated_pressgram' ) ) {
 
+			// Show the notice
 			$html = '<div class="updated">';
-				$html .= '<p>';
-					$html .= __( "<strong>Awesome!</strong> You're almost there - just <a href='options-media.php?section=pressgram'>click here</a> to select your Pressgram category and setup fine control of your posts.", 'pressgram-locale' );
+				$html .= '<a href="http://pressgr.am"><img src="' . plugin_dir_url( __FILE__ ) . 'pressgram-logo.png" style="float: left; width: 2em; height: 2em; margin-right: 0.4em; margin-top: 0.4em" /></a>';
+				$html .= '<p style="display: inline-block">';
+					$html .= __( "<strong>Awesome!</strong> You're almost there - <a href='options-media.php#pressgram-section'>click here</a> to select a Pressgram category, set fine control options and manage post relations.", 'pressgram-locale' );
 				$html .= '</p>';
 			$html .= '</div><!-- /.updated -->';
 
 			echo $html;
 
-			update_option( 'has_activated_plugin', TRUE );
+			update_option( 'has_activated_pressgram', TRUE );
 
 		} // end if
 
@@ -193,19 +218,228 @@ class Pressgram {
 	 * Deletes the option for the plugin activation so that it can be displayed when the plugin is reinstalled or
 	 * when it's reactivated.
 	 *
-	 * @since    1.0.0
+	 * @since    2.1.0
 	 */
 	public static function remove_plugin_option() {
-		delete_option( 'has_activated_plugin' );
+		delete_option( 'has_activated_pressgram' );
 	} // end has_activated_message
+
+	/**
+	 * Returns the active plugin notices for display on the settings page summary.
+	 *
+	 * @since    2.1.0
+	 */
+	public function get_notices() {
+
+		$current_user = wp_get_current_user();
+
+		// Get the notice options from the user
+		$notices = get_user_meta( $current_user->ID, 'pressgram_notices', TRUE );
+
+		// If not yet set, then set the usermeta as an array
+		! is_array( $notices ) ? add_user_meta( $current_user->ID, 'pressgram_notices', array() ) : FALSE;
+
+		// Create specific notices if they do not exist, otherwise set to current notice state
+		$notices['activation'] = isset( $notices['activation'] ) ? $notices['activation'] : array( 'trigger' => TRUE, 'time' => ( time() - 5 ) );
+		$notices['support'] = isset( $notices['support'] ) ? $notices['support'] : array( 'trigger' => TRUE, 'time' => ( time() - 5 ) );
+		$notices['social'] = isset( $notices['social'] ) ? $notices['social'] : array( 'trigger' => TRUE, 'time' => ( time() - 5 ) );
+		$notices['review'] = isset( $notices['review'] ) ? $notices['review'] : array( 'trigger' => TRUE, 'time' => ( time() - 5 ) );
+		$notices['photos'] = isset( $notices['photos'] ) ? $notices['photos'] : array( 'trigger' => TRUE, 'time' => ( time() - 5 ) );
+
+		// Update the users meta
+		update_user_meta( $current_user->ID, 'pressgram_notices', $notices );
+
+		// Set the variable that will hold the html
+		$html = '<div id="pressgram-outer-container">';
+
+		$html .= '<div id="pressgram-container" style="height: 72px;"><div class="update-nag pressgram-notice info">';
+			//$html .= '<a href="http://pressgr.am"><img src="' . plugin_dir_url( __FILE__ ) . 'pressgram-logo.png" style="float: left; width: 2em; height: 2em; margin-right: 0.9em; margin-top: 0.5em" /></a>';
+			$html .= '<p>';
+				$html .= __( '<a href="http://wordpress.org/plugins/pressgram">Plugin</a> developed by <a href="http://pressgr.am">Pressgram</a> & <a href="http://vandercar.net">UaMV</a>. <span style="float:right;"><a href="' . wp_nonce_url( 'options-media.php?pressgram-action=undismiss&notif=info', 'pressgram-undismiss-all-notices' ) . '">Reactivate All Notices</a></span>', 'pressgram-locale' );
+			$html .= '</p>';
+		$html .= '</div></div><!-- /.updated -->';
+
+		// Show the support notice
+		if ( $notices['support']['trigger'] && $notices['support']['time'] < time() ) {
+
+			$html .= '<div id="pressgram-container" style="height: 72px;"><div class="update-nag pressgram-notice support">';
+				//$html .= '<a href="http://pressgr.am"><img src="' . plugin_dir_url( __FILE__ ) . 'pressgram-logo.png" style="float: left; width: 2em; height: 2em; margin-right: 0.9em; margin-top: 0.5em" /></a>';
+				$html .= '<p>';
+					$html .= __( 'Require assistance? Find (or give) support at <a href="http://wordpress.org/support/plugin/pressgram/">wordpress.org</a> and <a href="http://help.pressgr.am">help.pressgr.am</a>.<span style="float:right;"><a href="' . wp_nonce_url( 'options-media.php?pressgram-action=dismiss&notif=support&duration=forever', 'pressgram-dismiss-support-forever' ) . '">Dismiss</a></span>', 'pressgram-locale' );
+				$html .= '</p>';
+			$html .= '</div></div><!-- /.updated -->';
+
+		} // end if
+
+		// Show the connect with Pressgram community notice
+		if ( $notices['social']['trigger'] && $notices['social']['time'] < time() ) {
+			
+			$html .= '<div id="pressgram-container"><div class="update-nag pressgram-notice social">';
+				$html .= '<p>';
+					$html .= __( '<strong>Hello, ' . $current_user->display_name . '!</strong> Have you connected with others in the Pressgram community?<br />Discover other digital rebels and the ways in which they are using Pressgram to tell their visual story.<br /><br />', 'pressgram-locale' );
+				$html .= '';
+					$html .= __( '<a href="http://blog.pressgr.am">Blog</a>&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;', 'pressgram-locale' );
+					$html .= __( '<a href="http://twitter.com/pressgram">@pressgram</a>&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;', 'pressgram-locale' );
+					$html .= __( '<a href="https://plus.google.com/105715666878799743742?prsrc=3">Google +</a>&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;', 'pressgram-locale' );
+					$html .= __( '<a href="http://facebook.com/pressgram">Facebook</a>&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;', 'pressgram-locale' );
+					$html .= __( '<a href="http://pressgram.net">Discover</a>', 'pressgram-locale' );
+					$html .= '<span style="float:right;">';
+					$html .= __( '<a href="' . wp_nonce_url( 'options-media.php?pressgram-action=dismiss&notif=social&duration=month', 'pressgram-dismiss-social-month' ) . '">Hide For One Month</a>&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;', 'pressgram-locale' );
+					$html .= __( '<a href="' . wp_nonce_url( 'options-media.php?pressgram-action=dismiss&notif=social&duration=forever', 'pressgram-dismiss-social-forever' ) . '">Dismiss Forever</a>', 'pressgram-locale' );
+					$html .= '</span>';
+				$html .= '</p>';
+			$html .= '</div></div><!-- /.updated -->';
+		}
+
+		// Show the review the plugin and app notice
+		if ( $notices['review']['trigger'] && $notices['review']['time'] < time() ) {
+
+			$html .= '<div id="pressgram-container"><div class="update-nag pressgram-notice review">';
+				$html .= '<p>';
+					$html .= __( 'We do hope the Pressgram plugin has been serving you and your readers well.<br />Your experience could assist other users. Consider yourself invited to rate and review these tools.<br /><br />', 'pressgram-locale' );
+				$html .= '';
+					$html .= __( '<a href="http://wordpress.org/support/view/plugin-reviews/pressgram#postform">Review Plugin</a>&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;', 'pressgram-locale' );
+					$html .= __( '<a href="http://bit.ly/pressgramapp">Review iOS App</a>', 'pressgram-locale' );
+					$html .= '<span style="float:right;">';
+					$html .= __( '<a href="' . wp_nonce_url( 'options-media.php?pressgram-action=dismiss&notif=review&duration=month', 'pressgram-dismiss-review-month' ) . '">Hide For One Month</a>&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;', 'pressgram-locale' );
+					$html .= __( '<a href="' . wp_nonce_url( 'options-media.php?pressgram-action=dismiss&notif=review&duration=forever', 'pressgram-dismiss-review-forever' ) . '">Dismiss Forever</a>', 'pressgram-locale' );
+					$html .= '</span>';
+				$html .= '</p>';
+			$html .= '</div></div><!-- /.updated -->';
+		}
+
+		// Show the random photo vault notice
+		if ( $notices['photos']['trigger'] && $notices['photos']['time'] < time() ) {
+
+			$random_photo_content = '';
+			
+			// The arguments
+			$args = array(
+				'post_type'      => get_post_types( array( 'public' => TRUE ) ),
+				'meta_key'       => '_pressgram_post',
+				'meta_value'     => TRUE,
+				'posts_per_page' => 5,
+				'orderby'        => 'rand',
+				'author'         => $current_user->ID,
+				);
+
+			// Get the pressgram posts
+			$pressgram_array = get_posts( $args );
+
+			// The Loop to link images to their post
+			foreach ( $pressgram_array as $pressgram_post ) {
+
+				// Do this if featured image is set
+				if ( '' != get_the_post_thumbnail( $pressgram_post->ID ) ) {
+					$random_photo_content .= '<a href="' . get_permalink( $pressgram_post->ID ) . '" title="' . esc_attr( $pressgram_post->post_title ) . '">' . get_the_post_thumbnail( $pressgram_post->ID, array( 100, 100 ) ) . '</a>';
+				} else { // Otherwise
+					// Get the first attachment image
+					$attachment = get_children( "post_parent=$pressgram_post->ID&post_type=attachment&post_mime_type=image&numberposts=1" );  // get child attachments of type image
+						
+					// Get post ID of attachment
+					$attachment_ID = current( array_keys( $attachment ) );
+
+					$random_photo_content .= '<a href="' . get_permalink( $pressgram_post->ID ) . '" title="' . esc_attr( $pressgram_post->post_title ) . '">' . wp_get_attachment_image( $attachment_ID, array( 100, 100 ), FALSE, array( 'class' => 'wp-post-image' ) ) . '</a>';
+				}
+			}
+
+			$html .= '<div id="pressgram-container"><div class="update-nag pressgram-notice photos">';
+				$html .= '<p>';
+					$html .= $random_photo_content;
+				$html .= '';
+					$html .= '<span style="float:right;">';
+					$html .= __( '<a href="' . wp_nonce_url( 'options-media.php?pressgram-action=dismiss&notif=photos&duration=forever', 'pressgram-dismiss-photos-forever' ) . '">Hide Photo Vault</a>', 'pressgram-locale' );
+					$html .= '</span>';
+				$html .= '</p>';
+			$html .= '</div></div><!-- /.updated -->';
+		}
+
+		$html .= '</div>';
+
+		return $html;
+	} // end display_notices
+
+	/**
+	 * Process any responses to the displayed notices.
+	 *
+	 * @since    2.1.0
+	 */
+	public function process_notice_response() {
+		
+		// Check if user has responded to notice
+		if ( isset( $_GET['pressgram-action'] ) ) {
+			
+			$current_user = wp_get_current_user();
+
+			// Get the notice options from the user
+			$notices = get_user_meta( $current_user->ID, 'pressgram_notices', TRUE );
+
+			// If they've postponed the review and duration is set
+			if ( 'dismiss' == $_GET['pressgram-action'] && isset( $_GET['duration'] ) && isset( $_GET['notif'] ) ) {
+				
+				if ( 'support' == $_GET['notif'] ) {
+					check_admin_referer( 'pressgram-dismiss-support-forever' ) ? $notices['support']['time'] = time() + 31536000 : FALSE;
+				} elseif ( 'social' == $_GET['notif'] ) {
+					// Do the stuff
+					switch ( $_GET['duration'] ) {
+						case 'month':
+							check_admin_referer( 'pressgram-dismiss-social-month' ) ? $notices['social']['time'] = time() + 2592000 : FALSE;
+							break;
+						case 'forever':
+							check_admin_referer( 'pressgram-dismiss-social-forever' ) ? $notices['social']['trigger'] = FALSE : FALSE;
+							break;
+						default:
+							break;
+					}
+				} elseif ( 'review' == $_GET['notif'] ) {
+					// Do the stuff
+					switch ( $_GET['duration'] ) {
+						case 'month':
+							check_admin_referer( 'pressgram-dismiss-review-month' ) ? $notices['review']['time'] = time() + 2592000 : FALSE;
+							break;
+						case 'forever':
+							check_admin_referer( 'pressgram-dismiss-review-forever' ) ? $notices['review']['trigger'] = FALSE : FALSE;
+							break;
+						default:
+							break;
+					}
+				} elseif ( 'photos' == $_GET['notif'] ) {
+					// Do the stuff
+					switch ( $_GET['duration'] ) {
+						case 'month':
+							check_admin_referer( 'pressgram-dismiss-photos-month' ) ? $notices['photos']['time'] = time() + 2592000 : FALSE;
+							break;
+						case 'forever':
+							check_admin_referer( 'pressgram-dismiss-photos-forever' ) ? $notices['photos']['trigger'] = FALSE : FALSE;
+							break;
+						default:
+							break;
+					}
+				}
+
+				// Update the option
+				update_user_meta( $current_user->ID, 'pressgram_notices', $notices );
+
+			} elseif ( 'undismiss' == $_GET['pressgram-action'] && isset( $_GET['notif'] ) && check_admin_referer( 'pressgram-undismiss-all-notices' ) ) {
+				$notices['activation'] = array( 'trigger' => TRUE, 'time' => ( time() - 5 ) );
+				$notices['support'] = array( 'trigger' => TRUE, 'time' => ( time() - 5 ) );
+				$notices['social'] = array( 'trigger' => TRUE, 'time' => ( time() - 5 ) );
+				$notices['review'] = array( 'trigger' => TRUE, 'time' => ( time() - 5 ) );
+				$notices['photos'] = array( 'trigger' => TRUE, 'time' => ( time() - 5 ) );
+
+				update_user_meta( $current_user->ID, 'pressgram_notices', $notices );
+			}
+		}
+	} // end process_notice_response
 
 	/**
 	 * Registers the plugin's administrative stylesheets and JavaScript
 	 *
-	 * @since    1.0.0
+	 * @since    2.1.0
 	 */
 	public function add_stylesheets_and_javascript() {
-
+		wp_enqueue_style( 'pressgram-admin-style', plugin_dir_url( __FILE__ ) . 'css/pressgram-admin.css', array(), $this->version, 'screen' );
+		
 		wp_enqueue_style( 'pressgram-select2', plugins_url( '/pressgram/css/lib/select2.css' ) );
 
 		wp_enqueue_script( 'pressgram-select2', plugins_url( '/pressgram/js/lib/select2.min.js' ) );
@@ -216,7 +450,7 @@ class Pressgram {
 	/**
 	 * Registers the Pressgram Category and Fine Control setting and field with the WordPress Settings API.
 	 *
-	 * @since    2.0.0
+	 * @since    2.1.0
 	 */
 	public function register_pressgram_fields() {
 
@@ -226,6 +460,7 @@ class Pressgram {
 		// Then, register the settings for the Pressgram fields
 		register_setting( 'media', 'pressgram_category', 'esc_attr' );
 		register_setting( 'media', 'pressgram_fine_control' );
+		register_setting( 'media', 'pressgram_post_relation' );
 
 		// Now introduce the settings fields
 		add_settings_field(
@@ -242,17 +477,35 @@ class Pressgram {
 			'media',
 			'pressgram'
 		);
+		add_settings_field(
+			'pressgram_post_relation',
+			__( 'Post Relations' , 'pressgram-locale' ),
+			array( $this, 'display_pressgram_post_relations' ) ,
+			'media',
+			'pressgram'
+		);
 
 	} // end register_pressgram_options
 
 	 /**
 	 * Renders the intro to the Pressgram section of the media page.
 	 *
-	 * @since    2.0.5
+	 * @since    2.1.0
 	 */
 	public function display_pressgram_section() {
+
+		// Build the section intro
+		$html = '<div id="pressgram-section">';
+			$html .= $this->get_notices();
+			$html .= '<a href="http://pressgr.am"><img src="' . plugin_dir_url( __FILE__ ) . 'pressgram-logo.png" style="border-radius:100%;"/></a>';
+			$html .= 'Select a category for Pressgram, which will ...<br />&nbsp;&nbsp;&nbsp; ';
+			$html .= '(1) be automatically assigned to all Pressgram uploads,<br />&nbsp;&nbsp;&nbsp; ';
+			$html .= '(2) enable application of your custom fine control settings, and<br />&nbsp;&nbsp;&nbsp; ';
+			$html .= '(3) mark post relation with Pressgram.';
+		$html .= '</div>';
+
 		// Echo the section description
-		echo 'Select a category for Pressgram, which will ...<br />&nbsp;&nbsp;&nbsp; (1) be automatically assigned to all Pressgram uploads, and <br />&nbsp;&nbsp;&nbsp; (2) enable application of your custom fine control settings.';
+		echo $html;
 	}
 
 	/**
@@ -294,7 +547,7 @@ class Pressgram {
 		$html = '<fieldset>';
 
 		// Build the list of strip options
-		$html .= 'Include Pressgram image posts ... ';
+		$html .= 'Include above categorized posts ... ';
 		$this->options['show']['home'] = isset( $this->options['show']['home'] ) ? $this->options['show']['home'] : FALSE;
 		
 		$html .= '<input type="checkbox" id="pressgram_fine_control_show_home" name="pressgram_fine_control[show][home]" value="1"';
@@ -511,9 +764,39 @@ class Pressgram {
 	} // end display_pressgram_fine_control
 
 	/**
+	 * Renders the options for the post type relation for Pressgram posts
+	 * which will allow display of Pressgram Post checkbox in Publicize metabox
+	 *
+	 * @since    2.1.0
+	 */
+	public function display_pressgram_post_relations() {
+
+		$html = '<fieldset>';
+
+		// Build the list of post types
+		$html .= 'Allow Pressgram post relation control for the following post types:';
+		$html .= '<br />';
+		$html .= '<span class="description">(post relations control images featured in the Pressgram widget)</span>';
+		$html .= '<br /><br />';
+
+		$post_types = get_post_types( array( 'public' => TRUE ) );
+
+		foreach ( $post_types as $post_type ) {
+			if ( 'attachment' != $post_type && 'page' != $post_type ) {
+				$pressgram_relation_exists = isset( $this->pressgram_post_relation[ $post_type ] ) ? $this->pressgram_post_relation[ $post_type ] : FALSE;
+				$html .= '<input type="checkbox" id="pressgram_post_relation_' . $post_type . '" name="pressgram_post_relation[' . $post_type . ']" value="1" ' . checked( $pressgram_relation_exists, TRUE, FALSE ) . ' /> <label for="pressgram_post_relation_' . $post_type . '">' . get_post_type_object( $post_type )->labels->singular_name . '</label><br />';
+			}
+		}
+
+		$html .= '</fieldset>';
+
+		echo $html;
+	}
+
+	/**
 	 * Renders jquery script to control options upon post type selection
 	 *
-	 * @since    2.0.0
+	 * @since    2.1.0
 	 */
 	public function process_selected_post_type() {
 
@@ -619,8 +902,24 @@ class Pressgram {
 								$('#post_tag_support').show();
 								$('#post_tag_no_support').hide();
 							}
+
+							if ($(this.selected)) {
+								$('#pressgram_post_relation_<?php echo $post_type; ?>').attr('checked', 'checked');
+							}
 						} <?php
 					} ?>
+				});
+
+				$('.pressgram-notice').hover(
+					function() { $('#pressgram-outer-container').css('min-width', '800px') },
+					function() { $('#pressgram-outer-container').not('.active').css('min-width', '62px') }
+				);
+
+				$('.pressgram-notice').click(function() {
+					$(this).toggleClass('selected');
+					$('#pressgram-outer-container').toggleClass('active');
+				}).find('a','img').click(function(e) {
+					e.stopPropagation();
 				});
 			});
 		</script>
@@ -662,7 +961,7 @@ class Pressgram {
 			// Add all app categories to array (exclude uncategorized category)
 			$categories = array();
 			foreach ( $app_categories as $key => $category_object ) {
-				'uncategorized' != $category_object->slug ? $categories[ $key ] = $category_object->term_id : FALSE;
+				'Pressgram' != $category_object->name ? $categories[ $key ] = $category_object->term_id : FALSE;
 			}
 
 			// Add selected Pressgram category to the array
@@ -879,7 +1178,7 @@ class Pressgram {
 	/**
 	 * Split content into various parts, returning an array of parts.
 	 *
-	 * @since    2.0.0
+	 * @since    2.1.0
 	 */
 	public function parse_content( $content ) {
 		// Get Pressgram image container div element
@@ -899,7 +1198,7 @@ class Pressgram {
 		$body = trim( strip_tags( str_replace( $div, '', $content ), '<a></a>' ) );
 
 		// Get hashtags
-		$hashtags_count = preg_match_all( '/(?=#)[^\s]*/sim', $content, $matches );
+		$hashtags_count = preg_match_all( '/(?=#).[^\s#.?!,\'"]*/sim', $content, $matches );
 		$hashtags = $matches[0];
 
 		// Process hashtag array to tag array
@@ -966,15 +1265,69 @@ class Pressgram {
 	} // end strip_content
 
 	/**
+	 * Adds a checkbox to the Publicize metabox on post pages so that
+	 * posts can be marked as Pressgram posts and featured in widget
+	 *
+	 * @since    2.1.0
+	 */
+	public function post_page_metabox() {
+
+		// Get the global post object
+		global $post;
+
+		// Check if Pressgram post relation is enabled for post type
+		$pressgram_relation_exists = isset( $this->pressgram_post_relation[ $post->post_type ] ) ? $this->pressgram_post_relation[ $post->post_type ] : FALSE;
+		
+		// Show checkbox if relation exists
+		if ( $pressgram_relation_exists ) {
+			// Get the specific _pressgram_post metadata
+			$is_pressgram_post = get_post_meta( $post->ID, '_pressgram_post', TRUE );
+
+			// Display the checkbox (css located in pressgram-admin.css)
+			$html = '<div class="misc-pub-section pressgram-post" id="pressgram-post-meta">';
+				$html .= '<input type="checkbox" name="_pressgram_post" id="_pressgram_post" value="1" ';
+				$html .= checked( $is_pressgram_post, TRUE, FALSE );
+				$html .= ' /> <label for="_pressgram_post">Pressgram Post</label> <span class="description">(feature in widget)</span>';
+			$html .= '</div>';
+
+			echo $html;
+		}
+	} // end post_page_metabox
+
+	/**
+	 * Saves metadata related to Pressgram post checkbox on Publicize metabox
+	 *
+	 * @since    2.1.0
+	 */
+	public function save_pressgram_post_metabox_data( $post_ID ) {
+
+		// Get the global pagenow
+		global $pagenow;
+
+		// Get the post type
+		$post_type = get_post_type( $post_ID );
+
+		// Check if Pressgram post relation is enabled for post type
+		$pressgram_relation_exists = isset( $this->pressgram_post_relation[ $post_type ] ) ? $this->pressgram_post_relation[ $post_type ] : FALSE;
+
+		// Show checkbox if relation exists and save request is coming from post edit page or bulk_edit
+		if ( $pressgram_relation_exists && ( 'post.php' == $pagenow ) ) {
+
+			// Get the posted data for whether post is marked as Pressgram
+			$is_pressgram_post = isset( $_POST['_pressgram_post'] ) ? TRUE : FALSE;
+
+			// Update the post meta
+			update_post_meta( $post_ID, '_pressgram_post', $is_pressgram_post );
+		}
+	}
+
+	/**
 	 * Modifies the query for the main loop excluding all posts from the selected
 	 * Pressgram category so that they do not appear in the main loop.
 	 *
-	 * @since    2.0.2
+	 * @since    2.1.0
 	 */
 	public function exclude_pressgram_category_posts( $wp_query ) {
-
-		// Only remove them from the blog page - display them on the Dashboard, Search, and Archive pages
-		if ( ! is_admin() && ! is_search() && ! is_archive() ) {
 
 			// If it's a feed or home, check if it should be shown ... otherwise, hide.
 			if ( ( is_feed() && ! $this->options['show']['feed'] ) || ( is_home() && ! $this->options['show']['home'] ) ) {
@@ -986,8 +1339,6 @@ class Pressgram {
 				set_query_var( 'category__not_in', $exclude );
 
 			} // end if
-
-		} // end if
 
 	} // end exclude_pressgram_category_posts
 
