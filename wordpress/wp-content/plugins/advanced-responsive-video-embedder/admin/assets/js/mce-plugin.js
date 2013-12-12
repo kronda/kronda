@@ -10,7 +10,7 @@
 				// creates the button
 				var button = controlManager.createButton('arve_button', {
 					title : 'Embed Videos', // title of the button
-					image : '../wp-content/plugins/advanced-responsive-video-embedder/img/tinymce-icon.png',  // path to the button's image
+					image : '../wp-content/plugins/advanced-responsive-video-embedder/admin/assets/img/tinymce-icon.png',  // path to the button's image
 					onclick : function() {
 						// triggers the thickbox
 						var width = jQuery(window).width(),
@@ -37,7 +37,7 @@ jQuery(document).ready(function($) {
 		type: 'GET',
 		url: 'admin-ajax.php',
 		data: { action: 'get_arve_form' },
-		success: function(response){
+		success: function( response ) {
 			// var table = $(response).find('table');
 			$(response).appendTo('body').hide();
 
@@ -85,17 +85,21 @@ jQuery(document).ready(function($) {
 					}
 				}
 			});
-			$("#arve-open-url-info").click(function(event) {
+
+			$("#arve-open-url-info").click( function( event ) {
 				event.preventDefault();
 				info.dialog('open');
 			});
 
-			$("#arve-show-more").click(function () {
+			$("#arve-show-more").click( function( event ) {
+				event.preventDefault();
 				$('.arve-hidden').fadeIn();
 			});
 
 			// handles the click event of the submit button
-			$('#arve-submit').click(function(){
+			$('#arve-submit').click( function( event ){
+
+				event.preventDefault();
 
 				if ( ($('#arve-id').val() === '') || ($('#arve-id').val() === 'nothing matched') ) {
 					alert('no id');
@@ -114,10 +118,60 @@ jQuery(document).ready(function($) {
 				tb_remove();
 			});
 
-			var getid = function(code){
-				var regExp,
-				match,
-				output = new Array(2);
+			var detect_id = function( code ) {
+
+				//var regExp;
+				var embed_regex = new Object(); 
+				var output      = new Object();
+				var match;
+
+				$.each(arve_regex_list, function(provider, regex) {
+
+					regex = new RegExp(regex,"i");
+
+					match = code.match( regex );
+					
+					if ( match && match[1] ) {
+						output.provider = provider;
+						output.videoid  = match[1];
+						return false;
+					}
+
+				});
+
+				if( ! $.isEmptyObject(output) ) {
+					return output;
+				}
+
+				// MTV services
+				embed_regex.comedycentral = /comedycentral\.com:([a-z0-9\-]{36})/i;
+				embed_regex.gametrailers  = /gametrailers\.com:([a-z0-9\-]{36})/i;
+				embed_regex.spike         = /spike\.com:([a-z0-9\-]{36})/i;
+
+				embed_regex.flickr        = /flickr\.com\/photos\/[a-zA-Z0-9@_\-]+\/([0-9]+)/i;
+				embed_regex.videojug      = /videojug\.com\/embed\/([a-z0-9\-]{36})/i;
+				embed_regex.bliptv        = /blip\.tv\/play\/([a-z0-9]+)/i;
+				embed_regex.movieweb      = /movieweb\.com\/v\/([a-z0-9]{14})/i
+
+				embed_regex.iframe        = /src="https?:\/\/(?:www\.)?([^"]+)/i
+
+				$.each(embed_regex, function(provider, regex) {
+
+					match = code.match( regex );
+					
+					if ( match && match[1] ) {
+						output.provider = provider;
+						output.videoid  = match[1];
+						return false;
+					}
+
+				});
+
+				if( ! $.isEmptyObject(output) ) {
+					return output;
+				}
+
+				/*
 
 				regExp = /vimeo\.com\/(?:(?:channels\/[A-z]+\/)|(?:groups\/[A-z]+\/videos\/))?([0-9]+)/i;
 				match = code.match(regExp);
@@ -210,7 +264,7 @@ jQuery(document).ready(function($) {
 					return output;
 				}
 
-				regExp = /videojug\.com\/embed\/([a-z0-9-]{36})/i;
+				regExp = /videojug\.com\/embed\/([a-z0-9\-]{36})/i;
 				match = code.match(regExp);
 				if ( match && match[1] ) {
 					output[0] = 'videojug';
@@ -343,16 +397,21 @@ jQuery(document).ready(function($) {
 
 				// regExp = /clipfish\.de\/(?:embed_image\/\?vid=|[a-z\/\-]+)([0-9]{2,7})/i;
 
+				*/
+
 				return 'nothing matched';
 			};
 
-			$('#arve-url').bind('keyup mouseup change',function() {
+			$('#arve-url').bind('keyup mouseup change', function() {
 
-				var provider_and_id = getid( $(this).val() );
-				if ( provider_and_id != 'nothing matched' ) {
-					$('#arve-provider').val( provider_and_id[0] );
-					$('#arve-id').val( provider_and_id[1] );
+				var response = detect_id( $(this).val() );
+
+				if ( 'nothing matched' == response ) {
+					return;
 				}
+
+				$('#arve-provider').val( response.provider );
+				$('#arve-id').val( response.videoid );
 			});
 
 			$('#arve-url, #arve-provider, #arve-id, #arve-maxwidth, #arve-mode, #arve-align, #arve-autoplay').bind('keyup mouseup change',function() {

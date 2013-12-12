@@ -6,10 +6,11 @@
  * frontend of the theme when the plugin is activated.
  *
  * @package   Advanced_Responsive_Video_Embedder
- * @author    Nicolas Jonas
- * @license   GPL-3.0+
- * @link      http://nextgenthemes.com
- * @copyright 2013 Nicolas Jonas
+ * @author    Your Name <email@example.com>
+ * @license   GPL-2.0+
+ * @link      http://example.com
+ * @copyright 2013 Your Name or Company Name
  */
 ?>
+
 <!-- This file is used to markup the public facing aspect of the plugin. -->

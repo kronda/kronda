@@ -46,7 +46,7 @@ _  _ ____ _  _ ___ ____ ____ _  _ ___ _  _ ____ _  _ ____ ____  ____ ____ _  _
  * @package Advanced_Responsive_Video_Embedder
  * @author  Nicolas Jonas
  */
-class Arve_Make_Shortcodes {
+class Advanced_Responsive_Video_Embedder_Create_Shortcodes {
 	
 	/**
 	 * Current shortcode provider helper variable
@@ -73,15 +73,19 @@ class Arve_Make_Shortcodes {
 	public function do_shortcode( $atts ) {
 
 		$shortcode_atts = shortcode_atts( array(
-			'id'       => '',
 			'align'    => '',
-			'mode'     => '',
+			'autoplay' => '',
+			'id'       => '',
 			'maxw'     => '',
 			'maxwidth' => '',
+			'mode'     => '',
+			'start'    => '',
+			'end'      => '',
 			'time'     => '',
-			'autoplay' => '',
 		), $atts );
 
-		return Advanced_Responsive_Video_Embedder::build_embed( $this->provider, $shortcode_atts );
+		$arve = Advanced_Responsive_Video_Embedder::get_instance();
+
+		return $arve->build_embed( $this->provider, $shortcode_atts );
 	}
 }

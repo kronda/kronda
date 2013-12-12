@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: responsive, embeds, embed, flash, iframe, minimal, lightweight, simple, simplicity, shortcodes, videos, youtube, blip, bliptv, dailymotion, videojug, collegehumor, veoh, break, movieweb, snotr, gametrailers, vimeo, viddler, funnyordie, myspace, liveleak, metacafe, googlevideo, myvideo, yahoo, spike,
 Requires at least: 3.3.1
 Tested up to: 3.6
-Stable tag: 2.7.5
+Stable tag: 3.0.4
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -12,7 +12,7 @@ Embed videos with a click of a button from many providers with full responsive s
 
 == Description ==
 
-Simple lightweight plugin lets you embed videos from many providers with full responsive sizes with a click of a single button for all providers. Show videos as thumbnails and let them open in colorbox. Clean and easy shortcode syntax.
+Simple lightweight plugin lets you embed videos from many providers with full responsive sizes via URL or Shortcode. Show videos as thumbnails and let them open in colorbox. Clean and easy shortcode syntax.
 
 [More info and demo](http://nextgenthemes.com/plugins/advanced-responsive-video-embedder/)
 
@@ -25,6 +25,8 @@ Simple lightweight plugin lets you embed videos from many providers with full re
 * FunnyOrDie
 * Gametrailers
 * Iframes (in general, every provider that supports iframe embed codes)
+* IGN
+* Kickstarter
 * Liveleak
 * Metacafe
 * Movieweb
@@ -34,6 +36,7 @@ Simple lightweight plugin lets you embed videos from many providers with full re
 * Spike
 * Ustream
 * Veoh
+* Vevo
 * Viddler
 * Videojug
 * Vimeo (starttime supported)
@@ -56,6 +59,22 @@ Depends, but most likely yes.
 1. Options Page.
 
 == Changelog ==
+
+= 3.0.2 (beta) =
+* Javascript Fix
+
+= 3.0.0 (beta) =
+* New: Support for embedding via simply pasting of URLs into posts (need to be on their own line, no button or shortcodes needed)
+* New: Thumbnails are now responsive
+* New: Vevo support
+* New: TED Talks support
+* New: IGN support
+* New: Kickstarter support
+* Improved: request large thumbnail from vimeo instead of medium
+* Improved: 'youtubelist' shortcode deprecated YouTube playlists are now handled via the normal youtube shortcode with support for starting video
+* Improved: 'bliptv' shortcode deprecated on favor of 'blip' that uses the ids from blip.tv URLs instead of the ones from embed codes
+* Improved: Moved code to newest Plugin Boilerplate
+* Improved: Massive code improvements
 
 = 2.7.4 =
 * Fix: Dropped mb_detect_encoding now using just preg_match to support rare php setups.
