@@ -32,7 +32,7 @@ class Pressgram {
 	 *
 	 * @var     string
 	 */
-	protected $version = '2.1.2';
+	protected $version = '2.1.3';
 
 	/**
 	 * Instance of this class.
@@ -113,6 +113,10 @@ class Pressgram {
 		$this->options['strip']['image'] = isset( $this->options['strip']['image'] ) ? $this->options['strip']['image'] : FALSE;
 		$this->options['show']['home'] = isset( $this->options['show']['home'] ) ? $this->options['show']['home'] : FALSE;
 		$this->options['show']['feed'] = isset( $this->options['show']['feed'] ) ? $this->options['show']['feed'] : FALSE;
+		// Show option to display on home if post includes non-Pressgram category and a Pressgram category
+		$this->options['show']['multi_category_homepage'] = isset( $this->options['show']['multi_category_homepage'] ) ? $this->options['show']['multi_category_homepage'] : FALSE;
+		// Show option to display in feed if post includes non-Pressgram category and a Pressgram category
+		$this->options['show']['multi_category_feed'] = isset( $this->options['show']['multi_category_feed'] ) ? $this->options['show']['multi_category_feed'] : FALSE;
 
 		// Set Pressgram post relations
 		$this->pressgram_post_relation = get_option( 'pressgram_post_relation', array() );
@@ -435,15 +439,15 @@ class Pressgram {
 	/**
 	 * Registers the plugin's administrative stylesheets and JavaScript
 	 *
-	 * @since    2.1.0
+	 * @since    2.1.3
 	 */
 	public function add_stylesheets_and_javascript() {
 		wp_enqueue_style( 'pressgram-admin-style', plugin_dir_url( __FILE__ ) . 'css/pressgram-admin.css', array(), $this->version, 'screen' );
 		
-		wp_enqueue_style( 'pressgram-select2', plugins_url( '/pressgram/css/lib/select2.css' ) );
+		wp_enqueue_style( 'pressgram-select2', plugin_dir_url( __FILE__ ) . 'css/lib/select2.css' );
 
-		wp_enqueue_script( 'pressgram-select2', plugins_url( '/pressgram/js/lib/select2.min.js' ) );
-		wp_enqueue_script( 'pressgram', plugins_url( '/pressgram/js/admin.min.js' ), array( 'jquery', 'pressgram-select2' ), $this->version, false );
+		wp_enqueue_script( 'pressgram-select2', plugin_dir_url( __FILE__ ) . 'js/lib/select2.min.js' );
+		wp_enqueue_script( 'pressgram', plugin_dir_url( __FILE__ ) . 'js/admin.min.js' , array( 'jquery', 'pressgram-select2' ), $this->version, false );
 
 	} // end add_stylesheets_and_javascript
 
@@ -540,24 +544,33 @@ class Pressgram {
 	 * including options for type, status, format, featured image, alignment, link, comments, pings
 	 * tags, and content
 	 *
-	 * @since    2.0.2
+	 * @since    2.1.3
 	 */
 	public function display_pressgram_fine_control() {
 
 		$html = '<fieldset>';
 
 		// Build the list of strip options
-		$html .= 'Include above categorized posts ... ';
-		$this->options['show']['home'] = isset( $this->options['show']['home'] ) ? $this->options['show']['home'] : FALSE;
-		
-		$html .= '<input type="checkbox" id="pressgram_fine_control_show_home" name="pressgram_fine_control[show][home]" value="1"';
-			$html .= $this->options['show']['home'] ? ' checked="checked">' : '>';
-			$html .= __( 'on home page <em>and/or</em> ', 'pressgram-locale' ) . '</input>';
+		$html .= 'Include above categorized posts ... <br />';
+			$this->options['show']['home'] = isset( $this->options['show']['home'] ) ? $this->options['show']['home'] : FALSE;
+			$html .= '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="pressgram_fine_control_show_home" name="pressgram_fine_control[show][home]" value="1"';
+				$html .= checked( $this->options['show']['home'], 1, FALSE ) . '>';
+				$html .= __( ' On home page <span class="description">(always)</span>', 'pressgram-locale' ) . '</input><br />';
+			$this->options['show']['multi_category_homepage'] = isset( $this->options['show']['multi_category_homepage'] ) ? $this->options['show']['multi_category_homepage'] : FALSE;
+			$html .= '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="pressgram_fine_control_show_multi_category_homepage" name="pressgram_fine_control[show][multi_category_homepage]" value="1"';
+				$html .= checked( $this->options['show']['multi_category_homepage'], 1, FALSE ) . '>';
+				$html .= __( ' On home page <span class="description">(only if other categories exist for the post)</span>', 'pressgram-locale' ) . '</input>';
+
+		$html .= '<br /><br />';
+			
 		$this->options['show']['feed'] = isset( $this->options['show']['feed'] ) ? $this->options['show']['feed'] : FALSE;
-		$html .= '<input type="checkbox" id="pressgram_fine_control_show_feed" name="pressgram_fine_control[show][feed]" value="1"';
-			$html .= $this->options['show']['feed'] ? ' checked="checked">' : '>';
-			$html .= __( 'in feeds', 'pressgram-locale' ) . '</input>';
-		$html .= '<br /><span class="description">(note: will likely only work if Post Type is set to Post)</span>';
+			$html .= '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="pressgram_fine_control_show_feed" name="pressgram_fine_control[show][feed]" value="1"';
+				$html .= checked( $this->options['show']['feed'], 1, FALSE ) . '>';
+				$html .= __( ' In feeds <span class="description">(always)</span>', 'pressgram-locale' ) . '</input><br />';
+			$this->options['show']['multi_category_feed'] = isset( $this->options['show']['multi_category_feed'] ) ? $this->options['show']['multi_category_feed'] : FALSE;
+			$html .= '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="pressgram_fine_control_show_multi_category_feed" name="pressgram_fine_control[show][multi_category_feed]" value="1"';
+				$html .= checked( $this->options['show']['multi_category_feed'], 1, FALSE ) . '>';
+				$html .= __( ' In feeds <span class="description">(only if other categories exist for the post)</span>', 'pressgram-locale' ) . '</input>';
 
 		$html .= '<br /><br />';
 
@@ -1325,22 +1338,74 @@ class Pressgram {
 	 * Modifies the query for the main loop excluding all posts from the selected
 	 * Pressgram category so that they do not appear in the main loop.
 	 *
-	 * @since    2.1.0
+	 * @since    2.1.3
 	 */
 	public function exclude_pressgram_category_posts( $wp_query ) {
 
-			// If it's a feed or home, check if it should be shown ... otherwise, hide.
-			if ( ( is_feed() && ! $this->options['show']['feed'] ) || ( is_home() && ! $this->options['show']['home'] ) ) {
+		// If it's a feed or home, check if the Pressgram posts should be hidden from main stream
+		if ( ( is_feed() && ! $this->options['show']['feed'] ) 
+			|| ( is_home() && ! $this->options['show']['home'] ) ) {
+			
+			// Check to see if non-Pressgram multi-category posts should be shown on home or feed
+			if( ( is_feed() && $this->options['show']['multi_category_feed'] ) 
+				|| ( is_home() && $this->options['show']['multi_category_homepage'] ) ) {
+							
+				// Retrieve list of all categories for blog, excluding the pressgram category(ies)
+				$non_pressgram_category_list = get_categories( array( 'exclude' => $this->pressgram_category ) );
 				
+				// Define non_pressgram_category_list_ids array for non_pressgram_category_list_ids
+				$non_pressgram_category_list_ids = array();
+		
+				// Populate non_pressgram_category_list_ids array so we know which posts to query
+				foreach ( $non_pressgram_category_list as $current_category )
+				{ 
+					// Grab id for category list
+					$non_pressgram_category_list_ids[] = $current_category->term_id;
+				}
+
+				// Update query_posts constraint for posts to pull by category
+				set_query_var( 'category__in', $non_pressgram_category_list_ids );
+
+				$this->include_pressgram_post_type( $wp_query );
+		
+			}// end if
+			else{
+	
 				// Add the category to an array of excluded categories. In this case, though, it's really just one.
 				$exclude = array( $this->pressgram_category );
-
+				
 				// This is a cleaner way to write: $wp_query->set('category__not_in', $excluded);
 				set_query_var( 'category__not_in', $exclude );
+				
+			} //end else
+			
+		} elseif ( ( is_feed() && $this->options['show']['feed'] )
+			|| ( is_home() && $this->options['show']['home'] ) ) {
 
-			} // end if
+			$this->include_pressgram_post_type( $wp_query );
 
+		}
 	} // end exclude_pressgram_category_posts
+
+	/**
+	 * Modifies the query for the main loop to include posts from the selected
+	 * Pressgram post type so that they appear, if requested.
+	 *
+	 * @since    2.1.3
+	 */
+	public function include_pressgram_post_type( $wp_query ) {
+		// Get post types currently included in the query
+		$included_post_types = get_query_var( 'post_type' );
+
+		// If not set (default of post), then initialize the array
+		! is_array( $included_post_types ) ? $included_post_types = array( 'post' ) : FALSE;
+
+		// Add our post type, if not already included
+		! in_array( $this->options['post_type'], $included_post_types ) ? array_push( $included_post_types, $this->options['post_type'] ) : FALSE;
+
+		set_query_var( 'post_type', $included_post_types );
+	} // end include_pressgram_post_type
+
 
 	/*---------------------------------------------------------------------------------*
 	 * Helper Functions

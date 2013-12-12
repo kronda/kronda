@@ -17,8 +17,8 @@
  * Plugin Name: Pressgram
  * Plugin URI:  http://support.pressgr.am/
  * Description: The official WordPress plugin for <a href="http://pressgr.am/">Pressgram</a> helps you publish pictures worth 1,000 words. Be a <strong>rebel with a cause</strong>. Viva la revolución!
- * Version:     2.1.2
- * Author:      <a href="http://yo.gg/">yo, gg</a> & UaMV
+ * Version:     2.1.3
+ * Author:      yo, gg & UaMV
  * Text Domain: pressgram-locale
  * License:     GPL-2.0+
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
@@ -36,3 +36,9 @@ require_once( plugin_dir_path( __FILE__ ) . 'class-pressgram.php' );
 Pressgram::get_instance();
 
 require_once( plugin_dir_path( __FILE__ ) . 'class-widget.php' );
+
+function _pdump( $var = '' ) {
+    echo '<br /><pre>';
+    var_dump( $var ) . '<br />';
+    echo '</pre>';
+}

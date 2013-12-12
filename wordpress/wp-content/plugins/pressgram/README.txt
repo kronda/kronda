@@ -4,7 +4,7 @@ Donate link:
 Tags: pressgram, photos, filters, instagram, twitter, facebook, pictures, photo sharing, publishing
 Requires at least: 3.5.2
 Tested up to: 3.7.1
-Stable tag: 2.1.2
+Stable tag: 2.1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -34,7 +34,9 @@ Upon activation, the plugin will prompt you to configure settings for Pressgram 
 The following fine control presets are customizable to your blog:
 
 * Show/hide Pressgram defined category posts from home page.
+* Show Pressgram defined category posts on home page only if they also contain at least one additional category.
 * Show/hide Pressgram defined category posts from rss feeds.
+* Show Pressgram defined category posts in feeds only if they also contain at least one additional category.
 * Post Type: select from available post types or select 'Unattached Media'
 * Post Status: select from Published, Pending, Draft, or Private
 * Post Format: select from available post formats
@@ -76,6 +78,7 @@ A new video showing plugin use (w/ it's recently added feature set) is in the wo
 Prior to Version 2.0.5, Pressgram posts and image attachments were not tagged with metadata. However, as of Version 2.0.5, each post and image attachment is tagged with metadata identifying it's source as the Pressgram app. This metadata is now used to query images for display in the Pressgram widget. In future versions, it may be used for other features. If you would like to tag your existing Pressgram posts and image attachments with the necessary metadata, do one of the following:
 
 **Adding _pressgram_post and _pressgram_image metadata:**
+
 1. Insert the following code in your theme's functions.php file.
 1. Define the array containing post IDs.
 1. Define the array containing attachment IDs.
@@ -109,7 +112,8 @@ function add_pressgram_meta() {
 // Do this on Pressgram plugin activation
 add_action( 'activate_pressgram/pressgram.php', 'add_pressgram_meta' );`
 
-**Adding/Removing _pressgram_post metadata
+**Adding/Removing _pressgram_post metadata:**
+
 As of Version 2.1.0, you can add/remove _pressgram_post metadata by enabling Post Relation on the settings screen and checking/unchecking the Pressgram Post option in the Publish metabox.
 
 
@@ -137,6 +141,10 @@ As of Version 2.1.0, you can add/remove _pressgram_post metadata by enabling Pos
 3. Pressgram Post Relation
 
 == Changelog ==
+
+= 2.1.3 =
+* Adding finer control for home feed and rss feed inclusion/exclusion of posts
+* Allowing custom post type inclusion in home feed adn rss feed
 
 = 2.1.2 =
 * Fixing horizontal scrolling issue
