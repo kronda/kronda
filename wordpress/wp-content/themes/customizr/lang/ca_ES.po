@@ -1,0 +1,1618 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Customizr 3.0.13\n"
+"POT-Creation-Date: 2013-11-26 11:45+0100\n"
+"PO-Revision-Date: 2013-11-26 11:46+0100\n"
+"Last-Translator: Jaume Albaigès <jaumealbaiges@hotmail.com>\n"
+"Language-Team: Jaume Albaigès <jaumealbaiges@hotmail.com>\n"
+"Language: Català\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.7\n"
+"X-Poedit-KeywordsList: __;_e;_n\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../comments.php:40
+msgid "Leave a Comment"
+msgstr "Deixa un Comentari"
+
+#: ../inc/class-fire-init.php:72
+msgid "Main Menu"
+msgstr "Men&uacute; Principal"
+
+#: ../inc/class-fire-utils.php:367
+#, php-format
+msgid "Page %s"
+msgstr "P&agrave;gina %s"
+
+#: ../inc/class-fire-widgets.php:40
+msgid "Right Sidebar"
+msgstr "Barra lateral dreta"
+
+#: ../inc/class-fire-widgets.php:41 ../inc/class-fire-widgets.php:45
+msgid "Appears on posts, static pages, archives and search pages"
+msgstr "Apareix a entrades, p&agrave;ginas, arxius i resultats de cerca"
+
+#: ../inc/class-fire-widgets.php:44
+msgid "Left Sidebar"
+msgstr "Barra lateral esquerra"
+
+#: ../inc/class-fire-widgets.php:48
+msgid "Footer Widget Area One"
+msgstr "&Agrave;rea de widgets 1 del peu de p&agrave;gina"
+
+#: ../inc/class-fire-widgets.php:49 ../inc/class-fire-widgets.php:53
+#: ../inc/class-fire-widgets.php:57
+msgid "Just use it as you want !"
+msgstr "Fes-lo servir com vulguis!"
+
+#: ../inc/class-fire-widgets.php:52
+msgid "Footer Widget Area Two"
+msgstr "&Agrave;rea de widgets 2 del peu de p&agrave;gina"
+
+#: ../inc/class-fire-widgets.php:56
+msgid "Footer Widget Area Three"
+msgstr "&Agrave;rea de widgets 3 del peu de p&agrave;gina"
+
+#: ../inc/admin/class-admin-customize.php:64
+#: ../inc/admin/class-admin-customize.php:65
+#: ../inc/admin/class-admin-customize.php:86
+msgid "Customiz'it!"
+msgstr "Personalitza el tema"
+
+#: ../inc/admin/class-admin-customize.php:89
+msgid "Customize your website at any time!"
+msgstr "Personalitza el teu web en qualsevol moment!"
+
+#: ../inc/admin/class-admin-customize.php:132
+msgid "Blue"
+msgstr "Blau"
+
+#: ../inc/admin/class-admin-customize.php:133
+msgid "Green"
+msgstr "Verd"
+
+#: ../inc/admin/class-admin-customize.php:134
+msgid "Yellow"
+msgstr "Groc"
+
+#: ../inc/admin/class-admin-customize.php:135
+msgid "Orange"
+msgstr "Taronja"
+
+#: ../inc/admin/class-admin-customize.php:136
+msgid "Red"
+msgstr "Vermell"
+
+#: ../inc/admin/class-admin-customize.php:137
+msgid "Purple"
+msgstr "Lila"
+
+#: ../inc/admin/class-admin-customize.php:138
+msgid "Grey"
+msgstr "Gris"
+
+#: ../inc/admin/class-admin-customize.php:139
+msgid "Black"
+msgstr "Negre"
+
+#: ../inc/admin/class-admin-customize.php:156
+msgid "&mdash; No slider &mdash;"
+msgstr "&mdash; Cap slider &mdash;"
+
+#: ../inc/admin/class-admin-customize.php:157
+msgid "&mdash; Demo Slider &mdash;"
+msgstr "&mdash; Slider Demo &mdash;"
+
+#: ../inc/admin/class-admin-customize.php:191
+msgid "Skin"
+msgstr "Estil"
+
+#: ../inc/admin/class-admin-customize.php:193
+msgid "Select a skin for Customizr"
+msgstr "Escull un estil per a Customizr"
+
+#: ../inc/admin/class-admin-customize.php:197
+msgid "Logo &amp; Favicon"
+msgstr "Logo &amp; Favicon"
+
+#: ../inc/admin/class-admin-customize.php:199
+msgid "Set up logo and favicon options"
+msgstr "Configura les opcions de logotip i favicon"
+
+#: ../inc/admin/class-admin-customize.php:203
+msgid "Front Page"
+msgstr "P&agrave;gina Principal"
+
+#: ../inc/admin/class-admin-customize.php:205
+msgid "Set up front page options"
+msgstr "Configura les opcions de la p&agrave;gina principal"
+
+#: ../inc/admin/class-admin-customize.php:209
+msgid "Pages &amp; Posts Layout"
+msgstr "Disposició de p&agrave;gines i entrades"
+
+#: ../inc/admin/class-admin-customize.php:211
+msgid "Set up layout options"
+msgstr "Configura les opcions de disposició"
+
+#: ../inc/admin/class-admin-customize.php:215
+msgid "Comments"
+msgstr "Comentaris"
+
+#: ../inc/admin/class-admin-customize.php:217
+msgid "Set up comments options"
+msgstr "Configura les opcions dels comentaris"
+
+#: ../inc/admin/class-admin-customize.php:221
+#: ../parts/class-content-sidebar.php:134
+msgid "Social links"
+msgstr "Enllaços socials"
+
+#: ../inc/admin/class-admin-customize.php:223
+msgid "Set up your social links"
+msgstr "Configura els enllaços socials"
+
+#: ../inc/admin/class-admin-customize.php:227
+msgid "Images"
+msgstr "Imatges"
+
+#: ../inc/admin/class-admin-customize.php:229
+#: ../inc/admin/class-admin-customize.php:784
+msgid "Enable/disable lightbox effect on images"
+msgstr "Activa/desactiva l'efecte lightbox a les imatges"
+
+#: ../inc/admin/class-admin-customize.php:239
+msgid "Custom CSS"
+msgstr "CSS personalitzat"
+
+#: ../inc/admin/class-admin-customize.php:241
+msgid "Add your own CSS"
+msgstr "Afegiu el vostre propi CSS"
+
+#: ../inc/admin/class-admin-customize.php:245
+msgid "Dev Tools (advanced users)"
+msgstr "Eines de desenvolupament (usuaris avançats)"
+
+#: ../inc/admin/class-admin-customize.php:247
+msgid "Enable/disable the Dev Tools"
+msgstr "Activa/desactiva les eines de desenvolupament"
+
+#: ../inc/admin/class-admin-customize.php:273
+msgid "Manage menus"
+msgstr "Gestiona els men&uacute;s"
+
+#: ../inc/admin/class-admin-customize.php:284
+msgid "Choose a predefined skin"
+msgstr "Escull un estil predefinit"
+
+#: ../inc/admin/class-admin-customize.php:293
+msgid "Display top border"
+msgstr "Mostra vora superior"
+
+#: ../inc/admin/class-admin-customize.php:297
+msgid "Uncheck this option to remove the colored top border."
+msgstr ""
+"Desactiva aquesta opci&oacute; per ocultar la vora de color de la part "
+"superior"
+
+#: ../inc/admin/class-admin-customize.php:307
+msgid "Logo Upload (supported formats : .jpg, .png, .gif)"
+msgstr "Puja el logotip (formats: .jpg, .png, .gif)"
+
+#: ../inc/admin/class-admin-customize.php:314
+msgid "Force logo dimensions to max-width:250px and max-height:100px"
+msgstr "Força les dimensions del logo a max-width:250px i max-height:100px"
+
+#: ../inc/admin/class-admin-customize.php:329
+msgid "Favicon Upload (supported formats : .ico, .png, .gif)"
+msgstr "Puja el favicon (formats: .ico, .png, .gif)"
+
+#: ../inc/admin/class-admin-customize.php:341
+msgid "Choose content and layout"
+msgstr "Selecciona el contingut i la disposició"
+
+#: ../inc/admin/class-admin-customize.php:349
+msgid "Front page displays"
+msgstr "La p&agrave;gina principal mostra"
+
+#: ../inc/admin/class-admin-customize.php:354
+msgid "Don't show any posts or page"
+msgstr "No mostris cap entrada o p&agrave;gina"
+
+#: ../inc/admin/class-admin-customize.php:355
+msgid "Your latest posts"
+msgstr "Les teves darreres entrades"
+
+#: ../inc/admin/class-admin-customize.php:356
+msgid "A static page"
+msgstr "Una p&agrave;gina est&agrave;tica"
+
+#: ../inc/admin/class-admin-customize.php:362
+msgid "Front page"
+msgstr "P&agrave;gina principal"
+
+#: ../inc/admin/class-admin-customize.php:370
+msgid "Posts page"
+msgstr "P&agrave;gina d'entrades"
+
+#: ../inc/admin/class-admin-customize.php:379
+msgid "Set up the front page layout"
+msgstr "Configura la disposici&oacute; de la p&agrave;gina principal"
+
+#: ../inc/admin/class-admin-customize.php:383
+#: ../inc/admin/class-admin-customize.php:551
+#: ../inc/admin/class-admin-customize.php:577
+#: ../inc/admin/class-admin-customize.php:618
+#: ../inc/admin/class-admin-meta_boxes.php:130
+msgid "Right sidebar"
+msgstr "Barra lateral dreta"
+
+#: ../inc/admin/class-admin-customize.php:384
+#: ../inc/admin/class-admin-customize.php:552
+#: ../inc/admin/class-admin-customize.php:578
+#: ../inc/admin/class-admin-customize.php:619
+#: ../inc/admin/class-admin-meta_boxes.php:131
+msgid "Left sidebar"
+msgstr "Barra lateral esquerra"
+
+#: ../inc/admin/class-admin-customize.php:385
+#: ../inc/admin/class-admin-customize.php:553
+#: ../inc/admin/class-admin-customize.php:579
+#: ../inc/admin/class-admin-customize.php:620
+msgid "2 sidebars : Right and Left"
+msgstr "2 barres laterals: dreta i esquerra"
+
+#: ../inc/admin/class-admin-customize.php:386
+#: ../inc/admin/class-admin-customize.php:554
+#: ../inc/admin/class-admin-customize.php:580
+#: ../inc/admin/class-admin-customize.php:621
+msgid "No sidebars : full width layout"
+msgstr "Sense barres laterals: amplada completa"
+
+#: ../inc/admin/class-admin-customize.php:395
+msgid "Slider options"
+msgstr "Opcions d'slider"
+
+#: ../inc/admin/class-admin-customize.php:396
+msgid "Select front page slider"
+msgstr "Selecciona l'slider de la p&agrave;gina principal"
+
+#: ../inc/admin/class-admin-customize.php:408
+msgid "Full width slider"
+msgstr "Slider d'amplada completa"
+
+#: ../inc/admin/class-admin-customize.php:427
+msgid "Delay between each slides"
+msgstr "Retard entre cada imatge de l'slider"
+
+#: ../inc/admin/class-admin-customize.php:432
+msgid "in ms : 1000ms = 1s"
+msgstr "en ms : 1000ms = 1s"
+
+#: ../inc/admin/class-admin-customize.php:440
+msgid "Featured pages options"
+msgstr "Opcions de p&agrave;gines destacades"
+
+#: ../inc/admin/class-admin-customize.php:441
+msgid "Display home featured pages area"
+msgstr ""
+"Mostra l'&agrave;rea de p&agrave;gins destacades a la p&agrave;gina principal"
+
+#: ../inc/admin/class-admin-customize.php:445
+msgid "Enable"
+msgstr "Activa"
+
+#: ../inc/admin/class-admin-customize.php:446
+msgid "Disable"
+msgstr "Desactiva"
+
+#: ../inc/admin/class-admin-customize.php:455
+msgid "Show images"
+msgstr "Mostra les imatges"
+
+#: ../inc/admin/class-admin-customize.php:458
+msgid ""
+"The images are set with the \"featured image\" of each pages (in the page "
+"edit screen). Uncheck the option above to disable the featured page images."
+msgstr ""
+"Les imatges es fixen segons la \"imatge destacada\" de cada p&agrave;gina (a "
+"la pantalla d'edici&oacute; de p&agrave;gina). Desmarqueu l'opci&oacute; "
+"anterior per desactivar les imatges de pàgines destacades."
+
+#: ../inc/admin/class-admin-customize.php:464
+msgid "Read more &raquo;"
+msgstr "Llegeix m&eacute;s &raquo;"
+
+#: ../inc/admin/class-admin-customize.php:466
+msgid "Button text"
+msgstr "Text del bot&oacute;"
+
+#: ../inc/admin/class-admin-customize.php:474
+msgid "Home featured page one"
+msgstr "P&agrave;gina destacada 1 de la p&agrave;gina principal"
+
+#: ../inc/admin/class-admin-customize.php:482
+msgid "Home featured page two"
+msgstr "P&agrave;gina destacada 2 de la p&agrave;gina principal"
+
+#: ../inc/admin/class-admin-customize.php:490
+msgid "Home featured page three"
+msgstr "P&agrave;gina destacada 3 de la p&agrave;gina principal"
+
+#: ../inc/admin/class-admin-customize.php:501
+msgid "Featured text one (200 car. max)"
+msgstr "Text destacat 1 (200 car. m&agrave;x):"
+
+#: ../inc/admin/class-admin-customize.php:504
+#: ../inc/admin/class-admin-customize.php:516
+#: ../inc/admin/class-admin-customize.php:528
+msgid ""
+"You need to select a page first. Leave this field empty if you want to use "
+"the page excerpt."
+msgstr ""
+"Primer heu de seleccionar una p&agrave;gina. Deixeu aquest camp buit si "
+"voleu fer servir l'extracte de la p&agrave;gina."
+
+#: ../inc/admin/class-admin-customize.php:513
+msgid "Featured text two (200 car. max)"
+msgstr "Text destacat 2 (200 car. m&agrave;x):"
+
+#: ../inc/admin/class-admin-customize.php:525
+msgid "Featured text three (200 car. max)"
+msgstr "Text destacat 3 (200 car. m&agrave;x):"
+
+#: ../inc/admin/class-admin-customize.php:538
+msgid "Display Breadcrumb"
+msgstr "Mostra la ruta (molles de p&agrave;)"
+
+#: ../inc/admin/class-admin-customize.php:547
+msgid "Choose the global default layout"
+msgstr "Seleccioneu la disposici&oacute; per defecte del web"
+
+#: ../inc/admin/class-admin-customize.php:563
+msgid "Force default layout everywhere"
+msgstr "Força la disposici&oacute; per defecte a tot el lloc"
+
+#: ../inc/admin/class-admin-customize.php:566
+msgid ""
+"This option will override the specific layouts on all posts/pages, including "
+"the front page."
+msgstr ""
+"Aquesta opci&oacute; anul·la la configuraci&oacute; de les disposicions a "
+"totes les p&agrave;gines/entrades, inclosa la p&agrave;gina principal."
+
+#: ../inc/admin/class-admin-customize.php:573
+msgid "Choose the posts default layout"
+msgstr "Seleccioneu la disposici&oacute; per defecte de les entrades"
+
+#: ../inc/admin/class-admin-customize.php:590
+msgid "Maximum number of posts per page"
+msgstr "Nombre d'entrades per p&agrave;gina"
+
+#: ../inc/admin/class-admin-customize.php:601
+msgid "Select the length of posts in lists (home, search, archives, ...)"
+msgstr ""
+
+#: ../inc/admin/class-admin-customize.php:605
+msgid "Display the excerpt"
+msgstr ""
+
+#: ../inc/admin/class-admin-customize.php:606
+msgid "Display the full content"
+msgstr ""
+
+#: ../inc/admin/class-admin-customize.php:614
+msgid "Choose the pages default layout"
+msgstr "Seleccioneu la disposici&oacute; per defecte de les p&agrave;gines"
+
+#: ../inc/admin/class-admin-customize.php:632
+msgid "Enable comments on pages"
+msgstr "Permet els comentaris a les p&agrave;gines"
+
+#: ../inc/admin/class-admin-customize.php:635
+msgid ""
+"This option will enable comments on pages. You can disable comments for a "
+"single page in the quick edit mode of the page list screen."
+msgstr ""
+"Aquesta opci&oacute; habilitar&agrave; els comentaris a les p&agrave;gines. "
+"Podeu deshabilitar els comentaris per a una sola p&agrave;gina en el mode "
+"d'edici&oacute; r&agrave;pida de la pantalla de llista de p&agrave;gines."
+
+#: ../inc/admin/class-admin-customize.php:645
+msgid "Social links in header"
+msgstr "Enllaços socials a la capçalera"
+
+#: ../inc/admin/class-admin-customize.php:653
+msgid "Social links in left sidebar"
+msgstr "Enllaços socials a la barra lateral esquerra"
+
+#: ../inc/admin/class-admin-customize.php:661
+msgid "Social links in right sidebar"
+msgstr "Enllaços socials a la barra lateral dreta"
+
+#: ../inc/admin/class-admin-customize.php:669
+msgid "Social links in footer"
+msgstr "Enllaços socials al peu de p&agrave;gina"
+
+#: ../inc/admin/class-admin-customize.php:681
+msgid "RSS feed (default is the wordpress feed)"
+msgstr "Canal RSS (el valor per defecte &eacute;s el canal wordpress)"
+
+#: ../inc/admin/class-admin-customize.php:690
+msgid "Twitter profile url"
+msgstr "Url del perfil de Twitter"
+
+#: ../inc/admin/class-admin-customize.php:699
+msgid "Facebook profile url"
+msgstr "Url del perfil de Facebook"
+
+#: ../inc/admin/class-admin-customize.php:708
+msgid "Google+ profile url"
+msgstr "Url del perfil de Google+"
+
+#: ../inc/admin/class-admin-customize.php:717
+msgid "Instagram profile url"
+msgstr "Url del perfil d'Instagram"
+
+#: ../inc/admin/class-admin-customize.php:726
+msgid "WordPress profile url"
+msgstr "Url del perfil de WordPress"
+
+#: ../inc/admin/class-admin-customize.php:735
+msgid "Youtube profile url"
+msgstr "Url del perfil de Youtube"
+
+#: ../inc/admin/class-admin-customize.php:744
+msgid "Pinterest profile url"
+msgstr "Url del perfil de Pinterest"
+
+#: ../inc/admin/class-admin-customize.php:753
+msgid "Github profile url"
+msgstr "Url del perfil de Github"
+
+#: ../inc/admin/class-admin-customize.php:762
+msgid "Dribbble profile url"
+msgstr "Url del perfil de Dribbble"
+
+#: ../inc/admin/class-admin-customize.php:771
+msgid "LinkedIn profile url"
+msgstr "Url del perfil de LinkedIn"
+
+#: ../inc/admin/class-admin-customize.php:787
+msgid ""
+"If enabled, this option activate a popin window whith a zoom effect when an "
+"image is clicked. This will not apply to image gallery."
+msgstr ""
+"Si s'activa aquesta opci&oacute;, es mostra una finestra amb efecte zoom "
+"quan es fa clic a la imatge. Això no s'aplica a les galeries d'imatges."
+
+#: ../inc/admin/class-admin-customize.php:793
+msgid "Autoscale images on zoom"
+msgstr "Escala automàticament les imatges al zoom"
+
+#: ../inc/admin/class-admin-customize.php:796
+msgid ""
+"If enabled, this option will force images to fit the screen on lightbox zoom."
+msgstr ""
+"Si est&agrave; activada, aquesta opci&oacute; forçar&agrave; que la imatge "
+"s'ajusti a la pantalla de zoom de lightbox."
+
+#: ../inc/admin/class-admin-customize.php:819
+msgid "Add your custom css here and design live! (for advanced users)"
+msgstr ""
+"Afegiu el vostre CSS personalitzat aqu&iacute; i dissenyeu en viu! (usuaris "
+"avançats)"
+
+#: ../inc/admin/class-admin-customize.php:822
+msgid ""
+"Always use this field to add your custom css instead of editing directly the "
+"style.css file : it will not be deleted during theme updates. You can also "
+"paste your custom css in the style.css file of a child theme."
+msgstr ""
+"Utilitzeu aquest camp per afegir el vostre CSS personalitzat en comptes "
+"d'editar directament l'arxiu style.css: no s'eliminar&agrave; quan "
+"s'actualitzi el tema. Tamb&eacute; podeu enganxar el vostre CSS "
+"personalitzat a l'arxiu style.css d'un tema fill."
+
+#: ../inc/admin/class-admin-customize.php:831
+msgid "Developer Box"
+msgstr "Caixa del desenvolupador"
+
+#: ../inc/admin/class-admin-customize.php:840
+#: ../inc/admin/class-admin-customize.php:858
+msgid "Only visible for logged in users with an admin profile."
+msgstr ""
+"Visible nom&eacute;s per a usuaris registrats amb perfil d'administrador."
+
+#: ../inc/admin/class-admin-customize.php:843
+msgid ""
+"If enabled, this option displays a draggable information box to help you "
+"develop or debug your Customizr based website."
+msgstr ""
+"Si est&agrave; activada, aquesta opci&oacute; mostrar&agrave; una caixa "
+"informativa arrossegable que us ajudar&agrave; a desenvolupar o depurar el "
+"vostre lloc web basat en Customizr."
+
+#: ../inc/admin/class-admin-customize.php:849
+msgid "Developer tooltips"
+msgstr "Sobreimpressions de desenvolupament"
+
+#: ../inc/admin/class-admin-customize.php:861
+msgid ""
+"If enabled, this option displays clickable contextual tooltips right inside "
+"your website."
+msgstr ""
+"Si est&agrave; activada, aquesta opci&oacute; mostra suggeriments "
+"contextuals clicables dins del vostre web."
+
+#: ../inc/admin/class-admin-customize.php:870
+msgid "Tip icon color"
+msgstr "Color de la icona de suggeriment"
+
+#: ../inc/admin/class-admin-meta_boxes.php:89
+msgid "Layout Options"
+msgstr "Opcions de disposici&oacute;"
+
+#: ../inc/admin/class-admin-meta_boxes.php:97
+#: ../inc/admin/class-admin-meta_boxes.php:470
+msgid "Slider Options"
+msgstr "Opcions d'slider"
+
+#: ../inc/admin/class-admin-meta_boxes.php:132
+msgid "Two sidebars"
+msgstr "Dues barres laterals"
+
+#: ../inc/admin/class-admin-meta_boxes.php:133
+msgid "Full Width"
+msgstr "Amplada completa"
+
+#: ../inc/admin/class-admin-meta_boxes.php:166
+#, php-format
+msgid "Default %1$s layout is set to : %2$s"
+msgstr "La disposici&oacute; %1$s per defecte s'ha establert a: %2$s"
+
+#: ../inc/admin/class-admin-meta_boxes.php:166
+msgid "pages"
+msgstr "p&agrave;gines"
+
+#: ../inc/admin/class-admin-meta_boxes.php:166
+msgid "posts"
+msgstr "entrades"
+
+#: ../inc/admin/class-admin-meta_boxes.php:171
+msgid ""
+"You have checked the <i>\"Force global default layout for all posts and pages"
+"\"</i>, you must unchecked this option to enable a specific layout for this "
+"post."
+msgstr ""
+"Heu marcat l'opci&oacute; <i>\"Força la disposici&oacute; global per defecte "
+"per a totes les entrades i p&agrave;gines\"</i>; l'haureu de desactivar per "
+"poder assignar una disposici&oacute; espec&iacute;fica per a aquesta entrada."
+
+#: ../inc/admin/class-admin-meta_boxes.php:172
+msgid "Change layout options"
+msgstr "Canvia les opcions de disposici&oacute"
+
+#: ../inc/admin/class-admin-meta_boxes.php:176
+#, php-format
+msgid ""
+"You can define a specific layout for %1$s by using the pre-defined left and "
+"right sidebars. The default layouts can be defined in the WordPress "
+"customizer screen %2$s.<br />"
+msgstr ""
+"Podeu definir una disposici&oacute; espec&iacute;fica per a %1$s utilitzant "
+"les barres laterals predefinides. Les disposicions per defecte es poden "
+"canviar a la pantalla de personalització de Wordpress %2$s. <br />"
+
+#: ../inc/admin/class-admin-meta_boxes.php:177
+#: ../inc/admin/class-admin-meta_boxes.php:182
+msgid "this page"
+msgstr "aquesta p&agrave;gina"
+
+#: ../inc/admin/class-admin-meta_boxes.php:177
+#: ../inc/admin/class-admin-meta_boxes.php:182
+msgid "this post"
+msgstr "aquesta entrada"
+
+#: ../inc/admin/class-admin-meta_boxes.php:178
+msgid "here"
+msgstr "aqu&iacute;"
+
+#: ../inc/admin/class-admin-meta_boxes.php:181
+#, php-format
+msgid "Select a specific layout for %1$s"
+msgstr "Seleccioneu una disposici&oacute; espec&iacute;fica per a %1$s"
+
+#: ../inc/admin/class-admin-meta_boxes.php:185
+#, php-format
+msgid "Default layout %1s"
+msgstr "Disposici&oacute;  per defecte %1s"
+
+#: ../inc/admin/class-admin-meta_boxes.php:227
+msgid "Add a slider to this post/page"
+msgstr "Afegeix un slider a aquesta entrada/p&agrave;gina"
+
+#: ../inc/admin/class-admin-meta_boxes.php:291
+#: ../inc/admin/class-admin-meta_boxes.php:677
+msgid "Choose a slider"
+msgstr "Escolliu un slider"
+
+#: ../inc/admin/class-admin-meta_boxes.php:298
+#: ../inc/admin/class-admin-meta_boxes.php:692
+msgid "&mdash; Select a slider &mdash; "
+msgstr "&mdash; Seleccioneu un slider &mdash; "
+
+#: ../inc/admin/class-admin-meta_boxes.php:303
+msgid ""
+"To create a new slider : open the media library, edit your images and add "
+"them to your new slider."
+msgstr ""
+"Per crear un nou slider obriu la llibreria multimèdia, editeu les vostres "
+"imatges i afegiu-les al vostre nou slider."
+
+#: ../inc/admin/class-admin-meta_boxes.php:307
+msgid "Delay between each slides in milliseconds (default : 5000 ms)"
+msgstr "Retard entre cada imatge en milisegons (per defecte: 5000 ms)"
+
+#: ../inc/admin/class-admin-meta_boxes.php:314
+msgid "Slider Layout : set the slider in full width"
+msgstr "Disposició de l'slider: col·loca l'slider amb amplada completa"
+
+#: ../inc/admin/class-admin-meta_boxes.php:331
+#: ../inc/admin/class-admin-meta_boxes.php:701
+msgid "Delete this slider"
+msgstr "Elimina aquest slider"
+
+#: ../inc/admin/class-admin-meta_boxes.php:336
+#: ../inc/admin/class-admin-meta_boxes.php:705
+msgid ""
+"The slider will be deleted permanently (images, call to actions and link "
+"will be kept)."
+msgstr ""
+"L'slider s'eliminar&agrave; de forma permanent (es conservaran les fotos, "
+"les crides a l'acci&oacute i els enllaços)."
+
+#: ../inc/admin/class-admin-meta_boxes.php:339
+#: ../inc/admin/class-admin-meta_boxes.php:708
+msgid "Delete slider"
+msgstr "Elimina l'slider"
+
+#: ../inc/admin/class-admin-meta_boxes.php:347
+#: ../inc/admin/class-controls.php:136
+msgid ""
+"You haven't create any slider yet. Go to the media library, edit your images "
+"and add them to your sliders."
+msgstr ""
+"Encara no heu creat cap slider. Aneu a la biblioteca multimèdia, editeu les "
+"imatges i afegiu-les al vostre slider."
+
+#: ../inc/admin/class-admin-meta_boxes.php:499
+msgid "Add to a slider"
+msgstr "Afegeix a un slider"
+
+#: ../inc/admin/class-admin-meta_boxes.php:501
+msgid "Add to a slider (create one if needed)"
+msgstr "Afegeix a un slider (si cal, creeu-ne un)"
+
+#: ../inc/admin/class-admin-meta_boxes.php:634
+msgid "Title text (80 car. max length)"
+msgstr "Text del t&iacute;tol (200 car. màx):"
+
+#: ../inc/admin/class-admin-meta_boxes.php:641
+msgid "Description text (below the title, 250 car. max length)"
+msgstr ""
+"Text de descripci&oacute; (sota del t&iacute;tol, longitud m&agrave;xima de "
+"250 caràcters)"
+
+#: ../inc/admin/class-admin-meta_boxes.php:648
+msgid "Title and text color"
+msgstr "Color del títol i del text"
+
+#: ../inc/admin/class-admin-meta_boxes.php:656
+msgid "Button text (80 car. max length)"
+msgstr "Text del bot&oacute; (longitud m&agrave;xima de 80 caràcters)"
+
+#: ../inc/admin/class-admin-meta_boxes.php:663
+msgid "Choose a linked page or post (among the last 100)."
+msgstr ""
+"Escolliu una p&agrave;gina o entrada relacionada (entre les 100 darreres)."
+
+#: ../inc/admin/class-admin-meta_boxes.php:668
+msgid "No link"
+msgstr "Sense enllaç"
+
+#: ../inc/admin/class-admin-meta_boxes.php:698
+#: ../inc/admin/class-admin-meta_boxes.php:729
+msgid "Add a slider"
+msgstr "Afegeix a un slider"
+
+#: ../inc/admin/class-admin-meta_boxes.php:727
+msgid ""
+"You haven't create any slider yet. Write a slider name and click on the "
+"button to add you first slider."
+msgstr ""
+"Encara no heu creat cap slider. Escriviu un nom d'slider i feu clic al "
+"bot&oacute; per afegir el primer slider."
+
+#: ../inc/admin/class-admin-meta_boxes.php:844
+msgid ""
+"This slider has not slides to show. Go to the media library and start adding "
+"images to it."
+msgstr ""
+"Aquest slider no té imatges per mostrar. Aneu a la llibreria multimèdia i "
+"afegiu-hi les imatges."
+
+#: ../inc/admin/class-admin-meta_boxes.php:854
+msgid "Slide Image"
+msgstr "Imatge d'slide"
+
+#: ../inc/admin/class-admin-meta_boxes.php:855
+msgid "Title"
+msgstr "Títol"
+
+#: ../inc/admin/class-admin-meta_boxes.php:856
+msgid "Slide Text"
+msgstr "Text de l'slide"
+
+#: ../inc/admin/class-admin-meta_boxes.php:857
+msgid "Button Text"
+msgstr "Text del botó"
+
+#: ../inc/admin/class-admin-meta_boxes.php:858
+msgid "Button Link"
+msgstr "Enllaç del botó"
+
+#: ../inc/admin/class-admin-meta_boxes.php:859
+#: ../parts/class-content-attachment.php:88
+#: ../parts/class-content-breadcrumb.php:614
+#: ../parts/class-content-breadcrumb.php:647
+#: ../parts/class-content-breadcrumb.php:662
+#: ../parts/class-content-breadcrumb.php:690
+#: ../parts/class-content-comments.php:154 ../parts/class-content-post.php:94
+msgid "Edit"
+msgstr "Edita"
+
+#: ../inc/admin/class-admin-meta_boxes.php:900
+msgid "No Image Selected"
+msgstr "No hi ha cap imatge seleccionada"
+
+#: ../inc/admin/class-admin-meta_boxes.php:926
+msgid "Edit this slide"
+msgstr "Edita aquest slide"
+
+#: ../inc/admin/class-admin-meta_boxes.php:928
+msgid "Current slide"
+msgstr "Slide actual"
+
+#: ../inc/admin/class-controls.php:136
+msgid "Create a slider"
+msgstr "Crea un slider"
+
+#: ../inc/admin/class-fire-admin_init.php:78
+#: ../inc/admin/class-fire-admin_init.php:79
+msgid "Upgrade WP"
+msgstr "Actualizeu WP"
+
+#: ../inc/admin/class-fire-admin_init.php:98
+msgid "This theme requires WordPress 3.4+"
+msgstr "Aquest tema requereix WordPress 3.4 o superior"
+
+#: ../inc/admin/class-fire-admin_init.php:101
+#: ../inc/admin/class-fire-admin_init.php:102
+msgid "Upgrade Wordpress Now"
+msgstr "Actualitzeu Wordpress ara"
+
+#: ../inc/admin/class-fire-admin_init.php:119
+#: ../inc/admin/class-fire-admin_init.php:120
+msgid "About Customizr"
+msgstr "Quant a Customizr"
+
+#: ../inc/admin/class-fire-admin_init.php:140
+msgid "Help"
+msgstr "Ajuda"
+
+#: ../inc/admin/class-fire-admin_init.php:143
+msgid "Need help with Customizr? Click here!"
+msgstr "Necessiteu ajuda amb Customizr? Feu clic aquí!"
+
+#: ../inc/admin/class-fire-admin_init.php:169
+msgid "Need help with Customizr ?"
+msgstr "Necessiteu ajuda amb Customizr?"
+
+#: ../inc/admin/class-fire-admin_init.php:171
+#, php-format
+msgid "Welcome to Customizr %s"
+msgstr "Benvingut a Customizr %s"
+
+#: ../inc/admin/class-fire-admin_init.php:178
+#, php-format
+msgid ""
+"You can start by watching the <a href=\"%1$s\" target=\"_blank"
+"\">introduction video</a> or by reading <a href=\"%2$s\" target=\"_blank"
+"\">the documentation</a>.<br/> If you don't find an answer to your issue, "
+"don't panic! Since Customizr is used by a growing community of webmasters "
+"reporting bugs and making continuous improvements, you will probably find a "
+"solution to your problem either in the FAQ or in the user forum."
+msgstr ""
+"Podeu començar per veure el <a href=\"%1$s\" target=\"_blank\">vídeo "
+"d'introducció</a> o llegir <a href=\"%2$s\" target=\"_blank\">la "
+"documentació</a>.<br/> Si no trobeu la solució al vostre problema, no us "
+"preocupeu! Customizr és utilitzat per una creixent comunitat de webmàsters "
+"que informen d'errors i realitzen millores contínues, per tant, probablement "
+"trobareu una solució al vostre problema a les preguntes freqüents o al fòrum "
+"d'usuaris."
+
+#: ../inc/admin/class-fire-admin_init.php:186
+msgid "Read the documentation"
+msgstr "Llegiu la documentació"
+
+#: ../inc/admin/class-fire-admin_init.php:190
+msgid "Check the FAQ"
+msgstr "Consulteu les preguntes més freqüents"
+
+#: ../inc/admin/class-fire-admin_init.php:195
+msgid "Code snippets"
+msgstr ""
+
+#: ../inc/admin/class-fire-admin_init.php:198
+msgid "Discuss in the user forum"
+msgstr "Debateu-ho al fòrum d'usuaris"
+
+#: ../inc/admin/class-fire-admin_init.php:206
+#, php-format
+msgid ""
+"Thank you for using Customizr! Customizr %1$s has more features, is safer "
+"and more stable than ever <a href=\"#customizr-changelog\">(see the "
+"changelog)</a> to help you build an awesome website. Watch the <a href=\"%2$s"
+"\" target=\"_blank\">introduction video</a> and find inspiration in the <a "
+"href=\"#showcase\">showcase</a>.<br/>Enjoy it! "
+msgstr ""
+"Gràcies per utilitzar Customizr! Customizr %1$s té més funcionalitat, és més "
+"segur i estable que mai <a href=\"#customizr-changelog\">(vegeu els canvis)</"
+"a> per ajudar-vos a construir un web impressionant. Vegeu el <a href=\"%2$s"
+"\" target=\"_blank\">vídeo d'introducció</a> i busqueu inspiració al nostre "
+"<a href=\"#showcase\"> catàleg de webs</a>.<br/> Gaudiu-lo!"
+
+#: ../inc/admin/class-fire-admin_init.php:220
+#, php-format
+msgid ""
+"You are using a child theme of Customizr %1$s : always check the %2$s after "
+"upgrading to see if a function or a template has been deprecated."
+msgstr ""
+"Esteu utilitzant un tema fill de Customizr %1$s: reviseu sempre %2$ s "
+"després de l'actualizació per veure si alguna funció o alguna plantilla ha "
+"quedat obsoleta."
+
+#: ../inc/admin/class-fire-admin_init.php:235
+msgid "We need sponsors!"
+msgstr "Necessitem patrocinadors!"
+
+#: ../inc/admin/class-fire-admin_init.php:236
+msgid ""
+"<strong>We do our best do make Customizr the perfect free theme for you!</"
+"strong><br/> Please help support it's continued development with a donation "
+"of $20, $50, or even $100."
+msgstr ""
+"<strong>Fem tot el possible per tal que Customizr sigui un tema lliure "
+"perfecte per a vosaltres.</strong><br /> Si us plau, ajudeu-nos a mantenir i "
+"continuar el desenvolupament amb una donació de $20, $50 o fins i tot $100."
+
+#: ../inc/admin/class-fire-admin_init.php:243
+msgid "Happy user of Customizr?"
+msgstr "Sou un usuari feliç de Customizr?"
+
+#: ../inc/admin/class-fire-admin_init.php:244
+msgid ""
+"If you are happy with the theme, say it on wordpress.org and give Customizr "
+"a nice review! <br />(We are addicted to your feedbacks...)"
+msgstr ""
+"Si esteu satisfet amb el tema, comenteu-ho a wordpress.org i escriviu una "
+"bona crítica de Customizr!.<br />(Som addictes a les vostres opinions...)"
+
+#: ../inc/admin/class-fire-admin_init.php:249
+msgid "Follow us"
+msgstr "Seguiu-nos"
+
+#: ../inc/admin/class-fire-admin_init.php:257
+msgid "New! Customizr Developer Tools"
+msgstr "Nou! Eines de desenvolupador de Customizr"
+
+#: ../inc/admin/class-fire-admin_init.php:261
+msgid "Easily drill down into Customizr code with the dev tools!"
+msgstr ""
+"Aprofundiu fàcilment al codi de Customizr amb les eines de desenvolupament!"
+
+#: ../inc/admin/class-fire-admin_init.php:262
+msgid ""
+"A new section called \"Dev Tools\" has been added to the customizer options."
+"<br/> There you will find two optional new features : <br/><strong>-The "
+"developer box</strong> : this draggable box is a developer dashboard "
+"allowing you to have an overview of your theme settings (plugins, custom "
+"post types, theme options,...) and providing useful informations for debug "
+"and development : a loading timeline of any pages, contextual data ( like "
+"conditional tags and query), the hook's structure of the theme and a note "
+"section about the code logic of Customizr.<br/><strong>-The embedded "
+"tooltips</strong> : this option displays clickable (and draggable) "
+"contextual tooltips right inside your website. They help you understand "
+"which part of the php code handles any front-end block or element. The "
+"informations provided are : class -> method, hook, file, function "
+"description and possible filter.<br/><br/><i>Those tools are only displayed "
+"to logged in users with an admin capability profile.</i>"
+msgstr ""
+"S'ha afegit una nova secció anomenada \"Eines de desenvolupament\" (Dev "
+"Tools) a les opcions de personalització.<br/> Allà trobareu dues noves "
+"característiques opcionals : <br/><strong>- Caixa del desenvolupador</"
+"strong>: aquesta caixa arrossegable és un panell que permet al "
+"desenvolupador tenir una visió general de la configuració del tema "
+"(extensions, tipus d'entrades personalitzades, opcions del tema...) i "
+"proporcionar-li informació útil per a la depuració i el desenvolupament: una "
+"línia de temps de càrrega de les pàgines, dades contextuals (com ara "
+"etiquetes condicionals i consultes), l'estructura de <i>hooks</i> del tema i "
+"una secció amb notes sobre el codi de Customizr.<br/><strong>-Informació "
+"integrada de les eines (embedded tooltips):</strong>: aquesta opció mostra "
+"suggeriments contextuals clicables i arrossegables dins del vostre web. "
+"Ajuden a comprendre quina part del codi php s'ocupa de cada bloc o element "
+"de la interfície. Les informacions disponibles són: classe -> mètode, "
+"<i>hook</i>, arxiu, descripció de funcions i filtres possibles.<br/><br/"
+"><i>Aquestes eines només es mostren als usuaris registrats que tenen perfil "
+"d'administrador.</i>"
+
+#: ../inc/admin/class-fire-admin_init.php:269
+msgid "Customizr Showcase"
+msgstr "Catàleg de webs Customizr"
+
+#: ../inc/admin/class-fire-admin_init.php:272
+#: ../inc/admin/class-fire-admin_init.php:279
+msgid "Visit the showcase"
+msgstr "Visiteu el catàleg de webs"
+
+#: ../inc/admin/class-fire-admin_init.php:273
+msgid "Find inspiration for your next Customizr based website!"
+msgstr "Trobeu inspiració per al vostre proper web basat en Customizr!"
+
+#: ../inc/admin/class-fire-admin_init.php:274
+msgid ""
+"This showcase aims to show what can be done with Customizr and helping other "
+"users to find inspiration for their web design."
+msgstr ""
+"Aquest catàleg de webs pretén mostratr el que es pot fer amb Customizr i "
+"ajudar altres usuaris a trobar inspiració per al seu disseny."
+
+#: ../inc/admin/class-fire-admin_init.php:276
+msgid ""
+"Do you think you made an awesome website that can inspire people? Submitting "
+"a site for review is quick and easy to do."
+msgstr ""
+"Creieu que heu fet un web impressionant que pot inspirar altra gent? "
+"Presentar-lo per tal que sigui revisat és ràpid i fàcil de fer."
+
+#: ../inc/admin/class-fire-admin_init.php:286
+#, php-format
+msgid "Changelog in version %1$s"
+msgstr "Registre de canvis de la versió %1$s"
+
+#: ../inc/admin/class-fire-admin_init.php:295
+msgid "Go to Dashboard &rarr; Home"
+msgstr "Vés al Tauler &rarr; Pàgina d'inici"
+
+#: ../inc/admin/class-fire-admin_init.php:295
+msgid "Go to Dashboard"
+msgstr "Vés al Tauler"
+
+#: ../parts/class-content-404.php:67
+msgid "Ooops, page not found"
+msgstr "Ooops, pàgina no trobada"
+
+#: ../parts/class-content-404.php:95
+msgid "Speaking the Truth in times of universal deceit is a revolutionary act."
+msgstr "Dir la veritat en temps d'engany universal és un acte revolucionari."
+
+#: ../parts/class-content-404.php:96
+msgid "George Orwell"
+msgstr "George Orwell"
+
+#: ../parts/class-content-404.php:99
+msgid ""
+"Sorry, but the requested page is not found. You might try a search below."
+msgstr ""
+"Ens sap greu però la pàgina sol·licitada no s'ha trobat. Proveu una nova "
+"cerca a la casella de sota."
+
+#: ../parts/class-content-attachment.php:86 ../parts/class-content-page.php:74
+#: ../parts/class-content-post.php:92
+msgid "Comment(s) on "
+msgstr "Comentari(s) a "
+
+#: ../parts/class-content-attachment.php:136
+msgid "&larr; Previous"
+msgstr "&larr;  Anterior"
+
+#: ../parts/class-content-attachment.php:138
+msgid "Next &rarr;"
+msgstr "Següent &rarr;"
+
+#: ../parts/class-content-breadcrumb.php:49
+#: ../parts/class-content-breadcrumb.php:121
+msgid "Home"
+msgstr "Inici"
+
+#: ../parts/class-content-breadcrumb.php:118
+msgid "Browse:"
+msgstr "Navega per:"
+
+#: ../parts/class-content-breadcrumb.php:498
+msgid "g:i a"
+msgstr "g:i a"
+
+#: ../parts/class-content-breadcrumb.php:501
+#, php-format
+msgid "Minute %1$s"
+msgstr "Minut %1$s"
+
+#: ../parts/class-content-breadcrumb.php:501
+msgid "i"
+msgstr "i"
+
+#: ../parts/class-content-breadcrumb.php:504
+msgid "g a"
+msgstr "g a"
+
+#: ../parts/class-content-breadcrumb.php:515
+#: ../parts/class-content-breadcrumb.php:525
+#: ../parts/class-content-breadcrumb.php:534
+#: ../parts/class-content-breadcrumb.php:545
+#: ../parts/class-content-breadcrumb.php:547
+#: ../parts/class-content-breadcrumb.php:746
+msgid "Y"
+msgstr "Y"
+
+#: ../parts/class-content-breadcrumb.php:516
+#: ../parts/class-content-breadcrumb.php:537
+#: ../parts/class-content-breadcrumb.php:539
+#: ../parts/class-content-breadcrumb.php:750
+msgid "F"
+msgstr "F"
+
+#: ../parts/class-content-breadcrumb.php:519
+#: ../parts/class-content-breadcrumb.php:521
+#: ../parts/class-content-breadcrumb.php:754
+msgid "d"
+msgstr "d"
+
+#: ../parts/class-content-breadcrumb.php:528
+#: ../parts/class-content-breadcrumb.php:530
+#, php-format
+msgid "Week %1$s"
+msgstr "Setmana %1$s"
+
+#: ../parts/class-content-breadcrumb.php:556
+#: ../parts/class-content-breadcrumb.php:558
+#, php-format
+msgid "Search results for &quot;%1$s&quot;"
+msgstr "Resultats de la cerca per a &quot;%1$s&quot;"
+
+#: ../parts/class-content-breadcrumb.php:563
+msgid "404 Not Found"
+msgstr "Error 404 - Pàgina no trobada"
+
+#: ../parts/class-content-breadcrumb.php:568
+#: ../parts/class-content-breadcrumb.php:570
+#, php-format
+msgid "Page %d"
+msgstr "P&agrave;gina %d"
+
+#: ../parts/class-content-breadcrumb.php:639
+msgid "Split"
+msgstr "Divideix"
+
+#: ../parts/class-content-breadcrumb.php:643
+msgid "Merge"
+msgstr "Combina"
+
+#: ../parts/class-content-comments.php:63
+#, php-format
+msgid "One thought on &ldquo;%2$s&rdquo;"
+msgstr "Un comentari a &ldquo;%2$s&rdquo;"
+
+#: ../parts/class-content-comments.php:128
+msgid "Pingback:"
+msgstr "Pingback:"
+
+#: ../parts/class-content-comments.php:128
+msgid "(Edit)"
+msgstr "(Edita)"
+
+#: ../parts/class-content-comments.php:145
+msgid "Reply"
+msgstr "Resposta"
+
+#: ../parts/class-content-comments.php:153
+msgid "Post author"
+msgstr "Autor de l'entrada"
+
+#: ../parts/class-content-comments.php:160
+#, php-format
+msgid "%1$s at %2$s"
+msgstr "%1$s a les %2$s"
+
+#: ../parts/class-content-comments.php:166
+msgid "Your comment is awaiting moderation."
+msgstr "El vostre comentari està pendent de moderació."
+
+#: ../parts/class-content-comments.php:201
+msgid "Comment navigation"
+msgstr "Navegació dels comentaris"
+
+#: ../parts/class-content-comments.php:207
+msgid "<span class=\"meta-nav\">&larr;</span> Older Comments"
+msgstr "<span class=\"meta-nav\">&larr;</span> Comentaris més antics"
+
+#: ../parts/class-content-comments.php:215
+msgid "Newer Comments <span class=\"meta-nav\">&rarr;</span>"
+msgstr "Comentarios més recents <span class=\"meta-nav\">&rarr;</span>"
+
+#: ../parts/class-content-comments.php:248
+msgid "Comments are closed."
+msgstr "Comentaris tancats."
+
+#: ../parts/class-content-featured_pages.php:105
+msgid "Customizer screen"
+msgstr "Pantalla de personalització"
+
+#: ../parts/class-content-featured_pages.php:105
+msgid " here"
+msgstr "aquí"
+
+#: ../parts/class-content-featured_pages.php:110
+msgid "Featured page"
+msgstr "P&agrave;gina destacada"
+
+#: ../parts/class-content-featured_pages.php:111
+#, php-format
+msgid ""
+"Featured page description text : use the page excerpt or set your own custom "
+"text in the Customizr screen%s."
+msgstr ""
+"Descripció de la p&agrave;gina destacada: utilitzeu l'extracte de la "
+"p&agrave;gina o escriviu el vostre propi text a la pantalla de Customizr % s."
+
+#: ../parts/class-content-gallery.php:188
+msgid "Missing Attachment"
+msgstr "Falta l'arxiu adjunt"
+
+#: ../parts/class-content-no_results.php:76
+msgid ""
+"Success is the ability to go from one failure to another with no loss of "
+"enthusiasm..."
+msgstr ""
+"L'èxit és la capacitat d'anar de fracàs en fracàs sense perdre "
+"l'entusiasme..."
+
+#: ../parts/class-content-no_results.php:77
+msgid "Sir Winston Churchill"
+msgstr "Sir Winston Churchill"
+
+#: ../parts/class-content-no_results.php:79
+msgid ""
+"Sorry, but nothing matched your search criteria. Please try again with some "
+"different keywords."
+msgstr ""
+"Ens sap greu, però no hi ha resultats per a la vostra cerca. Si us plau, "
+"proveu-ho una altra vegada amb paraules clau diferents."
+
+#: ../parts/class-content-page.php:76
+msgid "Edit page"
+msgstr "Edita p&agrave;gina"
+
+#: ../parts/class-content-page.php:84 ../parts/class-content-post.php:149
+#: ../parts/class-content-post_list.php:192
+msgid "Continue reading <span class=\"meta-nav\">&rarr;</span>"
+msgstr "Segueix llegint <span class=\"meta-nav\">&rarr;</span>"
+
+#: ../parts/class-content-page.php:87 ../parts/class-content-post.php:150
+#: ../parts/class-content-post_list.php:193
+msgid "Pages:"
+msgstr "P&agrave;gines:"
+
+#: ../parts/class-content-post.php:196
+#: ../parts/class-content-post_list.php:428
+#, php-format
+msgid "About %s"
+msgstr "Quant a %s"
+
+#: ../parts/class-content-post.php:201
+#, php-format
+msgid "View all posts by %s <span class=\"meta-nav\">&rarr;</span>"
+msgstr ""
+"Mostra totes les entrades per %s <span class=\"meta-nav\">&rarr;</span>"
+
+#: ../parts/class-content-post_list.php:116
+#, php-format
+msgid "Permalink to %s"
+msgstr "Enllaç permanent a %s"
+
+#: ../parts/class-content-post_list.php:116
+msgid "{no title} Read the post &raquo;"
+msgstr "{no title} Llegeix l'entrada &raquo;"
+
+#: ../parts/class-content-post_list.php:381
+#, php-format
+msgid "%1sSearch Results for: %2s"
+msgstr "%1sResultats de cerca per a: %2s"
+
+#: ../parts/class-content-post_list.php:382
+msgid "No"
+msgstr "No hi ha"
+
+#: ../parts/class-content-post_list.php:419
+#, php-format
+msgid "Author Archives: %s"
+msgstr "Arxiu de l'autor: %s"
+
+#: ../parts/class-content-post_list.php:463
+#, php-format
+msgid "Category Archives: %s"
+msgstr "Arxiu de la categoría: %s"
+
+#: ../parts/class-content-post_list.php:495
+#, php-format
+msgid "Tag Archives: %s"
+msgstr "Arxiu de l'etiqueta: %s"
+
+#: ../parts/class-content-post_list.php:529
+#, php-format
+msgid "Daily Archives: %s"
+msgstr "Arxiu diari: %s"
+
+#: ../parts/class-content-post_list.php:531
+#, php-format
+msgid "Monthly Archives: %s"
+msgstr "Arxiu mensual: %s"
+
+#: ../parts/class-content-post_list.php:533
+#, php-format
+msgid "Yearly Archives: %s"
+msgstr "Arxiu anual: %s"
+
+#: ../parts/class-content-post_list.php:535
+msgid "Archives"
+msgstr "Arxiu"
+
+#: ../parts/class-content-post_metas.php:48
+msgid "Published"
+msgstr "Publicat"
+
+#: ../parts/class-content-post_metas.php:51
+msgid "at dimensions"
+msgstr "a les dimensions"
+
+#: ../parts/class-content-post_metas.php:51
+msgid "Link to full-size image"
+msgstr "Enllaç a la imatge de mida completa"
+
+#: ../parts/class-content-post_metas.php:52
+msgid "in"
+msgstr "a"
+
+#: ../parts/class-content-post_metas.php:52
+msgid "Return to "
+msgstr "Torna a"
+
+#: ../parts/class-content-post_metas.php:71
+#, php-format
+msgid "View all posts by %s"
+msgstr "Mostra totes les entrades per %s"
+
+#: ../parts/class-content-post_metas.php:77
+#, php-format
+msgid ""
+"This entry was posted in %1$s and tagged %2$s on %3$s<span class=\"by-author"
+"\"> by %4$s</span>."
+msgstr ""
+"Entrada publicada a %1$s i etiquetada %2$s el %3$s <span class=\"\"by-author"
+"\"> per %4$s</span>."
+
+#: ../parts/class-content-post_metas.php:79
+#, php-format
+msgid ""
+"This entry was posted in %1$s on %3$s<span class=\"by-author\"> by %4$s</"
+"span>."
+msgstr ""
+"Entrada publicada a %1$s el %3$s <span class=\"by-author\"> per %4$s</span>."
+
+#: ../parts/class-content-post_metas.php:81
+#, php-format
+msgid "This entry was posted on %3$s<span class=\"by-author\"> by %4$s</span>."
+msgstr ""
+"Entrada publicada el %3$s <span class=\"by-author\"> per %4$s</\"span>."
+
+#: ../parts/class-content-post_metas.php:119
+#: ../parts/class-content-post_metas.php:148
+#, php-format
+msgid "View all posts in %s"
+msgstr "Mostra totes les entrades a %s"
+
+#: ../parts/class-content-post_navigation.php:55
+#: ../parts/class-content-post_navigation.php:78
+msgid "Post navigation"
+msgstr "Navegació de les entrades"
+
+#: ../parts/class-content-post_navigation.php:85
+msgid "<span class=\"meta-nav\">&larr;</span> Older posts"
+msgstr "<span class=\"meta-nav\">&larr;</span> Entrades més antigues"
+
+#: ../parts/class-content-post_navigation.php:93
+msgid "Newer posts <span class=\"meta-nav\">&rarr;</span>"
+msgstr "Entrades més recents <span class=\"meta-nav\">&rarr;</span"
+
+#: ../parts/class-content-socials.php:56
+msgid "Follow me on "
+msgstr "Segueix-me a"
+
+#: ../parts/class-content-socials.php:60
+msgid "Suscribe to my rss feed"
+msgstr "Subscriu-te al meu canal RSS"
+
+#: ../parts/class-footer-footer_main.php:205
+msgid "Back to top"
+msgstr "Torna a dalt"
+
+#: ../parts/class-header-header_main.php:161
+msgid "Back Home"
+msgstr "Torna a l'inici"
+
+#: ../parts/class-header-menu.php:47
+msgid "Add a menu"
+msgstr "Afegeix un menú"
+
+#: ../parts/class-header-slider.php:96 ../parts/class-header-slider.php:99
+msgid "Customizr is a clean responsive theme"
+msgstr "Customizr és un tema adaptable net."
+
+#: ../parts/class-header-slider.php:100
+msgid "Let your creativity speak and easily customiz'it the way you want!"
+msgstr "Deixeu parlar la vostra creativitat i personalitzeu el tema fàcilment!"
+
+#: ../parts/class-header-slider.php:101
+msgid "Learn more"
+msgstr "Apreneu-ne més"
+
+#: ../parts/class-header-slider.php:106 ../parts/class-header-slider.php:109
+msgid "Style your WordPress site live!"
+msgstr "Estilitzeu el vostre lloc WordPress en viu! "
+
+#: ../parts/class-header-slider.php:110
+msgid ""
+"Many layout and design options are available from the WordPress customizer "
+"screen : see your changes live !"
+msgstr ""
+"Moltes de les opcions de disposició i disseny estan disponibles a la "
+"pantalla de personalització de Wordpress: vegeu els vostres canvis en viu!"
+
+#: ../parts/class-header-slider.php:111
+msgid "Just try it!"
+msgstr "Proveu-lo!"
+
+#: ../parts/class-header-slider.php:116 ../parts/class-header-slider.php:119
+msgid "Create beautiful sliders"
+msgstr "Creeu sliders bonics"
+
+#: ../parts/class-header-slider.php:120
+msgid ""
+"Customizr comes with a cool slider generator : add a slider to any post or "
+"page!"
+msgstr ""
+"Customizr inclou un generador d'sliders: afegiu un slider a qualsevol "
+"entrada o pàgina!"
+
+#: ../parts/class-header-slider.php:121
+msgid "Discover the features"
+msgstr "Descobriu-ne la funcionalitat"
+
+#~ msgid ""
+#~ "Thank you for updating to the latest version! Customizr %1$s has more "
+#~ "features, is safer and more stable than ever <a href=\"#customizr-"
+#~ "changelog\">(see changelog)</a> to help you build an awesome website. "
+#~ "Watch the <a href=\"#introduction\">introduction video</a> and find "
+#~ "inspiration in the <a href=\"#showcase\">showcase</a>.<br/> Enjoy it! "
+#~ msgstr ""
+#~ "Gràcies per actualitzar a la darrera versió! Customizr %1$s té més "
+#~ "funcionalitat, és més segur i estable que mai <a href=\"#customizr-"
+#~ "changelog\">(vegeu els canvis)</a> per ajudar-vos a construir un web "
+#~ "impressionant. Vegeu el <a href=\"#introduction\">vídeo d'introducció</a> "
+#~ "i busqueu inspiració al nostre <a href=\"#showcase\"> catàleg de webs</a>."
+#~ "<br/> Gaudiu-lo!"
+
+#~ msgid "Discover Customizr : quick video introduction"
+#~ msgstr "Descobriu Customizr: vídeo d'introducció ràpida"
+
+#~ msgid ""
+#~ "Welcome to the new version of Customizr. You will be redirected to the "
+#~ "About screen. If not, click <a href=\"%1$s\">here</a>."
+#~ msgstr ""
+#~ "Benvinguts a la nova versió de Customizr. Sereu redirigit a la pantalla "
+#~ "del \"Quant a\".  Si no és així, feu clic <a href=\"%1$s\">aquí</a>."
+
+#~ msgid ""
+#~ "<span class=\"meta-prep meta-prep-entry-date\">Published </span> <span "
+#~ "class=\"entry-date\"><time class=\"entry-date\" datetime=\"%1$s\">%2$s</"
+#~ "time></span> at <a href=\"%3$s\" title=\"Link to full-size image\">%4$s "
+#~ "&times; %5$s</a> in <a href=\"%6$s\" title=\"Return to %7$s\" rel="
+#~ "\"gallery\">%8$s</a>."
+#~ msgstr ""
+#~ "<span class=\"meta-prep meta-prep-entry-date\">Publicado</span> <span "
+#~ "class=\"entry-date\"><time class=\"entry-date\" datetime=\"%1$s\">%2$s</"
+#~ "time></span> en <a href=\"%3$s\" title=\"Link to full-size image\">%4$s "
+#~ "&times;%5$s</a> en <a href=\"%6$s\" title=\"Return to %7$s\" rel=\"gallery"
+#~ "\">%8$s</\"a>."
+
+#~ msgid "Logo Upload"
+#~ msgstr "Subir Logo"
+
+#~ msgid "Favicon Upload"
+#~ msgstr "Subir Favicon"
+
+#~ msgid "&larr; Older Comments"
+#~ msgstr "&larr; Comentarios m&aacute;s antiguos"
+
+#~ msgid "Newer Comments &rarr;"
+#~ msgstr "Comentarios m&aacute;s nuevos &rarr;"
+
+#, fuzzy
+#~ msgid "Ajust the slider size"
+#~ msgstr "Ajuste el tama&ntilde;o del t&iacute;tulo"
+
+#, fuzzy
+#~ msgid "Learn more &raquo;"
+#~ msgstr "Leer m&aacute;s &raquo;"
+
+#, fuzzy
+#~ msgid "Choose a font"
+#~ msgstr "Elegir una p&agrave;gina"
+
+#, fuzzy
+#~ msgid "Ajust the size"
+#~ msgstr "Ajuste el tama&ntilde;o del t&iacute;tulo"
+
+#~ msgid "Color"
+#~ msgstr "Color"
+
+#, fuzzy
+#~ msgid "Designed by %4$s"
+#~ msgstr "Dise&ntilde;ado por "
+
+#~ msgid "feed"
+#~ msgstr "Canal"
+
+#~ msgid "twitter"
+#~ msgstr "twitter"
+
+#~ msgid "facebook"
+#~ msgstr "facebook"
+
+#~ msgid "google"
+#~ msgstr "google"
+
+#~ msgid "youtube"
+#~ msgstr "youtube"
+
+#~ msgid "pinterest"
+#~ msgstr "pinterest"
+
+#~ msgid "github"
+#~ msgstr "github"
+
+#~ msgid "dribbble"
+#~ msgstr "dribbble"
+
+#~ msgid "linkedin"
+#~ msgstr "linkedin"
+
+#~ msgid "footer"
+#~ msgstr "pie de p&agrave;gina"
+
+#~ msgid "right-sidebar"
+#~ msgstr "barra lateral derecha"
+
+#~ msgid "left-sidebar"
+#~ msgstr "barra lateral izquierda"
+
+#~ msgid "header"
+#~ msgstr "cabecera"
+
+#~ msgid "Choose a font for your website title"
+#~ msgstr "Elija un tipo de letra para el título del sitio"
+
+#~ msgid "Slide Entry"
+#~ msgstr "Imagen slide"
+
+#~ msgid "Edit Slide Entry"
+#~ msgstr "Modificar imagen slide"
+
+#~ msgid "Search Slide Entries"
+#~ msgstr "Buscar en imatges de slide"
+
+#~ msgid "Edit Slider Name"
+#~ msgstr "Editar el nombre del slider"
+
+#~ msgid "Front Page Widget Area One"
+#~ msgstr "Primera &agrave;rea de widgets de p&agrave;gina principal"
+
+#~ msgid "Front Page Widget Area Two"
+#~ msgstr "Segunda &agrave;rea de widgets de p&agrave;gina principal"
+
+#~ msgid "Front Page Widget Area Three"
+#~ msgstr "Tercera &agrave;rea de widgets de p&agrave;gina principal"
+
+#~ msgid "If this field is empty, it will display an excerpt of the page."
+#~ msgstr ""
+#~ "Si el campo est&agrave; vac&iacute;o, se muestra un extracto de la "
+#~ "p&agrave;gina."
+
+#~ msgid "Force logo to fit in the left header block"
+#~ msgstr "Forzar tama&ntilde;o del logo en la cabecera del bloque izquierdo"
+
+#~ msgid ""
+#~ "Force default layout for all posts and pages (including front page and "
+#~ "pages/posts with a specific layout)"
+#~ msgstr ""
+#~ "Obligar a estructura por defecto  para todos las entradas y p&agrave;"
+#~ "ginas del sitio (incluyendo la p&agrave:gina de inicio, p&agrave;ginas y "
+#~ "entradas con estrucutra espec&iacute;fica)"
+
+#~ msgid "0"
+#~ msgstr "0"
+
+#~ msgid "1"
+#~ msgstr "1"
+
+#~ msgid "%"
+#~ msgstr "%"
+
+#~ msgid "Manage widgets"
+#~ msgstr "Administrar widgets"
+
+#~ msgid "Right"
+#~ msgstr "Derecha"
+
+#~ msgid "Left"
+#~ msgstr "Izquierdo"
+
+#~ msgid "Edit the slide text"
+#~ msgstr "Editar el texto del slide"
+
+#~ msgid "Edit the button text"
+#~ msgstr "Editar el texto del bot&oacute;n\""
+
+#~ msgid "View details &raquo;"
+#~ msgstr "Ver detalles &raquo;"
+
+#~ msgid "Length of the excerpt (default 200)"
+#~ msgstr "Longitud del extracto (por defecto 200)"
+
+#~ msgid "Theme Options"
+#~ msgstr "Opciones del tema"
+
+#~ msgid "Front Page Settings"
+#~ msgstr "Configuraci&oacute;n p&agrave;gina de inicio"
+
+#~ msgid "Layout Settings"
+#~ msgstr "Configuraci&oacute;n de la estructura  de la p&agrave;gina"
+
+#~ msgid " checked=\"checked\""
+#~ msgstr "comprobado=\"checked\" "
+
+#~ msgid "Sample Checkbox"
+#~ msgstr "Ejemplo"
+
+#~ msgid ""
+#~ "Appears on posts and pages except the optional Front Page template, which "
+#~ "has its own widgets"
+#~ msgstr ""
+#~ "Se muestra en los entradas y las p&agrave;ginas, excepto la plantilla "
+#~ "opcional de la portada, que tiene sus propios widgets"

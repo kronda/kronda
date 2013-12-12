@@ -1,0 +1,470 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Contango 1.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-06-02 01:24+0500\n"
+"PO-Revision-Date: 2013-06-02 01:24+0500\n"
+"Last-Translator: DesignOrbital <designorbital@live.com>\n"
+"Language-Team: DesignOrbital <designorbital@live.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: __;_e;esc_attr_e;esc_attr\n"
+"X-Poedit-Basepath: E:\\contango\n"
+"X-Generator: Poedit 1.5.5\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: 404.php:14
+#, php-format
+msgid ""
+"Just kidding! You tried going to %s, which doesn't exist, so that means I "
+"probably broke something."
+msgstr ""
+
+#: 404.php:16
+msgid ""
+"The following is a list of the latest posts from the blog. Maybe it will "
+"help you find what you're looking for."
+msgstr ""
+
+#: comments.php:4
+msgid ""
+"This post is password protected. Enter the password to view any comments."
+msgstr ""
+
+#: comments.php:32
+msgid "&larr; Older Comments"
+msgstr ""
+
+#: comments.php:36
+msgid "Newer Comments &rarr;"
+msgstr ""
+
+#: comments.php:51
+msgid "Comment navigation"
+msgstr ""
+
+#: comments.php:64
+msgid "Comments are closed."
+msgstr ""
+
+#: content-search.php:10 content-search.php:19 content.php:8
+#, php-format
+msgid "Permalink to %s"
+msgstr ""
+
+#: loop-error.php:2
+msgid "Nothing Found"
+msgstr ""
+
+#: loop-error.php:4
+msgid ""
+"Apologies, but no results were found for the requested archive. Perhaps "
+"searching will help find a related post."
+msgstr ""
+
+#: loop-meta.php:6
+#, php-format
+msgid "Category Archives: %s"
+msgstr ""
+
+#: loop-meta.php:17
+#, php-format
+msgid "Tag Archives: %s"
+msgstr ""
+
+#: loop-meta.php:31
+#, php-format
+msgid "Author Archives: %s"
+msgstr ""
+
+#: loop-meta.php:42
+#, php-format
+msgid "Search Results: %s"
+msgstr ""
+
+#: loop-meta.php:43
+#, php-format
+msgid "You are browsing the search results for %s"
+msgstr ""
+
+#: loop-meta.php:53
+#, php-format
+msgid "Daily Archives: %s"
+msgstr ""
+
+#: loop-meta.php:54
+msgid "You are browsing the site archives by date."
+msgstr ""
+
+#: loop-meta.php:64
+#, php-format
+msgid "Monthly Archives: %s"
+msgstr ""
+
+#: loop-meta.php:65
+msgid "You are browsing the site archives by month."
+msgstr ""
+
+#: loop-meta.php:75
+#, php-format
+msgid "Yearly Archives: %s"
+msgstr ""
+
+#: loop-meta.php:76
+msgid "You are browsing the site archives by year."
+msgstr ""
+
+#: loop-meta.php:86 sidebar.php:31
+msgid "Archives"
+msgstr ""
+
+#: loop-meta.php:87
+msgid "You are browsing the site archives."
+msgstr ""
+
+#: loop-meta.php:97
+msgid "404"
+msgstr ""
+
+#: loop-meta.php:98
+msgid "Whoah! You broke something!"
+msgstr ""
+
+#: searchform.php:3
+msgid "Search for:"
+msgstr ""
+
+#: searchform.php:4 searchform.php:5
+msgid "Search"
+msgstr ""
+
+#: sidebar.php:17
+msgid "Pages"
+msgstr ""
+
+#: sidebar.php:24
+msgid "Categories"
+msgstr ""
+
+#: sidebar.php:38
+msgid "Calendar"
+msgstr ""
+
+#: sidebar.php:45
+msgid "Recent Posts"
+msgstr ""
+
+#: sidebar.php:52
+msgid "Tag Cloud"
+msgstr ""
+
+#: sidebar.php:59
+msgid "About Contango"
+msgstr ""
+
+#: sidebar.php:60
+#, php-format
+msgid "%s"
+msgstr ""
+
+#: sidebar.php:66
+msgid "Meta"
+msgstr ""
+
+#: lib/admin/admin.php:52 lib/admin/admin.php:53
+msgid "Contango Options"
+msgstr ""
+
+#: lib/admin/admin.php:103
+msgid "Theme Support"
+msgstr ""
+
+#: lib/admin/admin.php:113
+msgid "License"
+msgstr ""
+
+#: lib/admin/admin.php:123
+msgid "Changelog"
+msgstr ""
+
+#: lib/admin/admin.php:130
+msgid "For more information:"
+msgstr ""
+
+#: lib/admin/admin.php:132
+msgid "Contango Project"
+msgstr ""
+
+#: lib/admin/admin.php:135
+msgid "Contango Official Page"
+msgstr ""
+
+#: lib/admin/admin.php:164
+msgid "Navigation Style"
+msgstr ""
+
+#: lib/admin/admin.php:169
+msgid "Post Style"
+msgstr ""
+
+#: lib/admin/admin.php:170
+msgid "Post Featured Image"
+msgstr ""
+
+#: lib/admin/admin.php:175
+msgid "Use Copyright"
+msgstr ""
+
+#: lib/admin/admin.php:176
+msgid "Enter Copyright Text"
+msgstr ""
+
+#: lib/admin/admin.php:181
+msgid "Reset Theme Options"
+msgstr ""
+
+#: lib/admin/admin.php:231
+msgid "yes"
+msgstr ""
+
+#: lib/admin/admin.php:231
+msgid "no"
+msgstr ""
+
+#: lib/admin/admin.php:236
+msgid "Numeric"
+msgstr ""
+
+#: lib/admin/admin.php:236
+msgid "Older / Newer"
+msgstr ""
+
+#: lib/admin/admin.php:241
+msgid "Content"
+msgstr ""
+
+#: lib/admin/admin.php:241
+msgid "Excerpt"
+msgstr ""
+
+#: lib/admin/admin.php:246
+msgid "Use Featured Image"
+msgstr ""
+
+#: lib/admin/admin.php:246
+msgid "Use Featured Image Automatically"
+msgstr ""
+
+#: lib/admin/admin.php:246
+msgid "No Featured Image"
+msgstr ""
+
+#: lib/admin/admin.php:289
+msgid "Settings Saved."
+msgstr ""
+
+#: lib/admin/admin.php:298
+msgid "Customize your blog by using the following settings."
+msgstr ""
+
+#: lib/admin/admin.php:315
+msgid "Select navigation style."
+msgstr ""
+
+#: lib/admin/admin.php:322
+msgid "Customize your posts by using the following settings."
+msgstr ""
+
+#: lib/admin/admin.php:339
+msgid "Select post style."
+msgstr ""
+
+#: lib/admin/admin.php:356
+msgid "<strong>Use Featured Image:</strong> which is set in the post."
+msgstr ""
+
+#: lib/admin/admin.php:357
+msgid ""
+"<strong>Use Featured Image Automatically:</strong> from the images uploaded "
+"to the post."
+msgstr ""
+
+#: lib/admin/admin.php:358
+msgid "<strong>No Featured Image:</strong> for the post."
+msgstr ""
+
+#: lib/admin/admin.php:365
+msgid "Customize your footer by using the following settings."
+msgstr ""
+
+#: lib/admin/admin.php:382
+msgid "Select yes to override default copyright text."
+msgstr ""
+
+#: lib/admin/admin.php:391
+msgid "Enter the copyright text."
+msgstr ""
+
+#: lib/admin/admin.php:399
+msgid "Here are the general settings to customize your blog."
+msgstr ""
+
+#: lib/admin/admin.php:408
+msgid "Reset Theme Options."
+msgstr ""
+
+#: lib/admin/page.php:9
+#, php-format
+msgid "%1$s Theme Settings"
+msgstr ""
+
+#: lib/admin/page.php:16 lib/admin/page.php:63
+msgid "Save Changes"
+msgstr ""
+
+#: lib/admin/page.php:24
+msgid "Blog Settings"
+msgstr ""
+
+#: lib/admin/page.php:25
+msgid "Post Settings"
+msgstr ""
+
+#: lib/admin/page.php:26
+msgid "Footer Settings"
+msgstr ""
+
+#: lib/admin/page.php:27
+msgid "General Settings"
+msgstr ""
+
+#: lib/admin/page.php:28
+msgid "Contango Pro"
+msgstr ""
+
+#: lib/admin/page.php:52
+msgid "Upgrade to Contango Pro"
+msgstr ""
+
+#: lib/admin/page.php:54
+msgid "Contango Pro Features"
+msgstr ""
+
+#: lib/functions/custom-header.php:25
+msgid "Contango"
+msgstr ""
+
+#: lib/functions/menus.php:9
+msgid "Contango Primary Menu"
+msgstr ""
+
+#: lib/functions/sidebars.php:40
+msgid "Contango Primary Sidebar"
+msgstr ""
+
+#: lib/functions/sidebars.php:42
+msgid "The main (primary) widget area, most often used as a sidebar."
+msgstr ""
+
+#: lib/functions/utility.php:16
+msgid "Featured"
+msgstr ""
+
+#: lib/functions/utility.php:41
+#, php-format
+msgid "by %2$s"
+msgstr ""
+
+#: lib/functions/utility.php:52 lib/functions/utility.php:54
+#: lib/functions/utility.php:355 lib/functions/utility.php:384
+msgid "Edit"
+msgstr ""
+
+#: lib/functions/utility.php:70
+msgid "Leave a Comment"
+msgstr ""
+
+#: lib/functions/utility.php:70
+msgid "1 Comment"
+msgstr ""
+
+#: lib/functions/utility.php:70
+msgid "% Comments"
+msgstr ""
+
+#: lib/functions/utility.php:87
+msgid "Posted in:"
+msgstr ""
+
+#: lib/functions/utility.php:99
+msgid "Tagged:"
+msgstr ""
+
+#: lib/functions/utility.php:111
+msgid "Pages:"
+msgstr ""
+
+#: lib/functions/utility.php:189 lib/functions/utility.php:212
+#: lib/functions/utility.php:239 lib/functions/utility.php:255
+msgid "Post Navigation"
+msgstr ""
+
+#: lib/functions/utility.php:200
+msgid "Older Posts"
+msgstr ""
+
+#: lib/functions/utility.php:204
+msgid "Newer Posts"
+msgstr ""
+
+#: lib/functions/utility.php:227
+msgid "Previous Post"
+msgstr ""
+
+#: lib/functions/utility.php:231
+msgid "Next Post"
+msgstr ""
+
+#: lib/functions/utility.php:256
+msgid "&larr; Return to"
+msgstr ""
+
+#: lib/functions/utility.php:277
+msgid "Attachment Navigation"
+msgstr ""
+
+#: lib/functions/utility.php:301
+#, php-format
+msgid "About %s"
+msgstr ""
+
+#: lib/functions/utility.php:304
+#, php-format
+msgid "View all posts by %s"
+msgstr ""
+
+#: lib/functions/utility.php:340
+#, php-format
+msgid "%s Theme by"
+msgstr ""
+
+#: lib/functions/utility.php:355
+msgid "Pingback:"
+msgstr ""
+
+#: lib/functions/utility.php:380
+msgid "said:"
+msgstr ""
+
+#: lib/functions/utility.php:389
+msgid "Your comment is awaiting moderation."
+msgstr ""
+
+#: lib/functions/utility.php:399
+msgid "Reply"
+msgstr ""
+
+#: lib/functions/utility.php:469 lib/functions/utility.php:474
+msgid "Read More &rarr;"
+msgstr ""

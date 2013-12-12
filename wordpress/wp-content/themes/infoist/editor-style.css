@@ -1,0 +1,46 @@
+html .mceContentBody {
+	max-width: 64.667%;
+}
+
+a, a:visited {}
+a:hover {}
+
+h1 {}
+h2 {}
+p { margin:0 0 1.5em 0; }
+p:last-child { margin-bottom:0; }
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+	margin:0 0 22px 0;
+}
+
+.read-more {}
+
+ul, ol, table, dl { margin: 1.5em 0; }
+ul, ol { list-style-position:outside; line-height:1.5; margin-left: 2.2em; margin-right: 2.2em; }
+li { margin-bottom: 0.75em; }
+ul li { list-style-type: disc; }
+ol li { list-style-type: decimal; }
+			
+blockquote { font-style:italic; line-height:1.6em; margin: 1.5em 2.2em; }
+blockquote:before { font-family:Georgia, serif; content:open-quote; font-size:2.75em; text-indent:-.8em; margin-top:.1em; float:left; opacity:.3; }
+			
+dl { margin:1.75em 0 1.75em; }
+dt { font-style:italic; margin-top:1.25em; font-size:1.13em; font-weight:700; border-bottom:1px solid #999; background:#DDD; }
+dd { font-style:italic; font-size:.85em; margin-top:1em; line-height:1.6em; }
+			
+video { display: block; margin: 1.5em 0; max-width: 100%; }
+object { display: block; margin: 1.5em 0; max-width: 100%; }
+embed { display: block; margin: 1.5em 0; max-width: 100%; }
+iframe { display: block; margin: 1.5em 0; max-width: 100%; }
+			
+/* image alignment & styles */
+			
+img { margin: 0 0 1.5em 0; max-width: 100%; }
+.alignleft, img.alignleft, img[align=left] { margin-right:1.5em; margin-bottom:1em;	margin-top:.75em; display: inline; float: left; }
+.alignright, img.alignright, img[align=right] { margin-left:1.5em; margin-bottom:1em; margin-top:.75em; display: inline; float: right; }
+.aligncenter, img.aligncenter, img[align=center] { margin-right: auto; margin-left: auto; display: block; clear: both; }
