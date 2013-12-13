@@ -54,10 +54,6 @@ If you don't use SASS but want to make further modifications, do so in wp-conten
   }
 }
 
-/* line 1, ../sass/_widgets.scss */
-.jetpack_subscription_widget {
-  border: 1px solid red;
-}
 /* line 3, ../sass/_widgets.scss */
 .jetpack_subscription_widget label.font-secondary {
   color: #FFF;
