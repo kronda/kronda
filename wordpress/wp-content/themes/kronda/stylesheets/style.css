@@ -39,3 +39,17 @@ This stylesheet compiles to stylesheets/style.css
 The normal child theme stylesheet at $themealicious/style.css imports the parent theme stylesheet and the sass-generated stylesheet. 
 
 If you don't use SASS but want to make further modifications, do so in wp-content/themes/$themealicious/style.css file AFTER the import statements. */
+/* line 1, ../sass/_content.scss */
+.entry-summary img.thumb {
+  width: 100%;
+  height: auto;
+}
+@media only screen and (min-width: 450px) {
+  /* line 1, ../sass/_content.scss */
+  .entry-summary img.thumb {
+    max-width: 33%;
+    width: 150px;
+    float: left;
+    margin-right: 1em;
+  }
+}

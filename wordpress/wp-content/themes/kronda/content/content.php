@@ -27,7 +27,7 @@
 
 	<?php else : // If not viewing a single post. ?>
 
-		<?php get_the_image( array( 'size' => 'stargazer-full', 'order' => array( 'featured', 'attachment' ) ) ); ?>
+		
 
 		<header class="entry-header">
 
@@ -43,6 +43,7 @@
 		</header><!-- .entry-header -->
 
 		<div <?php hybrid_attr( 'entry-summary' ); ?>>
+			<?php get_the_image( array( 'size' => 'thumb', 'order' => array( 'featured', 'attachment' ) ) ); ?>
 			<?php the_excerpt(); ?>
 		</div><!-- .entry-summary -->
 

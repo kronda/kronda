@@ -1,0 +1,12 @@
+.entry-summary img.thumb {
+  width: 100%;
+  height: auto;
+
+  @media only screen and ( min-width: 450px ) {
+    max-width: 33%;
+    width: 150px;
+    float: left;
+    margin-right: 1em;
+  }
+}
+
