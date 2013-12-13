@@ -1,0 +1,117 @@
+/**
+ * Theme Name: Kepler
+ * Theme URI: http://cyberdesigncraft.com/kepler
+ * Description: A minimalist Child Theme for Stargazer
+ * Version: 1.0
+ * Author: Ruairi Phelan
+ * Author URI: http://cyberdesigncraft.com
+ * Text Domain: kepler
+ * Tags: one-column, two-columns, custom-background, custom-colors, custom-header, custom-menu, editor-style, featured-images, post-formats, rtl-language-support, theme-options, threaded-comments, translation-ready, white, light
+ * License: GNU General Public License v2.0 or later
+ * License URI: http://www.gnu.org/licenses/gpl-2.0.html
+ * Template: stargazer
+ */
+
+ /* Thanks to Justin Tadlock and Sami Keijonen I have literally tweaked their code */
+
+.font-headlines,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+#site-title { font-weight: 300; }
+
+.widget-title > .wrap,
+#reply-title > .wrap,
+#comments-number > .wrap { font-weight: 400; }
+
+/* Container color. */
+#container > .wrap  {
+    background: #fff;
+    background: rgba( 255,255,255,0.95 );
+}
+
+#site-title {
+    font-size: 2rem;
+    font-weight: 400;
+}
+
+#site-description {
+    font-family: 'Open Sans', serif;
+    font-style: none;
+}
+
+.entry-content a {
+    color: #0088cc;
+}
+
+.widget a {
+    color:#325a6f;
+}
+
+/* Primary menu color in all screen aizes. */
+#menu-primary {
+    background: #272727;
+}
+
+/* Primary and secondary menu styles in narrow screen. */
+@media screen and (max-width: 799px) {
+
+    .custom-background #container > .wrap {
+        margin-top: 0;
+    }
+
+    #menu-primary li a,
+    #menu-secondary li a  {
+        background: #272727;
+        border-color: #222;
+    }
+
+    #menu-primary li a:hover,
+    #menu-primary li a:active,
+    #menu-primary li a:focus,
+    #menu-secondary li a:hover,
+    #menu-secondary li a:active,
+    #menu-secondary li a:focus {
+        background: #222;
+    }
+
+    #menu-primary li.current-menu-item > a,
+    #menu-secondary li.current-menu-item > a {
+        background: #222;
+    }
+
+}
+
+/* Primary and secondary menu styles in larger screens. */
+@media only screen and (min-width: 800px) {
+
+    #menu-primary li li a,
+    #menu-secondary li li a,
+    #menu-primary .search-form > div {
+        background: #272727;
+    }
+
+    #menu-primary li li a,
+    #menu-secondary li li a {
+        border-top-color: #222;
+    }
+
+    #menu-primary li li a:hover,
+    #menu-secondary li li a:hover {
+        background: #222;
+    }
+
+    .menu li > ul::before {
+        border-bottom-color: #222;
+    }
+    .ltr .menu li li > ul::before {
+        border-right-color: #222;
+    }
+    .rtl .menu li li > ul::before {
+        border-left-color: #222;
+    }
+
+}

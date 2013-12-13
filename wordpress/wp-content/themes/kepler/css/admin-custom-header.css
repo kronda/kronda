@@ -1,0 +1,11 @@
+#site-title { font-weight: 300; }
+
+	#site-title {
+	    font-size: 2em; /* Intentionally using "em" here since the root element is different. */
+	    font-weight: 400;
+	}
+	
+	#site-description {
+	    font-family: 'Open Sans', serif;
+	    font-style: none;
+}
