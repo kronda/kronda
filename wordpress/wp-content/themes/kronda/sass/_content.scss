@@ -9,3 +9,41 @@
     margin-right: 1em;
   }
 }
+
+#social {
+  .social-identity {
+    padding-left: 20px;
+  }
+  .social-comment-header,
+  .social-comment-body {
+    padding-left: 70px;
+  }
+  .social-comment-body,
+  .comment-subscription-form {
+    font-size: 0.8em;
+    line-height: 1.4em;
+  }
+  .comment-subscription-form {
+    padding-left: 50px;
+  }
+}
+
+@media only screen and ( min-width: 450px ) {
+  #social {
+    .social-input-row textarea.social-input {
+      margin-left: 20px;
+    }
+    .comment-subscription-form {
+      padding-left: 70px;
+    }
+    .social-actions {
+      margin-top: 15px;
+    }
+  }
+  #social #respond .form-submit,
+  .logged-in #social #respond .form-submit {
+    padding-left: 70px;
+  }
+}
+
+

@@ -54,6 +54,46 @@ If you don't use SASS but want to make further modifications, do so in wp-conten
   }
 }
 
+/* line 14, ../sass/_content.scss */
+#social .social-identity {
+  padding-left: 20px;
+}
+/* line 18, ../sass/_content.scss */
+#social .social-comment-header,
+#social .social-comment-body {
+  padding-left: 70px;
+}
+/* line 22, ../sass/_content.scss */
+#social .social-comment-body,
+#social .comment-subscription-form {
+  font-size: 0.8em;
+  line-height: 1.4em;
+}
+/* line 26, ../sass/_content.scss */
+#social .comment-subscription-form {
+  padding-left: 50px;
+}
+
+@media only screen and (min-width: 450px) {
+  /* line 33, ../sass/_content.scss */
+  #social .social-input-row textarea.social-input {
+    margin-left: 20px;
+  }
+  /* line 36, ../sass/_content.scss */
+  #social .comment-subscription-form {
+    padding-left: 70px;
+  }
+  /* line 39, ../sass/_content.scss */
+  #social .social-actions {
+    margin-top: 15px;
+  }
+
+  /* line 44, ../sass/_content.scss */
+  #social #respond .form-submit,
+  .logged-in #social #respond .form-submit {
+    padding-left: 70px;
+  }
+}
 /* line 3, ../sass/_widgets.scss */
 .jetpack_subscription_widget label.font-secondary {
   color: #FFF;
