@@ -53,6 +53,11 @@ a:hover img {
   opacity: 0.9;
 }
 
+/* line 2, ../sass/_header.scss */
+.not-home .header-image {
+  display: none;
+}
+
 /* line 1, ../sass/_content.scss */
 .entry-summary img.thumb {
   width: 100%;
