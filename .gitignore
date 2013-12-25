@@ -17,6 +17,7 @@ db/
 docs/
 dev/
 static_files
+debug_log.txt
 *.sublime*
 backups
 webroot
