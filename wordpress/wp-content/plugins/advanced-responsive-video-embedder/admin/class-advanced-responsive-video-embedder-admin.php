@@ -12,6 +12,7 @@
 /*****************************************************************************
 
 Copyright (c) 2013 Nicolas Jonas
+Copyright (C) 2013 Tom Mc Farlin and WP Plugin Boilerplate Contributors
 
 This file is part of Advanced Responsive Video Embedder.
 
@@ -79,13 +80,12 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		add_action( 'admin_menu', array( $this, 'add_plugin_admin_menu' ) );
 
 		// Add an action link pointing to the options page.
-		$plugin_basename = plugin_basename( plugin_dir_path( __DIR__ ) ) . $this->plugin_slug . '.php';
-
+		$plugin_basename = plugin_basename( plugin_dir_path( __DIR__ ) . $this->plugin_slug . '.php' );
 		add_filter( 'plugin_action_links_' . $plugin_basename, array( $this, 'add_action_links' ) );
 	
 		//* Display a notice that can be dismissed
-		#add_action( 'admin_init',    array( $this, 'admin_notice_ignore') );
-		#add_action( 'admin_notices', array( $this, 'admin_notice') );
+		add_action( 'admin_init',    array( $this, 'admin_notice_ignore') );
+		add_action( 'admin_notices', array( $this, 'admin_notice') );
 
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
 		add_action( 'admin_init', array( $this, 'init_mce_plugin' ) );
@@ -147,21 +147,21 @@ class Advanced_Responsive_Video_Embedder_Admin {
 
 		$screen = get_current_screen();
 		if ( $this->plugin_screen_hook_suffix == $screen->id ) {
-			return;
+			wp_enqueue_script( $this->plugin_slug . '-admin-script', plugins_url( 'assets/js/admin.js', __FILE__ ), array( 'jquery' ), Advanced_Responsive_Video_Embedder::VERSION );
 		}
-
-		#wp_enqueue_script( $this->plugin_slug . '-admin-script', plugins_url( 'assets/js/admin.js', __FILE__ ), array( 'jquery' ), Advanced_Responsive_Video_Embedder::VERSION );
 
 		$plugin = Advanced_Responsive_Video_Embedder::get_instance();
 		$regex_list = $plugin->get_regex_list();
 
 		foreach ( $regex_list as $provider => $regex ) {
-			$regex_list[$provider] = str_replace(
-				array( 'https?://(?:www\.)?', 'http://', '/'  ),
-				array( ''                   , ''       , '\/' ),
-				$regex
-			);
-		}
+
+            if ( $provider != 'ign' ) {
+            	$regex = str_replace( array( 'https?://(?:www\.)?', 'http://' ), '', $regex );
+            }
+
+            $regex_list[$provider] = $regex;
+
+        }
 
 		wp_localize_script( 'jquery', 'arve_regex_list', $regex_list );
 
@@ -209,8 +209,9 @@ class Advanced_Responsive_Video_Embedder_Admin {
 	public function add_action_links( $links ) {
 
 		$extra_links = array(
-			'settings' => sprintf( '<a href="%s">%s</a>', admin_url( 'options-general.php?page=' . $this->plugin_slug ), __( 'Settings', $this->plugin_slug ) ),
-			'donate'   => sprintf( '<a href="%s">%s</a>', 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UNDSCARF3ZPBC', __( 'Donate', $this->plugin_slug ) ),
+			'contribute' => sprintf( '<a href="%s">%s</a>', 'http://nextgenthemes.com/', __( 'Contribute', $this->plugin_slug ) ),
+			'settings'   => sprintf( '<a href="%s">%s</a>', admin_url( 'options-general.php?page=' . $this->plugin_slug ), __( 'Settings', $this->plugin_slug ) ),
+			'donate'     => sprintf( '<a href="%s">%s</a>', 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UNDSCARF3ZPBC', __( 'Donate', $this->plugin_slug ) ),
 		);
 
 		return array_merge( $extra_links, $links );
@@ -263,7 +264,7 @@ class Advanced_Responsive_Video_Embedder_Admin {
 
 		$output = array();
 
-		$output['mode'] = wp_filter_nohtml_kses( $input['mode'] );
+		$output['mode']               = wp_filter_nohtml_kses( $input['mode'] );
 		$output['custom_thumb_image'] = esc_url_raw( $input['custom_thumb_image'] );
 
 		$output['fakethumb']      = isset( $input['fakethumb'] );
@@ -271,9 +272,11 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		
 		if( (int) $input['thumb_width'] > 50 ) {
 			$output['thumb_width'] = (int) $input['thumb_width'];
-		} else {
-			$output['thumb_width'] = '';
 		}
+
+		if( (int) $input['align_width'] > 200 ) {
+			$output['align_width'] = (int) $input['align_width'];
+		}	
 
 		if( (int) $input['video_maxwidth'] > 50 ) {
 			$output['video_maxwidth'] = (int) $input['video_maxwidth'];
@@ -454,14 +457,16 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		$user_id = $current_user->ID;
 		//* Check that the user hasn't already clicked to ignore the message
 		if ( ! get_user_meta($user_id, 'arve_ignore_admin_notice') ) {
-			echo '<div class="updated"><p>';
-			_e( 'Hey guys, this is Nico the Author of the Advanced Responsive Video Embedder Plugin. I have worked long and hard on version 3.0 of this plugin and not want to abuse all users as beta testers again. I would be glad if some of you can manually install and test the upcoming version and report back. Thanks.', $this->plugin_slug );
-			printf( __( ' <a href="%s" target="_blank">%s</a> | <a href="?arve_nag_ignore=1">%s</a>' ),
-				'https://github.com/nextgenthemes/advanced-responsive-video-embedder/archive/master.zip',
-				__( 'Download Beta', $this->plugin_slug ),
-				__( 'Dismiss', $this->plugin_slug )
+
+			$message = sprintf(
+				__( 'It is always nice when people show their appreciation for a plugin by <a href="%s" target="_blank">testing, contributing</a> or <a href="%s" target="_blank">donating</a>. Thank you!', $this->plugin_slug ),
+				'http://nextgenthemes.com/plugins/advanced-responsive-video-embedder/contribute/',
+				'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UNDSCARF3ZPBC'
 			);
-			echo "</p></div>";
+
+			$dismiss = sprintf( '<a class="alignright" href="?arve_nag_ignore=1">%s</a>', __( 'Dismiss', $this->plugin_slug ) );
+
+			echo '<div class="updated"><p><big>' . $message . $dismiss . '</big></p></div>';
 		}
 	}
 

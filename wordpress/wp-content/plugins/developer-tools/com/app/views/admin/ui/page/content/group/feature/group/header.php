@@ -1,1 +1,0 @@
-<div id="<?php print $view['name'] ?>-<?php print $view['counter'] ?>" class="single_feature">
