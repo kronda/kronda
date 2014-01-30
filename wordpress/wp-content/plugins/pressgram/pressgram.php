@@ -17,7 +17,7 @@
  * Plugin Name: Pressgram
  * Plugin URI:  http://support.pressgr.am/
  * Description: The official WordPress plugin for <a href="http://pressgr.am/">Pressgram</a> helps you publish pictures worth 1,000 words. Be a <strong>rebel with a cause</strong>. Viva la revolución!
- * Version:     2.1.3
+ * Version:     2.1.5
  * Author:      yo, gg & UaMV
  * Text Domain: pressgram-locale
  * License:     GPL-2.0+

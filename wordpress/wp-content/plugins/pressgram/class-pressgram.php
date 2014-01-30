@@ -32,7 +32,7 @@ class Pressgram {
 	 *
 	 * @var     string
 	 */
-	protected $version = '2.1.3';
+	protected $version = '2.1.5';
 
 	/**
 	 * Instance of this class.

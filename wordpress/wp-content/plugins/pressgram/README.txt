@@ -3,8 +3,8 @@ Contributors: pressgram, UaMV
 Donate link: 	
 Tags: pressgram, photos, filters, instagram, twitter, facebook, pictures, photo sharing, publishing
 Requires at least: 3.5.2
-Tested up to: 3.7.1
-Stable tag: 2.1.3
+Tested up to: 3.8
+Stable tag: 2.1.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -71,7 +71,7 @@ Download the <a href="http://pressgr.am/">mobile app here</a> and support our co
 
 = Tutorial =
 
-A new video showing plugin use (w/ it's recently added feature set) is in the works! Check back soon.
+[youtube http://www.youtube.com/watch?v=_DJqGpx9zdQ]
 
 = Understanding the Metadata =
 
@@ -141,6 +141,9 @@ As of Version 2.1.0, you can add/remove _pressgram_post metadata by enabling Pos
 3. Pressgram Post Relation
 
 == Changelog ==
+
+= 2.1.4 =
+* Adding tutorial video
 
 = 2.1.3 =
 * Adding finer control for home feed and rss feed inclusion/exclusion of posts
