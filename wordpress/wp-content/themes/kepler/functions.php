@@ -5,7 +5,7 @@
  * All style changes should be in child themes style.css file.
  *
  * @package    Kepler
- * @version    1.0
+ * @version    1.0.1
  * @author     Ruairi Phelan <rory@cyberdesigncraft.com>
  * @copyright  Copyright (c) 2013, Ruairi Phelan
  * @link       http://cyberdesigncraft.com/about/
