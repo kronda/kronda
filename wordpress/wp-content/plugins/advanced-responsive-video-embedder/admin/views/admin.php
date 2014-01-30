@@ -44,21 +44,21 @@ $options = get_option( 'arve_options', array() );
 			<tr valign="top">
 				<th scope="row"><label for="video_maxwidth"><?php _e('Video Maximal Width', $this->plugin_slug); ?></label></th>
 				<td>
-					<input id="arve_options[video_maxwidth]" name="arve_options[video_maxwidth]" type="text" value="<?php echo $options['video_maxwidth'] ?>" class="small-text"><br>
+					<input id="arve_options[video_maxwidth]" name="arve_options[video_maxwidth]" type="text" value="<?php echo $options['video_maxwidth'] ?>" class="small-text">px<br>
 					<span class='description'><?php _e('Optional, if not set your videos will be the maximum size of the container they are in. If your content area has a big width you might want to set this.', $this->plugin_slug); ?></span>
 				</td>
 			</tr>
 			<tr valign="top">
 				<th scope="row"><label for="arve_options[align_width]"><?php _e('Aligned Maximal Width (Normal Mode)', $this->plugin_slug); ?></label></label></th>
 				<td>
-					<input id="arve_options[align_width]" name="arve_options[align_width]" type="text" value="<?php echo $options['align_width'] ?>" class="small-text"><br>
+					<input id="arve_options[align_width]" name="arve_options[align_width]" type="text" value="<?php echo $options['align_width'] ?>" class="small-text">px<br>
 					<span class="description"><?php _e('Needed! Must be 200+ to work.', $this->plugin_slug); ?></span>
 				</td>
 			</tr>			
 			<tr valign="top">
 				<th scope="row"><label for="arve_options[thumb_width]"><?php _e('Thumbnail Maximal Width', $this->plugin_slug); ?></label></label></th>
 				<td>
-					<input id="arve_options[thumb_width]" name="arve_options[thumb_width]" type="text" value="<?php echo $options['thumb_width'] ?>" class="small-text"><br>
+					<input id="arve_options[thumb_width]" name="arve_options[thumb_width]" type="text" value="<?php echo $options['thumb_width'] ?>" class="small-text">px<br>
 					<span class="description"><?php _e('Needed! Must be 50+ to work.', $this->plugin_slug); ?></span>
 				</td>
 			</tr>
@@ -91,10 +91,53 @@ $options = get_option( 'arve_options', array() );
 				</td>
 			</tr>
 		</table>
+
+		<h3><?php _e('Set custom parameters', $this->plugin_slug); ?></h3>
+		<p>
+			<?php _e("You may use spaces to seperate them instead of <code>&amp;</code>'s. They will be transformed to two spaces after save. Resources: ", $this->plugin_slug); ?>
+			<a target="_blank" href="https://developers.google.com/youtube/player_parameters">Youtube Parameters</a>, 
+			<a target="_blank" href="http://www.dailymotion.com/doc/api/player#DailymotionPlayerTools-Parameters">Dailymotion Parameters</a>
+		</p>
+		
+		<table class="form-table">
+			<?php
+
+			foreach ( $options['params'] as $provider => $params ) {
+
+				$params_str = '';
+
+				if ( is_array( $params ) ) {
+
+					foreach ( $params as $key => $var ) {
+						$params_str .= (string) "$key=$var  ";
+					}
+				}
+
+				?>
+				<tr valign="top">
+					<th scope="row">
+						<?php printf( '<label for="arve_options[params][%s]">%s</label>', $provider, ucwords( $provider ) . ' Parameters' ); ?>
+					</th>
+					<td>
+						<?php printf( '<input type="text" id="arve_options[params][%s]" class="widefat" name="arve_options[params][%s]" value="%s">', $provider, $provider, $params_str ); ?>
+					</td>
+				</tr>
+				<?php
+			}
+			
+			?>
+
+			<tr>
+				<th></th>
+				<td>
+					<?php submit_button(); ?>
+				</td>
+			</tr>
+		</table>
 		
 		<h3><?php _e('Change shortcode tags', $this->plugin_slug); ?></h3>
 		<p>
-			<?php _e('You might need this to prevent conflicts with other plugins you want to use. At least 3 alphanumec characters with optional underscores are needed!', $this->plugin_slug); ?>
+			<?php _e('Do not touch this is you not know what you are doing. You might need this to prevent conflicts with other plugins you want to use. At least 3 alphanumec characters with optional underscores are needed!', $this->plugin_slug); ?>
 		</p>
 		
 		<table class="form-table">
