@@ -39,6 +39,25 @@ This stylesheet compiles to stylesheets/style.css
 The normal child theme stylesheet at $themealicious/style.css imports the parent theme stylesheet and the sass-generated stylesheet. 
 
 If you don't use SASS but want to make further modifications, do so in wp-content/themes/$themealicious/style.css file AFTER the import statements. */
+/* line 1, ../sass/_global.scss */
+a img {
+  opacity: 1;
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+}
+
+/* line 9, ../sass/_global.scss */
+a:hover img {
+  opacity: 0.9;
+}
+
+/* line 2, ../sass/_header.scss */
+.not-home .header-image {
+  display: none;
+}
+
 /* line 1, ../sass/_content.scss */
 .entry-summary img.thumb {
   width: 100%;
