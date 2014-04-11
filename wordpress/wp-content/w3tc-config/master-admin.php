@@ -1,10 +1,9 @@
 <?php
 
 return array(
-	'version' => '0.9.2.8',
+	'version' => '0.9.4',
 	'browsercache.configuration_sealed' => false,
 	'cdn.configuration_sealed' => false,
-	'cloudflare.configuration_sealed' => false,
 	'common.install' => 1361248958,
 	'common.visible_by_master_only' => true,
 	'dbcache.configuration_sealed' => false,
@@ -15,10 +14,19 @@ return array(
 	'varnish.configuration_sealed' => false,
 	'fragmentcache.configuration_sealed' => false,
 	'newrelic.configuration_sealed' => false,
+	'extensions.configuration_sealed' => array(
+	),
 	'notes.minify_error' => false,
 	'minify.error.last' => '',
 	'minify.error.notification' => '',
 	'minify.error.notification.last' => 0,
 	'minify.error.file' => '',
+	'track.maxcdn_signup' => 0,
+	'track.maxcdn_authorize' => 0,
+	'track.maxcdn_validation' => 0,
+	'notes.maxcdn_whitelist_ip' => true,
 	'notes.remove_w3tc' => false,
+	'notes.hide_extensions' => array(
+	),
+	'evaluation.reminder' => 1397852185,
 );

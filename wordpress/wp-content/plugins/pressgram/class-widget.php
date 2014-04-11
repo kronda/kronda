@@ -157,7 +157,7 @@ class Pressgram_Widget extends WP_Widget {
 }
 
 function pressgram_widget_styles() {
-	wp_enqueue_style( 'pressgram-widget-style', plugin_dir_url( __FILE__ ) . 'css/pressgram-widget.css', array(), '2.0.6', 'screen' );
+	wp_enqueue_style( 'pressgram-widget-style', PRESSGRAM_DIR_URL . 'css/pressgram-widget.css', array(), PRESSGRAM_VERSION, 'screen' );
 }
 
 add_action( 'wp_enqueue_scripts', 'pressgram_widget_styles' );

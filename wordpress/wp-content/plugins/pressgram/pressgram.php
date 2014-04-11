@@ -17,7 +17,7 @@
  * Plugin Name: Pressgram
  * Plugin URI:  http://support.pressgr.am/
  * Description: The official WordPress plugin for <a href="http://pressgr.am/">Pressgram</a> helps you publish pictures worth 1,000 words. Be a <strong>rebel with a cause</strong>. Viva la revolución!
- * Version:     2.1.5
+ * Version:     2.2.1
  * Author:      yo, gg & UaMV
  * Text Domain: pressgram-locale
  * License:     GPL-2.0+
@@ -30,15 +30,41 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 } // end if
 
-register_deactivation_hook( __FILE__, array( 'Pressgram', 'remove_plugin_option' ) );
+/************************************
+* Define static variables
+************************************/
+// Set PRESSGRAM_LOCAL to true to check processing on localhost.
+// Instead of processing any xml-rpc post, it will process posts transitioning from draft to publish
+! defined( 'PRESSGRAM_LOCAL' ) ? define( 'PRESSGRAM_LOCAL', FALSE ) : FALSE;
+! defined( 'PRESSGRAM_RESTRICTION') ? define( 'PRESSGRAM_RESTRICTION', '' ) : FALSE;
+! defined( 'PRESSGRAM_RESTRICT_TO_XMLRPC' ) ? define( 'PRESSGRAM_RESTRICT_TO_XMLRPC', TRUE ) : FALSE;
 
-require_once( plugin_dir_path( __FILE__ ) . 'class-pressgram.php' );
+define( 'PRESSGRAM_VERSION', '2.2.1' );
+define( 'PRESSGRAM_DIR_PATH', plugin_dir_path( __FILE__ ) );
+define( 'PRESSGRAM_DIR_URL', plugin_dir_url( __FILE__ ) );
+
+/************************************
+* Include files
+************************************/
+require_once( PRESSGRAM_DIR_PATH . 'class-pressgram.php' );
+//require_once( PRESSGRAM_DIR_PATH . 'class-pressgram-role.php' ); // for possible further development
+require_once( PRESSGRAM_DIR_PATH . 'class-widget.php' );
+
+// admin files
+is_admin() ? require_once( PRESSGRAM_DIR_PATH . 'wp-side-notice/class-wp-side-notice.php' ) : FALSE;
+is_admin() ? require_once( PRESSGRAM_DIR_PATH . 'class-pressgram-admin.php' ) : FALSE;
+
+// xml-rpc files
+! PRESSGRAM_RESTRICT_TO_XMLRPC || defined( 'XMLRPC_REQUEST' ) || PRESSGRAM_LOCAL ? require_once( PRESSGRAM_DIR_PATH . 'class-pressgram-engine.php' ) : FALSE;
+
+/************************************
+* Get class instances
+************************************/
 Pressgram::get_instance();
+//Pressgram_Role::get_instance(); // for possible further development
 
-require_once( plugin_dir_path( __FILE__ ) . 'class-widget.php' );
+// admin class
+is_admin() ? Pressgram_Admin::get_instance() : FALSE;
 
-function _pdump( $var = '' ) {
-    echo '<br /><pre>';
-    var_dump( $var ) . '<br />';
-    echo '</pre>';
-}
+// xml-rpc class
+! PRESSGRAM_RESTRICT_TO_XMLRPC || defined( 'XMLRPC_REQUEST' ) || PRESSGRAM_LOCAL ? Pressgram_Engine::get_instance() : FALSE;

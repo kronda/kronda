@@ -22,7 +22,7 @@ $options = get_option( 'arve_options', array() );
 	<?php
 	$message = sprintf(
 		__( 'It is always nice when people show their appreciation for a plugin by <a href="%s" target="_blank">testing, contributing</a> or <a href="%s" target="_blank">donating</a>. Thank you!', $this->plugin_slug ),
-		'http://nextgenthemes.com/plugins/advanced-responsive-video-embedder/contribute/',
+		'http://nextgenthemes.com/plugins/advanced-responsive-video-embedder/#contribute',
 		'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UNDSCARF3ZPBC'
 	);
 
@@ -36,8 +36,9 @@ $options = get_option( 'arve_options', array() );
 				<th scope="row">Default Mode:</th>
 				<td>
 					<select id="arve_options[mode]" name="arve_options[mode]" size="1">
-					  <option<?php selected( $options['mode'], 'normal'); ?> value="normal"><?php _e('Normal', $this->plugin_slug ); ?></option>
-					  <option<?php selected( $options['mode'], 'thumbnail'); ?> value="thumbnail"><?php _e('Thumbnail', $this->plugin_slug); ?></option>
+					  <option<?php selected( $options['mode'], 'normal');    ?> value="normal"><?php    _e('Normal',    $this->plugin_slug ); ?></option>
+					  <option<?php selected( $options['mode'], 'lazyload');  ?> value="lazyload"><?php  _e('Lazyload',  $this->plugin_slug ); ?></option>
+					  <option<?php selected( $options['mode'], 'thumbnail'); ?> value="thumbnail"><?php _e('Thumbnail', $this->plugin_slug ); ?></option>
 					</select>
 				</td>
 			</tr>
@@ -66,7 +67,7 @@ $options = get_option( 'arve_options', array() );
 				<th scope="row"><label for="fakethumb"><?php _e('Fake Thumbnails', $this->plugin_slug); ?></label></th>
 				<td>
 					<input id="arve_options[fakethumb]" name="arve_options[fakethumb]" type="checkbox" value="1" <?php checked( 1, $options['fakethumb'] ); ?> /><br>
-					<span class='description'><?php _e('Loads the actual Videoplayer as "background image" to for thumbnails to emulate the feature Youtube, Dailymotion, and Bliptv have. If not enabled thumbnails are displayed black or you can choose a image below.', $this->plugin_slug); ?></span>
+					<span class='description'><?php _e('Loads the actual Videoplayer as "background image" to for thumbnails to emulate the feature Youtube, Dailymotion, and Bliptv have. If not enabled or the provider not supports `wmode=transparent` thumbnails are displayed black or you can choose a image below.', $this->plugin_slug); ?></span>
 				</td>
 			</tr>
 			<tr valign="top">
@@ -74,6 +75,13 @@ $options = get_option( 'arve_options', array() );
 				<td>
 					<input id="arve_options[custom_thumb_image]" name="arve_options[custom_thumb_image]" type="text" value="<?php echo $options['custom_thumb_image'] ?>" class="large-text"><br>
 					<span class='description'><?php _e('To be used instead of black background. Upload a 16:10 Image with a size bigger or equal the thumbnials size you want to use into your WordPress and paste the URL of it here.', $this->plugin_slug); ?></span>
+				</td>
+			</tr>
+			<tr valign="top">
+				<th scope="row"><label for="arve_options[transient_expire_time]"><?php _e('Transients expire time', $this->plugin_slug); ?></label></label></th>
+				<td>
+					<input id="arve_options[transient_expire_time]" name="arve_options[transient_expire_time]" type="text" value="<?php echo $options['transient_expire_time'] ?>" class="medium-text">s<br>
+					<span class="description"><?php _e('This Pluigin uses Wordpress transients to cache video thumbnails that greatly speeds up page loading. The maximum of seconds to keep the thumbnail image before refreshing. For example: hour - 3600, day - 86400, week - 604800.', $this->plugin_slug); ?></span>
 				</td>
 			</tr>
 			<tr valign="top">
@@ -96,7 +104,8 @@ $options = get_option( 'arve_options', array() );
 		<p>
 			<?php _e("You may use spaces to seperate them instead of <code>&amp;</code>'s. They will be transformed to two spaces after save. Resources: ", $this->plugin_slug); ?>
 			<a target="_blank" href="https://developers.google.com/youtube/player_parameters">Youtube Parameters</a>, 
-			<a target="_blank" href="http://www.dailymotion.com/doc/api/player#DailymotionPlayerTools-Parameters">Dailymotion Parameters</a>
+			<a target="_blank" href="http://www.dailymotion.com/doc/api/player.html#parameters">Dailymotion Parameters</a>.<br>
+			<strong><?php _e("<code>wmode=transparent</code> should not be changed if you want to use thumbnail mode", $this->plugin_slug); ?></strong>
 		</p>
 		
 		<table class="form-table">

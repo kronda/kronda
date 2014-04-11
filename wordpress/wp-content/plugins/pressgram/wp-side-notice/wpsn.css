@@ -1,0 +1,85 @@
+.wpsn-outer-container {
+	position: absolute;
+	right: 0px;
+	overflow-x: hidden;
+	margin: 0 auto;
+	width: 62px;
+}
+
+.wpsn-outer-container .active {
+	overflow: visible;
+}
+.wpsn-outer-container > div {
+	height: 130px;
+}
+	.wpsn-outer-container .wpsn-notice {
+		z-index: 80002;
+		position: absolute;
+		right: -680px;
+		margin-top: 0;
+		margin-right: 0;
+		margin-bottom: 10px;
+		width: 707px;
+		min-width: 700px;
+		zoom: 1;
+		filter: alpha(opacity=60);
+		opacity: 0.60;
+	}
+
+	.wpsn-outer-container .wpsn-notice a {
+		text-decoration: none;
+	}
+
+	.wpsn-outer-container .wpsn-notice img {
+		margin-right: 20px;
+	}
+
+		.wpsn-notice:before {
+		  font-family: dashicons;
+		  font-size: 2em;
+		  display: inline-block;
+		  vertical-align: top;
+		  margin-top: .4em;
+		  margin-right: .5em;
+		}
+
+		.wpsn-outer-container .wpsn-notice p {
+		  display: inline-block;
+		  width: 93%;
+		  line-height: 1.5;
+		  margin: 1em 0;
+		  font-size: 13px;
+		}
+
+		/* toggled .selected w/jquery accounts for clicks on touch devices */
+		.wpsn-outer-container .wpsn-notice:hover,
+		.wpsn-outer-container .wpsn-notice.selected {
+			right: 0px;
+			zoom: 1;
+			overflow: visible;
+			filter: alpha(opacity=93);
+			opacity: 0.93;
+			-webkit-transition: all 250ms cubic-bezier(0.190, 1.000, 0.220, 1.000); 
+			-moz-transition: all 250ms cubic-bezier(0.190, 1.000, 0.220, 1.000); 
+			-o-transition: all 250ms cubic-bezier(0.190, 1.000, 0.220, 1.000); 
+			transition: all 250ms cubic-bezier(0.190, 1.000, 0.220, 1.000); /* easeOutExpo */
+
+			-webkit-transition-timing-function: cubic-bezier(0.190, 1.000, 0.220, 1.000); 
+			-moz-transition-timing-function: cubic-bezier(0.190, 1.000, 0.220, 1.000); 
+			-o-transition-timing-function: cubic-bezier(0.190, 1.000, 0.220, 1.000); 
+			transition-timing-function: cubic-bezier(0.190, 1.000, 0.220, 1.000); /* easeOutExpo */
+		}
+
+@media only screen and (max-width: 767px) {
+	.wpsn-outer-container .wpsn-notice {
+		display: none;
+	}
+
+	.wpsn-outer-container .wpsn-notice:before {
+		display: none;
+	}
+
+	.wpsn-outer-container .wpsn-notice p {
+		width: 93%;
+	}
+}
