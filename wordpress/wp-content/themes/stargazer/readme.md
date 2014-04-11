@@ -31,9 +31,20 @@ The following resources are included within the theme package.
 
 All other resources and theme elements are licensed under the [GNU GPL](http://www.gnu.org/licenses/old-licenses/gpl-2.0.html), version 2 or later.
 
-2013 &copy; [Justin Tadlock](http://justintadlock.com).
+2013&thinsp;&ndash;&thinsp;2014 &copy; [Justin Tadlock](http://justintadlock.com).
 
 ## Changelog
+
+### Version 1.0.1
+
+* Updated to version 3.0.3 of Genericons.
+	* Uses the new "fullscreen" icon for media player.
+	* Dropbox supported in the Social menu.
+* Fix for JS conflict with Gravity Forms embeds.
+* Fixed Subsidiary sidebar column count when using a single widget.
+* Better CSS for Japanese language (`css/ja.css`).
+* Added French language files.
+* Added Romanian language files.
 
 ### Version 1.0.0
 
