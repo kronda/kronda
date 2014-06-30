@@ -59,7 +59,7 @@ figure {
 }
 
 /* line 14, ../sass/_global.scss */
-.wp-caption-text {
+.wp-caption .wp-caption-text {
   position: relative;
   bottom: 0;
   background: none;
@@ -70,7 +70,7 @@ figure {
 }
 @media only screen and (max-width: 450px) {
   /* line 14, ../sass/_global.scss */
-  .wp-caption-text {
+  .wp-caption .wp-caption-text {
     width: 93%;
   }
 }
