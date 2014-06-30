@@ -6,4 +6,24 @@ a img {
           transition: all 0.5s ease-in-out;
 }
 
-  a:hover img { opacity: 0.9; }
+a:hover img { opacity: 0.9; }
+
+figure {
+  position: relative;
+}
+.wp-caption-text {
+  position: relative;
+  bottom: 0;
+  background: none;
+  color: lighten(#656565, 15%);
+  border: 1px dashed #E3E3E3;
+  padding: 0.5rem;
+  width: 97%;
+  @media only screen and ( max-width: 450px ) {
+    width: 93%;
+  }
+}
+
+.embed-wrap {
+  display: none;
+}
