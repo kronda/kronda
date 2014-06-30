@@ -46,4 +46,13 @@
   }
 }
 
+blockquote {
+  background-color: transparent !important;
+  color: $color-text;
+  font-size: 0.85em;
+  line-height: 1.8em;
+  border: none;
+  outline: 5px solid;
+  padding-bottom: 1px;
+}
 

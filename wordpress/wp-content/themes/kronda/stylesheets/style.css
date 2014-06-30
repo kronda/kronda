@@ -135,6 +135,17 @@ figure {
     padding-left: 70px;
   }
 }
+/* line 49, ../sass/_content.scss */
+blockquote {
+  background-color: transparent !important;
+  color: #656565;
+  font-size: 0.85em;
+  line-height: 1.8em;
+  border: none;
+  outline: 5px solid;
+  padding-bottom: 1px;
+}
+
 /* line 3, ../sass/_widgets.scss */
 .jetpack_subscription_widget label.font-secondary {
   color: #FFF;
