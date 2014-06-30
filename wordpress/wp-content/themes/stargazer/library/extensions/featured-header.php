@@ -181,14 +181,8 @@ class Featured_Header {
 
 		/* If a featured header image URL was set, add the width and height values. */
 		if ( !empty( $this->url ) ) {
-			/* Sometimes $data is an array and sometimes it's an object. That's weird. */
-			if( is_array( $data ) ) {
-				$data['width']  = $this->width;
-				$data['height'] = $this->height;			
-			} else {
-				$data->width  = $this->width;
-				$data->height = $this->height;
-			}
+			$data->width = $this->width;
+			$data->height = $this->height;
 		}
 
 		return $data;

@@ -85,16 +85,7 @@ jQuery( document ).ready( function() {
 
 		value.bind( function( to ) {
 
-			/* If removing the header image, make sure to hide it so there's not an error image. */
-			if ( 'remove-header' === to ) {
-				jQuery( '.header-image' ).hide();
-			}
-
-			/* Else, make sure to show the image and change the source. */
-			else {
-				jQuery( '.header-image' ).show();
-				jQuery( '.header-image' ).attr( 'src', to );
-			}
+			jQuery( '.header-image' ).attr( 'src', to );
 
 		} ); // value.bind
 
@@ -113,7 +104,7 @@ jQuery( document ).ready( function() {
 			/* special case: hover */
 
 			jQuery( 'a, .mejs-button button' ).
-				not( '#header a, .menu a, .entry-title a, #footer a, .media-info-toggle, .comment-reply-link, .comment-reply-login, .wp-playlist-item, .wp-playlist-caption' ).
+				not( '#header a, .menu a, .entry-title a, #footer a, .media-info-toggle, .comment-reply-link, .comment-reply-login' ).
 				hover(
 					function() {
 						jQuery( this ).css( 'color', to );
@@ -124,21 +115,10 @@ jQuery( document ).ready( function() {
 					}
 			); // .hover
 
-			jQuery( '.wp-playlist-light .wp-playlist-item, .wp-playlist-light .wp-playlist-caption' ).
-				hover(
-					function() {
-						jQuery( this ).css( 'color', to );
-
-					},
-					function() {
-						jQuery( this ).css( 'color', 'inherit' );
-					}
-			); // .hover
-
 			/* color */
 
-			jQuery( 'a, .wp-playlist-light .wp-playlist-playing' ).
-				not( '#header a, .menu a, .entry-title a, #footer a, .media-info-toggle, .comment-reply-link, .comment-reply-login, .wp-playlist-caption' ).
+			jQuery( 'a' ).
+				not( '#header a, .menu a, .entry-title a, #footer a, .media-info-toggle, .comment-reply-link, .comment-reply-login' ).
 				css( 'color', 'rgba( ' + rgb + ', 0.75 )' );
 
 			jQuery( '#menu-secondary-items > li > a' ).

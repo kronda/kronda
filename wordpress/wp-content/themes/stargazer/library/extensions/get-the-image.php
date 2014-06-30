@@ -110,6 +110,7 @@ final class Get_The_Image {
 	 * @return void
 	 */
 	public function __construct( $args = array() ) {
+		global $_wp_additional_image_sizes;
 
 		/* Set the default arguments. */
 		$defaults = array(
@@ -133,7 +134,7 @@ final class Get_The_Image {
 			'split_content'      => false,
 
 			/* Attachment-specific arguments. */
-			'size'               => has_image_size( 'post-thumbnail' ) ? 'post-thumbnail' : 'thumbnail',
+			'size'               => isset( $_wp_additional_image_sizes['post-thumbnail'] ) ? 'post-thumbnail' : 'thumbnail',
 
 			/* Format/display of image. */
 			'link_to_post'       => true,

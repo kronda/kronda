@@ -9,7 +9,7 @@
  * @package    HybridCore
  * @subpackage Functions
  * @author     Justin Tadlock <justin@justintadlock.com>
- * @copyright  Copyright (c) 2008 - 2014, Justin Tadlock
+ * @copyright  Copyright (c) 2008 - 2013, Justin Tadlock
  * @link       http://themehybrid.com/hybrid-core
  * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  */
@@ -83,8 +83,7 @@ function get_atomic_template( $template ) {
  */
 function do_atomic( $tag = '', $arg = '' ) {
 	_deprecated_function( __FUNCTION__, '2.0.0', 'hybrid_do_atomic' );
-	$pre = hybrid_get_prefix();
-	hybrid_do_atomic( "{$pre}_{$tag}", $arg );
+	hybrid_do_atomic( $tag, $arg );
 }
 
 /**
@@ -93,8 +92,7 @@ function do_atomic( $tag = '', $arg = '' ) {
  */
 function apply_atomic( $tag = '', $value = '' ) {
 	_deprecated_function( __FUNCTION__, '2.0.0', 'hybrid_apply_atomic' );
-	$pre = hybrid_get_prefix();
-	return hybrid_apply_atomic( "{$pre}_{$tag}", $value );
+	return hybrid_apply_atomic( $tag, $value );
 }
 
 /**
@@ -103,8 +101,7 @@ function apply_atomic( $tag = '', $value = '' ) {
  */
 function apply_atomic_shortcode( $tag = '', $value = '' ) {
 	_deprecated_function( __FUNCTION__, '2.0.0', 'hybrid_apply_atomic_shortcode' );
-	$pre = hybrid_get_prefix();
-	return hybrid_apply_atomic_shortcode( "{$pre}_{$tag}", $value );
+	return hybrid_apply_atomic_shortcode( $tag, $value );
 }
 
 /**

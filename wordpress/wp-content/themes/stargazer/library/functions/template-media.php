@@ -6,7 +6,7 @@
  * @package    HybridCore
  * @subpackage Functions
  * @author     Justin Tadlock <justin@justintadlock.com>
- * @copyright  Copyright (c) 2008 - 2014, Justin Tadlock
+ * @copyright  Copyright (c) 2008 - 2013, Justin Tadlock
  * @link       http://themehybrid.com/hybrid-core
  * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  */
@@ -152,10 +152,8 @@ function hybrid_get_audio_transcript( $post_id = 0 ) {
  * @return void
  */
 function hybrid_attachment() {
-
-	$file       = wp_get_attachment_url();
-	$mime       = get_post_mime_type();
-	$attachment = '';
+	$file = wp_get_attachment_url();
+	$mime = get_post_mime_type();
 
 	$mime_type = false !== strpos( $mime, '/' ) ? explode( '/', $mime ) : array( $mime, '' );
 
@@ -209,23 +207,28 @@ function hybrid_text_attachment( $mime = '', $file = '' ) {
 }
 
 /**
- * Handles the output of the media for audio attachment posts. This should be used within The Loop.
+ * Handles audio attachments on their attachment pages.  Puts audio/mpeg and audio/wma files into 
+ * an <object> element.
  *
  * @since  0.2.2
  * @access public
+ * @param  string $mime attachment mime type
+ * @param  string $file attachment file URL
  * @return string
  */
-function hybrid_audio_attachment() {
-	return hybrid_media_grabber( array( 'type' => 'audio' ) );
+function hybrid_audio_attachment( $mime = '', $file = '' ) {
+	return do_shortcode( '[audio src="' . esc_url( $file ) . '"]' );
 }
 
 /**
- * Handles the output of the media for video attachment posts. This should be used within The Loop.
+ * Handles video attachments on attachment pages.  Add other video types to the <object> element.
  *
  * @since  0.2.2
  * @access public
+ * @param  string $mime attachment mime type
+ * @param  string $file attachment file URL
  * @return string
  */
-function hybrid_video_attachment() {
-	return hybrid_media_grabber( array( 'type' => 'video' ) );
+function hybrid_video_attachment( $mime = '', $file = '' ) {
+	return do_shortcode( '[video src="' . esc_url( $file ) . '"]' );
 }

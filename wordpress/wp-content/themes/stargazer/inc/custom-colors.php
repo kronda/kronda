@@ -126,8 +126,6 @@ final class Stargazer_Custom_Colors {
 	 */
 	public function editor_styles_callback() {
 
-		header( 'Content-type: text/css' );
-
 		echo $this->get_primary_styles();
 
 		die();
@@ -148,11 +146,10 @@ final class Stargazer_Custom_Colors {
 		$rgb = join( ', ', hybrid_hex_to_rgb( $hex ) );
 
 		/* Color. */
-		$style .= "a, .wp-playlist-light .wp-playlist-playing { color: rgba( {$rgb}, 0.75 ); } ";
+		$style .= "a { color: rgba( {$rgb}, 0.75 ); } ";
 
 		$style .= "a:hover, legend, mark, .comment-respond .required, pre, 
 				.form-allowed-tags code, pre code, 
-				.wp-playlist-light .wp-playlist-item:hover, 
 				.mejs-button button:hover::after, 
 				.mejs-overlay-button:hover::after 
 				{ color: #{$hex}; } ";

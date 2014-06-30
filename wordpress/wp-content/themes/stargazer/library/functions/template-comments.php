@@ -7,7 +7,7 @@
  * @package    HybridCore
  * @subpackage Functions
  * @author     Justin Tadlock <justin@justintadlock.com>
- * @copyright  Copyright (c) 2008 - 2014, Justin Tadlock
+ * @copyright  Copyright (c) 2008 - 2013, Justin Tadlock
  * @link       http://themehybrid.com/hybrid-core
  * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  */
@@ -58,13 +58,12 @@ function hybrid_get_comment_reply_link( $args = array() ) {
  *
  * @since  0.7.0
  * @access public
- * @param  array  $args 
- * @return array
+ * @return array $args Arguments for listing comments.
  */
-function hybrid_list_comments_args( $args = array() ) {
+function hybrid_list_comments_args() {
 
 	/* Set the default arguments for listing comments. */
-	$defaults = array(
+	$args = array(
 		'style'        => 'ol',
 		'type'         => 'all',
 		'avatar_size'  => 80,
@@ -73,7 +72,7 @@ function hybrid_list_comments_args( $args = array() ) {
 	);
 
 	/* Return the arguments and allow devs to overwrite them. */
-	return apply_filters( 'hybrid_list_comments_args', wp_parse_args( $args, $defaults ) );
+	return apply_filters( 'hybrid_list_comments_args', $args );
 }
 
 /**

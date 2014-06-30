@@ -54,12 +54,9 @@ function stargazer_customize_register( $wp_customize ) {
  */
 function stargazer_enqueue_customizer_scripts() {
 
-	/* Use the .min script if SCRIPT_DEBUG is turned off. */
-	$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
-
 	wp_enqueue_script(
 		'stargazer-customize',
-		trailingslashit( get_template_directory_uri() ) . "js/customize{$suffix}.js",
+		trailingslashit( get_template_directory_uri() ) . 'js/customize.min.js',
 		array( 'jquery' ),
 		null,
 		true
