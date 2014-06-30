@@ -6,35 +6,12 @@
  * @author    Nicolas Jonas
  * @license   GPL-3.0+
  * @link      http://example.com
- * @copyright 2013 Nicolas Jonas
+ * @copyright Copyright (C) 2013 Nicolas Jonas, Copyright (C) 2013 Tom Mc Farlin and WP Plugin Boilerplate Contributors
+ * _  _ ____ _  _ ___ ____ ____ _  _ ___ _  _ ____ _  _ ____ ____  ____ ____ _  _ 
+ * |\ | |___  \/   |  | __ |___ |\ |  |  |__| |___ |\/| |___ [__   |    |  | |\/| 
+ * | \| |___ _/\_  |  |__] |___ | \|  |  |  | |___ |  | |___ ___] .|___ |__| |  | 
+ * 
  */
-
-/*****************************************************************************
-
-Copyright (c) 2013 Nicolas Jonas
-Copyright (C) 2013 Tom Mc Farlin and WP Plugin Boilerplate Contributors
-
-This file is part of Advanced Responsive Video Embedder.
-
-Advanced Responsive Video Embedder is free software: you can redistribute it
-and/or modify it under the terms of the GNU General Public License as
-published by the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-Advanced Responsive Video Embedder is distributed in the hope that it will be
-useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General
-Public License for more details.
-
-You should have received a copy of the GNU General Public License along with
-Advanced Responsive Video Embedder.  If not, see
-<http://www.gnu.org/licenses/>.
-
-_  _ ____ _  _ ___ ____ ____ _  _ ___ _  _ ____ _  _ ____ ____  ____ ____ _  _ 
-|\ | |___  \/   |  | __ |___ |\ |  |  |__| |___ |\/| |___ [__   |    |  | |\/| 
-| \| |___ _/\_  |  |__] |___ | \|  |  |  | |___ |  | |___ ___] .|___ |__| |  | 
-
-*******************************************************************************/
 
 class Advanced_Responsive_Video_Embedder_Admin {
 
@@ -64,19 +41,17 @@ class Advanced_Responsive_Video_Embedder_Admin {
 	 */
 	private function __construct() {
 
-		/*
-		 * Call $plugin_slug from public plugin class.
-		 *
-		 *
-		 */
 		$plugin = Advanced_Responsive_Video_Embedder::get_instance();
-		$this->plugin_slug = $plugin->get_plugin_slug();
+		$this->plugin_slug      = $plugin->get_plugin_slug();
+		$this->regex_list       = $plugin->get_regex_list();
+		$this->options          = $plugin->get_options();
+		$this->options_defaults = $plugin->get_options_defaults();
 
 		// Add the options page and menu item.
 		add_action( 'admin_menu', array( $this, 'add_plugin_admin_menu' ) );
 
 		// Add an action link pointing to the options page.
-		$plugin_basename = plugin_basename( plugin_dir_path( __DIR__ ) . $this->plugin_slug . '.php' );
+		$plugin_basename = plugin_basename( plugin_dir_path( realpath( dirname( __FILE__ ) ) ) . $this->plugin_slug . '.php' );
 		add_filter( 'plugin_action_links_' . $plugin_basename, array( $this, 'add_action_links' ) );
 	
 		//* Display a notice that can be dismissed
@@ -112,7 +87,7 @@ class Advanced_Responsive_Video_Embedder_Admin {
 	 */
 	public function display_plugin_admin_page() {
 
-		include_once( 'views/admin.php' );
+		include_once( 'views/admin-options-page.php' );
 	}
 
 	/**
@@ -144,7 +119,7 @@ class Advanced_Responsive_Video_Embedder_Admin {
 
 		if ( $this->admin_page_has_post_editor() ) {
 
-			wp_enqueue_style( $this->plugin_slug . '-admin-styles', plugins_url( 'assets/css/admin.css', __FILE__ ), array(), Advanced_Responsive_Video_Embedder::VERSION );
+			wp_enqueue_style( $this->plugin_slug . '-admin-styles', plugins_url( 'assets/css/admin-dialog.css', __FILE__ ), array(), Advanced_Responsive_Video_Embedder::VERSION );
 		}
 	}
 
@@ -161,29 +136,24 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		if ( $this->admin_page_has_post_editor() ) {
 
 			wp_enqueue_script(
-				$this->plugin_slug . '-admin-script',
-				plugins_url( 'assets/js/admin.js', __FILE__ ),
+				"{$this->plugin_slug}-admin-dialog",
+				plugins_url( 'assets/js/admin-dialog.js', __FILE__ ),
 				array( 'jquery' ),
 				Advanced_Responsive_Video_Embedder::VERSION,
 				true
 			);
 
-			$plugin = Advanced_Responsive_Video_Embedder::get_instance();
-			
-			$regex_list = $plugin->get_regex_list();
+			foreach ( $this->regex_list as $provider => $regex ) {
 
-			foreach ( $regex_list as $provider => $regex ) {
+				if ( $provider != 'ign' ) {
 
-	            if ( $provider != 'ign' ) {
+					$regex = str_replace( array( 'https?://(?:www\.)?', 'http://' ), '', $regex );
+				}
 
-	            	$regex = str_replace( array( 'https?://(?:www\.)?', 'http://' ), '', $regex );
-	            }
+				$regex_list[ $provider ] = $regex;
+			}
 
-	            $regex_list[$provider] = $regex;
-
-	        }
-
-			wp_localize_script( 'jquery', 'arve_regex_list', $regex_list );
+			wp_localize_script( "{$this->plugin_slug}-admin-dialog", 'arve_regex_list', $regex_list );
 		}
 	}
 
@@ -204,7 +174,7 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		 */
 		$this->plugin_screen_hook_suffix = add_options_page(
 			__( 'Advanced Responsive Video Embedder Settings', $this->plugin_slug ),
-			__( 'A.R. Video Embedder Settings', $this->plugin_slug ),
+			__( 'A.R. Video Embedder', $this->plugin_slug ),
 			'manage_options',
 			$this->plugin_slug,
 			array( $this, 'display_plugin_admin_page' )
@@ -248,7 +218,7 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		// Append the icon
 		printf(
 			'<a href="%1$s" id="arve-btn" class="button add_media thickbox" title="%2$s"><span class="wp-media-buttons-icon arve-icon"></span> %3$s</a>',
-			esc_url( '#TB_inline?width=640&height=400&inlineId=' . $popup_id ),
+			esc_url( '#TB_inline?&inlineId=' . $popup_id ),
 			esc_attr( $title ),
 			esc_html__( 'Embed Video', $this->plugin_slug )
 		);
@@ -270,9 +240,10 @@ class Advanced_Responsive_Video_Embedder_Admin {
 	 */
 	public function validate_options( $input ) {
 		
-		//* Reset options by deleting the options and returning nothing will cause the reset/defaults of all options at the init options function
+		//* Storing the Options as a empty array will cause the plugin to use defaults
 		if( isset( $input['reset'] ) ) {
-			return;
+
+			return array();
 		}
 
 		$output = array();
@@ -303,24 +274,65 @@ class Advanced_Responsive_Video_Embedder_Admin {
 
 		foreach ( $input['shortcodes'] as $key => $var ) {
 		
-			$var = preg_replace('/[_]+/', '_', $var );	// remove multiple underscores
-			$var = preg_replace('/[^A-Za-z0-9_]/', '', $var );	// strip away everything except a-z,0-9 and underscores
+			$var = preg_replace( '/[_]+/', '_', $var );	// remove multiple underscores
+			$var = preg_replace( '/[^A-Za-z0-9_]/', '', $var );	// strip away everything except a-z,0-9 and underscores
 			
-			if ( strlen($var) < 3 )
+			if ( strlen($var) < 3 ) {
 				continue;
+			}
 			
-			$output['shortcodes'][$key] = $var;
+			$output['shortcodes'][ $key ] = $var;
 		}
+
+		$arve = Advanced_Responsive_Video_Embedder::get_instance();
 
 		foreach ( $input['params'] as $key => $var ) {
 		
-			$plugin = Advanced_Responsive_Video_Embedder::get_instance();
-			$var = $plugin->parse_parameters( $var );
+			$var = $arve->parse_parameters( $var );
 			
-			$output['params'][$key] = $var;
-		}		
-		
+			$output['params'][ $key ] = $var;
+		}
+
+		//* Store only the options in the database that are different from the defaults.
+		$output = $this->array_diff_assoc_recursive( $output, $this->options_defaults );
+
 		return $output;
+	}
+	
+	/** 
+	 * 
+	 * @link     http://de3.php.net/manual/de/function.array-diff-assoc.php#111675
+	 * @since    4.4.0
+	 */
+	public function array_diff_assoc_recursive( $array1, $array2 ) {
+
+		$difference = array();
+
+		foreach( $array1 as $key => $value ) {
+
+			if( is_array( $value ) ) {
+				
+				if( !isset( $array2[ $key ] ) || !is_array( $array2[ $key ] ) ) {
+					
+					$difference[ $key ] = $value;
+				
+				} else {
+					
+					$new_diff = $this->array_diff_assoc_recursive( $value, $array2[ $key ] );
+
+					if( !empty( $new_diff ) ) {
+
+						$difference[ $key ] = $new_diff;
+					}
+				}
+
+			} elseif( !array_key_exists( $key, $array2 ) || $array2[ $key ] !== $value ) {
+				
+				$difference[ $key ] = $value;
+			}
+		}
+
+		return $difference;
 	}
 
 	/**
@@ -328,7 +340,7 @@ class Advanced_Responsive_Video_Embedder_Admin {
 	 *
 	 * @since     3.0.0
 	 */
-	function admin_notice() {
+	public function admin_notice() {
 
 		global $current_user ;
 		$user_id = $current_user->ID;
@@ -360,7 +372,7 @@ class Advanced_Responsive_Video_Embedder_Admin {
 	 *
 	 * @since     3.0.0
 	 */
-	function admin_notice_ignore() {
+	public function admin_notice_ignore() {
 		global $current_user;
 
 		$user_id = $current_user->ID;
@@ -375,20 +387,20 @@ class Advanced_Responsive_Video_Embedder_Admin {
 	 *
 	 * @since     4.3.0
 	 */
-	function admin_page_has_post_editor() {
+	public function admin_page_has_post_editor() {
 
 		global $pagenow;
 
-	    if ( empty ( $pagenow ) ) {
+		if ( empty ( $pagenow ) ) {
 
-	        return false;
-	    }
+			return false;
+		}
 
-	    if ( ! in_array( $pagenow, array ( 'post-new.php', 'post.php' ) ) ) {
-	        
-	        return false;
-	    }
+		if ( ! in_array( $pagenow, array ( 'post-new.php', 'post.php' ) ) ) {
+			
+			return false;
+		}
 
-	    return post_type_supports( get_current_screen()->post_type, 'editor' );
+		return post_type_supports( get_current_screen()->post_type, 'editor' );
 	}	
 }

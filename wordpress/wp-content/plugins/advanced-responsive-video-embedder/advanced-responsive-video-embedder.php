@@ -1,49 +1,17 @@
-<?php /*
-
-*******************************************************************************
-
-Copyright (C) 2013 Nicolas Jonas
-Copyright (C) 2013 Tom Mc Farlin and WP Plugin Boilerplate Contributors
-
-This file is part of Advanced Responsive Video Embedder.
-
-Advanced Responsive Video Embedder is free software: you can redistribute it
-and/or modify it under the terms of the GNU General Public License as
-published by the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-Advanced Responsive Video Embedder is distributed in the hope that it will be
-useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General
-Public License for more details.
-
-You should have received a copy of the GNU General Public License along with
-Advanced Responsive Video Embedder.  If not, see
-<http://www.gnu.org/licenses/>.
-
-_  _ ____ _  _ ___ ____ ____ _  _ ___ _  _ ____ _  _ ____ ____  ____ ____ _  _ 
-|\ | |___  \/   |  | __ |___ |\ |  |  |__| |___ |\/| |___ [__   |    |  | |\/| 
-| \| |___ _/\_  |  |__] |___ | \|  |  |  | |___ |  | |___ ___] .|___ |__| |  | 
-
-
-Contributors:
-Karel - neo7.fr (French Translation)
-
-*******************************************************************************/
-
+<?php
 /**
  *
  * @package   Advanced Responsive Video Embedder
  * @author    Nicolas Jonas
  * @license   GPL-3.0+
  * @link      http://nextgenthemes.com
- * @copyright 2013 Nicolas Jonas
+ * @copyright Copyright (C) 2014 Nicolas Jonas, Copyright (C) 2014 Tom Mc Farlin and WP Plugin Boilerplate Contributors
  *
  * @wordpress-plugin
  * Plugin Name:       Advanced Responsive Video Embedder
  * Plugin URI:        http://nextgenthemes.com/plugins/advanced-responsive-video-embedder/
  * Description:       Embed videos with a click of a button from many providers with full responsive sizes. Show videos as thumbnails and let them open in colorbox.
- * Version:           4.3.0
+ * Version:           4.8.0
  * Author:            Nicolas Jonas
  * Author URI:        http://nextgenthemes.com
  * Text Domain:       advanced-responsive-video-embedder
@@ -51,6 +19,7 @@ Karel - neo7.fr (French Translation)
  * License URI:       http://www.gnu.org/licenses/gpl-3.0.txt
  * Domain Path:       /languages
  * GitHub Plugin URI: https://github.com/nextgenthemes/advanced-responsive-video-embedder
+ * GitHub Branch:     master
  */
 
 // If this file is called directly, abort.
@@ -85,7 +54,7 @@ add_action( 'plugins_loaded', array( 'Advanced_Responsive_Video_Embedder', 'get_
  * Dashboard and Administrative Functionality
  *----------------------------------------------------------------------------*/
 
-if ( is_admin() ) {
+if ( is_admin() && ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX ) ) {
 
 	require_once( plugin_dir_path( __FILE__ ) . '/admin/class-advanced-responsive-video-embedder-admin.php' );
 	add_action( 'plugins_loaded', array( 'Advanced_Responsive_Video_Embedder_Admin', 'get_instance' ) );

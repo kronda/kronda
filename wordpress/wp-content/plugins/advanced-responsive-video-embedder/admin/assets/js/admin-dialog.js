@@ -16,7 +16,8 @@
 			'mode'         : '',
 			'autoplay'     : '',
 			'aspect_ratio' : '',
-			'maxwidth'     : ''
+			'maxwidth'     : '',
+			'parameters'   : ''
 		};
 
 		var shortcode = '[' + $('#arve-provider').val();
@@ -41,11 +42,11 @@
 		var output      = new Object();
 		var match;
 
-		$.each(arve_regex_list, function(provider, regex) {
+		$.each( arve_regex_list, function( provider, regex ) {
 
-			regex = new RegExp(regex,"i");
+			regex = new RegExp( regex,"i" );
 
-			match = code.match( regex );
+			var match = code.match( regex );
 			
 			if ( match && match[1] ) {
 				output.provider = provider;
@@ -55,7 +56,7 @@
 
 		});
 
-		if( ! $.isEmptyObject(output) ) {
+		if( ! $.isEmptyObject( output ) ) {
 			return output;
 		}
 
@@ -67,15 +68,21 @@
 		embed_regex.flickr        = /flickr\.com\/photos\/[a-zA-Z0-9@_\-]+\/([0-9]+)/i;
 		embed_regex.videojug      = /videojug\.com\/embed\/([a-z0-9\-]{36})/i;
 		embed_regex.bliptv        = /blip\.tv\/play\/([a-z0-9]+)/i;
-		embed_regex.movieweb      = /movieweb\.com\/v\/([a-z0-9]{14})/i
+		embed_regex.movieweb      = /movieweb\.com\/v\/([a-z0-9]{14})/i;
 
-		embed_regex.iframe        = /(.*\.(mp4|webm|ogg))$|src=(?:'|")(https?:\/\/(www\.)?[^'"]+)/i
+		// Iframe
+		embed_regex.iframe        = /src=(?:'|")(https?:\/\/(www\.)?[^'"]+)/i;
+		embed_regex.fileurl       = /(.*\.(mp4|webm|ogg))$/i;
 
-		$.each(embed_regex, function(provider, regex) {
+		$.each( embed_regex, function( provider, regex ) {
 
-			match = code.match( regex );
-			
+			var match = code.match( regex );
+
 			if ( match && match[1] ) {
+
+				if ( 'fileurl' == provider ) {
+					provider = 'iframe';				
+				}
 
 				output.provider = provider;
 				output.videoid  = match[1];
@@ -91,32 +98,34 @@
 		return 'nothing matched';
 	};
 
-	$("#arve-btn").click( function( event ) {
+	$( "#arve-btn" ).click( function( event ) {
 
 		event.preventDefault();
 
 		setTimeout( function() {
-			$('#TB_window').height( $('.arve-dialog:first').outerHeight() + 70 );
-		}, 30 );
+			// Stupid WP or Thinkbox
+			$( '#TB_ajaxContent' ).height( "auto" );
+			$( '#TB_window' ).height( $( '.arve-dialog:first' ).outerHeight() + 70 );
+		}, 100 );
 	} );
 
-	$("#arve-show-more").click( function( event ) {
+	$( "#arve-show-more" ).click( function( event ) {
 		event.preventDefault();
 		$('.arve-hidden').fadeIn();
 	});
 
 	// handles the click event of the submit button
-	$('#arve-submit').click( function( event ){
+	$( '#arve-submit' ).click( function( event ){
 
 		event.preventDefault();
 
-		if ( ($('#arve-id').val() === '') || ($('#arve-id').val() === 'nothing matched') ) {
+		if ( ( $( '#arve-id' ).val() === '' ) || ( $('#arve-id').val() === 'nothing matched' ) ) {
 			alert('no id');
 			return;
 		}
 
-		if ( $('#arve-provider').val() === '' )  {
-			alert('no provider selected');
+		if ( $( '#arve-provider' ).val() === '' )  {
+			alert( 'no provider selected' );
 			return;
 		}
 
@@ -127,7 +136,7 @@
 		tb_remove();
 	});
 
-	$('#arve-url').bind('keyup mouseup change', function() {
+	$( '#arve-url' ).bind( 'keyup mouseup change', function() {
 
 		var response = detect_id( $(this).val() );
 
@@ -135,7 +144,7 @@
 			return;
 		}
 
-		$("#arve-provider option").each(function () {
+		$( "#arve-provider option" ).each( function () {
 			if ( $(this).html() == response.provider ) {
 				$(this).attr("selected", "selected");
 				return;
@@ -145,14 +154,14 @@
 		$('#arve-id').val( response.videoid );
 	});
 
-	$( '#arve-url, #arve-provider, #arve-id, #arve-maxwidth, #arve-mode, #arve-align, #arve-autoplay, #arve-aspect_ratio' ).bind( 'keyup mouseup change', function() {
+	$( '#arve-url, #arve-provider, #arve-id, #arve-maxwidth, #arve-mode, #arve-align, #arve-autoplay, #arve-aspect_ratio, #arve-parameters' ).bind( 'keyup mouseup change', function() {
 
 		var shortcode = create_shortcode();
 
 		if ( shortcode ) {
-			$('#arve-shortcode').html( shortcode );
+			$( '#arve-shortcode' ).html( shortcode );
 		} else {
-			$('#arve-shortcode').html( '-' );
+			$( '#arve-shortcode' ).html( '-' );
 		}
 
 	});
