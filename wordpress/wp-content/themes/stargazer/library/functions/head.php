@@ -5,7 +5,7 @@
  * @package    HybridCore
  * @subpackage Functions
  * @author     Justin Tadlock <justin@justintadlock.com>
- * @copyright  Copyright (c) 2008 - 2013, Justin Tadlock
+ * @copyright  Copyright (c) 2008 - 2014, Justin Tadlock
  * @link       http://themehybrid.com/hybrid-core
  * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  */
@@ -149,7 +149,7 @@ function hybrid_wp_title( $doctitle, $separator, $seplocation ) {
 		$doctitle = sprintf( __( '%1$s Page %2$s', 'hybrid-core' ), $doctitle . $separator, number_format_i18n( absint( $page ) ) );
 
 	/* Trim separator + space from beginning and end. */
-	$doctitle = trim( $doctitle, "{$separator} " );
+	$doctitle = trim( strip_tags( $doctitle ), "{$separator} " );
 
 	return $doctitle;
 }

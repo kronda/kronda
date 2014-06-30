@@ -43,6 +43,7 @@ add_filter( 'hybrid_aside_infinity', 'stargazer_aside_infinity' );
 
 /* Adds custom settings for the visual editor. */
 add_filter( 'tiny_mce_before_init', 'stargazer_tiny_mce_before_init' );
+add_filter( 'mce_css',              'stargazer_mce_css'              );
 
 /* Filters the calendar output. */
 add_filter( 'get_calendar', 'stargazer_get_calendar' );
@@ -195,6 +196,23 @@ function stargazer_tiny_mce_before_init( $settings ) {
 }
 
 /**
+ * Removes the media player styles from the visual editor since we're loading our own.
+ *
+ * @since  1.1.0
+ * @access public
+ * @param  string  $mce_css
+ * @return string
+ */
+function stargazer_mce_css( $mce_css ) {
+	$version = 'ver=' . $GLOBALS['wp_version'];
+
+	$mce_css = str_replace( includes_url( "js/mediaelement/mediaelementplayer.min.css?$version" ) . ',', '', $mce_css );
+	$mce_css = str_replace( includes_url( "js/mediaelement/wp-mediaelement.css?$version" ) . ',',        '', $mce_css );
+
+	return $mce_css;
+}
+
+/**
  * Modifies the theme layout on attachment pages.  If a specific layout is not selected and the global layout 
  * isn't set to '1c-narrow', this filter will change the layout to '1c'.
  *
@@ -335,10 +353,16 @@ function stargazer_audio_shortcode( $html, $atts, $audio, $post_id ) {
 
 	/* Else, get the ID via the file URL. */
 	else {
-		preg_match( '/src=[\'"](.+?)[\'"]/i', $html, $matches );
+		$extensions = join( '|', wp_get_audio_extensions() );
+
+		preg_match(
+			'/(src|' . $extensions . ')=[\'"](.+?)[\'"]/i', 
+			preg_replace( '/(\?_=[0-9])/i', '', $html ),
+			$matches
+		);
 
 		if ( !empty( $matches ) )
-			$attachment_id = hybrid_get_attachment_id_from_url( $matches[1] );
+			$attachment_id = hybrid_get_attachment_id_from_url( $matches[2] );
 	}
 
 	/* If an attachment ID was found. */
@@ -401,10 +425,16 @@ function stargazer_video_shortcode( $html, $atts, $video ) {
 
 	/* Else, get the ID via the file URL. */
 	else {
-		preg_match( '/src=[\'"](.+?)[\'"]/i', $html, $matches );
+		$extensions = join( '|', wp_get_video_extensions() );
+
+		preg_match(
+			'/(src|' . $extensions . ')=[\'"](.+?)[\'"]/i', 
+			preg_replace( '/(\?_=[0-9])/i', '', $html ),
+			$matches
+		);
 
 		if ( !empty( $matches ) )
-			$attachment_id = hybrid_get_attachment_id_from_url( $matches[1] );
+			$attachment_id = hybrid_get_attachment_id_from_url( $matches[2] );
 	}
 
 	/* If an attachment ID was found, add the media info section. */

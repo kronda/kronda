@@ -11,7 +11,7 @@ jQuery( document ).ready( function() {
 
 	var font_primary = 'body, input, textarea, .label-checkbox, .label-radio, .required, #site-description, #reply-title small';
 
-	var font_secondary = 'dt, th, legend, label, input[type="submit"], input[type="reset"], input[type="button"], button, select, option, .wp-caption-text, .gallery-caption, .mejs-controls, .entry-byline, .entry-footer, .chat-author cite, .chat-author, .comment-meta, .breadcrumb-trail, .menu, .media-info .prep, .comment-reply-link, .comment-reply-login, .clean-my-archives .day, .whistle-title';
+	var font_secondary = 'dt, th, legend, label, input[type="submit"], input[type="reset"], input[type="button"], button, select, option, .wp-caption-text, .gallery-caption, .mejs-controls, .wp-playlist-item-meta, .entry-byline, .entry-footer, .chat-author cite, .chat-author, .comment-meta, .breadcrumb-trail, .menu, .media-info .prep, .comment-reply-link, .comment-reply-login, .clean-my-archives .day, .whistle-title';
 
 	var font_headlines = 'h1, h2, h3, h4, h5, h6';
 
@@ -159,7 +159,7 @@ jQuery( document ).ready( function() {
 
 	/* Responsive videos. */
 	/* blip.tv adds a second <embed> with "display: none".  We don't want to wrap that. */
-	jQuery( 'object, embed, iframe' ).not( 'embed[style*="display"], [src*="soundcloud.com"], [name^="gform_"]' ).wrap( '<div class="embed-wrap" />' );
+	jQuery( '.entry object, .entry embed, .entry iframe' ).not( 'embed[style*="display"], [src*="soundcloud.com"], [src*="amazon"], [name^="gform_"]' ).wrap( '<div class="embed-wrap" />' );
 
 	/* Removes the 'width' attribute from embedded videos and replaces it with a max-width. */
 	jQuery( '.embed-wrap object, .embed-wrap embed, .embed-wrap iframe' ).attr( 

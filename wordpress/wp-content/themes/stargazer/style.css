@@ -2,10 +2,10 @@
  * Theme Name:  Stargazer
  * Theme URI:   http://themehybrid.com/themes/stargazer
  * Description: Welcome to Stargazer, the most advanced theme ever created for WordPress without compromising standards. This is the only theme in the world that you'll find that extends WordPress' built-in theme features so robustly but naturally. The theme is built on the rock-solid Hybrid Core theme framework. It's built with search-engine optimization (SEO) in mind by utilizing the most current HTML5 conventions and <a href="http://schema.org">Schema.org</a> microdata. It also integrates with useful theme add-on plugins like <a href="http://wordpress.org/plugins/custom-background-extended">Custom Background Extended</a>, <a href="http://wordpress.org/plugins/custom-header-extended">Custom Header Extended</a>, <a href="http://wordpress.org/plugins/whistles">Whistles</a>, and more.
- * Version:     1.0.1
+ * Version:     1.1.1
  * Author:      Justin Tadlock
  * Author URI:  http://justintadlock.com
- * Tags:        one-column, two-columns, custom-background, custom-colors, custom-header, custom-menu, editor-style, featured-images, post-formats, rtl-language-support, theme-options, threaded-comments, translation-ready
+ * Tags:        one-column, two-columns, custom-background, custom-colors, custom-header, custom-menu, editor-style, featured-images, left-sidebar, post-formats, responsive-layout, right-sidebar, rtl-language-support, theme-options, threaded-comments, translation-ready
  * Text Domain: stargazer
  * License:     GNU General Public License v2.0 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -623,15 +623,15 @@ img.stargazer-full { margin: 0 0 1.5rem; }
 
 .wp-caption { position: relative; }
 
-	.wp-caption-text {
+	.wp-caption .wp-caption-text {
 		position:   absolute;
 		bottom:     1.5rem;
 		padding:    0.75rem;
 		font-size:  0.9375rem;
 	}
 
-		.ltr .wp-caption-text { margin-right: 1.5rem; }
-		.rtl .wp-caption-text { margin-left:  1.5rem; }
+		.ltr .wp-caption .wp-caption-text { margin-right: 1.5rem; }
+		.rtl .wp-caption .wp-caption-text { margin-left:  1.5rem; }
 
 /* === Gallery === */
 
@@ -716,6 +716,7 @@ li.ping::after,
 .media-info::after,
 .media-info ul li::after,
 .media-shortcode-extend::after,
+.wp-playlist-current-item::after,
 .widget::after,
 .whistles::after,
 .whistle-content::after {
@@ -753,10 +754,13 @@ blockquote::before,
 .comment-content ul li::before,
 
 /* Media player */
-.wp-audio-shortcode .mejs-controls .mejs-button button::after,
-.wp-video-shortcode .mejs-controls .mejs-button button::after,
-.wp-video-shortcode .mejs-overlay-button::after,
+.mejs-controls .mejs-button button::after,
+.mejs-overlay-button::after,
 .media-info-toggle::after,
+
+/* Playlists */
+.wp-playlist-playing .wp-playlist-caption::before,
+.wp-playlist-item-meta::before,
 
 /* Posts */
 .entry-author a::before,
@@ -768,6 +772,7 @@ blockquote::before,
 .entry-terms::before,
 .image-sizes::before,
 .chat-author cite::before,
+.entry-views::before,
 
 /* Menus */
 #menu-social li a::before,
@@ -829,6 +834,7 @@ blockquote::before,
 	.ltr .post-format-link::before,
 	.ltr .entry-terms::before,
 	.ltr .image-sizes::before,
+	.ltr .entry-views::before,
 	.ltr .comment-published::before,
 	.ltr .comment-edit-link::before,
 	.ltr .comment-author::before,
@@ -845,6 +851,7 @@ blockquote::before,
 	.rtl .post-format-link::before,
 	.rtl .entry-terms::before,
 	.rtl .image-sizes::before,
+	.rtl .entry-views::before,
 	.rtl .comment-published::before,
 	.rtl .comment-edit-link::before,
 	.rtl .comment-author::before,
@@ -879,6 +886,9 @@ blockquote::before,
 	.format-status .post-format-link::before   { content: '\f105'; }
 	.format-video .post-format-link::before    { content: '\f104'; }
 
+	/* Entry Views plugin. */
+	.entry-views::before { content: '\f403'; }
+
 	/* Comments */
 	.comment-published::before    { content: '\f303'; }
 	.comment-author::before       { content: '\f304'; }
@@ -893,6 +903,7 @@ blockquote::before,
 
 	#menu-social li a[href*="codepen.io"]::before      { content: '\f216'; color: #fff;    }
 	#menu-social li a[href*="digg.com"]::before        { content: '\f221'; color: #fff;    }
+	#menu-social li a[href*="dribbble.com"]::before    { content: '\f201'; color: #ea4c89; }
 	#menu-social li a[href*="dropbox.com"]::before     { content: '\f225'; color: #007ee5; }
 	#menu-social li a[href*="facebook.com"]::before    { content: '\f203'; color: #3b5998; }
 	#menu-social li a[href*="flickr.com"]::before      { content: '\f211'; color: #ff0084; }
@@ -1017,6 +1028,17 @@ blockquote::before,
 	.mejs-pause button::after             { content: '\f448'; }
 	.mejs-volume-button button::after     { content: '\f109'; }
 
+	/* Media playlist */
+	.wp-playlist-playing .wp-playlist-caption::before          { content: '\f452'; }
+	.wp-playlist-current-item .wp-playlist-item-title::before  { content: '\f109'; }
+	.wp-playlist-current-item .wp-playlist-item-album::before  { content: '\f460'; }
+	.wp-playlist-current-item .wp-playlist-item-artist::before { content: '\f304'; }
+
+	.wp-playlist-playing .wp-playlist-caption::before,
+	.wp-playlist-item-meta::before                     { padding-bottom: 2px; }
+	.ltr .wp-playlist-item-meta::before                { padding-right:  3px; }
+	.rtl .wp-playlist-item-meta::before                { padding-left:   3px; }
+
 	/* Whistles plugin */
 
 	.whistles-toggle .whistle-title::after,
@@ -1095,6 +1117,9 @@ blockquote::before,
 	/* Series plugin. */
 	.widget.series-list-posts .widget-title > .wrap::before,
 	.widget.series-list-related .widget-title > .wrap::before { content: '\f411'; }
+
+	/* Entry Views plugin. */
+	.widget-entry-views .widget-title > .wrap::before { content: '\f403'; }
 
 /********************************************************************************************************
  * ====== End Genericons ======
@@ -1279,7 +1304,8 @@ blockquote::before,
 		.ltr .post-edit-link,
 		.ltr .entry-permalink,
 		.ltr .entry-terms,
-		.ltr .post-format-link { margin-right: 5px; display: inline-block; }
+		.ltr .post-format-link,
+		.ltr .entry-views { margin-right: 5px; display: inline-block; }
 
 		.rtl .entry-author,
 		.rtl .entry-published,
@@ -1287,7 +1313,8 @@ blockquote::before,
 		.rtl .post-edit-link,
 		.rtl .entry-permalink,
 		.rtl .entry-terms,
-		.rtl .post-format-link { margin-left: 5px; display: inline-block; }
+		.rtl .post-format-link,
+		.rtl .entry-views { margin-left: 5px; display: inline-block; }
 
 		/* Output from comments_popup_link() when no comments are found or off. */
 		.ltr span.comments-link,
@@ -1489,6 +1516,59 @@ blockquote::before,
 		}
 
 /**
+ * WordPress playlist
+ *
+ * Customizes the output of the media playlist.  For the full media playlist styles, see the 
+ * `css/mediaelement/medialement.css` stylesheet.
+ */
+
+.wp-playlist {
+	padding: 0;
+	border:  none;
+}
+
+	.wp-playlist-dark  { padding-top: 1.5rem; }
+	.wp-video-playlist { padding-top: 0;      }
+
+	/* Currently playing. */
+	.wp-playlist-current-item {
+		padding: 0 1.5rem 0.75rem;
+	}
+
+		.wp-playlist-current-item img { max-width: 75px; }
+
+		.wp-playlist-item-meta { font-size: 1rem; }
+
+	/* Media player. */
+	.wp-playlist-dark .mejs-controls {
+		border-top:    1px solid;
+		border-bottom: 1px solid;
+	}
+
+	/* Playlist tracks (list of items). */
+
+	.wp-playlist-tracks {
+		margin-top: 0;
+		padding:    1rem 1.5rem;
+		border:     1px solid;
+	}
+
+		.wp-playlist-dark .wp-playlist-tracks { border: none; }
+
+		.wp-playlist-item {
+			margin:        0;
+			padding:       0.5rem 0;
+			font-size:     1rem;
+			border-bottom: 1px dotted;
+		}
+
+			.wp-playlist-item a { color: inherit; border: none; }
+
+			.wp-playlist-item-title { text-transform: capitalize; }
+
+		.wp-playlist-playing { font-weight: normal; }
+
+/**
  * WordPress media player.
  *
  * This overwrites various elements of the media player styles included.  For the full media player styles, 
@@ -1502,7 +1582,7 @@ blockquote::before,
 	.mejs-controls {
 		width:           100%;
 		height:          50px;
-		padding:         10px;
+		padding:         0 10px;
 		-moz-box-sizing: border-box;
 		     box-sizing: border-box;
 	}
@@ -1515,12 +1595,14 @@ blockquote::before,
 
 	.wp-audio-shortcode .mejs-controls { top: 25px; }
 
+	.mejs-controls > div { margin-top: 10px; }
+
 		/* Fix for last item dropping below the controls. */
 		.mejs-controls > div:last-of-type {
 			position: relative;
 			clear:    both;
 			float:    right;
-			top:      -31px;
+			top:      -41px;
 		}
 
 		.wp-audio-shortcode .mejs-mediaelement {
@@ -1686,8 +1768,9 @@ blockquote::before,
 
 			.widget-title > .wrap a { text-decoration: underline; }
 
-	/* Recent posts widget. */
-	.widget_recent_entries .post-date {
+	/* Recent posts widget and Entry Views plugin. */
+	.widget_recent_entries .post-date,
+	.widget-entry-views .entry-view-count {
 		font-size: 0.875em; /* relative */
 	}
 
@@ -2144,7 +2227,7 @@ blockquote::before,
 					.ltr .menu li li > ul::before {
 						left:         -6px;
 						border-right-width: 6px;
-						border-right-style: 6px;
+						border-right-style: solid;
 						border-left:  0;
 					}
 
@@ -2152,7 +2235,7 @@ blockquote::before,
 						right:        -6px; 
 						border-right:  0;
 						border-left-width: 6px;
-						border-left-style: 6px;
+						border-left-style: solid;
 					}
 
 			.menu li {
@@ -2545,6 +2628,7 @@ option,
 .wp-caption-text,
 .gallery-caption,
 .mejs-controls,
+.wp-playlist-item-meta,
 .entry-byline,
 .entry-footer,
 .chat-author cite,
@@ -2587,7 +2671,8 @@ h6 {
 /* ====== color: #656565 ====== */
 
 body,
-.media-shortcode-extend .media-info {
+.media-shortcode-extend .media-info,
+.wp-playlist-dark .wp-playlist-item {
 	color: #656565;
 }
 
@@ -2610,6 +2695,8 @@ textarea,
 .entry,
 .format-chat .chat-author,
 .media-info li,
+.wp-playlist-tracks,
+.wp-playlist-item,
 .loop-description,
 .loop-pagination,
 .loop-nav,
@@ -2654,6 +2741,7 @@ select,
 .loop-pagination,
 .loop-nav,
 .widget_recent_entries .post-date,
+.widget-entry-views .entry-view-count,
 .gallery-count,
 .comment-respond .must-log-in,
 .comment-respond .logged-in-as,
@@ -2662,7 +2750,8 @@ select,
 .form-allowed-tags,
 .whistles-tabs-nav li a,
 .whistles-toggle .whistle-title,
-.whistles-accordion .whistle-title {
+.whistles-accordion .whistle-title,
+.wp-playlist-dark .wp-playlist-item-meta {
 	color: #858585;
 }
 
@@ -2679,7 +2768,8 @@ select,
 .mejs-controls,
 .mejs-volume-button .mejs-volume-slider,
 .mejs-overlay-play .mejs-overlay-button::after,
-.mejs-time-rail .mejs-time-float {
+.mejs-time-rail .mejs-time-float,
+.wp-playlist-dark {
 	background: #252525;
 }
 
@@ -2763,7 +2853,7 @@ select:focus {
 	border-color: #d3d3d3;
 }
 
-.wp-caption-text {
+.wp-caption .wp-caption-text {
 	color:      #e3e3e3;
 	background: rgba( 0, 0, 0, 0.75 );
 }
@@ -2803,7 +2893,8 @@ select:focus {
 
 .entry-byline,
 .entry-footer,
-.comment-meta { color: rgba( 85, 85, 85, 0.75 ); }
+.comment-meta,
+.wp-playlist-item-meta { color: rgba( 85, 85, 85, 0.75 ); }
 
 .image-sizes .sep { color: #e3e3e3; }
 
@@ -2851,8 +2942,10 @@ li.ping,
 }
 
 .media-shortcode-extend .audio-info     { border-color: #202020; }
-.media-shortcode-extend .media-info li  { border-color: #353535; }
-.wp-video-shortcode .mejs-controls      { border-color: #151515; }
+.media-shortcode-extend .media-info li,
+.wp-playlist-dark .wp-playlist-item     { border-color: #353535; }
+.wp-video-shortcode .mejs-controls,
+.wp-playlist-dark .mejs-controls        { border-color: #151515; }
 .mejs-time-rail .mejs-time-float        { border-color: #454545; }
 .mejs-time-rail .mejs-time-float-corner { border-top-color: #fff; }
 
@@ -2954,7 +3047,10 @@ button,
 .mejs-volume-button .mejs-volume-slider .mejs-volume-handle,
 .media-info-toggle:hover,
 .mejs-overlay-play .mejs-overlay-button::after,
-.mejs-time-rail .mejs-time-float {
+.mejs-time-rail .mejs-time-float,
+.wp-playlist-dark .wp-playlist-playing,
+.wp-playlist-dark .wp-playlist-caption:hover, 
+.wp-playlist-dark .wp-playlist-item:hover {
 	color: #fff;
 }
 
