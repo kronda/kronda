@@ -1,12 +1,13 @@
 === Advanced Excerpt ===
-Contributors: basvd
-Tags: excerpt, advanced, post, posts, template, formatting
-Donate link: http://basvd.com/code/advanced-excerpt/
+Contributors: bradt, aprea
+Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5VPMGLLK94XJC
+Tags: excerpt, post, content, formatting
 Requires at least: 3.2
-Tested up to: 3.3
-Stable tag: 4.1.1
+Tested up to: 3.9
+Stable tag: 4.2.3
+License: GPLv3
 
-Several improvements over WP's default excerpt. The size can be limited using character or word count, and HTML markup is not removed.
+Control the appearance of WordPress post excerpts
 
 == Description ==
 
@@ -23,13 +24,18 @@ This plugin adds several improvements to WordPress' default way of creating exce
 
 Most of the above features are optional and/or can be customized by the user or theme developer.
 
+Interested in contributing to Advanced Excerpt? Please visit https://github.com/deliciousbrains/wp-advanced-excerpt
+
+See [our wiki](https://github.com/deliciousbrains/wp-advanced-excerpt/wiki) for additional documentation.
+
+Banner image credit - [chillihead](https://www.flickr.com/photos/chillihead/)
+
+Original plugin author - [basvd](http://profiles.wordpress.org/basvd)
+
 == Installation ==
 
-After you've downloaded and extracted the files:
-
-1. Upload the complete `advanced-excerpt` folder to the `/wp-content/plugins/` directory
-2. Activate the plugin through the 'Plugins' menu in WordPress
-3. Go to 'Excerpt' under the 'Settings' menu and configure the plugin
+1. Use WordPress' built-in installer
+2. Access the "Excerpt" menu option under Settings
 
 == Frequently Asked Questions ==
 
@@ -39,19 +45,15 @@ A short version of a post that is usually displayed wherever the whole post woul
 
 = Why do I need this plugin? =
 
-The default excerpt created by WordPress removes all HTML. If your theme uses `the_excerpt()` to view excerpts, they might look weird because of this (smilies are removed, lists are flattened, etc.) This plugin fixes that and also gives you more control over excerpts.
+The default excerpt created by WordPress removes all HTML. If your theme uses `the_excerpt()` or `the_content()` to view excerpts, they might look weird because of this (smilies are removed, lists are flattened, etc.) This plugin fixes that and also gives you more control over excerpts.
 
 = Does it work for WordPress version x.x.x? =
 
-During development, the plugin is tested with the most recent version(s) of WordPress. The range of tested versions is listed on this page (3.2 - 3.3 at the moment). It might work on older versions, but it's better to just keep your installation up-to-date.
-
-The plugin requires PHP 5 to work. So if you are using WordPress before 3.2, make sure you have it (WP 3.2 and higher require PHP 5 already).
+During development, the plugin is tested with the most recent version(s) of WordPress. It might work on older versions, but it's better to just keep your installation up-to-date.
 
 = Is this plugin available in my language? / How do I translate this plugin? =
 
-The plugin comes bundled with a few (2) languages. The correct language will automatically be selected to match your [WordPress locale](http://codex.wordpress.org/WordPress_in_Your_Language).
-
-More information on translation will be added in the future.
+Advanced Excerpt is internationalization (i18n) friendly. If you'd like to contribute a translation for your language please do so by opening a [pull request](https://github.com/deliciousbrains/wp-advanced-excerpt).
 
 = Does this plugin support multibyte characters, such as Chinese? =
 
@@ -61,18 +63,17 @@ If you require multibyte character support on your website, you can [override th
 
 = Can I manually call the filter in my WP theme or plugin? =
 
-The plugin automatically hooks on `the_excerpt()` function and uses the parameters specified in the options panel.
+The plugin automatically hooks on `the_excerpt()` and `the_content()` functions and uses the parameters specified in the options panel.
 
 If you want to call the filter with different options, you can use `the_advanced_excerpt()` template tag provided by this plugin. This tag accepts [query-string-style parameters](http://codex.wordpress.org/Template_Tags/How_to_Pass_Tag_Parameters#Tags_with_query-string-style_parameters) (theme developers will be familiar with this notation).
 
 The following parameters can be set:
 
 * `length`, an integer that determines the length of the excerpt
-* `use_words`, if set to `1`, the excerpt length will be in words; if set to `0`, characters will be used for the count
+* `length_type`, enumeration, if set to `words` the excerpt length will be in words; if set to `characters` the excerpt length will be in characters
 * `no_custom`, if set to `1`, an excerpt will be generated even if the post has a custom excerpt; if set to `0`, the custom excerpt will be used
 * `no_shortcode`, if set to `1`, shortcodes are removed from the excerpt; if set to `0`, shortcodes will be parsed
-* `finish_word`, if set to `1`, the last word in the excerpt will not be cut off; if set to `0`, no effort is made to finish the word
-* `finish_sentence`, if set to `1`, the last sentence in the excerpt will not be cut off; if set to `0`, no effort is made to include the full sentence
+* `finish`, enumeration, if set to `exact` the excerpt will be the exact lenth as defined by the "Excerpt Length" option. If set to `word` the last word in the excerpt will be completed. If set to `sentence` the last sentence in the excerpt will be completed.
 * `ellipsis`, the string that will substitute the omitted part of the post; if you want to use HTML entities in the string, use `%26` instead of the `&` prefix to avoid breaking the query
 * `read_more`, the text used in the read-more link
 * `add_link`, if set to `1`, the read-more link will be appended; if `0`, no link will be added
@@ -81,14 +82,47 @@ The following parameters can be set:
 
 A custom advanced excerpt call could look like this:
 
-`the_advanced_excerpt('length=320&use_words=0&no_custom=1&ellipsis=%26hellip;&exclude_tags=img,p,strong');`
+`the_advanced_excerpt('length=320&length_type=words&no_custom=1&ellipsis=%26hellip;&exclude_tags=img,p,strong');`
 
 = Does this plugin work outside the Loop? =
 
 No, this plugin fetches the post from The Loop and there is currently no way to pass a post ID or any custom input to it.
 However, you can [start The Loop manually](http://codex.wordpress.org/The_Loop#Multiple_Loops) and apply the plugin as usual.
 
+== Screenshots ==
+
+1. The options page
+2. An example of an excerpt generated by the plugin
+
 == Changelog ==
+
+= 4.2.3 =
+* Fix: The "Remove all tags except the following" wasn't excluding tags as expected
+* Fix: Call `remove_all_filter()` on the `the_excerpt` hook to improve excerpt rendering
+* Fix: Only honor the "Only filter `the_content()` when there's no break (&lt;!--more--&gt;) tag in the post content" setting when hooking into `the_content` filter
+* Improvement: Improve backwards compatibility by reverting back to using `get_the_content()` for the base excerpt text
+* Improvement: Added the `advanced_excerpt_skip_excerpt_filtering` filter allowing users to skip excerpt filtering on a per excerpt basis
+
+= 4.2.2 =
+* Fix: The `the_advanced_excerpt()` function was not working on singular page types (pages / posts)
+
+= 4.2.1 =
+* Fix: Undefined index errors when using the `the_advanced_excerpt()` function
+* Fix: Not excluding tags when using the `exclude_tags` argument in the `the_advanced_excerpt()` function 
+
+= 4.2 =
+* Feature: Toggle excerpt filtering when there's no break (&lt;!--more--&gt;) tag in the post content
+* Feature: Toggle excerpt filtering for the `the_excerpt()` and `the_content()` functions
+* Feature: Toggle excerpt filtering on certain page types
+* Improvement: Added HTML5 tags to the allowed tags list
+* Improvement: Options are now automatically removed from `wp_options` when the plugin is deleted from the dashboard
+* Improvement: Added several WordPress filters, allowing developers to extend/modify the default functionality of the plugin
+* Improvement: Additional strings were made i18n friendly
+* Improvement: All options are now stored in one row in wp_options rather than one row per option
+* Improvement: Several UI elements have be reworded and styled differently to improve user experience
+* Fix: Now works with themes using `the_content()` on archive pages (i.e. WordPress default themes and others)
+* Fix: Notices/warning were appearing when the options were saved while having a checkbox option unchecked
+* Fix: The "Read More" link was being incorrectly appended into certain HTML tags, e.g. table tags and list tags
 
 = 4.1 =
 * Fix: Template function with custom options works again
