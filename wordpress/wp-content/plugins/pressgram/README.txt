@@ -3,8 +3,8 @@ Contributors: pressgram, UaMV
 Donate link: 	
 Tags: pressgram, photos, filters, instagram, twitter, facebook, pictures, photo sharing, publishing
 Requires at least: 3.5.2
-Tested up to: 3.8
-Stable tag: 2.2.1
+Tested up to: 3.9
+Stable tag: 2.2.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -44,6 +44,7 @@ The following fine control presets are customizable to your blog:
 * Comment Status: allow or disallow
 * Trackback Status: allow or disallow
 * Post Content Removal: remove first image
+* Gallery: when multiple images are posted, create a gallery
 
 = How do post relations and the widget work? =
 Pressgram post relation is created for all posts made from Pressgram. Post relation can be broken or created for posts by use of the checkbox found in the Publish metabox of posts. The widget allows you to display from 1 to 16 images in a grid of one to four columns for recent posts that are related to Pressgram. Images link to the associated Pressgram post on your blog.
@@ -58,6 +59,7 @@ Powertags allow you in-app control of how the plugin will process a single Press
 * **{comments:open/closed}**  (comment status must open or closed)
 * **{pings:open/closed}**  (ping status must be open or closed)
 * **{remove.img:set/unset}**  (selecting set or unset will control removal of first image)
+* **{gallery:set/unset}** (selecting set or unset will control whether a gallery is created)
 
 Download the <a href="http://pressgr.am/">mobile app here</a> and support our community with <a href="http://store.pressgr.am/">some official swag</a>!
 
@@ -137,6 +139,14 @@ As of Version 2.1.0, you can add/remove _pressgram_post metadata by enabling Pos
 3. Pressgram Post Relation
 
 == Changelog ==
+
+= 2.2.3 =
+* Fix: Include gallery only if more than one image exists
+
+= 2.2.2 =
+* Allows processing to post types that do not support categories
+* Fixes for powertags
+* Adds gallery option & powertag
 
 = 2.2.1 =
 * Fixes PHP Warning in some instances

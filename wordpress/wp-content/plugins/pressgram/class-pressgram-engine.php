@@ -123,6 +123,7 @@ class Pressgram_Engine {
 		$this->options['comments'] = isset( $this->options['comments'] ) ? $this->options['comments'] : FALSE;
 		$this->options['pings'] = isset( $this->options['pings'] ) ? $this->options['pings'] : FALSE;
 		$this->options['strip']['image'] = isset( $this->options['strip']['image'] ) ? $this->options['strip']['image'] : FALSE;
+		$this->options['gallery'] = isset( $this->options['gallery'] ) ? $this->options['gallery'] : FALSE;
 
 	}
 
@@ -135,7 +136,7 @@ class Pressgram_Engine {
 	public function do_pressgram( $new_status, $old_status, $post ) {
 
 		// Check if post is transitioning from new or auto-draft (or from draft, if local defined) to publish
-		if ( ( ( PRESSGRAM_LOCAL && 'draft' == $old_status && 'publish' == $new_status ) || ( 'new' == $old_status || 'auto-draft' == $old_status ) ) && ( 'publish' == $new_status ) ) {
+		if ( ( PRESSGRAM_LOCAL && 'draft' == $old_status && 'publish' == $new_status ) || ( ( 'new' == $old_status || 'auto-draft' == $old_status ) && ( 'publish' == $new_status || 'pending' == $new_status ) && ( 'attachment' != $post->post_type ) ) ) {
 
 			// Check if restricted to posts with specific string present
 			if ( '' != PRESSGRAM_RESTRICTION && ! strpos( $post->post_content, PRESSGRAM_RESTRICTION ) ) {
@@ -222,37 +223,46 @@ class Pressgram_Engine {
 
 						// Apply featured image
 						case 'featured.img':
-							if ( 'set' == strtolower( $power_value ) ) {
+							if ( 'set' == strtolower( $power_tag_value ) ) {
 								$this->options['featured_img'] = TRUE;
-							} elseif ( 'unset' == strtolower( $power_value ) ) {
+							} elseif ( 'unset' == strtolower( $power_tag_value ) ) {
 								$this->options['featured_img'] = FALSE;
 							}
 							break;
 
 						// Apply comment status
 						case 'comments':
-							if ( 'open' == strtolower( $power_value ) ) {
+							if ( 'open' == strtolower( $power_tag_value ) ) {
 								$this->options['comments'] = TRUE;
-							} elseif ( 'closed' == strtolower( $power_value ) ) {
+							} elseif ( 'closed' == strtolower( $power_tag_value ) ) {
 								$this->options['comments'] = FALSE;
 							}
 							break;
 						
 						// Apply ping status
 						case 'pings':
-							if ( 'open' == strtolower( $power_value ) ) {
+							if ( 'open' == strtolower( $power_tag_value ) ) {
 								$this->options['pings'] = TRUE;
-							} elseif ( 'closed' == strtolower( $power_value ) ) {
+							} elseif ( 'closed' == strtolower( $power_tag_value ) ) {
 								$this->options['pings'] = FALSE;
 							}
 							break;
 
-						// Apply ping status
+						// Apply image removal
 						case 'remove.img':
-							if ( 'set' == strtolower( $power_value ) ) {
+							if ( 'set' == strtolower( $power_tag_value ) ) {
 								$this->options['strip']['image'] = TRUE;
-							} elseif ( 'unset' == strtolower( $power_value ) ) {
+							} elseif ( 'unset' == strtolower( $power_tag_value ) ) {
 								$this->options['strip']['image'] = FALSE;
+							}
+							break;
+
+						// Apply gallery
+						case 'gallery':
+							if ( 'set' == strtolower( $power_tag_value ) ) {
+								$this->options['gallery'] = TRUE;
+							} elseif ( 'unset' == strtolower( $power_tag_value ) ) {
+								$this->options['gallery'] = FALSE;
 							}
 							break;
 						
@@ -299,10 +309,32 @@ class Pressgram_Engine {
 			// Strip images
 			if ( $this->options['strip']['image'] ) {
 				$post->post_content = $this->strip_content( $post->post_content, 1 );
-			} elseif ( 'attachment' == $this->options['post_type'] ) {
+			} elseif ( 'attachment' == $this->options['post_type'] || ( $this->options['gallery'] && count( $attachments ) > 1 ) ) {
 				$post->post_content = $this->strip_content( $post->post_content, 2 );
 			}
 
+			// Add gallery if more than one attached image
+			if ( $this->options['gallery'] && count( $attachments ) > 1 ) {
+
+				// Set max columns to nine
+				$columns = 9;
+
+				// Find suitable column number
+				do {
+					$mod = count( $attachments ) % $columns;
+					$columns --;
+				} while ( $mod != 0 );
+
+				// Append the gallery shortcode
+				$post->post_content .= "\r\n\r\n[gallery link=file columns=" . ( $columns + 1 ) . "]" ;
+			}
+
+			// Loop through the attachments
+			foreach ( $attachments as $attachment_ID => $attachment ) {
+				// Add pressgram_image meta
+				add_post_meta( $attachment_ID, '_pressgram_image', TRUE, TRUE );
+			}
+			
 			// Check that fine control post type is not set as attachment
 			if ( 'attachment' != $this->options['post_type'] ) {
 
@@ -330,12 +362,6 @@ class Pressgram_Engine {
 
 				// Add pressgram_post meta
 				add_post_meta( $post['ID'], '_pressgram_post', TRUE, TRUE );
-
-				// Loop through the attachments
-				foreach ( $attachments as $attachment_ID => $attachment ) {
-					// Add pressgram_image meta
-					add_post_meta( $attachment_ID, '_pressgram_image', TRUE, TRUE );
-				}
 				
 				// If post is not published, remove Jetpack publicized flag
 				'publish' != $this->options['post_status'] ? delete_post_meta( $post['ID'], '_wpas_done_all' ) : FALSE;
@@ -356,9 +382,6 @@ class Pressgram_Engine {
 
 					// Update the attachment post
 					wp_update_post( $attachment_post );
-
-					// Add pressgram_image meta
-					add_post_meta( $attachment_ID, '_pressgram_image', TRUE, TRUE );
 
 				}
 
@@ -388,7 +411,7 @@ class Pressgram_Engine {
 
 			foreach ( $images[0] as $index => $image ) {
 				// strip the images
-				$content = str_replace( array( $images[0][ $index ], '<p></p>' ), array( '', ''), $content );
+				$content = str_replace( array( $images[0][ $index ], '<p></p>' ), array( '', '' ), $content );
 			}
 
 		}

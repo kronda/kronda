@@ -131,6 +131,7 @@ class Pressgram_Admin {
 		$this->options['comments'] = isset( $this->options['comments'] ) ? $this->options['comments'] : FALSE;
 		$this->options['pings'] = isset( $this->options['pings'] ) ? $this->options['pings'] : FALSE;
 		$this->options['strip']['image'] = isset( $this->options['strip']['image'] ) ? $this->options['strip']['image'] : FALSE;
+		$this->options['gallery'] = isset( $this->options['gallery'] ) ? $this->options['gallery'] : FALSE;
 		
 		// Set Pressgram post relations
 		$this->pressgram_post_relation = get_option( 'pressgram_post_relation', array() );
@@ -478,11 +479,27 @@ class Pressgram_Admin {
 							$html .= '<option value="' . $post_type . '" pfsupport="' . $post_format_support . '" pfisupport="' . $featured_image_support . '" pcsupport="' . $comment_support . '" ptsupport="' . $trackback_support . '" ptgsupport="' . $tag_support . '"';
 								$html .= $this->options['post_type'] == $post_type ? ' selected="selected"' : '';
 							 	$html .= '>' . get_post_type_object( $post_type )->labels->singular_name . '</option>';
+						// remove the post type from array
+						unset( $post_types[ $post_type ] );
 						}
 					}
-					$html .= '<option value="attachment" pfsupport="no-support" pfisupport="no-support" pcsupport="no-support" ptsupport="no-support" ptgsupport="no-support"';
-						$html .= $this->options['post_type'] == 'attachment' ? ' selected="selected">' : '>';
-						$html .= __( 'Unattached Media', 'pressgram-locale' ) . '</option>';
+					if ( ! empty( $post_types ) ) {
+						$html .= '<optgroup label="Without Category Support">';
+						foreach( $post_types as $post_type ) {
+								$post_format_support = post_type_supports( $post_type, 'post-formats' ) ? 'support' : 'no-support';
+								$featured_image_support = post_type_supports( $post_type, 'thumbnail' ) ? 'support' : 'no-support';
+								$comment_support = post_type_supports( $post_type, 'comments' ) ? 'support' : 'no-support';
+								$trackback_support = post_type_supports( $post_type, 'trackbacks' ) ? 'support' : 'no-support';
+								$tag_support = in_array( 'post_tag', $supported_taxonomies ) ? 'support' : 'no-support';
+
+								$html .= '<option value="' . $post_type . '" pfsupport="' . $post_format_support . '" pfisupport="' . $featured_image_support . '" pcsupport="' . $comment_support . '" ptsupport="' . $trackback_support . '" ptgsupport="' . $tag_support . '"';
+									$html .= $this->options['post_type'] == $post_type ? ' selected="selected"' : '';
+								 	$html .= '>';
+								 	$html .= 'attachment' == $post_type ? 'Unattached ' : '';
+								 	$html .= get_post_type_object( $post_type )->labels->singular_name . '</option>';
+						}
+						$html .= '</optgroup>';
+					}
 
 				$html .= '</select>';
 			$html .= '</label>';
@@ -559,6 +576,13 @@ class Pressgram_Admin {
 			$html .= '<label><input type="checkbox" id="pressgram_fine_control_strip_image" name="pressgram_fine_control_' . $this->pressgram_current_category . '[strip][image]" value="1"';
 				$html .= $this->options['strip']['image'] ? ' checked="checked">' : '>';
 				$html .= __( ' Remove first image', 'pressgram-locale' ) . '</input></label>';
+
+			$html .= '&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;';
+			
+			$this->options['gallery'] = isset( $this->options['gallery'] ) ? $this->options['gallery'] : FALSE;
+			$html .= '<label><input type="checkbox" id="pressgram_fine_control_gallery" name="pressgram_fine_control_' . $this->pressgram_current_category . '[gallery]" value="1"';
+				$html .= $this->options['gallery'] ? ' checked="checked">' : '>';
+				$html .= __( ' Create gallery if multiple images are posted', 'pressgram-locale' ) . '</input></label>';
 
 			$html .= '<br /><br />';
 

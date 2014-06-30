@@ -10,14 +10,14 @@
  * @package   Pressgram
  * @author    yo, gg <info@press.gram>, UaMV
  * @license   GPL-2.0+
- * @link      http://support.pressgr.am/
+ * @link      http://blog.pressgr.am/support/
  * @copyright 2013 yo, gg, UaMV
  *
  * @wordpress-plugin
  * Plugin Name: Pressgram
- * Plugin URI:  http://support.pressgr.am/
+ * Plugin URI:  http://blog.pressgr.am/support/
  * Description: The official WordPress plugin for <a href="http://pressgr.am/">Pressgram</a> helps you publish pictures worth 1,000 words. Be a <strong>rebel with a cause</strong>. Viva la revolución!
- * Version:     2.2.1
+ * Version:     2.2.3
  * Author:      yo, gg & UaMV
  * Text Domain: pressgram-locale
  * License:     GPL-2.0+
@@ -39,7 +39,7 @@ if ( ! defined( 'WPINC' ) ) {
 ! defined( 'PRESSGRAM_RESTRICTION') ? define( 'PRESSGRAM_RESTRICTION', '' ) : FALSE;
 ! defined( 'PRESSGRAM_RESTRICT_TO_XMLRPC' ) ? define( 'PRESSGRAM_RESTRICT_TO_XMLRPC', TRUE ) : FALSE;
 
-define( 'PRESSGRAM_VERSION', '2.2.1' );
+define( 'PRESSGRAM_VERSION', '2.2.3' );
 define( 'PRESSGRAM_DIR_PATH', plugin_dir_path( __FILE__ ) );
 define( 'PRESSGRAM_DIR_URL', plugin_dir_url( __FILE__ ) );
 
