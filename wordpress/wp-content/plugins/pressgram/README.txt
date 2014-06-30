@@ -4,7 +4,7 @@ Donate link:
 Tags: pressgram, photos, filters, instagram, twitter, facebook, pictures, photo sharing, publishing
 Requires at least: 3.5.2
 Tested up to: 3.8
-Stable tag: 2.1.5
+Stable tag: 2.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -17,36 +17,33 @@ Our mission is to publish pictures worth 1,000 words. The official WordPress plu
 = What does the plugin do? =
 Once activated and configured, the Pressgram plugin will handle all incoming posts from Pressgram. It will ...
 
-* Auto-categorize the post to the category selected during setup.
 * Apply fine control settings according to your custom setup and any powertags you've defined.
 * Feature Pressgram images via a simple and clean Pressgram widget.
-* Write metadata to your database identifying the post and the image as from Pressgram.
+* Write metadata to your database identifying the post and the images as from Pressgram.
 
 = How do I set up the plugin? =
 Upon activation, the plugin will prompt you to configure settings for Pressgram management. *(found at Settings > Media)*
 
-1. Select a category that will be auto-assigned to your Pressgram posts. *(note: no need to assign this category in-app)*
-1. Define custom fine control settings to handle your Pressgram posts. *(note: override settings in-app via powertags)*
+1. Select categories to add as Pressgram categories. *(note: as of v2.2.0 category must be assigned to post in-app)*
+1. Define custom fine control settings to handle posts to the category. *(note: override settings in-app via powertags)*
 1. Enable post types for which you would like to allow Pressgram relation.
+1. Set query filters for home page and feeds.
 1. If desired, add the Pressgram widget to sidebars.
 
 = What fine control settings are included? =
 The following fine control presets are customizable to your blog:
 
 * Show/hide Pressgram defined category posts from home page.
-* Show Pressgram defined category posts on home page only if they also contain at least one additional category.
+* Show Pressgram defined category posts on home page only if they also contain a non-Pressgram related category.
 * Show/hide Pressgram defined category posts from rss feeds.
-* Show Pressgram defined category posts in feeds only if they also contain at least one additional category.
+* Show Pressgram defined category posts in feeds only if they also contain a non-Pressgram related category.
 * Post Type: select from available post types or select 'Unattached Media'
 * Post Status: select from Published, Pending, Draft, or Private
 * Post Format: select from available post formats
-* Featured Image Control: set as featured image *(or not)*
-* Image Alignment: select from Left, Center, Right, or None
-* Image Link: select from Media File, Attachment Page, or None
+* Featured Image Control: set first image as featured image *(or not)*
 * Comment Status: allow or disallow
 * Trackback Status: allow or disallow
-* Hashtag Translation: translate hashtags to post tags
-* Post Content Removal: options to remove hashtags, non-hashtag text, and/or the image
+* Post Content Removal: remove first image
 
 = How do post relations and the widget work? =
 Pressgram post relation is created for all posts made from Pressgram. Post relation can be broken or created for posts by use of the checkbox found in the Publish metabox of posts. The widget allows you to display from 1 to 16 images in a grid of one to four columns for recent posts that are related to Pressgram. Images link to the associated Pressgram post on your blog.
@@ -54,22 +51,21 @@ Pressgram post relation is created for all posts made from Pressgram. Post relat
 = What are powertags? =
 Powertags allow you in-app control of how the plugin will process a single Pressgram post. Use the following tags in-app and you control how your content is published and displayed:
 
-* **_t:post-type**  (post-type must be an existing post type slug: ex. post, attachment)
-* **_s:post-status**  (post-status options include: publish, pending, draft, private)
-* **_f:post-format**  (post-format must be a supported post format: ex. image, aside, standard)
-* **_i:featured-image**  (featured-image must be either t or f and will control featured image assignment)
-* **_a:image-alignment**  (image-alignment options: left, center, right, none)
-* **_l:image-link**  (image-link options: link, post, none)
-* **_c:comment-status**  (comment status must be t or f)
-* **_p:ping-status**  (ping status must be t or f)
-* **_h:hashtag-translation**  (hashtag-translation must be t or f)
-* **_r:removal-of-content**  (remove content options: hashtags, text, image)
+* **{post.type:post-type}**  (post-type must be an existing post type slug: ex. post, attachment)
+* **{post.status:post-status}**  (post-status options include: publish, pending, draft, private)
+* **{post.format:post-format}**  (post-format must be a supported post format: ex. image, aside, standard)
+* **{featured.img:set/unset}**  (selecting set or unset will control featured image assignment)
+* **{comments:open/closed}**  (comment status must open or closed)
+* **{pings:open/closed}**  (ping status must be open or closed)
+* **{remove.img:set/unset}**  (selecting set or unset will control removal of first image)
 
 Download the <a href="http://pressgr.am/">mobile app here</a> and support our community with <a href="http://store.pressgr.am/">some official swag</a>!
 
 == Other Notes ==
 
 = Tutorial =
+
+The following tutorial is for an earlier version of the Pressgram plugin. Note that the interface and options have changed slightly.
 
 [youtube http://www.youtube.com/watch?v=_DJqGpx9zdQ]
 
@@ -141,6 +137,15 @@ As of Version 2.1.0, you can add/remove _pressgram_post metadata by enabling Pos
 3. Pressgram Post Relation
 
 == Changelog ==
+
+= 2.2.1 =
+* Fixes PHP Warning in some instances
+* Adds XMLRPC restriction variable
+
+= 2.2.0 =
+* Allowing control of multiple categories.
+* Removed hashtag, alignment, and image link options.
+* Organized code.
 
 = 2.1.4 =
 * Adding tutorial video
