@@ -75,11 +75,6 @@ figure {
   }
 }
 
-/* line 27, ../sass/_global.scss */
-.embed-wrap {
-  display: none;
-}
-
 /* line 2, ../sass/_header.scss */
 .not-home .header-image {
   display: none;
