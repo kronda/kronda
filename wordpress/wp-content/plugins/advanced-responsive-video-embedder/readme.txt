@@ -8,7 +8,7 @@ Stable tag: trunk
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Easy responsive video embeds via URL (like WordPress) or Shortcodes. Normal, Lazyload or Thumbnails that open a Colorbox your choice!  
+Easy responsive video embeds via URL (like WordPress) or Shortcodes. Normal, Lazyload or Thumbnails that open a Colorbox - Your choice!  
 
 == Description ==
 
@@ -106,8 +106,11 @@ This plugins embed is considered as 'custom player' by YouTube so you have to pa
 
 1. In action
 2. Options page
-
 == Changelog ==
+
+= 4.9.0 Beta =
+* Improved: All Javascript is loaded from files now and they are only loaded when there are embeds on the page. This improves page load times on pages with no embeds.
+* Fix: Removed autohide=1 from default YouTube Parameters since it causes a YouTube bug in the HTML5 player.
 
 = 4.8.0 =
 * Updated: Spanish translation now 80% complete. Thanks Xarkitu!
