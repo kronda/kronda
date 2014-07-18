@@ -146,6 +146,11 @@ blockquote {
   padding-bottom: 1px;
 }
 
+/* line 59, ../sass/_content.scss */
+.internal-link {
+  font-size: .75em;
+}
+
 /* line 3, ../sass/_widgets.scss */
 .jetpack_subscription_widget label.font-secondary {
   color: #FFF;
