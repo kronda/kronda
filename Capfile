@@ -116,8 +116,8 @@ namespace :db do
       download("#{temp}", "db/#{filename}", :via=> :scp)
       search = "#{application}.com"
       replace = local_domain
-      puts "searching (#{search}) and replacing (#{replace}) domain information"
-      run_locally "sed -e 's/#{search}/#{replace}/g' -i .bak db/#{filename}"
+      #puts "searching (#{search}) and replacing (#{replace}) domain information"
+      #run_locally "sed -e 's/#{search}/#{replace}/g' -i .bak db/#{filename}"
       run "rm #{temp}"
     end
   end
@@ -127,6 +127,10 @@ namespace :db do
     domains.each do |domain|
       filename = "#{domain}_#{stage}.sql"
       system "cd #{local_path}/#{app_root} ; wp db import ../db/#{filename}"
+      search = "#{application}.com"
+      replace = local_domain
+      puts "searching (#{search}) and replacing (#{replace}) domain information"
+      system "cd #{local_path}/#{app_root} ; wp search-replace #{search} #{replace}"
     end
   end
 
@@ -137,9 +141,9 @@ namespace :db do
       temp = "/tmp/#{release_name}_#{application}_#{filename}"
       run "touch #{temp} && chmod 600 #{temp}"
       if "#{stage}" == "prod"
-        replace = "kronda.com"
+        replace = "#{application}.com"
       else
-        replace = "#{stage}.kronda.com"
+        replace = "#{stage}.#{application}.com"
       end
       
       search = local_domain
@@ -147,6 +151,7 @@ namespace :db do
       run_locally "sed -e 's/#{search}/#{replace}/g' -i .bak db/#{filename}"
       upload("db/#{filename}", "#{temp}", :via=> :scp)
       run "source /home/krondaco/.bash_profile && cd #{deploy_to}/current/wordpress && #{wp} db import #{temp}"
+      #run "cd #{deploy_to}/current/wordpress && #{wp} search-replace #{search} #{replace}"
       run "rm #{temp}"
     end
   end
