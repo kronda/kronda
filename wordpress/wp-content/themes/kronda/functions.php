@@ -39,4 +39,21 @@ function kronda_add_body_class( $classes ) {
 }
 
 add_filter( 'body_class', 'kronda_add_body_class' );
+
+/** Exclude Aside category from posts */
+
+function kronda_exclude_post_formats_from_blog( $query ) {
+
+  if( $query->is_main_query() && $query->is_home() ) {
+    $tax_query = array( array(
+      'taxonomy' => 'post_format',
+      'field' => 'slug',
+      'terms' => array( 'post-format-quote', 'post-format-aside' ),
+      'operator' => 'NOT IN',
+    ) );
+    $query->set( 'tax_query', $tax_query );
+  }
+
+}
+add_action( 'pre_get_posts', 'kronda_exclude_post_formats_from_blog' );
  
