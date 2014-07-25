@@ -75,6 +75,13 @@ figure {
   }
 }
 
+/* line 27, ../sass/_global.scss */
+.embed-wrap {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border: 1px solid yellow;
+}
+
 /* line 2, ../sass/_header.scss */
 .not-home .header-image {
   display: none;
