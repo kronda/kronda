@@ -16,9 +16,9 @@
  * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @package   GetTheImage
- * @version   1.0.0-alpha-1
+ * @version   1.0.1
  * @author    Justin Tadlock <justin@justintadlock.com>
- * @copyright Copyright (c) 2008 - 2013, Justin Tadlock
+ * @copyright Copyright (c) 2008 - 2014, Justin Tadlock
  * @link      http://justintadlock.com/archives/2008/05/27/get-the-image-wordpress-plugin
  * @license   http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  */
@@ -110,7 +110,11 @@ final class Get_The_Image {
 	 * @return void
 	 */
 	public function __construct( $args = array() ) {
-		global $_wp_additional_image_sizes;
+		global $wp_embed;
+
+		/* Use WP's embed functionality to handle the [embed] shortcode and autoembeds. */
+		add_filter( 'get_the_image_post_content', array( $wp_embed, 'run_shortcode' ) );
+		add_filter( 'get_the_image_post_content', array( $wp_embed, 'autoembed'     ) );
 
 		/* Set the default arguments. */
 		$defaults = array(
@@ -134,7 +138,7 @@ final class Get_The_Image {
 			'split_content'      => false,
 
 			/* Attachment-specific arguments. */
-			'size'               => isset( $_wp_additional_image_sizes['post-thumbnail'] ) ? 'post-thumbnail' : 'thumbnail',
+			'size'               => has_image_size( 'post-thumbnail' ) ? 'post-thumbnail' : 'thumbnail',
 
 			/* Format/display of image. */
 			'link_to_post'       => true,
@@ -143,6 +147,10 @@ final class Get_The_Image {
 			'height'             => false,
 			'before'             => '',
 			'after'              => '',
+
+			/* Minimum allowed sizes. */
+			'min_width'          => 0,
+			'min_height'         => 0,
 
 			/* Captions. */
 			'caption'            => false, // Default WP [caption] requires a width.
@@ -208,7 +216,7 @@ final class Get_The_Image {
 
 		/* Only used if $original_image is set. */
 		if ( true === $this->args['split_content'] && !empty( $this->original_image ) )
-			add_filter( 'the_content', array( $this, 'split_content' ), 1 );
+			add_filter( 'the_content', array( $this, 'split_content' ), 9 );
 	}
 
 	/**
@@ -444,6 +452,9 @@ final class Get_The_Image {
 		/* Get the post content. */
 		$post_content = get_post_field( 'post_content', $this->args['post_id'] );
 
+		/* Apply filters to content. */
+		$post_content = apply_filters( 'get_the_image_post_content', $post_content );
+
 		/* Check the content for `id="wp-image-%d"`. */
 		preg_match( '/id=[\'"]wp-image-([\d]*)[\'"]/i', $post_content, $image_ids );
 
@@ -488,6 +499,9 @@ final class Get_The_Image {
 
 		/* Get the post content. */
 		$post_content = get_post_field( 'post_content', $this->args['post_id'] );
+
+		/* Apply filters to content. */
+		$post_content = apply_filters( 'get_the_image_post_content', $post_content );
 
 		/* Finds matches for shortcodes in the content. */
 		preg_match_all( '/' . get_shortcode_regex() . '/s', $post_content, $matches, PREG_SET_ORDER );
@@ -628,6 +642,14 @@ final class Get_The_Image {
 		if ( empty( $this->image_args['src'] ) )
 			return;
 
+		/* Check against min. width. If the image width is too small return. */
+		if ( 0 < $this->args['min_width'] && isset( $this->image_args['width'] ) && $this->image_args['width'] < $this->args['min_width'] )
+			return;
+
+		/* Check against min. height. If the image height is too small return. */
+		if ( 0 < $this->args['min_height'] && isset( $this->image_args['height'] ) && $this->image_args['height'] < $this->args['min_height'] )
+			return;
+
 		/* Empty classes array. */
 		$classes = array();
 
@@ -763,7 +785,7 @@ final class Get_The_Image {
 	 */
 	public function split_content( $content ) {
 
-		remove_filter( 'the_content', array( $this, 'split_content' ), 1 );
+		remove_filter( 'the_content', array( $this, 'split_content' ), 9 );
 
 		return str_replace( $this->original_image, '', $content );
 	}

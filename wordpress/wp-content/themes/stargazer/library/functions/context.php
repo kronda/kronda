@@ -8,7 +8,7 @@
  * @package    HybridCore
  * @subpackage Functions
  * @author     Justin Tadlock <justin@justintadlock.com>
- * @copyright  Copyright (c) 2008 - 2013, Justin Tadlock
+ * @copyright  Copyright (c) 2008 - 2014, Justin Tadlock
  * @link       http://themehybrid.com/hybrid-core
  * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  */
@@ -32,11 +32,10 @@ add_filter( 'comment_class', 'hybrid_comment_class_filter', 0, 3 );
  * based archives depending on several factors.  For example, one could load an archive for a specific
  * second during a specific minute within a specific hour on a specific day and so on.
  *
- * @since 0.7.0
+ * @since  0.7.0
  * @access public
- * @global $wp_query The current page's query object.
- * @global $hybrid The global Hybrid object.
- * @return array $hybrid->context Several contexts based on the current page.
+ * @global object $hybrid  The global Hybrid object.
+ * @return array
  */
 function hybrid_get_context() {
 	global $hybrid;

@@ -26,7 +26,7 @@ add_action( 'wp_enqueue_scripts', 'stargazer_enqueue_scripts' );
 add_action( 'wp_enqueue_scripts',    'stargazer_register_styles', 0 );
 add_action( 'admin_enqueue_scripts', 'stargazer_admin_register_styles', 0 );
 
-/* Filters the excerpt length. */
+/* Excerpt-related filters. */
 add_filter( 'excerpt_length', 'stargazer_excerpt_length' );
 
 /* Modifies the theme layout. */
@@ -43,6 +43,7 @@ add_filter( 'hybrid_aside_infinity', 'stargazer_aside_infinity' );
 
 /* Adds custom settings for the visual editor. */
 add_filter( 'tiny_mce_before_init', 'stargazer_tiny_mce_before_init' );
+add_filter( 'mce_css',              'stargazer_mce_css'              );
 
 /* Filters the calendar output. */
 add_filter( 'get_calendar', 'stargazer_get_calendar' );
@@ -120,7 +121,19 @@ function stargazer_register_sidebars() {
  */
 function stargazer_enqueue_scripts() {
 
-	wp_enqueue_script( 'stargazer', trailingslashit( get_template_directory_uri() ) . 'js/stargazer.min.js', array( 'jquery' ), null, true );
+	$suffix = hybrid_get_min_suffix();
+
+	wp_register_script( 'stargazer', trailingslashit( get_template_directory_uri() ) . "js/stargazer{$suffix}.js", array( 'jquery' ), null, true );
+
+	wp_localize_script(
+		'stargazer',
+		'stargazer_i18n',
+		array(
+			'search_toggle' => __( 'Expand Search Form', 'stargazer' )
+		)
+	);
+
+	wp_enqueue_script( 'stargazer' );
 }
 
 /**
@@ -192,6 +205,23 @@ function stargazer_tiny_mce_before_init( $settings ) {
 	$settings['body_class'] = join( ' ', get_body_class() );
 
 	return $settings;
+}
+
+/**
+ * Removes the media player styles from the visual editor since we're loading our own.
+ *
+ * @since  1.1.0
+ * @access public
+ * @param  string  $mce_css
+ * @return string
+ */
+function stargazer_mce_css( $mce_css ) {
+	$version = 'ver=' . $GLOBALS['wp_version'];
+
+	$mce_css = str_replace( includes_url( "js/mediaelement/mediaelementplayer.min.css?$version" ) . ',', '', $mce_css );
+	$mce_css = str_replace( includes_url( "js/mediaelement/wp-mediaelement.css?$version" ) . ',',        '', $mce_css );
+
+	return $mce_css;
 }
 
 /**
@@ -335,10 +365,16 @@ function stargazer_audio_shortcode( $html, $atts, $audio, $post_id ) {
 
 	/* Else, get the ID via the file URL. */
 	else {
-		preg_match( '/src=[\'"](.+?)[\'"]/i', $html, $matches );
+		$extensions = join( '|', wp_get_audio_extensions() );
+
+		preg_match(
+			'/(src|' . $extensions . ')=[\'"](.+?)[\'"]/i', 
+			preg_replace( '/(\?_=[0-9])/i', '', $html ),
+			$matches
+		);
 
 		if ( !empty( $matches ) )
-			$attachment_id = hybrid_get_attachment_id_from_url( $matches[1] );
+			$attachment_id = hybrid_get_attachment_id_from_url( $matches[2] );
 	}
 
 	/* If an attachment ID was found. */
@@ -370,7 +406,7 @@ function stargazer_audio_shortcode( $html, $atts, $audio, $post_id ) {
 			$html .= '<div class="media-info audio-info">';
 			$html .= hybrid_media_meta( array( 'post_id' => $attachment_id, 'echo' => false ) );
 			$html .= '</div>';
-			$html .= '<a class="media-info-toggle">' . __( 'Audio Info', 'stargazer' ) . '</a>';
+			$html .= '<button class="media-info-toggle">' . __( 'Audio Info', 'stargazer' ) . '</button>';
 			$html .= '</div>';
 		}
 	}
@@ -401,10 +437,16 @@ function stargazer_video_shortcode( $html, $atts, $video ) {
 
 	/* Else, get the ID via the file URL. */
 	else {
-		preg_match( '/src=[\'"](.+?)[\'"]/i', $html, $matches );
+		$extensions = join( '|', wp_get_video_extensions() );
+
+		preg_match(
+			'/(src|' . $extensions . ')=[\'"](.+?)[\'"]/i', 
+			preg_replace( '/(\?_=[0-9])/i', '', $html ),
+			$matches
+		);
 
 		if ( !empty( $matches ) )
-			$attachment_id = hybrid_get_attachment_id_from_url( $matches[1] );
+			$attachment_id = hybrid_get_attachment_id_from_url( $matches[2] );
 	}
 
 	/* If an attachment ID was found, add the media info section. */
@@ -414,7 +456,7 @@ function stargazer_video_shortcode( $html, $atts, $video ) {
 		$html .= '<div class="media-info video-info">';
 		$html .= hybrid_media_meta( array( 'post_id' => $attachment_id, 'echo' => false ) );
 		$html .= '</div>';
-		$html .= '<a class="media-info-toggle">' . __( 'Video Info', 'stargazer' ) . '</a>';
+		$html .= '<button class="media-info-toggle">' . __( 'Video Info', 'stargazer' ) . '</button>';
 		$html .= '</div>';
 	}
 
