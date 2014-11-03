@@ -75,12 +75,6 @@ figure {
   }
 }
 
-/* line 27, ../sass/_global.scss */
-.embed-wrap {
-  margin-bottom: 0;
-  padding-bottom: 0;
-}
-
 /* line 2, ../sass/_header.scss */
 .not-home .header-image {
   display: none;
@@ -105,12 +99,12 @@ figure {
 #social .social-identity {
   padding-left: 20px;
 }
-/* line 18, ../sass/_content.scss */
+/* line 17, ../sass/_content.scss */
 #social .social-comment-header,
 #social .social-comment-body {
   padding-left: 70px;
 }
-/* line 22, ../sass/_content.scss */
+/* line 21, ../sass/_content.scss */
 #social .social-comment-body,
 #social .comment-subscription-form {
   font-size: 0.8em;
@@ -135,7 +129,7 @@ figure {
     margin-top: 15px;
   }
 
-  /* line 44, ../sass/_content.scss */
+  /* line 43, ../sass/_content.scss */
   #social #respond .form-submit,
   .logged-in #social #respond .form-submit {
     padding-left: 70px;
