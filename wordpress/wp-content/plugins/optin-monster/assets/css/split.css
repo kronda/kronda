@@ -1,0 +1,229 @@
+/* ==========================================================================
+   Split Test View Styles
+   ========================================================================== */
+
+#optin-monster-ui .optin-monster-clear {
+    clear: both;
+}
+
+#optin-monster-ui .optin-monster-clear:after {
+    clear: both;
+    content: '.';
+    display: block;
+    height: 0;
+    line-height: 0;
+    overflow: auto;
+    visibility: hidden;
+    zoom: 1;
+}
+
+#optin-monster-ui h2 {
+    background: url(images/menu-icon@2x.png) no-repeat scroll 0 50%;
+    padding-left: 52px;
+}
+
+#optin-monster-ui .fa-spinner {
+    opacity: 0;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter: alpha(opacity=0);
+    -moz-opacity: 0;
+    -khtml-opacity: 0;
+}
+
+#optin-monster-ui .optin-monster {
+    margin: 15px 0 20px;
+}
+
+#optin-monster-ui .om-error {
+    color: #ff0000;
+    font-size: 13px;
+    font-weight: 600;
+    vertical-align: middle;
+    display: inline-block;
+    margin-top: -3px;
+}
+
+#optin-monster-ui .om-input-error {
+    border-color: #ff0000;
+    -webkit-box-shadow: 0 0 2px rgba(255, 0, 0, .8);
+    box-shadow: 0 0 2px rgba(255, 0, 0, .8);
+}
+
+#optin-monster-ui .om-parent-optin {
+    background-color: #e7f3fb !important;
+}
+
+#optin-monster-ui .om-split-test-title {
+    color: #517a96;
+    font-size: 11px;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+#optin-monster-ui .om-green {
+    color: green;
+    font-weight: bold;
+}
+
+#optin-monster-ui .om-red {
+    color: red;
+    font-weight: bold;
+}
+
+#optin-monster-ui .column-settings {
+    position: relative;
+    overflow: visible;
+}
+
+#optin-monster-ui .om-settings-button {
+    font-size: 24px;
+    position: relative;
+}
+
+#optin-monster-ui .om-settings-popover {
+    display: none;
+    background: #fff;
+    border: 1px solid #dadada;
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding: 10px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+}
+
+#optin-monster-ui .om-settings-popover:after,
+#optin-monster-ui .om-settings-popover:before {
+    left: 100%;
+    top: 18px;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+}
+
+#optin-monster-ui .om-settings-popover:after {
+    border-color: rgba(255, 255, 255, 0);
+    border-left-color: #fff;
+    border-width: 8px;
+    margin-top: -8px;
+}
+
+#optin-monster-ui .om-settings-popover:before {
+    border-color: rgba(255, 255, 255, .1);
+    border-left-color: #dadada;
+    border-width: 9px;
+    margin-top: -9px;
+}
+
+#optin-monster-ui .om-settings-popover ul,
+#optin-monster-ui .om-settings-popover li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+#optin-monster-ui .om-settings-popover li a {
+    display: block;
+    border-bottom: 1px dashed #eaeaea;
+    padding: 7px 0;
+}
+
+#optin-monster-ui .om-settings-popover li:first-child a {
+    padding-top: 0;
+}
+
+#optin-monster-ui .om-settings-popover li:last-child a {
+    padding-bottom: 0;
+    border: 0 none;
+}
+
+#optin-monster-ui .om-overview-button {
+    margin-bottom: 1.5em;
+}
+
+#optin-monster-ui #optin-monster-add-split {
+    display: none;
+    position: fixed;
+    width: 600px;
+    height: auto;
+    z-index: 200000;
+    -webkit-animation-duration:1s;
+    animation-duration:1s;
+    -webkit-backface-visibility: visible;
+    -ms-backface-visibility: visible;
+    backface-visibility: visible;
+}
+
+#optin-monster-ui #optin-monster-add-split .om-split-header {
+    background: #3b94d1;
+    padding: 12px 20px;
+}
+
+#optin-monster-ui #optin-monster-add-split .om-split-header h2 {
+    color: #fff;
+    margin: 0;
+    padding: 9px 0 4px 52px;
+    background: url(images/menu-icon@2x.png) no-repeat scroll 0 50%;
+}
+
+#optin-monster-ui #optin-monster-add-split .om-split-header .om-close-split {
+    font-size: 28px;
+    text-decoration: none;
+    float: right;
+    font-weight: 300;
+}
+
+#optin-monster-ui #optin-monster-add-split .om-split-header .om-close-split:hover {
+    color: #fff;
+}
+
+#optin-monster-ui #optin-monster-add-split .om-split-content {
+    background: #fff;
+    padding: 10px 20px;
+}
+
+#optin-monster-ui #optin-monster-add-split .om-split-content label {
+    font-weight: bold;
+    display: block;
+}
+
+#optin-monster-ui #optin-monster-add-split .om-split-content input[type="text"],
+#optin-monster-ui #optin-monster-add-split .om-split-content textarea {
+    min-width: 350px;
+}
+
+.om-split-overlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    display: none;
+    top: 0;
+    left: 0;
+    z-index: 100000;
+    background: rgba(0,0,0,.7);
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+/* ==========================================================================
+   Retina Styles
+   ========================================================================== */
+
+@media
+only screen and (-webkit-min-device-pixel-ratio: 2),
+only screen and (   min--moz-device-pixel-ratio: 2),
+only screen and (     -o-min-device-pixel-ratio: 2/1),
+only screen and (        min-device-pixel-ratio: 2),
+only screen and (                min-resolution: 192dpi),
+only screen and (                min-resolution: 2dppx) {
+    #optin-monster-ui h2,
+    #optin-monster-ui #optin-monster-add-split .om-split-header h2 {
+        background-image: url(images/title-icon@2x.png);
+        background-size: 42px 32px;
+    }
+}

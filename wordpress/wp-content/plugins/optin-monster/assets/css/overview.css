@@ -1,0 +1,508 @@
+/* ==========================================================================
+   Settings Styles
+   ========================================================================== */
+
+#optin-monster-ui .optin-monster-clear {
+    clear: both;
+}
+
+#optin-monster-ui .optin-monster-clear:after {
+    clear: both;
+    content: '.';
+    display: block;
+    height: 0;
+    line-height: 0;
+    overflow: auto;
+    visibility: hidden;
+    zoom: 1;
+}
+
+#optin-monster-ui a {
+    outline: 0 none !important;
+}
+
+#optin-monster-ui h2 {
+    background: url(images/menu-icon@2x.png) no-repeat scroll 0 50%;
+    padding-left: 52px;
+}
+
+#optin-monster-ui .fa-spinner {
+    opacity: 0;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter: alpha(opacity=0);
+    -moz-opacity: 0;
+    -khtml-opacity: 0;
+}
+
+#optin-monster-ui .optin-monster {
+    margin: 15px 0 20px;
+}
+
+#optin-monster-ui #optin-monster-tabs-nav {
+    list-style: none;
+    margin: 0 0 10px;
+    padding: 0;
+    border-bottom: 1px solid #cecece;
+    background: none;
+}
+
+#optin-monster-ui #optin-monster-tabs-nav li {
+    float: left;
+    margin: 0 10px -1px 0;
+}
+
+#optin-monster-ui #optin-monster-tabs-nav li a {
+    display: block;
+    padding: 10px 12px 7px;
+    font-size: 18px;
+    color: #aaa;
+    font-weight: 300;
+    text-decoration: none;
+    outline: none;
+}
+
+#optin-monster-ui #optin-monster-tabs-nav li.optin-monster-active a {
+    border: 1px solid #cecece;
+    border-bottom-color: #f1f1f1;
+    -moz-border-radius: 3px 3px 0 0;
+    -webkit-border-radius: 3px 3px 0 0;
+    border-radius: 3px 3px 0 0;
+    color: #21759b;
+    padding-top: 9px;
+}
+
+#optin-monster-ui #optin-monster-tabs-nav li a:hover {
+    color: #21759b;
+}
+
+#optin-monster-ui #optin-monster-tabs-nav .om-version {
+	float: right;
+	font-size: 12px;
+	color: #aaa;
+	font-style: italic;
+}
+
+#optin-monster-ui .optin-monster-tab {
+    display: none;
+}
+
+#optin-monster-ui .optin-monster-tab.optin-monster-active {
+    display: block;
+}
+
+#optin-monster-ui .optin-monster-tab .form-table th {
+    width: 210px;
+    padding-right: 0;
+}
+
+#optin-monster-ui .om-green {
+    color: green;
+    font-weight: bold;
+}
+
+#optin-monster-ui .om-orange {
+    color: orange;
+    font-weight: bold;
+}
+
+#optin-monster-ui .om-red {
+    color: red;
+    font-weight: bold;
+}
+
+#optin-monster-ui .column-settings {
+    position: relative;
+    overflow: visible;
+}
+
+#optin-monster-ui .om-settings-button {
+    font-size: 24px;
+    position: relative;
+}
+
+#optin-monster-ui .om-settings-popover {
+    display: none;
+    background: #fff;
+    border: 1px solid #dadada;
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding: 10px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    z-index: 150000;
+    width: 175px;
+}
+
+#optin-monster-ui .om-settings-popover:after,
+#optin-monster-ui .om-settings-popover:before {
+    left: 100%;
+    top: 18px;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+}
+
+#optin-monster-ui .om-settings-popover:after {
+    border-color: rgba(255, 255, 255, 0);
+    border-left-color: #fff;
+    border-width: 8px;
+    margin-top: -8px;
+}
+
+#optin-monster-ui .om-settings-popover:before {
+    border-color: rgba(255, 255, 255, .1);
+    border-left-color: #dadada;
+    border-width: 9px;
+    margin-top: -9px;
+}
+
+#optin-monster-ui .om-settings-popover ul,
+#optin-monster-ui .om-settings-popover li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+#optin-monster-ui .om-settings-popover li a {
+    display: block;
+    border-bottom: 1px dashed #eaeaea;
+    padding: 7px 0;
+}
+
+#optin-monster-ui .om-settings-popover li:first-child a {
+    padding-top: 0;
+}
+
+#optin-monster-ui .om-settings-popover li:last-child a {
+    padding-bottom: 0;
+    border: 0 none;
+}
+
+#optin-monster-ui .om-settings-popover li .om-unique-slug {
+    display: block;
+    padding-top: 7px;
+    font-size: 12px !important;
+}
+
+#optin-monster-tab-optins tbody tr .om-optin-slug,
+#optin-monster-ui .om-settings-popover li .om-unique-slug code {
+    cursor: text !important;
+}
+
+#optin-monster-tab-optins tbody tr {
+    cursor: move;
+}
+
+#optin-monster-tab-optins .dropzone {
+    outline: 1px dashed #bbb;
+    background: #f1f1f1;
+    visibility: visible !important;
+}
+
+#optin-monster-tab-optins .ui-sortable-helper {
+    background-color: #fff;
+    outline: 1px solid #e1e1e1;
+}
+
+#optin-monster-tab-optins tr.om-test-mode {
+    background-color: #fcf8e3 !important;
+}
+
+#optin-monster-tab-optins tr.om-test-mode .om-test-mode-title {
+    color: #8a6d3b;
+    font-size: 11px;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+#optin-monster-tabs input[type="text"],
+#optin-monster-tabs input[type="number"],
+#optin-monster-tabs input[type="password"],
+#optin-monster-tabs select,
+#optin-monster-tabs textarea {
+    width: 350px;
+    padding-right: 0;
+}
+
+#optin-monster-ui #optin-monster-refresh-submit {
+    vertical-align: baseline;
+}
+
+/* ==========================================================================
+   Addons Styles
+   ========================================================================== */
+
+#optin-monster-addons-area {
+    margin-top: 20px;
+}
+
+.optin-monster-addon,
+.optin-integration {
+    border: 1px solid #ccc;
+    background: #fff;
+    border-radius: 3px;
+    float: left;
+    margin: 0 2% 2% 0;
+    min-height: 400px;
+    padding: 20px;
+    text-align: center;
+    width: 32%;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+
+.optin-monster-addon.last,
+.optin-integration.last {
+    margin-right: 0;
+}
+
+.optin-integration {
+    min-height: 0;
+}
+
+.optin-monster-addon .optin-monster-addon-thumb {
+    border-radius: 3px;
+    box-shadow: 0 0 3px rgba( 0, 0, 0, .35 );
+    height: auto;
+    margin: 0 auto;
+    max-width: 100%;
+    width: auto;
+}
+
+.optin-monster-addon .optin-monster-addon-message,
+.optin-monster-addon .optin-monster-addon-error {
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    padding: 10px 6px;
+    text-align: left;
+}
+
+.optin-monster-addon .optin-monster-addon-message span {
+    font-weight: bold;
+}
+
+.optin-monster-addon .optin-monster-addon-active {
+    background: #cbeca0;
+    border: 1px solid #97b48a;
+}
+
+.optin-monster-addon .optin-monster-addon-inactive {
+    background: #ffffe0;
+    border: 1px solid #e6db55;
+}
+
+.optin-monster-addon .optin-monster-addon-not-installed {
+    background: #eaeaea;
+    border: 1px solid #dadada;
+}
+
+.optin-monster-addon .optin-monster-addon-action {
+    display: inline;
+    float: right;
+}
+
+.optin-monster-addon .optin-monster-addon-action .button-primary {
+    margin-top: -5px;
+}
+
+.optin-monster-addon .optin-monster-addon-error {
+    background: #ffebe8;
+    border: 1px solid #c00;
+    margin-top: 10px;
+}
+
+.optin-monster-addon .optin-monster-addon-error .wrap {
+    margin: 0;
+}
+
+.optin-monster-addon .optin-monster-addon-error .icon32 {
+    display: none;
+}
+
+.optin-monster-addon .optin-monster-addon-error h2 {
+    padding: 0;
+}
+
+.optin-monster-addon .optin-monster-addon-error .form-table th {
+    padding: 10px 0;
+    width: 30% !important;
+}
+
+.optin-monster-addon .optin-monster-addon-error .form-table input[type="text"],
+.optin-monster-addon .optin-monster-addon-error .form-table input[type="password"] {
+    width: 100% !important;
+}
+
+.optin-monster-addon .optin-monster-addon-error p.submit {
+    padding: 0;
+}
+
+.optin-monster-addon p {
+    color: #2f2f2f;
+    font-size: 13px;
+    margin: 10px 0 0;
+    text-shadow: 0 1px #fff;
+}
+
+/* ==========================================================================
+   Integrations Styles
+   ========================================================================== */
+
+.optin-integration .logo {
+    margin: 0 auto 20px;
+    width: 200px;
+    height: 50px;
+    background-size: 200px 50px;
+    background-repeat: no-repeat;
+    background-position: 0 0;
+}
+
+.optin-integration.activecampaign .logo {
+    background-image: url(images/activecampaign.png);
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/activecampaign.png',sizingMethod='scale');
+    -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/activecampaign.png',sizingMethod='scale')";
+}
+
+.optin-integration.aweber .logo {
+    background-image: url(images/aweber.png);
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/aweber.png',sizingMethod='scale');
+    -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/aweber.png',sizingMethod='scale')";
+}
+
+.optin-integration.campaign-monitor .logo {
+    background-image: url(images/campaign-monitor.png);
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/campaign-monitor.png',sizingMethod='scale');
+    -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/campaign-monitor.png',sizingMethod='scale')";
+}
+
+.optin-integration.constant-contact .logo {
+    background-image: url(images/constant-contact.png);
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/constant-contact.png',sizingMethod='scale');
+    -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/constant-contact.png',sizingMethod='scale')";
+}
+
+.optin-integration.customerio .logo {
+    background-image: url(images/customerio.png);
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/customerio.png',sizingMethod='scale');
+    -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/customerio.png',sizingMethod='scale')";
+}
+
+.optin-integration.emma .logo {
+    background-image: url(images/emma.png);
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/emma.png',sizingMethod='scale');
+    -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/emma.png',sizingMethod='scale')";
+}
+
+.optin-integration.feedblitz .logo {
+    background-image: url(images/feedblitz.png);
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/feedblitz.png',sizingMethod='scale');
+    -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/feedblitz.png',sizingMethod='scale')";
+}
+
+.optin-integration.getresponse .logo {
+    background-image: url(images/getresponse.png);
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/getresponse.png',sizingMethod='scale');
+    -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/getresponse.png',sizingMethod='scale')";
+}
+
+.optin-integration.hubspot .logo {
+    background-image: url(images/hubspot.png);
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/hubspot.png',sizingMethod='scale');
+    -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/hubspot.png',sizingMethod='scale')";
+}
+
+.optin-integration.icontact .logo {
+    background-image: url(images/icontact.png);
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/icontact.png',sizingMethod='scale');
+    -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/icontact.png',sizingMethod='scale')";
+}
+
+.optin-integration.infusionsoft .logo {
+    background-image: url(images/infusionsoft.png);
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/infusionsoft.png',sizingMethod='scale');
+    -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/infusionsoft.png',sizingMethod='scale')";
+}
+
+.optin-integration.madmimi .logo {
+    background-image: url(images/madmimi.png);
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/madmimi.png',sizingMethod='scale');
+    -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/madmimi.png',sizingMethod='scale')";
+}
+
+.optin-integration.mailchimp .logo {
+    background-image: url(images/mailchimp.png);
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/mailchimp.png',sizingMethod='scale');
+    -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/mailchimp.png',sizingMethod='scale')";
+}
+
+.optin-integration.mailerlite .logo {
+	background-image: url(images/mailerlite.png);
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/mailerlite.png',sizingMethod='scale');
+	-ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/mailerlite.png',sizingMethod='scale')";
+}
+
+.optin-integration.mailpoet .logo {
+    background-image: url(images/mailpoet.png);
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/mailpoet.png',sizingMethod='scale');
+    -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/mailpoet.png',sizingMethod='scale')";
+}
+
+.optin-integration.marketo .logo {
+	background-image: url(images/marketo.png);
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/marketo.png',sizingMethod='scale');
+	-ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/marketo.png',sizingMethod='scale')";
+}
+
+.optin-integration.pardot .logo {
+    background-image: url(images/pardot.png);
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/pardot.png',sizingMethod='scale');
+    -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/pardot.png',sizingMethod='scale')";
+}
+
+.optin-integration.sendinblue .logo {
+    background-image: url(images/sendinblue.png);
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/sendinblue.png',sizingMethod='scale');
+    -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/sendinblue.png',sizingMethod='scale')";
+}
+
+.optin-integration.totalsend .logo {
+    background-image: url(images/totalsend.png);
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/sendinblue.png',sizingMethod='scale');
+    -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/sendinblue.png',sizingMethod='scale')";
+}
+
+.optin-integration li {
+    text-align: left;
+    border-bottom: 1px solid #dadada;
+    padding: 5px 0 10px;
+}
+
+.optin-integration .delete-integration {
+    display: block;
+    float: right;
+    margin-top: -3px;
+}
+
+/* ==========================================================================
+   Retina Styles
+   ========================================================================== */
+
+@media
+only screen and (-webkit-min-device-pixel-ratio: 2),
+only screen and (   min--moz-device-pixel-ratio: 2),
+only screen and (     -o-min-device-pixel-ratio: 2/1),
+only screen and (        min-device-pixel-ratio: 2),
+only screen and (                min-resolution: 192dpi),
+only screen and (                min-resolution: 2dppx) {
+    #optin-monster-ui h2 {
+        background-image: url(images/title-icon@2x.png);
+        background-size: 42px 32px;
+    }
+}

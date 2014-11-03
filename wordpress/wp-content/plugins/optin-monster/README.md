@@ -1,4 +1,6 @@
-optin-monster
-=============
+OptinMonster
+==============
 
-OptinMonster is the #1 lead generation and email list building tool for WordPress.
+OptinMonster is the best lead generation plugin for WordPress.
+
+**Copyright &copy; 2014 Retyp, LLC. All rights reserved.**

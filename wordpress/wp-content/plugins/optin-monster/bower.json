@@ -1,0 +1,19 @@
+{
+  "name": "optin-monster",
+  "version": "2.0.0",
+  "homepage": "http://optinmonster.com/",
+  "authors": [
+	"Thomas Griffin <thomas@thomasgriffinmedia.com>"
+  ],
+  "description": "OptinMonster is the #1 lead generation and email list building tool for WordPress.",
+  "main": "optin-monster.php",
+  "license": "GPL-2.0+",
+  "private": true,
+  "dependencies": {
+	"jquery-color": "~2.1.2",
+	"jquery-resize": "*",
+	"jquery-cookie": "~1.4.1",
+	"jquery-flot": "~0.8.3",
+	"chosen": "https://github.com/harvesthq/chosen/releases/download/v1.1.0/chosen_v1.1.0.zip"
+  }
+}

@@ -1,180 +1,242 @@
 <?php
 /**
- * OptinMonster is the #1 lead generation and email list building tool.
+ * Plugin Name: OptinMonster - Canvas Addon
+ * Plugin URI:  http://optinmonster.com
+ * Description: Adds a new optin type - Footer Bar - to the available optins.
+ * Author:      Thomas Griffin
+ * Author URI:  http://thomasgriffinmedia.com
+ * Version:     2.0.1
+ * Text Domain: optin-monster-canvas
+ * Domain Path: languages
  *
- * @package   OptinMonster
- * @author    Thomas Griffin
- * @license   GPL-2.0+
- * @link      http://optinmonster.com/
- * @copyright 2013 Retyp, LLC. All rights reserved.
+ * OptinMonster is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * any later version.
  *
- * @wordpress-plugin
- * Plugin Name:  OptinMonster Canvas
- * Plugin URI:   http://optinmonster.com/
- * Description:  Adds a new optin type - Canvas - to the available optins.
- * Version:      1.0.1
- * Author:       Thomas Griffin
- * Author URI:   http://thomasgriffinmedia.com/
- * Text Domain:  optin-monster-canvas
- * Contributors: griffinjt
- * License:      GPL-2.0+
- * License URI:  http://www.gnu.org/licenses/gpl-2.0.txt
- * Domain Path:  /lang
+ * OptinMonster is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with OptinMonster. If not, see <http://www.gnu.org/licenses/>.
  */
 
-add_action( 'init', 'om_canvas_automatic_upgrades', 20 );
-function om_canvas_automatic_upgrades() {
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
 
-    global $optin_monster_license;
+// Define necessary addon constants.
+define( 'OPTIN_MONSTER_CANVAS_PLUGIN_NAME', 'OptinMonster - Canvas Addon' );
+define( 'OPTIN_MONSTER_CANVAS_PLUGIN_VERSION', '2.0.1' );
+define( 'OPTIN_MONSTER_CANVAS_PLUGIN_SLUG', 'optin-monster-canvas' );
 
-    // Load the plugin updater.
-    if ( is_admin() && ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX ) ) :
-        if ( ! empty( $optin_monster_license['key'] ) ) {
-			$args = array(
-				'remote_url' 	=> 'http://optinmonster.com/',
-				'version' 		=> '1.0.1',
-				'plugin_name'	=> 'OptinMonster Canvas',
-				'plugin_slug' 	=> 'optin-monster-canvas',
-				'plugin_path' 	=> plugin_basename( __FILE__ ),
-				'plugin_url' 	=> WP_PLUGIN_URL . '/optin-monster-canvas',
-				'time' 			=> 43200,
-				'key' 			=> $optin_monster_license['key']
-			);
+add_action( 'plugins_loaded', 'optin_monster_canvas_plugins_loaded' );
+/**
+ * Ensures the full OptinMonster plugin is active before proceeding.
+ *
+ * @since 2.0.0
+ *
+ * @return null Return early if OptinMonster is not active.
+ */
+function optin_monster_canvas_plugins_loaded() {
 
-			// Load the updater class.
-			$optin_monster_canvas_updater = new optin_monster_updater( $args );
-		}
-    endif;
-
-    // Check for Canvas conversions.
-    if ( ! empty( $_GET['omcanvas'] ) ) {
-        om_canvas_do_conversion();
+    // Bail if the main class does not exist.
+    if ( ! class_exists( 'Optin_Monster' ) ) {
+        return;
     }
 
+    // Fire up the addon.
+    add_action( 'optin_monster_init', 'optin_monster_canvas_plugin_init' );
+
 }
 
-function om_canvas_do_conversion() {
+/**
+ * Loads all of the addon hooks and filters.
+ *
+ * @since 2.0.0
+ */
+function optin_monster_canvas_plugin_init() {
 
-    $optins = get_posts( array( 'post_type' => 'optin', 'posts_per_page' => 1, 'post_status' => 'publish', 'name' => stripslashes( $_GET['omcanvas'] ) ) );
-    if ( ! empty( $optins ) ) {
-        $optin = $optins[0];
-        $conversions = get_post_meta( $optin->ID, 'om_conversions', true );
-        update_post_meta( $optin->ID, 'om_conversions', (int) $conversions + 1 );
+	// Possibly count conversions with Canvas.
+	add_action( 'init', 'optin_monster_canvas_do_conversions' );
+    add_action( 'optin_monster_updater', 'optin_monster_canvas_updater' );
+    add_filter( 'optin_monster_theme_types', 'optin_monster_canvas_filter_optin_type' );
+    add_filter( 'optin_monster_themes', 'optin_monster_canvas_filter_optin_themes', 10, 2 );
+    add_filter( 'optin_monster_theme_api', 'optin_monster_canvas_theme_api', 10, 4 );
+    add_filter( 'optin_monster_positioning', 'optin_monster_canvas_positioning', 10, 5 );
+
+}
+
+/**
+ * Handles conversion tracking for the Canvas addon.
+ *
+ * @since 2.0.1
+ */
+function optin_monster_canvas_do_conversions() {
+	
+	// If the conversion parameter is empty, return early.
+	if ( empty( $_GET['omcanvas'] ) ) {
+		return;
+	}
+	
+	// Grab the optin.
+	$optin = Optin_Monster::get_instance()->get_optin_by_slug( stripslashes( $_GET['omcanvas'] ) );
+	if ( ! $optin ) {
+		return;
+	}
+	
+	// Process the conversion.
+	if ( ! class_exists( 'Optin_Monster_Track_Datastore' ) ) {
+		require plugin_dir_path( Optin_Monster::get_instance()->file ) . 'includes/global/track-datastore.php';
+	}
+	$track = new Optin_Monster_Track_Datastore( $optin->ID );
+	$track->save( 'conversion' );
+	
+	// Add a hook for custom functionality.
+	do_action( 'optin_monster_canvas_conversion', $optin );
+	
+}
+
+/**
+ * Initializes the addon updater.
+ *
+ * @since 2.0.0
+ *
+ * @param string $key The user license key.
+ */
+function optin_monster_canvas_updater( $key ) {
+
+    $args = array(
+        'plugin_name' => OPTIN_MONSTER_CANVAS_PLUGIN_NAME,
+        'plugin_slug' => OPTIN_MONSTER_CANVAS_PLUGIN_SLUG,
+        'plugin_path' => plugin_basename( __FILE__ ),
+        'plugin_url'  => trailingslashit( WP_PLUGIN_URL ) . OPTIN_MONSTER_CANVAS_PLUGIN_SLUG,
+        'remote_url'  => 'http://optinmonster.com/',
+        'version'     => OPTIN_MONSTER_CANVAS_PLUGIN_VERSION,
+        'key'         => $key
+    );
+    $optin_monster_effects_updater = new Optin_Monster_Updater( $args );
+
+}
+
+/**
+ * Filters the optin types.
+ *
+ * @since 2.0.0
+ *
+ * @param array $types  Array of optin types.
+ * @return array $types Amended array of optin types.
+ */
+function optin_monster_canvas_filter_optin_type( $types ) {
+
+    $types['canvas'] = __( 'Canvas', 'optin-monster-canvas' );
+    return $types;
+
+}
+
+/**
+ * Filters the optin themes
+ *
+ * @since 2.0.0
+ *
+ * @param array  $themes
+ * @param string $type
+ *
+ * @return array
+ */
+function optin_monster_canvas_filter_optin_themes( $themes, $type ) {
+
+    if ( 'canvas' != $type ) {
+        return $themes;
+    }
+    
+    $themes = array(
+        'whiteboard' => array(
+            'name'   => __( 'Whiteboard Theme', 'optin-monster-canvas' ),
+            'image'  => plugins_url( 'includes/themes/whiteboard/images/icon.jpg', __FILE__ ),
+            'file'   => plugin_dir_path( 'includes/themes/whiteboard/whiteboard.php', __FILE__ )
+        ),
+    );
+
+    return apply_filters( 'optin_monster_canvas_themes', $themes );
+
+}
+
+/**
+ * Filters the current theme object.
+ *
+ * @since 2.0.0
+ *
+ * @param object $api      The theme object to filter.
+ * @param string $theme    The currently selected theme slug.
+ * @param int    $optin_id The current optin ID.
+ * @param string $type     The current optin type.
+ *
+ * @return mixed           The correct theme object.
+ */
+function optin_monster_canvas_theme_api( $api, $theme, $optin_id, $type ) {
+
+    // Return early if this isn't a footer optin.
+    if ( 'canvas' != $type ) {
+        return $api;
     }
 
-}
-
-add_action( 'optin_monster_optin_types', 'om_canvas_optin_type' );
-function om_canvas_optin_type() {
-
-    echo '<div class="optin-item one-fourth first" data-optin-type="canvas">';
-		echo '<h4>Canvas</h4>';
-		echo '<img src="' . plugins_url( 'images/canvasicon.png', __FILE__ ) . '" />';
-	echo '</div>';
-
-}
-
-add_action( 'optin_monster_design_canvas', 'om_canvas_design_output' );
-function om_canvas_design_output() {
-
-    global $optin_monster_tab_optins;
-    $tab = $optin_monster_tab_optins;
-
-    echo '<div class="optin-select-wrap clearfix">';
-		echo '<div class="optin-item one-fourth first ' . ( isset( $tab->meta['theme'] ) && 'whiteboard-theme' == $tab->meta['theme'] ? 'selected' : '' ) . '" data-optin-theme="Whiteboard Theme">';
-			echo '<h4>Whiteboard Theme</h4>';
-			echo '<img src="' . plugins_url( 'images/canvasicon.png', __FILE__ ) . '" />';
-			echo '<form id="whiteboard-theme" data-optin-theme="whiteboard-theme">';
-			    echo om_canvas_get_whiteboard_theme( 'whiteboard-theme' );
-            echo '</form>';
-		echo '</div>';
-	echo '</div>';
-
-}
-
-add_filter( 'optin_monster_template_canvas', 'om_canvas_template_optin_canvas', 10, 7 );
-function om_canvas_template_optin_canvas( $html, $theme, $base_class, $hash, $optin, $env, $ssl ) {
-
-    // Load template based on theme.
     switch ( $theme ) {
-        case 'whiteboard-theme' :
-            $template = 'canvas-' . $theme;
-            require_once plugin_dir_path( __FILE__ ) . $template . '.php';
-            $class = 'optin_monster_build_' . str_replace( '-', '_', $template );
-    		$build = new $class( 'canvas', $theme, $hash, $optin, $env, $ssl, $base_class );
-    		$html  = $build->build();
-        break;
+        case 'whiteboard' :
+            if ( ! class_exists( 'Optin_Monster_Canvas_Theme_Whiteboard' ) ) {
+                require plugin_dir_path( __FILE__ ) . 'includes/themes/whiteboard/whiteboard.php';
+            }
+            $api = new Optin_Monster_Canvas_Theme_Whiteboard( $optin_id );
+            break;
     }
 
-    // Return the HTML of the optin type and theme.
-    return $html;
+    return $api;
 
 }
 
-add_action( 'optin_monster_save_canvas', 'om_canvas_save_optin_canvas', 10, 4 );
-function om_canvas_save_optin_canvas( $type, $theme, $optin, $data ) {
+/**
+ * Filters the script used to position the optin on the front-end and in preview.
+ *
+ * @param string $script     The existing javascript
+ * @param string $optin_name The optin hash
+ * @param string $type       The optin type
+ * @param string $theme      The current optin theme
+ * @param bool   $preview    Are we in the optin preview?
+ *
+ * @since 2.0.0
+ *
+ * @return string The new positioning javascript
+ */
+function optin_monster_canvas_positioning( $script, $optin_name, $type, $theme, $preview ) {
 
-    require_once plugin_dir_path( __FILE__ ) . 'save-' . $type . '-' . $theme . '.php';
-	$class = 'optin_monster_save_' . $type . '_' . str_replace( '-', '_', $theme );
-	$save  = new $class( $type, $theme, $optin, $data );
-	$save->save_optin();
-
-}
-
-function om_canvas_get_whiteboard_theme( $theme_type ) {
-
-    global $optin_monster_tab_optins;
-    $tab = $optin_monster_tab_optins;
+    if ( 'canvas' != $type ) {
+        return $script;
+    }
 
     ob_start();
-    	echo '<div class="design-customizer-ui" data-optin-theme="' . $theme_type . '">';
-        	echo '<div class="design-sidebar">';
-        		echo '<div class="controls-area om-clearfix">';
-        			echo '<a class="button button-secondary button-large grey pull-left close-design" href="#" title="'.__('Close Customizer','optin-monster').'">'.__('Close','optin-monster').'</a>';
-        			echo '<a class="button button-primary button-large orange pull-right save-design" href="#" title="'.__('Save Changes','optin-monster').'">'.__('Save','optin-monster').'</a>';
-        		echo '</div>';
-        		echo '<div class="title-area om-clearfix">';
-        			echo '<p class="no-margin">'.__('You are now previewing:','optin-monster').'</p>';
-        			echo '<h3 class="no-margin">' . ucwords( str_replace( '-', ' ', $theme_type ) ) . '</h3>';
-        		echo '</div>';
-        		echo '<div class="accordion-area om-clearfix">';
-        			echo '<h3>'.__('Dimensions','optin-monster').'</h3>';
-        			echo '<div class="colors-area">';
-        				echo '<p>';
-        					echo '<label for="om-canvas-' . $theme_type . '-optin-width">'.__('Lightbox Width (px)','optin-monster').'</label>';
-        					echo '<input type="text" id="om-canvas-' . $theme_type . '-optin-width" class="optin_dimensions" name="optin_canvas_width" value="' . $tab->get_field( 'dimensions', 'width', '700' ) . '" data-target="om-canvas-' . $theme_type . '-optin" data-attr="width" />';
-        				echo '</p>';
-        				echo '<p>';
-        					echo '<label for="om-canvas-' . $theme_type . '-optin-height">'.__('Lightbox Height (px)','optin-monster').'</label>';
-        					echo '<input type="text" id="om-canvas-' . $theme_type . '-optin-height" name="optin_canvas_height" class="optin_dimensions" data-attr="height" value="' . $tab->get_field( 'dimensions', 'height', '350' ) . '" data-target="om-canvas-' . $theme_type . '-optin" />';
-        				echo '</p>';
-        			echo '</div>';
-
-        			echo '<h3>'.__('HTML','optin-monster').'</h3>';
-        			echo '<div class="content-area">';
-        			    echo '<div class="custom-css-area">';
-            				echo '<p><small>' . __( 'The textarea below is for adding your own custom HTML markup into the lightbox canvas provided.', 'optin-monster' ) . '</small></p>';
-            				echo '<textarea id="om-canvas-' . $theme_type . '-custom-html" name="optin_custom_canvas_html" class="om-custom-css">' . $tab->get_field( 'custom_canvas_html' ) . '</textarea>';
-            				echo '<p><small>' . __( 'Unique Optin Slug: ', 'optin-monster' ) . ' <strong><code>' . $tab->optin->post_name . '</code></strong></small></p>';
-            				echo '<p><small><a href="http://optinmonster.com/docs/how-to-track-conversions-with-the-canvas-addon/" title="Tracking Conversions with Canvas" target="_blank"><em>' . __( 'This is needed for tracking conversions with the Canvas addon.', 'optin-monster' ) . '</em></a></small></p>';
-            			echo '</div>';
-        			echo '</div>';
-
-        			echo '<h3>'.__('CSS','optin-monster').'</h3>';
-        			echo '<div class="content-area">';
-            			echo '<div class="custom-css-area">';
-            				echo '<p><small>' . __( 'The textarea below is for adding custom CSS to this particular optin. Each of your custom CSS statements should be on its own line and be prefixed with the following declaration:', 'optin-monster' ) . '</small></p>';
-            				echo '<p><strong><code>html div#om-' . $tab->optin->post_name . '</code></strong></p>';
-            				echo '<textarea id="om-canvas-' . $theme_type . '-custom-css" name="optin_custom_css" placeholder="e.g. html div#om-' . $tab->optin->post_name . ' input[type=submit], html div#' . $tab->optin->post_name . ' button { background: #ff6600; }" class="om-custom-css">' . $tab->get_field( 'custom_css', '', '' ) . '</textarea>';
-            				echo '<small><a href="http://optinmonster.com/docs/custom-css/" title="' . __( 'Custom CSS with OptinMonster', 'optin-monster' ) . '" target="_blank"><em>'.__('Click here for help on using custom CSS with OptinMonster.','optin-monster').'</em></a></small>';
-            			echo '</div>';
-        			echo '</div>';
-        		echo '</div>';
-        	echo '</div>';
-        	echo '<div class="design-content">';
-        	echo '</div>';
-        echo '</div>';
-
-        return ob_get_clean();
+    ?>
+    $('.om-theme-<?php echo $theme; ?>, .optin-monster-success-overlay').css({
+    <?php if ( $preview ) : ?>
+        top: (($(window).height() - $('.om-theme-<?php echo $theme; ?>').height()) / 2) - 39,
+    <?php else : ?>
+        top: ($(window).height() - $('.om-theme-<?php echo $theme; ?>').height()) / 2,
+    <?php endif; ?>
+        left: ($(window).width() - $('.om-theme-<?php echo $theme; ?>').width()) / 2
+    });
+    $(window).resize(function(){
+        $('.om-theme-<?php echo $theme; ?>, .optin-monster-success-overlay').css({
+        <?php if ( $preview ) : ?>
+            top: (($(window).height() - $('.om-theme-<?php echo $theme; ?>').height()) / 2) - 39,
+        <?php else : ?>
+            top: ($(window).height() - $('.om-theme-<?php echo $theme; ?>').height()) / 2,
+        <?php endif; ?>
+        left: ($(window).width() - $('.om-theme-<?php echo $theme; ?>').width()) / 2
+        });
+    });
+    <?php
+    return ob_get_clean();
 
 }
