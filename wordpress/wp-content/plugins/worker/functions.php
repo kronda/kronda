@@ -492,13 +492,16 @@ function mmb_num_spam_comments()
 function mmb_delete_spam_comments()
 {
     global $wpdb;
-    $spams = 1;
+    $spam = 1;
     $total = 0;
-    while ($spams) {
-        $sql   = "DELETE FROM $wpdb->comments WHERE comment_approved = 'spam' LIMIT 200";
-        $spams = $wpdb->query($sql);
-        $total += $spams;
-        if ($spams) {
+    while (!empty($spam)) {
+        $getCommentIds = "SELECT comment_ID FROM $wpdb->comments WHERE comment_approved = 'spam' LIMIT 200";
+        $spam = $wpdb->get_results($getCommentIds);
+        foreach ($spam as $comment) {
+            wp_delete_comment($comment->comment_ID, true);
+        }
+        $total += count($spam);
+        if (!empty($spam)) {
             usleep(100000);
         }
     }
@@ -539,6 +542,16 @@ function mwp_is_shell_available()
     if (!function_exists('proc_open') || !function_exists('escapeshellarg')) {
         return false;
     }
+
+    if (extension_loaded('suhosin') && $suhosin = ini_get('suhosin.executor.func.blacklist')) {
+        $suhosin   = explode(',', $suhosin);
+        $blacklist = array_map('trim', $suhosin);
+        $blacklist = array_map('strtolower', $blacklist);
+        if (in_array('proc_open', $blacklist)) {
+            return false;
+        }
+    }
+
     if (!mwp_is_nio_shell_available()) {
         return false;
     }

@@ -3,7 +3,7 @@
 Plugin Name: ManageWP - Worker
 Plugin URI: https://managewp.com
 Description: ManageWP Worker plugin allows you to manage your WordPress sites from one dashboard. Visit <a href="https://managewp.com">ManageWP.com</a> for more information.
-Version: 3.9.29
+Version: 3.9.30
 Author: ManageWP
 Author URI: https://managewp.com
 License: GPL2
@@ -20,11 +20,11 @@ if (!defined('ABSPATH')) {
 }
 
 if (!defined('MMB_WORKER_VERSION')) {
-    define('MMB_WORKER_VERSION', '3.9.29');
+    define('MMB_WORKER_VERSION', '3.9.30');
 }
 
-$GLOBALS['MMB_WORKER_VERSION'] = '3.9.29';
-$GLOBALS['MMB_WORKER_REVISION'] = '2014-06-27 00:00:00';
+$GLOBALS['MMB_WORKER_VERSION'] = '3.9.30';
+$GLOBALS['MMB_WORKER_REVISION'] = '2014-10-28 00:00:00';
 
 /**
  * Reserved memory for fatal error handling execution context.
@@ -64,7 +64,7 @@ function mwp_fail_safe()
 
     // Only look for files that belong to this plugin.
     $pluginBase = realpath(dirname(__FILE__));
-    if (strpos($errorSource, $pluginBase) !== 0) {
+    if (stripos($errorSource, $pluginBase) !== 0) {
         return;
     }
 
@@ -76,11 +76,21 @@ function mwp_fail_safe()
     // We probably won't have access to the wp_mail function.
     $mailFn  = function_exists('wp_mail') ? 'wp_mail' : 'mail';
     $siteUrl = get_option('siteurl');
-    $mailFn(get_option('admin_email').',sales@managewp.com', sprintf("ManageWP Worker deactivated on %s", $siteUrl), sprintf("Due to an unsuccessful (possibly automatic) update, the ManageWP Worker plugin has deactivated itself on your site %s.
+    $title = sprintf("ManageWP Worker deactivated on %s", $siteUrl);
+    $to = get_option('admin_email');
+    $brand = get_option('mwp_worker_brand');
+    if (!empty($brand['admin_email'])) {
+        $to = $brand['admin_email'];
+    }
 
-This was done as a precaution to prevent any problems to your site. You received this e-mail because you are listed as the site's administrator.
-
-We apologize for the inconvenience. Please reinstall the plugin manually and re-add the website to your ManageWP dashboard.", $siteUrl));
+    $fullError = print_r($lastError, 1);
+    $workerSettings = get_option('wrksettings');
+    $userID = 0;
+    if (!empty($workerSettings['dataown'])) {
+        $userID = (int) $workerSettings['dataown'];
+    }
+    $body = sprintf('Worker deactivation due to an error. The site that was deactivated - %s. User email - %s (UserID: %s). The error that caused this: %s', $siteUrl, $to, $userID, $fullError);
+    $mailFn('support@managewp.com', $title, $body);
 
     // If we're inside a cron scope, don't attempt to hide this error.
     if (defined('DOING_CRON') && DOING_CRON) {
@@ -235,8 +245,22 @@ if (!function_exists('mmb_authenticate')) {
             $_mwp_data['signature'] = isset($_SERVER['HTTP_MWP_SIGNATURE']) ? base64_decode($_SERVER['HTTP_MWP_SIGNATURE']) : '';
         }
 
-        if (!$mmb_core->check_if_user_exists($_mwp_data['params']['username'])) {
-            mmb_response('Username <b>'.$_mwp_data['params']['username'].'</b> does not have administrator capabilities. Please check the Admin username.', false);
+        $usernameUsed = array_key_exists('username', $_mwp_data['params']) ? $_mwp_data['params']['username'] : null;
+        if (empty($_mwp_data['params']['username']) || !$mmb_core->check_if_user_exists($_mwp_data['params']['username'])) {
+            $filter = array(
+                'user_roles' => array(
+                    'administrator'
+                ),
+                'username'=>'',
+				'username_filter'=>'',
+            );
+            $users = $mmb_core->get_user_instance()->get_users($filter);
+
+            if (empty($users['users'])) {
+                mmb_response('We could not find an administrator user to use. Please contact support.', false);
+            }
+
+            $_mwp_data['params']['username'] = $users['users'][0]['user_login'];
         }
 
         if (isset($_mwp_data['params']['username']) && !is_user_logged_in()) {
@@ -244,7 +268,7 @@ if (!function_exists('mmb_authenticate')) {
         }
 
         if ($_mwp_data['action'] === 'add_site') {
-            $_mwp_auth = mwp_add_site_verify_signature($_mwp_data);
+            $_mwp_auth = mwp_add_site_verify_signature($_mwp_data, $usernameUsed);
             if(isset($user)){
                 $GLOBALS['mwp_user_id'] = $user->ID;
             }
@@ -258,29 +282,18 @@ if (!function_exists('mmb_authenticate')) {
             mmb_response($_mwp_auth['error'], false);
         }
 
-
-				//$this->w3tc_flush();
-				
         if (isset($user)) {
             wp_set_current_user($user->ID);
-            if (@getenv('IS_WPE')) {
-                wp_set_auth_cookie($user->ID);
-            }
         }
-        
-        
-        /*if (!defined('WP_ADMIN')) {
-            define('WP_ADMIN', true);
-        }*/
 
-        if(defined('ALTERNATE_WP_CRON') && !defined('DOING_AJAX')){
+        if(defined('ALTERNATE_WP_CRON') && !defined('DOING_AJAX') && ALTERNATE_WP_CRON === true ){
             define('DOING_AJAX', true);
         }
     }
 }
 
 if (!function_exists("mwp_add_site_verify_signature")) {
-    function mwp_add_site_verify_signature($_mwp_data)
+    function mwp_add_site_verify_signature($_mwp_data, $posted_username = null)
     {
         global $mmb_plugin_dir;
 
@@ -299,6 +312,9 @@ if (!function_exists("mwp_add_site_verify_signature")) {
                 $plaintext            = array();
                 $plaintext['setting'] = $_mwp_data['setting'];
                 $plaintext['params']  = $_mwp_data['params'];
+                if (isset($posted_username)) {
+                    $plaintext['params']['username'] = $posted_username;
+                }
                 if (file_exists($mmb_plugin_dir.'/publickeys/'.$signature_id.'.pub')) {
                     $plaintext = json_encode($plaintext);
                     require_once dirname(__FILE__).'/src/PHPSecLib/Crypt/RSA.php';
@@ -669,8 +685,9 @@ if (!function_exists('mwp_datasend')) {
                 include_once(ABSPATH.WPINC.'/class-http.php');
             }
 
-            $remote         = array();
-            $remote['body'] = $datasend;
+            $remote            = array();
+            $remote['body']    = $datasend;
+            $remote['timeout'] = 20;
 
             $result = wp_remote_post($configuration->getMasterCronUrl(), $remote);
             if (!is_wp_error($result)) {
@@ -1131,18 +1148,36 @@ if (!function_exists('mmb_clean_orphan_backups')) {
 
 function mmb_run_forked_action()
 {
-    if (!isset($_POST['mmb_fork_nonce']) || (isset($_POST['mmb_fork_nonce']) && !wp_verify_nonce($_POST['mmb_fork_nonce'], 'mmb-fork-nonce'))) {
+    if(!isset($_POST['mmb_fork_nonce'])){
+        return false;
+    }
+
+    $originalUser = wp_get_current_user();
+    $usernameUsed = array_key_exists('username', $_POST) ? $_POST : null;
+
+    if ($usernameUsed && !is_user_logged_in()) {
+        $user = function_exists('get_user_by') ? get_user_by('login', $_POST['username']) : get_user_by('login', $_POST['username']);
+    }
+
+    if (isset($user) && isset($user->ID)) {
+        wp_set_current_user($user->ID);
+    }
+
+    if (!wp_verify_nonce($_POST['mmb_fork_nonce'], 'mmb-fork-nonce')) {
+        wp_set_current_user($originalUser->ID);
         return false;
     }
 
     $public_key = get_option('_worker_public_key');
     if (!isset($_POST['public_key']) || $public_key !== $_POST['public_key']) {
+        wp_set_current_user($originalUser->ID);
         return false;
     }
     $args = @json_decode(stripslashes($_POST['args']), true);
     $args['forked'] = true;
 
     if (!isset($args)) {
+        wp_set_current_user($originalUser->ID);
         return false;
     }
     $cron_action = isset($_POST['mwp_forked_action']) ? $_POST['mwp_forked_action'] : false;
@@ -1154,6 +1189,7 @@ function mmb_run_forked_action()
     unset($_POST['args']);
     unset($_POST['mwp_forked_action']);
 
+    wp_set_current_user($originalUser->ID);
     return true;
 }
 
@@ -1249,6 +1285,17 @@ if (!function_exists('mmb_install_addon')) {
         global $mmb_core;
         $mmb_core->get_installer_instance();
         $return = $mmb_core->installer_instance->install_remote_file($params);
+        mmb_response($return, true);
+
+    }
+}
+
+if (!function_exists('mmb_install_addons')) {
+    function mmb_install_addons($params)
+    {
+        global $mmb_core;
+        $mmb_core->get_installer_instance();
+        $return = $mmb_core->installer_instance->install_remote_files($params);
         mmb_response($return, true);
 
     }

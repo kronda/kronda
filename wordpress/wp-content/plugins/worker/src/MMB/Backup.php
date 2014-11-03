@@ -191,7 +191,7 @@ class MMB_Backup extends MMB_Core
                 if (is_array($error)) {
                     $before[$task_name]['task_results'][count($before[$task_name]['task_results']) - 1]['error'] = $error['error'];
                 } else {
-                    $before[$task_name]['task_results'][count($before[$task_name]['task_results'])]['error'] = $error;
+                    $before[$task_name]['task_results'][count($before[$task_name]['task_results']) - 1]['error'] = $error;
                 }
             }
 
@@ -609,9 +609,18 @@ class MMB_Backup extends MMB_Core
 
         $remove  = array(
             trim(basename(WP_CONTENT_DIR))."/managewp/backups",
+            trim(basename(WP_CONTENT_DIR))."/infinitewp/backups",
             trim(basename(WP_CONTENT_DIR))."/".md5('mmb-worker')."/mwp_backups",
+            trim(basename(WP_CONTENT_DIR))."/backupwordpress",
+            trim(basename(WP_CONTENT_DIR))."/contents/cache",
+            trim(basename(WP_CONTENT_DIR))."/content/cache",
             trim(basename(WP_CONTENT_DIR))."/cache",
+            trim(basename(WP_CONTENT_DIR))."/old-cache",
+            trim(basename(WP_CONTENT_DIR))."/uploads/backupbuddy_backups",
             trim(basename(WP_CONTENT_DIR))."/w3tc",
+            "dbcache",
+            "pgcache",
+            "objectcache",
         );
         $exclude = array_merge($exclude, $remove);
 
@@ -1118,6 +1127,9 @@ class MMB_Backup extends MMB_Core
         );
 
         $include = array_merge($add, $include);
+        foreach ($include as &$value) {
+            $value = rtrim($value, '/');
+        }
 
         $filelist = array();
         if ($handle = opendir(ABSPATH)) {
@@ -1349,7 +1361,7 @@ class MMB_Backup extends MMB_Core
                 ));
             }
 
-            if (class_exists('PDO')) {
+            if (class_exists('PDO') && extension_loaded('pdo_mysql')) {
                 mwp_logger()->info('Using PHP dumper v2');
                 try {
                     $config = array(
@@ -1909,7 +1921,7 @@ class MMB_Backup extends MMB_Core
                     if (!empty($key)) {
                         $query = "SELECT option_value FROM ".$new_table_prefix."options WHERE option_name = %s";
                         $res   = $wpdb->get_var($wpdb->prepare($query, $key));
-                        if ($res == false) {
+                        if ($res === false) {
                             $query = "INSERT INTO ".$new_table_prefix."options  (option_value,option_name) VALUES(%s,%s)";
                             $wpdb->query($wpdb->prepare($query, $option, $key));
                         } else {
@@ -1925,7 +1937,7 @@ class MMB_Backup extends MMB_Core
             $wpdb->query($query);
 
             /* Restore previous backups */
-            $wpdb->query("UPDATE ".$new_table_prefix."options SET option_value = ".serialize($currentTasksTmp)." WHERE option_name = 'mwp_backup_tasks'");
+            $wpdb->query("UPDATE ".$new_table_prefix."options SET option_value = '".serialize($currentTasksTmp)."' WHERE option_name = 'mwp_backup_tasks'");
 
             /* Check for .htaccess permalinks update */
             $this->replace_htaccess($home);
@@ -2272,24 +2284,24 @@ class MMB_Backup extends MMB_Core
         $file_path = MWP_BACKUP_DIR;
         $reqs['Backup Folder']['status'] .= ' ('.$file_path.')';
 
-        $reqs['Execute Function']['status'] = 'exists';
-        $reqs['Execute Function']['pass']   = true;
+        $reqs['Function `proc_open`']['status'] = 'exists';
+        $reqs['Function `proc_open`']['pass']   = true;
         if (!$this->procOpenExists()) {
-            $reqs['Execute Function']['status'] = "not found";
-            $reqs['Execute Function']['pass']   = false;
+            $reqs['Function `proc_open`']['status'] = "not found";
+            $reqs['Function `proc_open`']['pass']   = false;
         }
 
         $reqs['Zip']['status'] = 'exists';
         $reqs['Zip']['pass']   = true;
         if (!$this->zipExists()) {
-            $reqs['Zip']['status'] = 'not found.';
+            $reqs['Zip']['status'] = 'not found';
             //$reqs['Zip']['info']   = 'We\'ll use ZipArchive replacement';
             $reqs['Zip']['pass'] = false;
 
             $reqs['ZipArchive']['status'] = 'exists';
             $reqs['ZipArchive']['pass']   = true;
             if (!class_exists('ZipArchive')) {
-                $reqs['ZipArchive']['status'] = 'not found.';
+                $reqs['ZipArchive']['status'] = 'not found';
                 $reqs['ZipArchive']['info']   = 'We\'ll use PclZip replacement (PclZip takes up the memory that is equal to size of your site)';
                 $reqs['ZipArchive']['pass']   = false;
             }
@@ -2298,7 +2310,7 @@ class MMB_Backup extends MMB_Core
         $reqs['Unzip']['status'] = 'exists';
         $reqs['Unzip']['pass']   = true;
         if (!$this->unzipExists()) {
-            $reqs['Unzip']['status'] = 'not found.';
+            $reqs['Unzip']['status'] = 'not found';
             $reqs['Unzip']['info']   = 'We\'ll use PclZip replacement (PclZip takes up the memory that is equal to size of your site)';
             $reqs['Unzip']['pass']   = false;
         }
@@ -3833,7 +3845,7 @@ class MMB_Backup extends MMB_Core
         $tasks = $this->tasks;
         if (is_array($tasks) && !empty($tasks)) {
             foreach ($tasks as $task_name => $info) {
-                if (is_array($info['task_results']) && !empty($info['task_results'])) {
+                if (!empty($info['task_results']) && is_array($info['task_results'])) {
                     foreach ($info['task_results'] as $key => $result) {
                         if (isset($result['server']) && !isset($result['error'])) {
                             if (isset($result['server']['file_path']) && !$info['task_args']['del_host_file']) {
@@ -3843,8 +3855,6 @@ class MMB_Backup extends MMB_Core
                             }
                         }
                     }
-                }
-                if (is_array($info['task_results'])) {
                     $stats[$task_name] = $info['task_results'];
                 }
             }
@@ -3909,7 +3919,7 @@ class MMB_Backup extends MMB_Core
                     $this->remove_ftp_backup($args);
                 }
                 if (isset($backups[$task_name]['task_results'][$i]['sftp']) && isset($backups[$task_name]['task_args']['account_info']['mwp_sftp'])) {
-                    $ftp_file            = $backups[$task_name]['task_results'][$i]['fstp'];
+                    $sftp_file           = $backups[$task_name]['task_results'][$i]['sftp'];
                     $args                = $backups[$task_name]['task_args']['account_info']['mwp_sftp'];
                     $args['backup_file'] = $sftp_file;
                     $this->remove_sftp_backup($args);
@@ -3992,9 +4002,9 @@ class MMB_Backup extends MMB_Core
             $this->remove_ftp_backup($args);
         }
         if (isset($backup['sftp'])) {
-            $ftp_file            = $backup['ftp'];
+            $sftp_file           = $backup['sftp'];
             $args                = $tasks[$task_name]['task_args']['account_info']['mwp_sftp'];
-            $args['backup_file'] = $ftp_file;
+            $args['backup_file'] = $sftp_file;
             $this->remove_sftp_backup($args);
         }
 

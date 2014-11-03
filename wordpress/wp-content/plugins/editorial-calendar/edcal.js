@@ -1343,7 +1343,16 @@ var edcal = {
             jQuery('#edcal-status').val(post.status);
             edcal.updatePublishButton();
         } else {
-            jQuery('#edcal-status').val('draft');
+            if (0 !== jQuery('#edcal-status option[value=' + edcal.defaultStatus + ']').length) {
+                /*
+                 * We want to use the default status if it exists in the list and we'll
+                 * default to the draft status if the default one is in the list.
+                 */
+                jQuery('#edcal-status').val(edcal.defaultStatus);
+            } else {
+                jQuery('#edcal-status').val('draft');
+            }
+            
             jQuery('#newPostScheduleButton').text(edcal.str_save);
         }
 
@@ -1838,6 +1847,7 @@ var edcal = {
      * This is the full list of start of the week days from unicode.org
      * http://unicode.org/repos/cldr/trunk/common/supplemental/supplementalData.xml
      */
+    /* jshint maxcomplexity: 80 */
     nextStartOfWeek: function(/*date*/ date) {
          date = date.clone();
          if (edcal.startOfWeek === null) {
@@ -1934,6 +1944,8 @@ var edcal = {
 
          return date.next().sunday().add(edcal.startOfWeek).days();
     },
+
+    /* jshint maxcomplexity: 14 */
 
     /*
      * Just a little helper function to tell if a given string (str)
@@ -2236,7 +2248,17 @@ var edcal = {
                  * the JSON parser from JSON.org works faster than the native
                  * one used by JQuery.
                  */
-                var parsedRes = JSON.parseIt(res);
+                var parsedRes = null;
+                
+                try {
+                    parsedRes = JSON.parseIt(res);
+                } catch (e) {
+                    edcal.showFatalError(edcal.str_fatal_parse_error + e.message);
+                    if (window.console) {
+                        console.error(e);
+                    }
+                    return;
+                }
 
                 if (parsedRes.error) {
                     /*
@@ -2624,7 +2646,7 @@ var edcal = {
      */
     showFatalError: function(message) {
         jQuery('#edcal_main_title').after(
-            '<div class="updated below-h2" id="message"><p>' +
+            '<div class="error below-h2" id="message"><p>' +
             edcal.str_fatal_error + message + '<br></p></div>');
 
         if (window.console) {
@@ -2633,9 +2655,9 @@ var edcal = {
     },
     
     chineseAposWorkaround: function(/*String*/ dateString) {
-        if (Date.CultureInfo.name.indexOf("zh") === 0 ||
-            Date.CultureInfo.name.indexOf("ja") === 0) {
-            return dateString.replace(/'/g, "");
+        if (Date.CultureInfo.name.indexOf('zh') === 0 ||
+            Date.CultureInfo.name.indexOf('ja') === 0) {
+            return dateString.replace(/'/g, '');
         }
         return dateString;
     }

@@ -14,7 +14,7 @@ if ( ! function_exists( 'add_filter' ) ) {
  * @internal Nobody should be able to overrule the real version number as this can cause serious issues
  * with the options, so no if ( ! defined() )
  */
-define( 'WPSEO_VERSION', '1.5.4.2' );
+define( 'WPSEO_VERSION', '1.6.3' );
 
 if ( ! defined( 'WPSEO_PATH' ) ) {
 	define( 'WPSEO_PATH', plugin_dir_path( WPSEO_FILE ) );
@@ -45,8 +45,10 @@ function wpseo_auto_load( $class ) {
 			'wpseo_admin'                        => WPSEO_PATH . 'admin/class-admin.php',
 			'wpseo_bulk_title_editor_list_table' => WPSEO_PATH . 'admin/class-bulk-title-editor-list-table.php',
 			'wpseo_bulk_description_list_table'  => WPSEO_PATH . 'admin/class-bulk-description-editor-list-table.php',
+			'wpseo_bulk_list_table'              => WPSEO_PATH . 'admin/class-bulk-editor-list-table.php',
 			'wpseo_admin_pages'                  => WPSEO_PATH . 'admin/class-config.php',
 			'wpseo_metabox'                      => WPSEO_PATH . 'admin/class-metabox.php',
+			'wpseo_snippet_preview'              => WPSEO_PATH . 'admin/class-snippet-preview.php',
 			'wpseo_social_admin'                 => WPSEO_PATH . 'admin/class-opengraph-admin.php',
 			'wpseo_pointers'                     => WPSEO_PATH . 'admin/class-pointers.php',
 			'wpseo_sitemaps_admin'               => WPSEO_PATH . 'admin/class-sitemaps-admin.php',
@@ -60,7 +62,6 @@ function wpseo_auto_load( $class ) {
 			'wpseo_googleplus'                   => WPSEO_PATH . 'frontend/class-googleplus.php',
 			'wpseo_rewrite'                      => WPSEO_PATH . 'inc/class-rewrite.php',
 			'wpseo_sitemaps'                     => WPSEO_PATH . 'inc/class-sitemaps.php',
-			'sitemap_walker'                     => WPSEO_PATH . 'inc/class-sitemap-walker.php',
 			'wpseo_options'                      => WPSEO_PATH . 'inc/class-wpseo-options.php',
 			'wpseo_option'                       => WPSEO_PATH . 'inc/class-wpseo-options.php',
 			'wpseo_option_wpseo'                 => WPSEO_PATH . 'inc/class-wpseo-options.php',
@@ -76,11 +77,11 @@ function wpseo_auto_load( $class ) {
 			'wpseo_replace_vars'                 => WPSEO_PATH . 'inc/class-wpseo-replace-vars.php',
 
 			'yoast_license_manager'              => WPSEO_PATH . 'admin/license-manager/class-license-manager.php',
-			'yoast_plugin_license_manager'       =>	WPSEO_PATH . 'admin/license-manager/class-plugin-license-manager.php',
-			'yoast_product'                      =>	WPSEO_PATH . 'admin/license-manager/class-product.php',
+			'yoast_plugin_license_manager'       => WPSEO_PATH . 'admin/license-manager/class-plugin-license-manager.php',
+			'yoast_product'                      => WPSEO_PATH . 'admin/license-manager/class-product.php',
 
-			'yoast_notification_center'          =>	WPSEO_PATH . 'admin/class-yoast-notification-center.php',
-			'yoast_notification'                 =>	WPSEO_PATH . 'admin/class-yoast-notification.php',
+			'yoast_notification_center'          => WPSEO_PATH . 'admin/class-yoast-notification-center.php',
+			'yoast_notification'                 => WPSEO_PATH . 'admin/class-yoast-notification.php',
 
 			'wp_list_table'                      => ABSPATH . 'wp-admin/includes/class-wp-list-table.php',
 			'walker_category'                    => ABSPATH . 'wp-includes/category-template.php',
@@ -107,7 +108,7 @@ if ( function_exists( 'spl_autoload_register' ) ) {
  *
  * @param bool $networkwide  Whether the plugin is being activated network-wide
  */
-function wpseo_activate( $networkwide ) {
+function wpseo_activate( $networkwide = false ) {
 	if ( ! is_multisite() || ! $networkwide ) {
 		_wpseo_activate();
 	}
@@ -122,7 +123,7 @@ function wpseo_activate( $networkwide ) {
  *
  * @param bool $networkwide  Whether the plugin is being de-activated network-wide
  */
-function wpseo_deactivate( $networkwide ) {
+function wpseo_deactivate( $networkwide = false ) {
 	if ( ! is_multisite() || ! $networkwide ) {
 		_wpseo_deactivate();
 	}
@@ -221,7 +222,7 @@ function wpseo_on_activate_blog( $blog_id ) {
 
 	if ( is_plugin_active_for_network( plugin_basename( WPSEO_FILE ) ) ) {
 		switch_to_blog( $blog_id );
-		wpseo_activate();
+		wpseo_activate( false );
 		restore_current_blog();
 	}
 }
@@ -338,7 +339,7 @@ function wpseo_admin_init() {
 	}
 
 	/**
-	 * Filter: 'wpseo_always_register_metaboxes_on_admint' - Allow developers to change whether
+	 * Filter: 'wpseo_always_register_metaboxes_on_admin' - Allow developers to change whether
 	 * the WPSEO metaboxes are only registered on the typical pages (lean loading) or always
 	 * registered when in admin.
 	 *

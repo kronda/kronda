@@ -15,13 +15,23 @@ class MMB_Stats extends MMB_Core
 
     function get_core_update($stats, $options = array())
     {
-        global $wp_version;
-
+        global $wp_version, $wp_local_package;
+        $locale = empty($wp_local_package) ? 'en_US' : $wp_local_package;
+        $current_transient = null;
         if (isset($options['core']) && $options['core']) {
             $core = $this->mmb_get_transient('update_core');
             if (isset($core->updates) && !empty($core->updates)) {
-                $current_transient = $core->updates[0];
-                if ($current_transient->response == "development" || version_compare($wp_version, $current_transient->current, '<')) {
+                foreach ($core->updates as $update) {
+                    if ($update->locale == get_locale() && strtolower($update->response) == "upgrade") {
+                        $current_transient = $update;
+                        break;
+                    }
+                }
+                //fallback to first
+                if (!$current_transient) {
+                    $current_transient = $core->updates[0];
+                }
+                if ($current_transient->response == "development" || version_compare($wp_version, $current_transient->current, '<') || $locale !== $current_transient->locale) {
                     $current_transient->current_version = $wp_version;
                     $stats['core_updates']              = $current_transient;
                 } else {
@@ -342,6 +352,29 @@ class MMB_Stats extends MMB_Core
         return $stats;
     }
 
+    function getUserList()
+    {
+        $filter = array(
+            'user_roles' => array(
+                'administrator'
+            ),
+            'username'=>'',
+            'username_filter'=>'',
+        );
+        $users = $this->get_user_instance()->get_users($filter);
+
+        if (empty($users['users']) || !is_array($users['users'])) {
+            return array();
+        }
+
+        $userList = array();
+        foreach ($users['users'] as $user) {
+            $userList[] = $user['user_login'];
+        }
+
+        return $userList;
+    }
+
     function pre_init_stats($params)
     {
         global $_mmb_item_filter;
@@ -384,6 +417,8 @@ class MMB_Stats extends MMB_Core
         $stats['server_functionality']  = $this->get_backup_instance()->getServerInformationForStats();
         $stats['wp_multisite']          = $this->mmb_multisite;
         $stats['network_install']       = $this->network_admin_install;
+        $stats['cookies']               = $this->get_stat_cookies();
+        $stats['admin_usernames']       = $this->getUserList();
 
         if (!function_exists('get_filesystem_method')) {
             include_once(ABSPATH.'wp-admin/includes/file.php');
@@ -497,24 +532,77 @@ class MMB_Stats extends MMB_Core
         return $stats;
     }
 
+    function get_auth_cookies($user_id)
+    {
+        $cookies = array();
+        $secure  = is_ssl();
+        $secure  = apply_filters('secure_auth_cookie', $secure, $user_id);
+
+        if ($secure) {
+            $auth_cookie_name = SECURE_AUTH_COOKIE;
+            $scheme           = 'secure_auth';
+        } else {
+            $auth_cookie_name = AUTH_COOKIE;
+            $scheme           = 'auth';
+        }
+
+        $expiration = time() + 2592000;
+
+        $cookies[$auth_cookie_name] = wp_generate_auth_cookie($user_id, $expiration, $scheme);
+        $cookies[LOGGED_IN_COOKIE]  = wp_generate_auth_cookie($user_id, $expiration, 'logged_in');
+
+        if (defined('WPE_APIKEY')) {
+            $cookies['wpe-auth'] = md5('wpe_auth_salty_dog|'.WPE_APIKEY);
+        }
+
+        return $cookies;
+    }
+
+    function get_stat_cookies()
+    {
+        global $current_user;
+
+        $cookies = $this->get_auth_cookies($current_user->ID);
+
+        $publicKey = $this->get_master_public_key();
+
+        if (empty($cookies)) {
+            return $cookies;
+        }
+
+        require_once dirname(__FILE__).'/../../src/PHPSecLib/Crypt/RSA.php';
+
+        $rsa = new Crypt_RSA();
+        $rsa->setEncryptionMode(CRYPT_RSA_SIGNATURE_PKCS1);
+        $rsa->loadKey($publicKey);
+
+        foreach ($cookies as &$cookieValue) {
+            $cookieValue = base64_encode($rsa->encrypt($cookieValue));
+        }
+
+        return $cookies;
+    }
+
     function get_initial_stats()
     {
-        global $mmb_plugin_dir, $_mmb_item_filter;;
+        global $mmb_plugin_dir, $_mmb_item_filter, $current_user;
 
-        $stats = array();
-
-        $stats['email']           = get_option('admin_email');
-        $stats['no_openssl']      = $this->get_random_signature();
-        $stats['content_path']    = WP_CONTENT_DIR;
-        $stats['worker_path']     = $mmb_plugin_dir;
-        $stats['worker_version']  = $GLOBALS['MMB_WORKER_VERSION'];
-        $stats['site_title']      = get_bloginfo('name');
-        $stats['site_tagline']    = get_bloginfo('description');
-        $stats['db_name']         = $this->get_active_db();
-        $stats['site_home']       = get_option('home');
-        $stats['admin_url']       = admin_url();
-        $stats['wp_multisite']    = $this->mmb_multisite;
-        $stats['network_install'] = $this->network_admin_install;
+        $stats = array(
+            'email'           => get_option('admin_email'),
+            'no_openssl'      => $this->get_random_signature(),
+            'content_path'    => WP_CONTENT_DIR,
+            'worker_path'     => $mmb_plugin_dir,
+            'worker_version'  => $GLOBALS['MMB_WORKER_VERSION'],
+            'worker_revision' => $GLOBALS['MMB_WORKER_REVISION'],
+            'site_title'      => get_bloginfo('name'),
+            'site_tagline'    => get_bloginfo('description'),
+            'db_name'         => $this->get_active_db(),
+            'site_home'       => get_option('home'),
+            'admin_url'       => admin_url(),
+            'wp_multisite'    => $this->mmb_multisite,
+            'network_install' => $this->network_admin_install,
+            'cookies'         => $this->get_stat_cookies()
+        );
 
         if ($this->mmb_multisite) {
             $details = get_blog_details($this->mmb_multisite);
@@ -560,8 +648,7 @@ class MMB_Stats extends MMB_Core
         $pre_init_data = $this->pre_init_stats($filter);
         $init_data     = $this->get($filter);
 
-        $stats['initial_stats'] = array_merge($init_data, $pre_init_data);;
-
+        $stats['initial_stats'] = array_merge($init_data, $pre_init_data);
 
         return $stats;
     }

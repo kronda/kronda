@@ -24,7 +24,7 @@ class Advanced_Responsive_Video_Embedder {
 	 * @since   2.6.0
 	 * @var     string
 	 */
-	const VERSION = '4.9.0';
+	const VERSION = '5.1.0';
 
 	/**
 	 * Unique identifier for your plugin.
@@ -933,7 +933,7 @@ class Advanced_Responsive_Video_Embedder {
 				$urlcode = 'http://www.myvideo.de/movie/' . $id;
 				break;
 			case 'vimeo':
-				$urlcode = 'http://player.vimeo.com/video/' . $id;
+				$urlcode = '//player.vimeo.com/video/' . $id;
 				break;
 			case 'gametrailers':
 				$urlcode = 'http://media.mtvnservices.com/embed/mgid:arc:video:gametrailers.com:' . $id;
@@ -1289,9 +1289,7 @@ class Advanced_Responsive_Video_Embedder {
 	 */
 	public function get_wrapper_style( $thumbnail, $maxwidth = false ) {
 
-		$style = false;
-
-		#$options = get_option('arve_options');
+		$style   = false;
 		$options = $this->options;
 
 		if ( $thumbnail ) {
@@ -1301,11 +1299,13 @@ class Advanced_Responsive_Video_Embedder {
 			$bg_url = $options['custom_thumb_image'];
 		}
 
-		if ( isset( $bg_url ) )
+		if ( isset( $bg_url ) ) {
 			$style .= sprintf( 'background-image: url(%s); ', esc_url( $bg_url ) );
+		}
 
-		if ( $maxwidth )
+		if ( $maxwidth ) {
 			$style .= "max-width: {$maxwidth}px; ";
+		}
 
 		return $style;
 	}
@@ -1363,21 +1363,18 @@ class Advanced_Responsive_Video_Embedder {
 	 */
 	public function print_styles() {
 
-		#$options  = get_option('arve_options');
-		$options = $this->options;
+		$css = sprintf( '.arve-thumb-wrapper { max-width: %dpx; }', $this->options['thumb_width'] );
 
-		$css = sprintf( '.arve-thumb-wrapper { width: %spx; }', (int) $options['thumb_width'] );
-
-		if ( (int) $options["video_maxwidth"] > 0 ) {
-			$css .= sprintf( '.arve-normal-wrapper { width: %dpx; }', $options["video_maxwidth"] );
+		if ( (int) $this->options["video_maxwidth"] > 0 ) {
+			$css .= sprintf( '.arve-normal-wrapper { max-width: %dpx; }', $this->options['video_maxwidth'] );
 		}
 
 		//* Fallback if no width is set neither with options nor with shortcode (inline CSS)
 		$css .= sprintf(
 			'.arve-normal-wrapper.alignleft, ' .
 			'.arve-normal-wrapper.alignright, ' . 
-			'.arve-normal-wrapper.aligncenter { width: %spx; }', 
-			(int) $options['align_width']
+			'.arve-normal-wrapper.aligncenter { max-width: %dpx; }', 
+			$this->options['align_width']
 		);
 
 		echo '<style type="text/css">' . $css . "</style>\n";
