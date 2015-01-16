@@ -3,6 +3,12 @@ var Redirection;
 (function($) {
 	Redirection_Items = function() {
 		function edit_items() {
+			$( 'table.items' ).on( 'click', '.advanced-toggle', function( ev ) {
+				ev.preventDefault();
+				$( this ).toggleClass( 'advanced-toggled' );
+				$( this ).closest( 'table' ).find( '.advanced' ).toggle();
+			} );
+
 			$( 'table.items' ).on( 'click', '.row-actions a.red-auto', function( ev ) {
 				ev.preventDefault();
 
@@ -23,7 +29,7 @@ var Redirection;
 
 				$.post( ajaxurl, {
 					action: $( this ).data( 'action' ),
-					nonce: $( this ).data( 'nonce' ),
+					_ajax_nonce: $( this ).data( 'nonce' ),
 					id: $( this ).data( 'id' )
 				}, function( response ) {
 					if ( show_error( response ) )
@@ -167,6 +173,7 @@ var Redirection;
 			success: function( response ) {
 				var error = get_redirect_error( response );
 
+				$( add_form ).find( 'input[type=text]' ).val( '' );
 				$( add_form ).removeClass( 'loading' );
 
 				if ( error ) {
