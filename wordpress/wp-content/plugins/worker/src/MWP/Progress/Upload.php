@@ -1,4 +1,12 @@
 <?php
+/*
+ * This file is part of the ManageWP Worker plugin.
+ *
+ * (c) ManageWP LLC <contact@managewp.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 class MWP_Progress_Upload extends MWP_Progress_Abstract
 {
@@ -45,17 +53,17 @@ class MWP_Progress_Upload extends MWP_Progress_Abstract
         $progress = round($currentProgress / $this->fileSize * 100, 2);
 
         global $forkedRequest;
-        if(!$forkedRequest){
+        if (!$forkedRequest) {
             echo ".";
             flush();
         }
 
         $this->logger->info(
-          'Upload progress: {progress}% (speed: {speed}/s)',
-          array(
-            'progress' => $progress,
-            'speed'    => $speed,
-          )
+            'Upload progress: {progress}% (speed: {speed}/s)',
+            array(
+                'progress' => $progress,
+                'speed'    => $speed,
+            )
         );
     }
 }

@@ -1,4 +1,12 @@
 <?php
+/*
+ * This file is part of the ManageWP Worker plugin.
+ *
+ * (c) ManageWP LLC <contact@managewp.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 abstract class MWP_Backup_MysqlDump_MysqlDump
 {
@@ -23,11 +31,11 @@ abstract class MWP_Backup_MysqlDump_MysqlDump
      * </ul>
      */
     protected $options = array(
-      'foreign_key_checks' => false,
-      'create_tables'      => true,
-      'drop_tables'        => true,
-      'compression_method' => null,
-      'skip_lock_tables'   => true
+        'foreign_key_checks' => false,
+        'create_tables'      => true,
+        'drop_tables'        => true,
+        'compression_method' => null,
+        'skip_lock_tables'   => true,
     );
     /** @var  PDO Connection instance */
     protected $connection;
@@ -72,7 +80,7 @@ abstract class MWP_Backup_MysqlDump_MysqlDump
      *
      * @throws Exception
      */
-    public abstract function dumpToFile();
+    abstract public function dumpToFile();
 
     /**
      * Checks if mysqldump is available and excecutable at the given or default path
@@ -84,7 +92,6 @@ abstract class MWP_Backup_MysqlDump_MysqlDump
         $path = is_string($path) ? $path : $this->getMysqlPath('/bin/mysqldump');
 
         return file_exists($path) && is_executable($path);
-
     }
 
     /**
@@ -120,8 +127,8 @@ abstract class MWP_Backup_MysqlDump_MysqlDump
             $connectionString = "mysql:dbname={$this->getConfig('database')};{$host}";
             // Create a PDO instance
             $this->connection = new PDO($connectionString, $this->getConfig('username'), $this->getConfig('password'), array(
-              PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8",
-              PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+                PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8",
+                PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
             ));
         }
 
@@ -181,6 +188,4 @@ abstract class MWP_Backup_MysqlDump_MysqlDump
 
         return $this;
     }
-
-
 }

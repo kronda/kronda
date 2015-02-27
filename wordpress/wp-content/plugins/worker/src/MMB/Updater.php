@@ -28,19 +28,19 @@ class MMB_Updater
         $autoUpdateCore = get_option('mwp_core_autoupdate');
 
         if ($autoUpdateCore === 'never') {
-            add_filter('allow_minor_auto_core_updates', '__return_false', 100);
-            add_filter('allow_major_auto_core_updates', '__return_false', 100);
+            add_filter('allow_minor_auto_core_updates', '__return_false', PHP_INT_MAX);
+            add_filter('allow_major_auto_core_updates', '__return_false', PHP_INT_MAX);
         } elseif ($autoUpdateCore === 'minor') {
-            add_filter('allow_minor_auto_core_updates', '__return_true', 100);
-            add_filter('allow_major_auto_core_updates', '__return_false', 100);
+            add_filter('allow_minor_auto_core_updates', '__return_true', PHP_INT_MAX);
+            add_filter('allow_major_auto_core_updates', '__return_false', PHP_INT_MAX);
         } elseif ($autoUpdateCore === 'major') {
-            add_filter('allow_minor_auto_core_updates', '__return_true', 100);
-            add_filter('allow_major_auto_core_updates', '__return_true', 100);
+            add_filter('allow_minor_auto_core_updates', '__return_true', PHP_INT_MAX);
+            add_filter('allow_major_auto_core_updates', '__return_true', PHP_INT_MAX);
         }
 
-        add_filter('auto_update_plugin', array($updater, 'updatePlugin'), 100, 2);
-        add_filter('auto_update_theme', array($updater, 'updateTheme'), 100, 2);
-        add_filter('auto_update_translation', array($updater, 'updateTranslation'), 100, 1);
+        add_filter('auto_update_plugin', array($updater, 'updatePlugin'), PHP_INT_MAX, 2);
+        add_filter('auto_update_theme', array($updater, 'updateTheme'), PHP_INT_MAX, 2);
+        add_filter('auto_update_translation', array($updater, 'updateTranslation'), PHP_INT_MAX, 1);
     }
 
     public function updatePlugin($update, $item)
@@ -56,7 +56,7 @@ class MMB_Updater
           }
          */
         $slug = $item->plugin;
-        if ($slug == 'worker/init.php') {
+        if ($slug === 'worker/init.php') {
             return false;
         }
         $alwaysUpdatePlugins = get_option('mwp_global_plugins_autoupdate', 'disabled');
@@ -83,7 +83,7 @@ class MMB_Updater
             "package": "https:\/\/wordpress.org\/themes\/download\/twentyfourteen.1.1.zip"
           }
          */
-        $slug = $item->theme;
+        $slug               = $item->theme;
         $alwaysUpdateThemes = get_option('mwp_global_themes_autoupdate', 'disabled');
 
         if ($alwaysUpdateThemes === 'enabled') {
@@ -169,9 +169,9 @@ class MMB_Updater
     {
         $return = array();
         foreach ($items as $item) {
-            if($type == 'plugins'){
-                $pluginOrTheme  = plugin_basename($item['path']);
-            }else{
+            if ($type == 'plugins') {
+                $pluginOrTheme = plugin_basename($item['path']);
+            } else {
                 $pluginOrTheme = $item['name'];
             }
             $current = get_option('mwp_active_autoupdate_'.$type, array());
@@ -260,7 +260,7 @@ class MMB_Updater
         if (!function_exists('wp_get_themes')) {
             return array();
         }
-        $themes    = array(
+        $themes = array(
             'active'   => array(),
             'inactive' => array(),
         );

@@ -1,4 +1,12 @@
 <?php
+/*
+ * This file is part of the ManageWP Worker plugin.
+ *
+ * (c) ManageWP LLC <contact@managewp.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 class MWP_Monolog_Processor_ProcessProcessor implements Monolog_Processor_ProcessorInterface
 {
@@ -9,7 +17,7 @@ class MWP_Monolog_Processor_ProcessProcessor implements Monolog_Processor_Proces
         }
         /** @var Symfony_Process_Process $process */
         $process = $record['context']['process'];
-        unset ($record['context']['process']);
+        unset($record['context']['process']);
         $record['extra']['process_command'] = $process->getCommandLine();
 
         if ($process->getExitCode() !== null) {

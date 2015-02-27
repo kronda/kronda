@@ -1,4 +1,12 @@
 <?php
+/*
+ * This file is part of the ManageWP Worker plugin.
+ *
+ * (c) ManageWP LLC <contact@managewp.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 class MWP_Backup_Writer_GzipWriter implements MWP_Backup_Writer_WriterInterface
 {
@@ -15,7 +23,7 @@ class MWP_Backup_Writer_GzipWriter implements MWP_Backup_Writer_WriterInterface
     public function open()
     {
         $this->file = gzopen($this->getFilename(), $this->getMode());
-        if($this->file === false){
+        if ($this->file === false) {
             throw new MWP_Backup_Exception("Could not open file: $this->getFilename()");
         }
 

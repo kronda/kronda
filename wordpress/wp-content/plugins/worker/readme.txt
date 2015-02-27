@@ -1,41 +1,55 @@
 === ManageWP Worker ===
 Contributors: freediver
 Donate link: https://www.networkforgood.org/donation/MakeDonation.aspx?ORGID2=520781390
-Tags: administration, amazon, analytics, clone wordpress, dashboard, google analytics, manage, managewp, managewp worker, manage wordpress, migrate wordpress, multisite, page, post, s3, security, seo, wordpress backup, wordpress multisite, worker
+Tags: administration, admin,amazon, analytics, api, automate, automatic, backup, comments, clone, dashboard, database, debug, dropbox, duplicate, events, google analytics, google drive, google, integration, login, manage, managewp, migrate, multiple, multisite, mysql, page, performance, plugin, post, remote, s3, security, seo, spam, speed, stats
 Requires at least: 3.0
-Tested up to: 4.0
+Tested up to: 4.1
 Stable tag: trunk
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/quick-guide-gplv3.html
 
-ManageWP Worker plugin allows you to remotely manage your WordPress sites from one dashboard.
+ManageWP is the ultimate WordPress productivity tool, allowing you to efficiently manage your websites.
 
 == Description ==
 
-[ManageWP](https://managewp.com/ "Manage Multiple Blogs") is a revolutionary service that automates the management of multiple WordPress websites. ManageWP Worker Plugin allows your site to communicate with the service, and is needed in order to enjoy all these features:
+[ManageWP](https://managewp.com/ "Manage Multiple WordPress Websites") is a revolutionary service designed to automate most of your daily tasks when managing multiple WordPress websites, allowing you to use your time on more important matters.
 
-Main features:
+= Everything in One Place =
+Just the hassle of logging into each of your websites is enough to ruin your day. With ManageWP the data from all of your sites is compiled and shown on a single easy to use dashboard, allowing you to check up on your websites in a single glance.
 
-*   Manage multiple WordPress sites securely and fast
-*	Manage WordPress themes, plugins, users, pages and posts for all your websites from one dashboard
-*   One click upgrades for WordPress, plugin and themes across all your sites
-*   Schedule automatic backups of your websites (Amazon S3, Google Drive, FTP/SFTP and Dropbox supported)
-*   Install WordPress, clone or migrate WordPress website to another domain
-*   One click to access WP admin of any site
-*   Bulk install themes and plugins to multiple sites at once
-*   Bulk publish posts and pages to multiple sites at once
-*   Add sub-users (writers, staff..) to your account
-*   SEO Statistics, track your keyword rankings
-*   Uptime monitoring - receive an SMS notification if your site goes down
+= One-click Management =
+With all the data on a single dashboard, all it takes is one click to perform plugin and theme updates on multiple websites. Got comments? Everything is on one single list. Or maybe you want to clean spam comments, table overhead or post revisions from all of your websites? It takes a single click.
 
+= Backup & Restore =
+Never leave home without a backup. With the scheduled backup tasks to remote destinations such as Amazon S3, Dropbox and Google Drive you will always have an up-to-date backup which you can use to restore your website if something happened to it (yeah, we know it was YOU who messed up the CSS!)
 
-Check out the [ManageWP Tour video](http://www.youtube.com/watch?v=Cg_W9MQBWt4).
+= Quick and Easy Migration =
+Want to know how easy is to migrate a website with ManageWP? Pick a source website, pick a destination website, click Go. Yeah, it's that easy.
 
-http://www.youtube.com/watch?v=Cg_W9MQBWt4
+= Uptime Monitoring =
+Be the first to know when your website is down with both email and SMS notifications, and get your website back online before anyone else notices.
 
-Check out [ManageWP.com](https://managewp.com/ "Manage Multiple Blogs").
+= SEO & Keyword Ranking =
+Be on top of your website rankings and figure out which keywords work best for you.
 
-== Changelog ==  
+= Client Reports =
+Keep track of what you're doing for your clients and dazzle them with a summary of your hard work.
+
+= Is This All? =
+No way! We've got a bunch of other awesome features, both free and premium, you can check out on our [ManageWP Features & Pricing Page](https://managewp.com/plans-and-pricing "ManageWP Plans & Pricing")
+
+Check out the [ManageWP promo video](https://www.youtube.com/watch?v=7usvv4DsG5A).
+
+https://www.youtube.com/watch?v=7usvv4DsG5A
+
+ManageWP is also the creator of [ManageWP.org](https://managewp.org/ "WordPress news site"), community project capturing the pulse of the WordPress community.
+
+== Changelog ==
+
+= 4.0.0 =
+
+- New features for the [ManageWP Orion release](http://managewp.com/managewp-orion-official-announcement "ManageWP Orion Official Announcement")
+- Misc bug fixes and performance improvements
 
 = 3.9.30 =
 
@@ -62,9 +76,9 @@ Check out [ManageWP.com](https://managewp.com/ "Manage Multiple Blogs").
 
 = 3.9.27 =
 - New: SFTP support for backups and clone!
-- Fix: Database dump for backup tasks with defined socket path or port number in wp-config.php 
+- Fix: Database dump for backup tasks with defined socket path or port number in wp-config.php
 - Fix: Optimize WordPress tables before backup
-- Fix: Compatibility with Better WP Security 
+- Fix: Compatibility with Better WP Security
 - Fix: Not adding jQuery on front page while using branding option
 
 = 3.9.26 =
@@ -77,7 +91,7 @@ Check out [ManageWP.com](https://managewp.com/ "Manage Multiple Blogs").
 - Fix: Delete user action was not functioning properly
 
 = 3.9.25 =
-- New: Improved Worker branding feature 
+- New: Improved Worker branding feature
 - Fix: Traffic alerts feature was not functioning properly
 - Fix: Backup information was sometimes incorrectly displayed
 - Fix: DB Table overhead was not shown on the dashboard
@@ -86,27 +100,27 @@ Check out [ManageWP.com](https://managewp.com/ "Manage Multiple Blogs").
 - New: Better support for large database dumps
 - Fix: PHP notice for WordPress 3.5
 - Fix: Support for automatic backup reports
-- Fix: Incorrect backup result message for S3 large files 
+- Fix: Incorrect backup result message for S3 large files
 
 = 3.9.23 =
 - New: SEO reports can be branded and viewed by sharing an URL
 - New: Set custom database prefix for new clone destination
 - New: Automatic change all URL paths for new clone destination
-- New: Success and fail email notifications for scheduled backup tasks 
-- Fix: Improved scheduled backups for limited server resources 
+- New: Success and fail email notifications for scheduled backup tasks
+- Fix: Improved scheduled backups for limited server resources
 - Fix: Improved backup to Dropbox (now supporting larger backup files)
 - Fix: Handling of external images with bulk posting
-- Fix: Display plugin versions on manage plugins 
-- Fix: Deprecated get_themes function 
+- Fix: Display plugin versions on manage plugins
+- Fix: Deprecated get_themes function
 - Fix: Special characters support for notes
- 
+
 = 3.9.22 =
 - New: Backup support for Google Drive
 - New: Keyword tracking limit increased from 5 to 20 times the website limit (ie. with 25 website account you can now track the ranking for 500 keywords!)
 - New: Support for Google Analytics API 3.0
 - New: Website preview screenshot
 - New: Ability to assign a newly added website to existing Backup tasks (under "advanced" in add website dialogue)
-- Fix: Clone tool now supports special characters and localized WP installs 
+- Fix: Clone tool now supports special characters and localized WP installs
 - Fix: Backup history preserved on website re-add
 
 = 3.9.21 =
@@ -193,7 +207,7 @@ Check out [ManageWP.com](https://managewp.com/ "Manage Multiple Blogs").
 = 3.9.9 =
 * New widget on the dashboard - Backup status
 * New screen for managing plugins and themes (activate, deactivate, delete, add to favorites, install) across all sites
-* New screen for managing users (change role or password, delete user) across all sites 
+* New screen for managing users (change role or password, delete user) across all sites
 * Option to overwrite old plugins and themes during bulk installation
 * Your website admin now loads faster in ManageWP
 * Added API for premium theme and plugin updates
@@ -239,7 +253,7 @@ Check out [ManageWP.com](https://managewp.com/ "Manage Multiple Blogs").
 
 = 3.9.0 =
 * New feature: Up to 50% faster dashboard loading
-* New feature: You can now ignore WordPress/plugin/theme updates         
+* New feature: You can now ignore WordPress/plugin/theme updates
 * New feature: Setting 'Show favicon' for websites in the dashboad
 * New feature: Full backups now include WordPress and other folders in the root of the site
 * Fixed: Bug with W3 TotalCache object cache causing weird behaviour in the dashboard
@@ -286,7 +300,7 @@ Check out [ManageWP.com](https://managewp.com/ "Manage Multiple Blogs").
 * No passwords required
 * Improved clone/backup
 
-= 3.6.3 =  
+= 3.6.3 =
 * Initial public release
 
 == Installation ==
@@ -294,7 +308,7 @@ Check out [ManageWP.com](https://managewp.com/ "Manage Multiple Blogs").
 1. Upload the plugin folder to your `/wp-content/plugins/` folder
 2. Go to the Plugins page in your website's WP-admin area and activate ManageWP Worker
 3. Visit [ManageWP.com](https://managewp.com/ "ManageWP")
-4. Sign up for a free 14 day trial and add your website
+4. Sign up and add your website
 
 Alternatively
 
@@ -339,6 +353,42 @@ You should have received a copy of the GNU General Public License along with Man
 
 == Frequently Asked Questions ==
 
+= Is ManageWP secure? =
+
+Yes. We invest heavilly in our security and in four years and serving over quarter a million websites we did not have a single security incident. Also we invest in a [white hat security program](https://managewp.com/white-hat-reward) with the purpose of preventing security issues.
+
+= Will ManageWP work with sites spread on different hosting accounts? =
+
+Yes.
+
+= Does ManageWP work with WordPress.com sites? =
+
+No. ManageWP works only with self-hosted WordPress sites.
+
+= Can I try all features for free? =
+
+Absolutely. The first month is on us.
+
 = I have problems adding my site =
 
 Make sure you use the latest version of the Worker plugin on the site you are trying to add. If you still have problems, check our dedicated [FAQ page](http://managewp.com/user-guide/faq/my-sites-fail-to-addload-to-managewp "Add site FAQ") or [contact us](http://managewp.com/contact "ManageWP Contact").
+
+= How does ManageWP compare to backup plugins like BackupBuddy, Backwpup, UpdraftPlus, WP-DB-Backup ? =
+
+There is a limit to what a PHP based backup can do (as are all these plugins) but we believe that our backup system is one of if not the most robust solution on the market.
+
+= How does ManageWP compare with clone plugins like Duplicator, WP Migrate DB, All-in-One WP Migration, XCloner ? =
+
+We are confident that our clone system is the most reliable one on the market featuring highly sophisticated technology allowing for the easiest and most efficient site clone/migration on the market.
+
+= Does ManageWP work with caching plugins like W3 Total Cache or WP Super Cache =
+
+Yes.
+
+= Does ManageWP work with all popular plugins like WordPress SEO by Yoast, WPTouch, Google XML Sitemaps, NextGEN Gallery, Contact Form 7, WooCommerce, iThemes Security, WordPres importer, Wordfence Security and others? =
+
+Yes. In most cases where there are conflicts we document them on our [known issues](https://managewp.com/user-guide/known-issues) page.
+
+= How does ManageWP compare to services like InfiniteWP, MainWP, CMS Commander, IControlWP ? =
+
+We believe that our product is technologically more advanced and more mature. In some cases ManageWP has been the inspiration for these services, and we continue to innovate. For more information please refer to [this comment](http://wpchat.com/t/security-and-centralized-wordpress-management-ie-managewp-jetpack-etc/505/6?u=vprelovac)

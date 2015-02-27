@@ -2,9 +2,9 @@
 Contributors: johnny5
 Donate link: http://urbangiraffe.com/about/
 Tags: post, admin, seo, pages, manage, 301, 404, redirect, permalink
-Requires at least: 3.2
+Requires at least: 3.4
 Tested up to: 4.2
-Stable tag: 2.3.12
+Stable tag: 2.3.14
 
 Redirection is a WordPress plugin to manage 301 redirections and keep track of 404 errors without requiring knowledge of Apache .htaccess files.
 
@@ -54,12 +54,12 @@ Redirection is available in:
 * Dutch by Marlon Navas, Pieter Carette, and Bart Kummel
 * Hungarian by daSSad and Szépe Viktor
 * Turkish by Fatih Cevik
-* Romanian translation, thanks to InboxTranslations
-* Greek, thanks to Stefanos Kofopoulos
-* Belarusian, thanks to Alexander Ovsov
-* Czech, thanks to Martin Jurica
-* Danish, thanks to Rasmus Himmelstrup
-* Persian, thanks to Danial Hatami
+* Romanian by InboxTranslations
+* Greek by Stefanos Kofopoulos
+* Belarusian by Alexander Ovsov
+* Czech by Martin Jurica
+* Danish by Rasmus Himmelstrup
+* Persian by Danial Hatami
 
 Please submit bugs and patches to https://github.com/johngodley/redirection
 
@@ -94,13 +94,24 @@ The plugin works in a similar manner to how WordPress handles permalinks and sho
 
 == Changelog ==
 
+= 2.3.14 =
+* Remove error_log statements
+* Fix incorrect table name when exporting 404 errors, props to brazenest/synchronos-t
+
+= 2.3.13 =
+* Split admin and front-end code out to streamline the loading a bit
+* Fix bad groups link when viewing redirects in a group, props to Patrick Fabre
+* Improved plugin activation/deactivation and cleanup
+* Improved log clearing
+
 = 2.3.12 =
 * Persian translation by Danial Hatami
-* Fix saving a redirection by login status, referrer, and user agent
+* Fix saving a redirection with login status, referrer, and user agent
 * Fix problem where deleting your last group would cause Redirection to only show an error
 * Add limits to referrer and destination in the logs
 * Redirect title now shows in the main list again. The field is hidden when editing until toggled
 * Fix 'bad nonce' error, props to Jonathan Harrell
+* Remove old WP code
 
 = 2.3.11 =
 * Fix log cleanup options
