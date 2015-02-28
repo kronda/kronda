@@ -37,8 +37,12 @@ class shortpixel_api {
 		$this->processImage($url, $filePath, $ID, $time);
 	}
 
-	public function doRequests($url, $filePath, $ID = null) {
-		$response = $this->doBulkRequest(array($url), true);
+	public function doRequests($urls, $filePath, $ID = null) {
+		
+		if ( !is_array($urls) )
+			$response = $this->doBulkRequest(array($urls), true);
+		else
+			$response = $this->doBulkRequest($urls, true);
 
 		if(is_object($response) && get_class($response) == 'WP_Error') {
 			return false;
@@ -55,7 +59,7 @@ class shortpixel_api {
 			'lossy' => $this->_compressionType,
 			'urllist' => $imageList
 		);
-
+		
 		$response = wp_remote_post($this->_apiEndPoint, array(
 			'method' => 'POST',
 			'timeout' => 45,
@@ -68,7 +72,6 @@ class shortpixel_api {
 		));
 
 		return $response;
-
 	}
 
 	public function parseResponse($response) {
@@ -80,8 +83,9 @@ class shortpixel_api {
 
 	//handles the processing of the image using the ShortPixel API
 	public function processImage($url, $filePath, $ID = null, $startTime = 0) {
-		if($startTime == 0) { $startTime = time(); }
-		if(time() - $startTime > MAX_EXECUTION_TIME) {
+		
+		if($startTime == 0) { $startTime = time(); }		
+		if(time() - $startTime > MAX_EXECUTION_TIME) {//keeps track of time
 			$meta = wp_get_attachment_metadata($ID);
 			$meta['ShortPixelImprovement'] = 'Could not determine compression';
 			unset($meta['ShortPixel']['WaitingProcessing']);
@@ -89,24 +93,24 @@ class shortpixel_api {
 			return 'Could not determine compression';
 		}
 
-		$response = $this->doRequests($url, $filePath, $ID);
-
+		$response = $this->doRequests($url, $filePath, $ID);//send requests to API
 		if(!$response) return $response;
 
-		if($response['response']['code'] != 200) {
-			printf('Web service did not respond. Please try again later.');
+		if($response['response']['code'] != 200) {//response <> 200 -> there was an error apparently?
+			printf('ShortPixel API service accesibility error. Please try again later.');
 			return false;
 		}
 
-		$data = $this->parseResponse($response);
-		$data = $data[0];
-
-		if(!is_object($data) || !isset($data->Status->Code)) {
+		$data = $this->parseResponse($response);//get the actual  response from API
+		
+		if( !is_array($data) ) {// the answer from API isn't good
 			printf('Web service returned an error. Please try again later.');
 			return false;
 		}
-
-		switch($data->Status->Code) {
+		
+		$firstImage = $data[0];//extract as object first image
+		
+		switch($firstImage->Status->Code) {
 			case 1:
 				//handle image has been scheduled
 				sleep(1);
@@ -133,41 +137,53 @@ class shortpixel_api {
 
 	public function handleSuccess($callData, $url, $filePath, $ID) {
 
-		if($this->_compressionType) {
-			//lossy
-			$correctFileSize = $callData->LossySize;
-			$tempFile = download_url(urldecode($callData->LossyURL));
-			if(is_wp_error( $tempFile )) {
-				$tempFile = download_url(str_replace('https://', 'http://', urldecode($callData->LossyURL)));
+		$counter = 0;
+		if($this->_compressionType)
+			{
+				$fileType = "LossyURL";
+				$fileSize = "LossySize";
+			}	
+		else
+			{
+				$fileType = "LosslessURL";
+				$fileSize = "LoselessSize";
 			}
-		} else {
-			//lossless
-			$correctFileSize = $callData->LoselessSize;
-			$tempFile = download_url(urldecode($callData->LosslessURL));
-			if(is_wp_error( $tempFile )) {
-				$tempFile = download_url(str_replace('https://', 'http://', urldecode($callData->LosslessURL)));
+
+		foreach ( $callData as $fileData )//download each file from array and process it
+		{
+			
+			if ( $counter == 0 )//save percent improvement for main file
+				$percentImprovement = $fileData->PercentImprovement;
+
+			$correctFileSize = $fileData->$fileSize;
+			$tempFiles[$counter] = download_url(urldecode($fileData->$fileType));
+			
+			if(is_wp_error( $tempFiles[$counter] )) //also tries with http instead of https
+				$tempFiles[$counter] = download_url(str_replace('https://', 'http://', urldecode($fileData->$fileType)));
+				
+			if ( is_wp_error( $tempFiles[$counter] ) ) {
+				@unlink($tempFiles[$counter]);
+				return sprintf("Error downloading file (%s)", $tempFiles[$counter]->get_error_message());
+				die;
 			}
-		}
-
-		if ( is_wp_error( $tempFile ) ) {
-			@unlink($tempFile);
-			return sprintf("Error downloading file (%s)", $tempFile->get_error_message());
-			die;
-		}
-
-		//check response so that download is OK
-		if(filesize($tempFile) != $correctFileSize) {
-			return sprintf("Error downloading file - incorrect file size");
-			die;
-		}
-
-		if (!file_exists($tempFile)) {
-			return sprintf("Unable to locate downloaded file (%s)", $tempFile);
-			die;
+	
+			//check response so that download is OK
+			if( filesize($tempFiles[$counter]) != $correctFileSize) {
+				return sprintf("Error downloading file - incorrect file size");
+				die;
+			}
+	
+			if (!file_exists($tempFiles[$counter])) {
+				return sprintf("Unable to locate downloaded file (%s)", $tempFiles[$counter]);
+				die;
+			}	
+			
+			$counter++;
 		}
 
 		//if backup is enabled
-		if(get_option('wp-short-backup_images')) {
+		if(get_option('wp-short-backup_images')) 
+		{
 
 			$imageIndex = 0;
 			$uploadDir = wp_upload_dir();
@@ -205,46 +221,67 @@ class shortpixel_api {
 			} else {
 				return sprintf("Backup folder exists but is not writable");
 			}
+		}//end backup section
+
+
+		$counter = 0;
+		$meta = wp_get_attachment_metadata($ID);//we'll need the metadata for subdir
+		$SubDir = trim(substr($meta['file'],0,strrpos($meta['file'],"/")+1));
+		if ( strlen($SubDir) == 0 )//it is likely a PDF file so we treat this differently
+		{
+			global  $wpdb;
+			$qry = "SELECT * FROM " . $wpdb->prefix . "postmeta
+                WHERE  (
+					post_id = $ID AND
+					meta_key = '_wp_attached_file'
+					)";
+			$idList = $wpdb->get_results($qry);
+			$metaPDF = $idList[0];	
+			$SubDir = trim(substr($metaPDF->meta_value,0,strrpos($metaPDF->meta_value,"/")+1));
 		}
-
-
-
-/////////////////////////
-
-
-		@unlink( $filePath );
-		$success = @rename( $tempFile, $filePath );
-
-		if (!$success) {
-			$copySuccess = copy($tempFile, $filePath);
-			unlink($tempFile);
-		}
-
-		if($success || $copySuccess) {
-			//update statistics
-			if(isset($callData->LossySize)) {
-				$savedSpace = $callData->OriginalSize - $callData->LossySize;
-			} else {
-				$savedSpace = $callData->OriginalSize - $callData->LoselessSize;
+		
+		foreach ( $tempFiles as $tempFile )
+		{ 
+			
+			$sourceFile = $tempFile;
+			$destinationFile = WP_CONTENT_DIR . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . $SubDir . basename($url[$counter]);	
+			
+			@unlink( $destinationFile );			
+			$success = @rename( $sourceFile, $destinationFile );
+	
+			if (!$success) {
+				$copySuccess = copy($sourceFile, $destinationFile);
+				unlink($sourceFile);
 			}
+	
+			//save data to counters
+			if($success || $copySuccess) {
+				//update statistics
+				$fileData = $callData[$counter];
+				$savedSpace = $fileData->OriginalSize - $fileData->LossySize;
 
-			update_option(
-				'wp-short-pixel-savedSpace',
-				get_option('wp-short-pixel-savedSpace') + $savedSpace
-			);
-			$averageCompression = get_option('wp-short-pixel-averageCompression') * get_option('wp-short-pixel-fileCount');
-			$averageCompression += $callData->PercentImprovement;
-			$averageCompression = $averageCompression /  (get_option('wp-short-pixel-fileCount') + 1);
-			update_option('wp-short-pixel-averageCompression', $averageCompression);
-			update_option('wp-short-pixel-fileCount', get_option('wp-short-pixel-fileCount')+1);
-
-			//update metadata
-			if(isset($ID)) {
-				$meta = wp_get_attachment_metadata($ID);
-				$meta['ShortPixelImprovement'] = $callData->PercentImprovement;
-				wp_update_attachment_metadata($ID, $meta);
+				update_option(
+					'wp-short-pixel-savedSpace',
+					get_option('wp-short-pixel-savedSpace') + $savedSpace
+				);
+				$averageCompression = get_option('wp-short-pixel-averageCompression') * get_option('wp-short-pixel-fileCount');
+				$averageCompression += $fileData->PercentImprovement;
+				$averageCompression = $averageCompression /  (get_option('wp-short-pixel-fileCount') + 1);
+				update_option('wp-short-pixel-averageCompression', $averageCompression);
+				update_option('wp-short-pixel-fileCount', get_option('wp-short-pixel-fileCount')+1);
+	
 			}
+			$counter++;
+		}	
+
+		//update metadata
+		if(isset($ID)) {
+			$meta = wp_get_attachment_metadata($ID);
+			$meta['ShortPixelImprovement'] = $percentImprovement;
+			wp_update_attachment_metadata($ID, $meta);
 		}
+		
+
 	}
 
 	public function parseJSON($data) {
