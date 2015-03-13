@@ -33,12 +33,11 @@ class shortpixel_api {
 		add_action('processImageAction', array(&$this, 'processImageAction'), 10, 4);
 	}
 
-	public function processImageAction($url, $filePath, $ID, $time) {
-		$this->processImage($url, $filePath, $ID, $time);
+	public function processImageAction($url, $filePaths, $ID, $time) {
+		$this->processImage($url, $filePaths, $ID, $time);
 	}
 
 	public function doRequests($urls, $filePath, $ID = null) {
-		
 		if ( !is_array($urls) )
 			$response = $this->doBulkRequest(array($urls), true);
 		else
@@ -55,15 +54,17 @@ class shortpixel_api {
 		if(!is_array($imageList)) return false;
 
 		$requestParameters = array(
+			'plugin_version' => PLUGIN_VERSION,
 			'key' => $this->_apiKey,
 			'lossy' => $this->_compressionType,
 			'urllist' => $imageList
 		);
-		
+
 		$response = wp_remote_post($this->_apiEndPoint, array(
 			'method' => 'POST',
 			'timeout' => 45,
-			'redirection' => 5,
+			'redirection' => 3,
+			'sslverify' => false,
 			'httpversion' => '1.0',
 			'blocking' => $blocking,
 			'headers' => array(),
@@ -76,24 +77,34 @@ class shortpixel_api {
 
 	public function parseResponse($response) {
 		$data = $response['body'];
-		$data = str_replace('Warning: Division by zero in /usr/local/important/web/api.shortpixel.com/lib/functions.php on line 33', '', $data);
 		$data = $this->parseJSON($data);
 		return $data;
 	}
 
 	//handles the processing of the image using the ShortPixel API
-	public function processImage($url, $filePath, $ID = null, $startTime = 0) {
+	public function processImage($url, $filePaths, $ID = null, $startTime = 0) {
 		
 		if($startTime == 0) { $startTime = time(); }		
+		$apiRetries = get_option('wp-short-pixel-api-retries');
 		if(time() - $startTime > MAX_EXECUTION_TIME) {//keeps track of time
-			$meta = wp_get_attachment_metadata($ID);
-			$meta['ShortPixelImprovement'] = 'Could not determine compression';
-			unset($meta['ShortPixel']['WaitingProcessing']);
-			wp_update_attachment_metadata($ID, $meta);
-			return 'Could not determine compression';
+			if ( $apiRetries > MAX_API_RETRIES )//we tried to process this time too many times, giving up...
+			{
+				$meta = wp_get_attachment_metadata($ID);
+				$meta['ShortPixelImprovement'] = 'Timed out while processing.';
+				unset($meta['ShortPixel']['WaitingProcessing']);
+				wp_update_attachment_metadata($ID, $meta);
+			}
+			else
+			{//we'll try again next time user visits a page on admin panel
+				$apiRetries++;
+				update_option('wp-short-pixel-api-retries', $apiRetries);
+				exit('Timed out while processing. (pass '.$apiRetries.')');	
+			}
+			
+			
 		}
 
-		$response = $this->doRequests($url, $filePath, $ID);//send requests to API
+		$response = $this->doRequests($url, $filePaths, $ID);//send requests to API
 		if(!$response) return $response;
 
 		if($response['response']['code'] != 200) {//response <> 200 -> there was an error apparently?
@@ -110,25 +121,41 @@ class shortpixel_api {
 		
 		$firstImage = $data[0];//extract as object first image
 		
+		//this part makes sure that all the sizes were processed and ready to be downloaded
+		foreach ( $data as $imageObject )
+		{
+			if 	( $imageObject->Status->Code <> 2 )
+			{
+				sleep(2);
+				//echo "\n not ready($apiRetries):" . $imageObject->OriginalURL;//fai
+				return $this->processImage($url, $filePaths, $ID, $startTime);	
+			}		
+		}
+		
 		switch($firstImage->Status->Code) {
 			case 1:
 				//handle image has been scheduled
 				sleep(1);
-				return $this->processImage($url, $filePath, $ID, $startTime);
+				return $this->processImage($url, $filePaths, $ID, $startTime);
 				break;
 			case 2:
 				//handle image has been processed
-				$this->handleSuccess($data, $url, $filePath, $ID);
+				$this->handleSuccess($data, $url, $filePaths, $ID);
 				break;
 			case -403:
 				return 'Quota exceeded</br>';
+				break;
 			case -401:
 				return 'Wrong API Key</br>';
+				break;
 			case -302:
 				return 'Images does not exists</br>';
+				break;
 			default:
 				//handle error
-				return $data->Status->Message;
+				if ( isset($data[0]->Status->Message) )
+					return $data[0]->Status->Message;
+				
 		}
 
 		return $data;
@@ -136,7 +163,7 @@ class shortpixel_api {
 
 
 	public function handleSuccess($callData, $url, $filePath, $ID) {
-
+		
 		$counter = 0;
 		if($this->_compressionType)
 			{
@@ -149,85 +176,95 @@ class shortpixel_api {
 				$fileSize = "LoselessSize";
 			}
 
-		foreach ( $callData as $fileData )//download each file from array and process it
-		{
-			
-			if ( $counter == 0 )//save percent improvement for main file
-				$percentImprovement = $fileData->PercentImprovement;
-
-			$correctFileSize = $fileData->$fileSize;
-			$tempFiles[$counter] = download_url(urldecode($fileData->$fileType));
-			
-			if(is_wp_error( $tempFiles[$counter] )) //also tries with http instead of https
-				$tempFiles[$counter] = download_url(str_replace('https://', 'http://', urldecode($fileData->$fileType)));
-				
-			if ( is_wp_error( $tempFiles[$counter] ) ) {
-				@unlink($tempFiles[$counter]);
-				return sprintf("Error downloading file (%s)", $tempFiles[$counter]->get_error_message());
-				die;
-			}
-	
-			//check response so that download is OK
-			if( filesize($tempFiles[$counter]) != $correctFileSize) {
-				return sprintf("Error downloading file - incorrect file size");
-				die;
-			}
-	
-			if (!file_exists($tempFiles[$counter])) {
-				return sprintf("Unable to locate downloaded file (%s)", $tempFiles[$counter]);
-				die;
-			}	
-			
-			$counter++;
-		}
-
-		//if backup is enabled
-		if(get_option('wp-short-backup_images')) 
-		{
-
-			$imageIndex = 0;
-			$uploadDir = wp_upload_dir();
-
-			if(!file_exists(SP_BACKUP_FOLDER) && !mkdir(SP_BACKUP_FOLDER, 0777, true)) {
-				return sprintf("Backup folder does not exist and it could not be created");
-			}
-			$meta = wp_get_attachment_metadata($ID);
-			$source[$imageIndex] = $filePath;
-			
-			//create destination dir if it isn't already created
-			@mkdir( SP_BACKUP_FOLDER . $uploadDir['subdir'], 0777, true);
-			
-			$destination[$imageIndex] = SP_BACKUP_FOLDER . $uploadDir['subdir'] . DIRECTORY_SEPARATOR . basename($source[$imageIndex]);
-
-			foreach ( $meta['sizes'] as $pictureDetails )
+			foreach ( $callData as $fileData )//download each file from array and process it
 			{
-				$imageIndex++;
-				$source[$imageIndex] = $uploadDir['path'] . DIRECTORY_SEPARATOR . $pictureDetails['file'];
-				$destination[$imageIndex] = SP_BACKUP_FOLDER . $uploadDir['subdir'] . DIRECTORY_SEPARATOR . basename($source[$imageIndex]);
-
-			}
-
-
-			if(is_writable(SP_BACKUP_FOLDER)) {
-				if(!file_exists($destination[0])) 
+			
+				if ( $counter == 0 )//save percent improvement for main file
+					$percentImprovement = $fileData->PercentImprovement;
+	
+				$correctFileSize = $fileData->$fileSize;
+				$tempFiles[$counter] = download_url(urldecode($fileData->$fileType));
+				
+				if(is_wp_error( $tempFiles[$counter] )) //also tries with http instead of https
 				{
-					foreach ( $source as $imageIndex => $fileSource )
-					{
-						$fileDestination = $destination[$imageIndex];
-						@copy($fileSource, $fileDestination);
-					}			
-					
+					sleep(2);
+					$tempFiles[$counter] = download_url(str_replace('https://', 'http://', urldecode($fileData->$fileType)));
+				}	
+				
+				if ( is_wp_error( $tempFiles[$counter] ) ) {
+					@unlink($tempFiles[$counter]);
+					return sprintf("Error downloading file (%s)", $tempFiles[$counter]->get_error_message());
+					die;
 				}
-			} else {
-				return sprintf("Backup folder exists but is not writable");
+		
+				//check response so that download is OK
+				if( filesize($tempFiles[$counter]) != $correctFileSize) {
+					return sprintf("Error downloading file - incorrect file size");
+					die;
+				}
+		
+				if (!file_exists($tempFiles[$counter])) {
+					return sprintf("Unable to locate downloaded file (%s)", $tempFiles[$counter]);
+					die;
+				}	
+				$counter++;
 			}
-		}//end backup section
 
+			//if backup is enabled
+			if(get_option('wp-short-backup_images')) 
+			{
+				$imageIndex = 0;
+				$uploadDir = wp_upload_dir();
+	
+				if(!file_exists(SP_BACKUP_FOLDER) && !mkdir(SP_BACKUP_FOLDER, 0777, true)) {
+					return sprintf("Backup folder does not exist and it could not be created");
+				}
+				$meta = wp_get_attachment_metadata($ID);
+				$source = $filePath;
+				$SubDir = trim(substr($meta['file'],0,strrpos($meta['file'],"/")+1));
+				
+				if ( empty($SubDir) ) //its a PDF?
+				{
+					$uploadFilePath = get_attached_file($ID);
+					$tmp = str_replace($uploadDir['basedir'],"", $uploadFilePath);
+					$SubDir = trim(substr($tmp,0,strrpos($tmp,"/")));
+
+					//create destination dir if it isn't already created
+					@mkdir( SP_BACKUP_FOLDER . $SubDir, 0777, true);
+					$destination[$imageIndex] = SP_BACKUP_FOLDER . $SubDir . DIRECTORY_SEPARATOR . basename($uploadFilePath);
+											
+				}
+				else //it is not PDF, its an image
+				{
+					@mkdir( SP_BACKUP_FOLDER . DIRECTORY_SEPARATOR. $SubDir, 0777, true);
+					$destination[$imageIndex] = SP_BACKUP_FOLDER . DIRECTORY_SEPARATOR . $SubDir . basename($source[$imageIndex]);//for main file
+	
+					foreach ( $meta['sizes'] as $pictureDetails )
+					{
+						$imageIndex++;
+						$source[$imageIndex] = $uploadDir['basedir'] . DIRECTORY_SEPARATOR . $SubDir . $pictureDetails['file'];
+						$destination[$imageIndex] = SP_BACKUP_FOLDER . DIRECTORY_SEPARATOR . $SubDir . basename($source[$imageIndex]);
+					}
+				}
+				
+				if(is_writable(SP_BACKUP_FOLDER)) {
+					if(!file_exists($destination[0])) 
+					{					
+						foreach ( $source as $imageIndex => $fileSource )
+						{
+							$fileDestination = $destination[$imageIndex];
+							@copy($fileSource, $fileDestination);
+						}			
+					}
+				} else {
+					return sprintf("Backup folder exists but is not writable");
+				}
+	
+			}//end backup section
 
 		$counter = 0;
 		$meta = wp_get_attachment_metadata($ID);//we'll need the metadata for subdir
-		$SubDir = trim(substr($meta['file'],0,strrpos($meta['file'],"/")+1));
-		if ( strlen($SubDir) == 0 )//it is likely a PDF file so we treat this differently
+		if ( !isset($meta['file']) )//it is likely a PDF file so we treat this differently
 		{
 			global  $wpdb;
 			$qry = "SELECT * FROM " . $wpdb->prefix . "postmeta
@@ -239,8 +276,11 @@ class shortpixel_api {
 			$metaPDF = $idList[0];	
 			$SubDir = trim(substr($metaPDF->meta_value,0,strrpos($metaPDF->meta_value,"/")+1));
 		}
+		else //its an image
+			$SubDir = trim(substr($meta['file'],0,strrpos($meta['file'],"/")+1));
+			
 		
-		foreach ( $tempFiles as $tempFile )
+		foreach ( $tempFiles as $tempFile )//overwrite the original files with the optimized ones
 		{ 
 			
 			$sourceFile = $tempFile;
@@ -280,9 +320,11 @@ class shortpixel_api {
 			$meta['ShortPixelImprovement'] = $percentImprovement;
 			wp_update_attachment_metadata($ID, $meta);
 		}
-		
-
-	}
+	
+		//we reset the retry counter in case of success
+		update_option('wp-short-pixel-api-retries', 0);
+	
+	}//end handleSuccess
 
 	public function parseJSON($data) {
 		if ( function_exists('json_decode') ) {
