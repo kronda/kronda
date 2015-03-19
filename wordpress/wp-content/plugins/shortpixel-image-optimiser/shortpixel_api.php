@@ -93,6 +93,9 @@ class shortpixel_api {
 				$meta['ShortPixelImprovement'] = 'Timed out while processing.';
 				unset($meta['ShortPixel']['WaitingProcessing']);
 				wp_update_attachment_metadata($ID, $meta);
+				//also decrement last ID for queries so bulk won't hang in such cases
+				$startQueryID = get_option("wp-short-pixel-query-id-start");
+				update_option("wp-short-pixel-query-id-start", $startQueryID - 1);
 			}
 			else
 			{//we'll try again next time user visits a page on admin panel
@@ -100,8 +103,6 @@ class shortpixel_api {
 				update_option('wp-short-pixel-api-retries', $apiRetries);
 				exit('Timed out while processing. (pass '.$apiRetries.')');	
 			}
-			
-			
 		}
 
 		$response = $this->doRequests($url, $filePaths, $ID);//send requests to API
@@ -112,27 +113,21 @@ class shortpixel_api {
 			return false;
 		}
 
-		$data = $this->parseResponse($response);//get the actual  response from API
+		$data = (array)$this->parseResponse($response);//get the actual response from API, convert it to an array if it is an object
 		
-		if( !is_array($data) ) {// the answer from API isn't good
-			printf('Web service returned an error. Please try again later.');
-			return false;
-		}
-		
-		$firstImage = $data[0];//extract as object first image
-		
-		//this part makes sure that all the sizes were processed and ready to be downloaded
-		foreach ( $data as $imageObject )
+		if ( isset($data[0]) )//API returned image details
 		{
-			if 	( $imageObject->Status->Code <> 2 )
-			{
-				sleep(2);
-				//echo "\n not ready($apiRetries):" . $imageObject->OriginalURL;//fai
-				return $this->processImage($url, $filePaths, $ID, $startTime);	
-			}		
-		}
-		
-		switch($firstImage->Status->Code) {
+			$firstImage = $data[0];//extract as object first image
+			foreach ( $data as $imageObject )
+			{	//this part makes sure that all the sizes were processed and ready to be downloaded
+				if 	( $imageObject->Status->Code == 0 || $imageObject->Status->Code == 1  )
+				{
+					sleep(2);
+					return $this->processImage($url, $filePaths, $ID, $startTime);	
+				}		
+			}
+			
+			switch($firstImage->Status->Code) {
 			case 1:
 				//handle image has been scheduled
 				sleep(1);
@@ -142,6 +137,15 @@ class shortpixel_api {
 				//handle image has been processed
 				$this->handleSuccess($data, $url, $filePaths, $ID);
 				break;
+			default:
+				//handle error
+				if ( isset($data[0]->Status->Message) )
+					return $data[0]->Status->Message;
+			}
+		}
+		else//API returned an error
+		{
+			switch($data['Status']->Code) {
 			case -403:
 				return 'Quota exceeded</br>';
 				break;
@@ -155,15 +159,16 @@ class shortpixel_api {
 				//handle error
 				if ( isset($data[0]->Status->Message) )
 					return $data[0]->Status->Message;
-				
+			}
+			
 		}
-
+		
 		return $data;
 	}
 
 
 	public function handleSuccess($callData, $url, $filePath, $ID) {
-		
+
 		$counter = 0;
 		if($this->_compressionType)
 			{
@@ -178,38 +183,43 @@ class shortpixel_api {
 
 			foreach ( $callData as $fileData )//download each file from array and process it
 			{
-			
-				if ( $counter == 0 )//save percent improvement for main file
-					$percentImprovement = $fileData->PercentImprovement;
-	
-				$correctFileSize = $fileData->$fileSize;
-				$tempFiles[$counter] = download_url(urldecode($fileData->$fileType));
-				
-				if(is_wp_error( $tempFiles[$counter] )) //also tries with http instead of https
+				if ( $fileData->Status->Code == 2 ) //file was processed OK
 				{
-					sleep(2);
-					$tempFiles[$counter] = download_url(str_replace('https://', 'http://', urldecode($fileData->$fileType)));
-				}	
+					if ( $counter == 0 )//save percent improvement for main file
+						$percentImprovement = $fileData->PercentImprovement;
 				
-				if ( is_wp_error( $tempFiles[$counter] ) ) {
-					@unlink($tempFiles[$counter]);
-					return sprintf("Error downloading file (%s)", $tempFiles[$counter]->get_error_message());
-					die;
-				}
-		
-				//check response so that download is OK
-				if( filesize($tempFiles[$counter]) != $correctFileSize) {
-					return sprintf("Error downloading file - incorrect file size");
-					die;
-				}
-		
-				if (!file_exists($tempFiles[$counter])) {
-					return sprintf("Unable to locate downloaded file (%s)", $tempFiles[$counter]);
-					die;
+					$correctFileSize = $fileData->$fileSize;
+					$tempFiles[$counter] = download_url(urldecode($fileData->$fileType));
+					
+					if(is_wp_error( $tempFiles[$counter] )) //also tries with http instead of https
+					{
+						sleep(1);
+						$tempFiles[$counter] = download_url(str_replace('https://', 'http://', urldecode($fileData->$fileType)));
+					}	
+					
+					if ( is_wp_error( $tempFiles[$counter] ) ) {
+						@unlink($tempFiles[$counter]);
+						return sprintf("Error downloading file (%s)", $tempFiles[$counter]->get_error_message());
+						die;
+					}
+	
+					//check response so that download is OK
+					if( filesize($tempFiles[$counter]) != $correctFileSize) {
+						return sprintf("Error downloading file - incorrect file size");
+						die;
+					}
+	
+					if (!file_exists($tempFiles[$counter])) {
+						return sprintf("Unable to locate downloaded file (%s)", $tempFiles[$counter]);
+						die;
+					}
 				}	
+				else //there was an error while trying to download a file
+					$tempFiles[$counter] = "";
 				$counter++;
 			}
 
+			
 			//if backup is enabled
 			if(get_option('wp-short-backup_images')) 
 			{
@@ -220,9 +230,9 @@ class shortpixel_api {
 					return sprintf("Backup folder does not exist and it could not be created");
 				}
 				$meta = wp_get_attachment_metadata($ID);
+				$SubDir = ( isset($meta['file']) ) ? trim(substr($meta['file'],0,strrpos($meta['file'],"/")+1)) : "";
 				$source = $filePath;
-				$SubDir = trim(substr($meta['file'],0,strrpos($meta['file'],"/")+1));
-				
+
 				if ( empty($SubDir) ) //its a PDF?
 				{
 					$uploadFilePath = get_attached_file($ID);
@@ -286,16 +296,24 @@ class shortpixel_api {
 			$sourceFile = $tempFile;
 			$destinationFile = WP_CONTENT_DIR . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . $SubDir . basename($url[$counter]);	
 			
-			@unlink( $destinationFile );			
-			$success = @rename( $sourceFile, $destinationFile );
-	
-			if (!$success) {
-				$copySuccess = copy($sourceFile, $destinationFile);
-				unlink($sourceFile);
+			if ( $sourceFile <> "" && file_exists($sourceFile) )//possibly there was an error and the file couldn't have been processed
+			{
+				@unlink( $destinationFile );			
+				$success = @rename( $sourceFile, $destinationFile );
+		
+				if (!$success) {
+					$copySuccess = copy($sourceFile, $destinationFile);
+					unlink($sourceFile);
+				}
 			}
-	
+			else
+				{
+					$success = 0;
+					$copySuccess = 0;
+				}
+		
 			//save data to counters
-			if($success || $copySuccess) {
+			if( $success || $copySuccess) {
 				//update statistics
 				$fileData = $callData[$counter];
 				$savedSpace = $fileData->OriginalSize - $fileData->LossySize;
@@ -317,12 +335,14 @@ class shortpixel_api {
 		//update metadata
 		if(isset($ID)) {
 			$meta = wp_get_attachment_metadata($ID);
-			$meta['ShortPixelImprovement'] = $percentImprovement;
+			$meta['ShortPixelImprovement'] = round($percentImprovement,2);
 			wp_update_attachment_metadata($ID, $meta);
 		}
 	
 		//we reset the retry counter in case of success
 		update_option('wp-short-pixel-api-retries', 0);
+		//set this file as processed -> we decrement the cursor
+		update_option("wp-short-pixel-query-id-start", $ID - 1);//update max ID	
 	
 	}//end handleSuccess
 

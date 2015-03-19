@@ -3,7 +3,7 @@
  * Plugin Name: ShortPixel Image Optimiser
  * Plugin URI: https://shortpixel.com/
  * Description: ShortPixel is an image compression tool that helps improve your website performance. The plugin optimises images automatically using both lossy and lossless compression. Resulting, smaller, images are no different in quality from the original. To install: 1) Click the "Activate" link to the left of this description. 2) <a href="https://shortpixel.com/wp-apikey" target="_blank">Free Sign up</a> for your unique API Key . 3) Check your email for your API key. 4) Use your API key to activate ShortPixel plugin in the 'Plugins' menu in WordPress. 5) Done!
- * Version: 2.0.8
+ * Version: 2.1.0
  * Author: ShortPixel
  * Author URI: https://shortpixel.com
  */
@@ -12,7 +12,7 @@ require_once('shortpixel_api.php');
 require_once( ABSPATH . 'wp-admin/includes/image.php' );
 require_once( ABSPATH . 'wp-includes/pluggable.php' );
 
-define('PLUGIN_VERSION', "2.0.8");
+define('PLUGIN_VERSION', "2.1.0");
 define('SP_DEBUG', false);
 define('SP_LOG', false);
 define('SP_MAX_TIMEOUT', 10);
@@ -21,7 +21,8 @@ define('MUST_HAVE_KEY', true);
 define('MAX_API_RETRIES', 5);
 $MAX_EXECUTION_TIME = ini_get('max_execution_time');
 if ( is_numeric($MAX_EXECUTION_TIME) )
-	define('MAX_EXECUTION_TIME', $MAX_EXECUTION_TIME - 1 );   //in seconds
+	define('MAX_EXECUTION_TIME', $MAX_EXECUTION_TIME - 3 );   //in seconds
+define("SP_MAX_RESULTS_QUERY", 6);	
 
 class WPShortPixel {
 
@@ -50,6 +51,10 @@ class WPShortPixel {
 		add_action( 'admin_menu', array( &$this, 'registerSettingsPage' ) );//display SP in Settings menu
 		add_action( 'admin_menu', array( &$this, 'registerAdminPage' ) );
 		add_action( 'delete_attachment', array( &$this, 'handleDeleteAttachmentInBackup' ) );
+		
+		//when plugin is activated run this 
+		register_activation_hook( __FILE__, array( &$this, 'shortPixelActivatePlugin' ) );
+		register_deactivation_hook( __FILE__, array( &$this, 'shortPixelDeactivatePlugin' ) );
 
 		//automatic optimization
 		add_action( 'admin_footer', array( &$this, 'my_action_javascript') );
@@ -109,8 +114,30 @@ class WPShortPixel {
 		if(get_option('wp-short-pixel-api-retries') === false) {//sometimes we need to retry processing/downloading a file multiple times
 			add_option( 'wp-short-pixel-api-retries', 0, '', 'yes' );
 		}
+		
+		if(get_option('wp-short-pixel-query-id-start') === false) {//current query ID used for postmeta
+			add_option( 'wp-short-pixel-query-id-start', 0, '', 'yes' );
+		}	
+	
+		if(get_option('wp-short-pixel-query-id-stop') === false) {//current query ID used for postmeta
+			add_option( 'wp-short-pixel-query-id-stop', 0, '', 'yes' );
+		}	
 	
 	}
+	
+	public function shortPixelActivatePlugin()//reset some params to avoid troubles for plugins that were activated/deactivated/activated
+	{
+			delete_option('bulkProcessingStatus');			
+			update_option( 'wp-short-pixel-query-id-stop', 0 );
+			update_option( 'wp-short-pixel-query-id-start', 0 );
+	}
+	
+	public function shortPixelDeactivatePlugin()//reset some params to avoid troubles for plugins that were activated/deactivated/activated
+	{
+			delete_option('bulkProcessingStatus');
+			update_option( 'wp-short-pixel-query-id-stop', 0 );
+			update_option( 'wp-short-pixel-query-id-start', 0 );
+	}	
 	
 	//set default move as "list". only set once, it won't try to set the default mode again.
 	public function setDefaultViewModeList() 
@@ -118,13 +145,12 @@ class WPShortPixel {
 		if(get_option('wp-short-pixel-view-mode') === false) 
 		{
 			add_option('wp-short-pixel-view-mode', 1, '', 'yes' );
-			if ( function_exists(get_currentuserinfo) )
+			if ( function_exists('get_currentuserinfo') )
 				{
 					global $current_user;
 					get_currentuserinfo();
 					$currentUserID = $current_user->ID;
 					update_user_meta($currentUserID, "wp_media_library_mode", "list");
-					echo "OK";
 				}
 		}
 		
@@ -174,13 +200,30 @@ class WPShortPixel {
 	}
 
 	public function handleImageUpload($meta, $ID = null) {
+
 		if(MUST_HAVE_KEY && $this->_verifiedKey) 
 			{
+				$bulkProcessingStatus = get_option('bulkProcessingStatus');
+				//update variable to keep track of this new attachment but only if bulk isn't running
+				if( $bulkProcessingStatus <> 'running' ) 
+						update_option("wp-short-pixel-query-id-start", $ID);
+				
 				self::log("Processing image id {$ID}");
 				$url = wp_get_attachment_url($ID);
 				$path = get_attached_file($ID);
 				if(self::isProcesable($path) != false) 
 				{
+					if ( empty($meta) && $bulkProcessingStatus <> 'running' )//here's a PDF file most likely, while bulk not running
+						{
+							$meta['ShortPixel']['WaitingProcessing'] = true;
+							return $meta;
+						}
+					elseif ( empty($meta) && $bulkProcessingStatus == 'running' )//while bulk running
+						{
+							return $meta;
+						}
+
+
 					$urlList[] = $url;
 					$filePath[] = $path;
 					//send request for thumbs as well, if needed
@@ -202,16 +245,17 @@ class WPShortPixel {
 							$this->_apiInterface->doRequests($urlList, $filePath);//send a processing request right after a file was uploaded
 						}
 					}
+					
+					if ( $bulkProcessingStatus <> 'running' ) 
+						$meta['ShortPixel']['WaitingProcessing'] = true;
+					return $meta;
 				} 
 				else 
 				{
-					$meta['ShortPixelImprovement'] = 'File is not an image';
+					$meta['ShortPixelImprovement'] = 'Optimisation N/A';
 					return $meta;
 				}
-		} 
-		
-		$meta['ShortPixel']['WaitingProcessing'] = true;
-		return $meta;
+			} 
 	}
 
 	public function handleImageProcessing($ID = null) {
@@ -219,29 +263,96 @@ class WPShortPixel {
 			echo "Missing API Key";
 			die();
 		}
-		//query database for first found entry that needs processing
+		//query database for first found entry that needs processing //
 		global  $wpdb;
-		$qry = "SELECT * FROM " . $wpdb->prefix . "postmeta
-                WHERE  ( 
-                meta_value LIKE '%\"WaitingProcessing\";b:1;%'
-                OR meta_value LIKE '%\"BulkProcessing\";b:1;%' )
-                ORDER BY post_id DESC
-                LIMIT 0,3";
-		$idList = $wpdb->get_results($qry);
-	
-		if(empty($idList)) { echo 'Empty queue'; die; }
+		
+//////////////////
 
+		$startQueryID = get_option('wp-short-pixel-query-id-start');
+		$endQueryID = get_option('wp-short-pixel-query-id-stop');
+		sleep(1);
+		$queryPostMeta = "SELECT * FROM " . $wpdb->prefix . "postmeta 
+						WHERE ( post_id <= $startQueryID AND post_id > $endQueryID ) AND (
+								meta_key = '_wp_attached_file'
+								OR meta_key = '_wp_attachment_metadata'
+						)
+						ORDER BY post_id DESC
+						LIMIT " . SP_MAX_RESULTS_QUERY;
+		$resultsPostMeta = $wpdb->get_results($queryPostMeta);
+		$idList = array();
+		foreach ( $resultsPostMeta as $itemMetaData )
+		{
+			$meta = wp_get_attachment_metadata($itemMetaData->post_id);
+			$meta['ShortPixelImprovement'] = ( isset($meta['ShortPixelImprovement']) ) ? $meta['ShortPixelImprovement'] : "";
+			$filePath = get_attached_file($itemMetaData->post_id);
+			$fileExtension = strtolower(substr($filePath,strrpos($filePath,".")+1));
+			
+			if ( ( $itemMetaData->meta_key == "_wp_attachment_metadata" && $meta['ShortPixelImprovement'] <> "Optimisation N/A"  && !is_numeric($meta['ShortPixelImprovement']) )  || $fileExtension == "pdf" )//Optimisation N/A = is an unsupported file format
+			{
+				$idList[] = $itemMetaData;
+			}
+		}
+		
+		if ( isset($idList[0]) )
+		{
+			$meta = wp_get_attachment_metadata($idList[0]->post_id);
+			$filePath = get_attached_file($idList[0]->post_id);
+			$fileExtension = strtolower(substr($filePath,strrpos($filePath,".")+1));
+			
+			if( !empty($meta) && !isset($meta['ShortPixel']['WaitingProcessing']) ) //possibly the file wasn't processed in the first pass so we'll wait for it to be completed
+			{
+				$startQueryID = ( $idList[0]->post_id );
+				update_option("wp-short-pixel-query-id-start", $startQueryID);//update max ID
+			}
+			elseif ( empty($meta) && $fileExtension <> "pdf" )//file is not an image or PDF so we just skip to the next batch
+			{
+				$startQueryID = $startQueryID - SP_MAX_RESULTS_QUERY;
+				update_option("wp-short-pixel-query-id-start", $startQueryID);//update max ID	
+				die();			
+			}
+			elseif ( !self::isProcesable($filePath) )//file has a non-supported extension, we skip it
+			{	
+				$startQueryID = $idList[0]->post_id - 1;
+				update_option("wp-short-pixel-query-id-start", $startQueryID);//update max ID
+				die();			
+			}
+			else //file was processed in the first pass
+			{
+				$startQueryID = $idList[0]->post_id;
+				update_option("wp-short-pixel-query-id-start", $startQueryID);//update max ID	
+			}			
+		}
+		elseif ( $startQueryID > $endQueryID ) 
+		{
+			$startQueryID = $startQueryID - 1;
+			update_option("wp-short-pixel-query-id-start", $startQueryID);//update max ID
+			die();
+		}
+
+//////////////////////       
+
+		if( empty($idList) && $startQueryID <= $endQueryID ) { //die but before set the $endQueryID so only new files will be processed
+			$queryMax = "SELECT max(post_id) as startQueryID FROM " . $wpdb->prefix . "postmeta";
+			$resultQuery = $wpdb->get_results($queryMax);
+			$endQueryID = $resultQuery[0]->startQueryID;
+			update_option('wp-short-pixel-query-id-stop', $endQueryID);
+			delete_option('bulkProcessingStatus');
+			echo 'Empty queue - '.$endQueryID; die;
+		}
+		
 		//send a couple of pre-process requests (if available/needed)	
 		if ( isset($idList[1]) )
 		{
 			$itemDetails = $this->returnURLsAndPaths($idList[1]);
 			$this->_apiInterface->doRequests($itemDetails['imageURLs'], $itemDetails['imagePaths']);	
 		}
+
 		if ( isset($idList[2]) )
 		{
 			$itemDetails = $this->returnURLsAndPaths($idList[1]);
 			$this->_apiInterface->doRequests($itemDetails['imageURLs'], $itemDetails['imagePaths']);	
 		}
+
 
 		//send a request for the latest item
 		$itemDetails = $this->returnURLsAndPaths($idList[0]);
@@ -255,20 +366,29 @@ class WPShortPixel {
 			$meta['ShortPixelImprovement'] = $result;
 			wp_update_attachment_metadata($ID, $meta);
 			echo "Error processing image: " . $result;
+			//also decrement last ID for queries so bulk won't hang in such cases
+			$startQueryID = get_option("wp-short-pixel-query-id-start");
+			update_option("wp-short-pixel-query-id-start", $startQueryID - 1);
 			die;
 		}
 
 		//$processThumbnails = get_option('wp-short-process_thumbnails');
+		if ( isset($meta['ShortPixel']['WaitingProcessing']) )
+			unset($meta['ShortPixel']['WaitingProcessing']);
 
-		unset($meta['ShortPixel']['WaitingProcessing']);
-
-		if(isset($meta['ShortPixel']['BulkProcessing'])) {
+		if( isset($meta['ShortPixel']['BulkProcessing']) ) 
 			unset($meta['ShortPixel']['BulkProcessing']);
-		}
 
-		$meta['ShortPixelImprovement'] = $result[0]->PercentImprovement;
+		$meta['ShortPixelImprovement'] = round($result[0]->PercentImprovement,2);
 		wp_update_attachment_metadata($ID, $meta);
 		echo "\nProcessing done succesfully for image #{$ID}";
+		
+		//set the next ID to be processed (skip to the next valid value)
+		if ( isset($isList[1]) )
+		{
+			$startQueryID = $idList[1]->post_id;
+			update_option("wp-short-pixel-query-id-start", $startQueryID);//update max ID	
+		}
 
 		die();
 	}
@@ -277,12 +397,14 @@ class WPShortPixel {
 	//return urls and paths to be used but other functions
 	public function returnURLsAndPaths($itemDetails)
 	{
+			global  $wpdb;
+			
 			$imageIndex=0;
 			$ID = $itemDetails->post_id;
 			$imageURL =  wp_get_attachment_url($ID);
 			$imagePath = get_attached_file($ID);
-			$meta = wp_get_attachment_metadata($ID);		
-
+			$meta = wp_get_attachment_metadata($ID);	
+			
 		if ( !isset($meta['file']) )//this could be a PDF file
 			{
 				$qry = "SELECT * FROM " . $wpdb->prefix . "postmeta
@@ -291,21 +413,24 @@ class WPShortPixel {
 					meta_key = '_wp_attached_file'
 					)";
 				$idList = $wpdb->get_results($qry);
-				$idList = $idList[0];
-				$uploadDir = wp_upload_dir();
-				$filePath = $uploadDir['path'] . DIRECTORY_SEPARATOR . basename($idList->meta_value);
+				if ( isset($idList[0]) )
+				{
+					$idList = $idList[0];
+					$uploadDir = wp_upload_dir();
+					$filePath = $uploadDir['path'] . DIRECTORY_SEPARATOR . basename($idList->meta_value);
 
-				//check if the image file exists on disk, if not set the right params
-				if(!file_exists($filePath)) {
-					if(isset($meta['ShortPixel']['BulkProcessing'])) { unset($meta['ShortPixel']['BulkProcessing']); }
-					if(isset($meta['ShortPixel']['WaitingProcessing'])) { unset($meta['ShortPixel']['WaitingProcessing']); }
-					$meta['ShortPixel']['NoFileOnDisk'] = true;
-					wp_update_attachment_metadata($ID, $meta);
-					die;
+					//check if the image file exists on disk, if not set the right params
+					if(!file_exists($filePath)) {
+						if(isset($meta['ShortPixel']['BulkProcessing'])) { unset($meta['ShortPixel']['BulkProcessing']); }
+						if(isset($meta['ShortPixel']['WaitingProcessing'])) { unset($meta['ShortPixel']['WaitingProcessing']); }
+						$meta['ShortPixel']['NoFileOnDisk'] = true;
+						wp_update_attachment_metadata($ID, $meta);
+						die;
+					}
+	
+					$imageURLs[] = $uploadDir['url'] . DIRECTORY_SEPARATOR . basename($idList->meta_value);//URL to PDF file
+					$imagePaths[] = $filePath;
 				}
-
-				$imageURLs[] = $uploadDir['url'] . DIRECTORY_SEPARATOR . basename($idList->meta_value);//URL to PDF file
-				$imagePaths[] = $filePath;
 			}
 		else
 			{//process images
@@ -340,8 +465,10 @@ class WPShortPixel {
 				}
 			}
 			
-			
-			return array("imageURLs" => $imageURLs, "imagePaths" => $imagePaths, "meta" => $meta, "ID" => $ID);
+			if ( isset($imageURLs) )
+				return array("imageURLs" => $imageURLs, "imagePaths" => $imagePaths, "meta" => $meta, "ID" => $ID);
+			else
+				return false;
 	}
 	
 
@@ -367,6 +494,9 @@ class WPShortPixel {
 
 		$result = $this->_apiInterface->processImage($urlList, $filePath, $attachmentID);//request to process all the images
 
+		if ( !is_array($result) )//there was an error, we save it in ShortPixelImprovement data
+			$this->handleError($attachmentID, $result);
+
 		// store the referring webpage location
 		$sendback = wp_get_referer();
 		// sanitize the referring webpage location
@@ -374,6 +504,14 @@ class WPShortPixel {
 		// send the user back where they came from
 		wp_redirect($sendback);
 		// we are done,
+	}
+	
+	//save error in file's meta data
+	public function handleError($ID, $result)
+	{
+		$meta = wp_get_attachment_metadata($ID);
+		$meta['ShortPixelImprovement'] = $result;
+		wp_update_attachment_metadata($ID, $meta);
 	}
 
 	public function handleRestoreBackup() {
@@ -430,7 +568,11 @@ class WPShortPixel {
 		if(self::isProcesable($uploadFilePath) != false) {
 			try {
 				$uploadDir = wp_upload_dir();
-				$SubDir = substr($meta['file'],0,strrpos($meta['file'],"/")+1);
+				if ( isset($meta['file']) )
+					$SubDir = substr($meta['file'],0,strrpos($meta['file'],"/")+1);
+				else
+					$SubDir = "";
+					
 				if ( empty($SubDir) ) //its a PDF?
 				{
 					$uploadFilePath = get_attached_file($ID);
@@ -457,25 +599,6 @@ class WPShortPixel {
 		}
 	}
 
-	public function bulkOptimizeActionHandler($hook) {
-		if($hook == 'upload.php') {
-			if($_GET['action'] == 2) {
-				if(!empty($_GET['media'])) {
-					$imageLog = array();
-					//remove all ShortPixel data from metadata
-					foreach($_GET['media'] as $attachmentID) {
-						$meta = wp_get_attachment_metadata($attachmentID);
-						$meta['ShortPixel']['BulkProcessing'] = true;
-						unset($meta['ShortPixelImprovement']);
-						wp_update_attachment_metadata($attachmentID, $meta);
-						$imageLog[$attachmentID] = false;
-					}
-					update_option('bulkProcessingLog', $imageLog);
-				}
-			}
-		}
-	}
-
 	public function registerSettingsPage() {
 		add_options_page( 'ShortPixel Settings', 'ShortPixel', 'manage_options', 'wp-shortpixel', array($this, 'renderSettingsMenu'));
 	}
@@ -485,6 +608,8 @@ class WPShortPixel {
 	}
 
 	public function bulkProcess() {
+		global $wpdb;
+		
 		echo '<h1>Bulk Image Optimisation by ShortPixel</h1>';
 
 		if(MUST_HAVE_KEY && $this->_verifiedKey == false) {//invalid API Key
@@ -493,133 +618,94 @@ class WPShortPixel {
 			return;
 		}
 	
-		if($_GET['cancel']) {
-			foreach($attachments as $attachment) {
-				$meta = wp_get_attachment_metadata($attachment->ID);
-				if(isset($meta['ShortPixel']['BulkProcessing'])) unset($meta['ShortPixel']['BulkProcessing']);
-				wp_update_attachment_metadata($attachment->ID, $meta);
-			}
+		if(isset($_GET['cancel'])) 
+		{//cancel an ongoing bulk processing, it might be needed sometimes
+			update_option("wp-short-pixel-query-id-start", 0);
+			update_option("wp-short-pixel-query-id-stop", 0);
+			delete_option('bulkProcessingStatus');
 		}
 
-		$attachments = null;
-		$attachments_images = get_posts( array(
-			'numberposts' => -1,
-			'post_type' => 'attachment',
-			'post_mime_type' => 'image'
-		));
-		$attachments_pdf = get_posts( array(
-			'numberposts' => -1,
-			'post_type' => 'attachment',
-			'post_mime_type' => 'application/pdf'
-		));
-		$attachments = array_merge($attachments_images, $attachments_pdf);
-
-
-		if($_POST["bulkProcess"]) 
+		if(isset($_POST["bulkProcess"])) 
 		{
-			$uploadDir = wp_upload_dir();
-			$uploadDir = $uploadDir['basedir'];	
-			
-			//remove all ShortPixel data from metadata
-			$imageList = array();
-			$processThumbnails = get_option('wp-short-process_thumbnails');
-
-			foreach($attachments as $attachment) {
-				if(self::isProcesable(get_attached_file($attachment->ID)) == false) continue;//skip this record
-				//apparently if the main image isn't on disk -> the result is false above
-				
-				//prepare bulk call for processing
-				$imagePath = wp_get_attachment_url($attachment->ID);
-				$filePathOnDisk = get_attached_file($attachment->ID);
-				$imageDiskPath[] = $filePathOnDisk;
-				$imageList[] = $imagePath;
-
-				$meta = wp_get_attachment_metadata($attachment->ID);
-				$SubDirs = substr($meta['file'],0,strrpos($meta['file'],"/")+1);
-
-				if($processThumbnails && isset($meta['sizes'])) {
-					foreach($meta['sizes'] as $thumbnailData) {
-						$imageOnDisk = $uploadDir . DIRECTORY_SEPARATOR . $SubDirs . basename($thumbnailData["file"]);
-						
-						if ( file_exists($imageOnDisk) )//make sure each version of the main file is on disk
-						{
-							$thumbPath = substr($imagePath, 0, strrpos($imagePath, '/')) . '/' . $thumbnailData["file"];
-							$imageList[] = $thumbPath;
-							$imageDiskPath[] = $imageOnDisk;
-						}
-					}
-				}			
-
-				$meta['ShortPixel']['BulkProcessing'] = true;
-				wp_update_attachment_metadata($attachment->ID, $meta);
-			}
-
-
-			if(count($imageList) > 10) {
-				echo "<BR>Counter going";
-				$batchList = array();
-				foreach($imageList as $image) {
-					$batchList[] = $image;
-
-					if(count($batchList) == 10) {
-//						$this->_apiInterface->doBulkRequest($batchList);
-						$batchList = array();
-					}
-				}
-				//send the rest of the images in the list
-//				if(count($batchList) > 0) { $this->_apiInterface->doBulkRequest($batchList); }
-
-			} else {
-//				$this->_apiInterface->doBulkRequest($imageList);
-			}
-
-
-			update_option('bulkProcessingStatus', 'running');
+			$queryMax = "SELECT max(post_id) as startQueryID FROM " . $wpdb->prefix . "postmeta";
+			$resultQuery = $wpdb->get_results($queryMax);
+			$startQueryID = $resultQuery[0]->startQueryID;
+			update_option("wp-short-pixel-query-id-start", $startQueryID);//start downwards from the biggest item ID
+			update_option("wp-short-pixel-query-id-stop", 0);
+			update_option("wp-short-pixel-flag-id", $startQueryID);//we use to detect new added files while bulk is running
+			add_option('bulkProcessingStatus', 'running');//set bulk flag		
 		}//end bulk process  was clicked
 
-		global  $wpdb;
-		$qry = "SELECT * FROM " . $wpdb->prefix . "postmeta
-                WHERE meta_value LIKE '%\"BulkProcessing\";b:1;%'";
-		$idList = $wpdb->get_results($qry);
+		$bulkProcessingStatus = get_option('bulkProcessingStatus');
+		$startQueryID = get_option('wp-short-pixel-query-id-start');
 
-		if(!empty($idList)) {
-			if(is_array($idList)) {
-				echo "<p>
-                        Bulk optimisation has started. This process will take some time, depending on the number of images in your library. <BR>Do not worry about the slow speed, it is a necessary measure in order not to interfere with the normal functioning of your site.<BR><BR>
-                        This is a brief estimation of the bulk processing times:<BR>
-						1 to 100 images < 20 min <BR>
-						100 to 500 images < 2 hour<BR>
-						500 to 1000 images < 4 hours<BR>
-						over 1000 images > 4 hours or more<BR><BR>
-                        
-                        The latest status of the processing will be displayed here every 30 seconds.<BR>
-						In the meantime, you can continue using the admin as usual.<BR> 
-						However, <b>you musn’t close the WordPress admin</b>, or the bulk processing will stop.
-                      </p>";
-				echo '
-                    <script type="text/javascript" >
-                        var bulkProcessingRunning = true;
-                     </script>
-                ';
+		//figure out all the files that could be processed
+		$qry = "SELECT count(*) FilesToBeProcessed FROM " . $wpdb->prefix . "postmeta
+		WHERE meta_key = '_wp_attached_file' ";
+		$allFiles = $wpdb->get_results($qry);
+		//figure out the files that are left to be processed
+		$qry_left = "SELECT count(*) FilesLeftToBeProcessed FROM " . $wpdb->prefix . "postmeta
+		WHERE meta_key = '_wp_attached_file' AND post_id <= $startQueryID";
+		$filesLeft = $wpdb->get_results($qry_left);
+	
+		if( $filesLeft[0]->FilesLeftToBeProcessed > 0 && $bulkProcessingStatus == "running" )//bulk processing was started and wasn't yet ended
+		{
+			echo "<p>
+					Bulk optimisation has started. This process will take some time, depending on the number of images in your library. <BR>Do not worry about the slow speed, it is a necessary measure in order not to interfere with the normal functioning of your site.<BR><BR>
+					This is a brief estimation of the bulk processing times:<BR>
+					1 to 100 images < 20 min <BR>
+					100 to 500 images < 2 hour<BR>
+					500 to 1000 images < 4 hours<BR>
+					over 1000 images > 4 hours or more<BR><BR>
+					
+					The latest status of the processing will be displayed here every 30 seconds.<BR>
+					In the meantime, you can continue using the admin as usual.<BR> 
+					However, <b>you musn’t close the WordPress admin</b>, or the bulk processing will stop.
+				  </p>";
+			echo '
+				<script type="text/javascript" >
+					var bulkProcessingRunning = true;
+				 </script>
+			';
 
-				$imagesLeft = count($idList);
-				$totalImages = count($attachments);
+			$imagesLeft = $filesLeft[0]->FilesLeftToBeProcessed;
+			$totalImages = $allFiles[0]->FilesToBeProcessed;
 
-				echo "<p>{$imagesLeft} out of {$totalImages} images left to process.</p>";
+			echo "<p>{$imagesLeft} out of {$totalImages} images left to process.</p>";
 
-				echo '
-                    <a class="button button-secondary" href="' . get_admin_url() .  'upload.php">Media Library</a>
-                    <a class="button button-secondary" href="' . get_admin_url() .  'upload.php?page=wp-short-pixel-bulk&cancel=1">Cancel Processing</a>
-                ';
-			}
-		} else {
+			echo '
+				<a class="button button-secondary" href="' . get_admin_url() .  'upload.php">Media Library</a>
+				<a class="button button-secondary" href="' . get_admin_url() .  'upload.php?page=wp-short-pixel-bulk&cancel=1">Cancel Processing</a>
+			';
+
+		} else 
+		{
 			$bulkProcessingStatus = get_option('bulkProcessingStatus');
-			if(isset($bulkProcessingStatus) && $bulkProcessingStatus == 'running') {
+			if(isset($bulkProcessingStatus) && $bulkProcessingStatus == 'running') 
+			{
 				echo "<p>Bulk optimisation was successful. ShortPixel has finished optimising all your images.</p>
                       <p>Go to the ShortPixel <a href='" . get_admin_url() . "options-general.php?page=wp-shortpixel#facts'>Stats</a> and see your website's optimised stats (in Settings > ShortPixel). </p>";
-				delete_option('bulkProcessingStatus');
+                      
+                $queryMax = "SELECT max(post_id) as startQueryID FROM " . $wpdb->prefix . "postmeta";
+				$resultQuery = $wpdb->get_results($queryMax);
+				$startQueryID = $resultQuery[0]->startQueryID;
+				$maxIDbeforeBulk = get_option("wp-short-pixel-flag-id");//what was the max id before bulk was started?
+
+				if ( $startQueryID > $maxIDbeforeBulk )//basically we resume the processing for the files uploaded while bulk was running
+				{
+					update_option("wp-short-pixel-query-id-start", $startQueryID);
+					update_option("wp-short-pixel-query-id-stop", $maxIDbeforeBulk);
+					delete_option('bulkProcessingStatus');
+				}
+				else
+				{	
+					update_option("wp-short-pixel-query-id-start", 0);
+					update_option("wp-short-pixel-query-id-stop", 0);      
+					delete_option('bulkProcessingStatus');
+				}
 			}
-			echo $this->getBulkProcessingForm(count($attachments));
+			
+			echo $this->getBulkProcessingForm($allFiles[0]->FilesToBeProcessed);
 			echo '
                 <script type="text/javascript" >
                     var bulkProcessingRunning = false;
@@ -659,6 +745,7 @@ class WPShortPixel {
 		$noticeHTML = "<br/><div style=\"background-color: #fff; border-left: 4px solid %s; box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1); padding: 1px 12px;\"><p>%s</p></div>";
 
 		if(isset($_POST['submit']) || isset($_POST['validate'])) {
+			
 			//handle API Key - common for submit and validate
 			$_POST['key'] = trim($_POST['key']);
 			$validityData = $this->getQuotaInformation($_POST['key'], true);
@@ -947,8 +1034,20 @@ HTML;
 			$data = wp_get_attachment_metadata($id);
 			$file = get_attached_file($id);
 			$fileExtension = strtolower(substr($file,strrpos($file,".")+1));
-			
-			if ( isset( $data['ShortPixelImprovement'] ) ) {
+
+			if ( empty($data) )
+			{
+				if ( $fileExtension <> "pdf" )				
+					print 'Optimisation N/A';
+				else
+					{
+						print 'PDF not processed';
+						print " | <a href=\"admin.php?action=shortpixel_manual_optimize&amp;attachment_ID={$id}\">Optimize now</a>";
+					}
+				return;
+			}
+			elseif ( isset( $data['ShortPixelImprovement'] ) ) 
+			{
 				if(isset($meta['ShortPixel']['BulkProcessing'])) {
 					print 'Waiting for bulk processing';
 					return;
@@ -960,8 +1059,8 @@ HTML;
 					print " | <a href=\"admin.php?action=shortpixel_restore_backup&amp;attachment_ID={$id}\">Restore backup</a>";
 					return;
 				}
-				else
-					print '';
+				elseif ( $data['ShortPixelImprovement'] <> "Optimisation N/A" || is_numeric($data['ShortPixelImprovement']) )
+					print '%';
 			} elseif(isset($data['ShortPixel']['WaitingProcessing'])) {
 				print 'Image waiting to be processed';
 				return;

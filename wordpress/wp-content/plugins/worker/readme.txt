@@ -38,18 +38,48 @@ Keep track of what you're doing for your clients and dazzle them with a summary 
 = Is This All? =
 No way! We've got a bunch of other awesome features, both free and premium, you can check out on our [ManageWP Features & Pricing Page](https://managewp.com/plans-and-pricing "ManageWP Plans & Pricing")
 
-Check out the [ManageWP promo video](https://www.youtube.com/watch?v=7usvv4DsG5A).
+Check out the [ManageWP promo video](https://www.youtube.com/watch?v=C5nBQJQIfH4).
 
-https://www.youtube.com/watch?v=7usvv4DsG5A
+https://www.youtube.com/watch?v=C5nBQJQIfH4
 
 ManageWP is also the creator of [ManageWP.org](https://managewp.org/ "WordPress news site"), community project capturing the pulse of the WordPress community.
 
 == Changelog ==
 
-= 4.0.0 =
+= 4.0.11 =
 
-- New features for the [ManageWP Orion release](http://managewp.com/managewp-orion-official-announcement "ManageWP Orion Official Announcement")
-- Misc bug fixes and performance improvements
+- Fix: Better detect available updates
+- Fix: Improve compatibility with other plugins
+
+= 4.0.10 =
+
+- Fix: Fix update functionality on some installations that use FTP credentials
+- Fix: Fix Google Drive uploading on installations without cURL PHP extension
+
+= 4.0.9 =
+
+- New: Make the ManageWP Worker plugin upgradable through the dashboard widget
+- Fix: Improve auto-connect functionality with [ManageWP Orion](http://managewp.com/managewp-orion-official-announcement "ManageWP Orion Official Announcement")
+
+= 4.0.8 =
+
+- Fix: Fix single-click restore functionality
+
+= 4.0.7 =
+
+- Fix: Fix issues related to cloning and backup restoration
+- Fix: Improve precision of the hit counter
+- Fix: Improve compatibility with other plugins
+- Fix: Numerous small improvements and fixes
+
+= 4.0.5 =
+
+- Fix: Misc bug fixes and performance improvements
+
+= 4.0.1 =
+
+- New: New features for the [ManageWP Orion release](http://managewp.com/managewp-orion-official-announcement "ManageWP Orion Official Announcement")
+- Fix: Misc bug fixes and performance improvements
 
 = 3.9.30 =
 

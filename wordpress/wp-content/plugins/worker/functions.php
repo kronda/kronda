@@ -512,12 +512,6 @@ function mmb_parse_request()
 
 function mmb_response($response = false, $success = true)
 {
-    mwp_logger()->debug('Master response: {action_response_status}', array(
-        'action_response_status' => $success ? 'success' : 'error',
-        'action_response'        => $response,
-        'headers_sent'           => headers_sent(),
-    ));
-
     if (!$success) {
         if (!is_scalar($response)) {
             $response = json_encode($response);
@@ -571,7 +565,7 @@ function mmb_stats_get($params)
     mwp_context()->requirePostTypes();
     mwp_context()->requireTheme();
 
-    $data = array_merge($mmb_core->stats_instance->get($params), mmb_pre_init_stats($params));
+    $data = array_merge(mmb_pre_init_stats($params), $mmb_core->stats_instance->get($params));
     mmb_response($data, true);
 }
 
