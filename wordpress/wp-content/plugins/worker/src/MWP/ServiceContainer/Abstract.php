@@ -63,6 +63,8 @@ abstract class MWP_ServiceContainer_Abstract implements MWP_ServiceContainer_Int
 
     private $updaterSkin;
 
+    private $sessionStore;
+
     public function __construct(array $parameters = array())
     {
         $this->parameters = $parameters;
@@ -74,6 +76,14 @@ abstract class MWP_ServiceContainer_Abstract implements MWP_ServiceContainer_Int
             'worker_basename'                     => null,
             // Always use PhpSecLib, even if the PHP extension 'openssl' is loaded.
             'prefer_phpseclib'                    => false,
+            // Force using fallbacks instead of shell commands
+            'disable_shell'                       => false,
+            // Emulate disabled PDO extension
+            'disable_pdo'                         => false,
+            // Emulate disabled mysqli extension
+            'disable_mysqli'                      => false,
+            // Emulate disabled mysql
+            'disable_mysql'                       => false,
             // Log file to use for all worker logs.
             'log_file'                            => null,
             // GrayLog2 server to use for all worker logs.
@@ -87,6 +97,9 @@ abstract class MWP_ServiceContainer_Abstract implements MWP_ServiceContainer_Int
             'message_minimum_level'               => Monolog_Logger::INFO,
             // Memory size (in kilobytes) to allocate for fatal error handling when the request is authenticated.
             'fatal_error_reserved_memory_size'    => 1024,
+            // This boundary will be different with each request and it's pretty much a hack for handling exceptions
+            // @see MWP_EventListener_ActionException_MultipartException
+            'multipart_boundary'                  => uniqid(),
             'hit_counter_blacklisted_ips'         => array(
                 // Uptime monitoring robot.
                 '/^74\.86\.158\.106$/',
@@ -516,4 +529,18 @@ abstract class MWP_ServiceContainer_Abstract implements MWP_ServiceContainer_Int
      * @return MWP_Updater_TraceableUpdaterSkin
      */
     protected abstract function createUpdaterSkin();
+
+    public function getSessionStore()
+    {
+        if ($this->sessionStore === null) {
+            $this->sessionStore = $this->createSessionStore();
+        }
+
+        return $this->sessionStore;
+    }
+
+    /**
+     * @return MWP_WordPress_SessionStore
+     */
+    protected abstract function createSessionStore();
 }

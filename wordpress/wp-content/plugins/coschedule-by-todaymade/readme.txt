@@ -3,8 +3,8 @@ Contributors: todaymade
 Donate link: http://coschedule.com
 Tags: calendar, schedule, social media, editorial, twitter, facebook, tweets, auto publish, linkedin, tumblr
 Requires at least: 3.5
-Tested up to: 4.1
-Stable tag: 2.3.2
+Tested up to: 4.1.1
+Stable tag: 2.3.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -126,6 +126,9 @@ We charge a monthly fee for CoSchedule because we provide an ongoing service tha
 5. **Social Scheduling While You Blog**: Social messages are content, too. Write as many as you need at the same time you write your blog post. Hit publish, and automatically set them all in motion.
 
 == Changelog ==
+
+= 2.3.3 =
+* Improves publishing posts that are backdated
 
 = 2.3.2 =
 * Improve the backend communication with CoSchedule
@@ -266,6 +269,9 @@ We charge a monthly fee for CoSchedule because we provide an ongoing service tha
 * Private beta release
 
 == Upgrade Notice ==
+
+= 2.3.3 =
+* This update improves publishing posts that are backdated
 
 = 2.3.2 =
 * This update improves the backend communication with CoSchedule

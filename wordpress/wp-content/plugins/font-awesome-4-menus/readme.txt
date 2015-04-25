@@ -81,6 +81,9 @@ If you uninstall the plugin, Font Awesome 4 Menus cleans up after itself by remo
 
 == Upgrade Notice ==
 
+= 4.3.0.3 =
+Fixes a 404 error due to the missing .woff2 version of the font
+
 = 4.3.0.2 =
 Fixes a 404 error due to the missing .woff2 version of the font
 
@@ -94,6 +97,9 @@ Update to Font Awesome 4.2 which includes another 40 icons
 This upgrade allows you to load Font Awesome from a CDN or prevent double-loading of the stylesheet. It also adds the ability to remove the space in your menus for finer style control.
 
 == Changelog ==
+
+= 4.3.0.3 =
+* Bug fix
 
 = 4.3.0.2 =
 * Bug fix

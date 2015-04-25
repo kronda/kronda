@@ -2,7 +2,7 @@
 if ( get_option( 'tm_coschedule_token' ) ) {
     if ( current_user_can( 'edit_posts' ) ) {
         $url = "https://app.coschedule.com/calendar/#/authenticate?blogID=" . urlencode( get_option( 'tm_coschedule_id' ) );
-        $url .= "&redirect=settings.team&build=" . $this->build;
+        $url .= "&redirect=permissions&build=" . $this->build;
         $url .= "&userID=" . $this->current_user_id;
 ?>
     <iframe id="CoSiFrame" frameborder=0 border=0 src="<?php echo esc_url( $url ); ?>" width="100%"></iframe>

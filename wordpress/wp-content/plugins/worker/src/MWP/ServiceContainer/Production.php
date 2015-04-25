@@ -29,7 +29,7 @@ class MWP_ServiceContainer_Production extends MWP_ServiceContainer_Abstract
         $dispatcher->addSubscriber(new MWP_EventListener_PublicRequest_DisableEditor($this->getWordPressContext(), $this->getBrand()));
         $dispatcher->addSubscriber(new MWP_EventListener_PublicRequest_SetPluginInfo($this->getWordPressContext(), $this->getBrand()));
         $dispatcher->addSubscriber(new MWP_EventListener_PublicRequest_SetHitCounter($this->getWordPressContext(), $this->getHitCounter(), $this->getRequestStack(), $this->getParameter('hit_counter_blacklisted_ips'), $this->getParameter('hit_counter_blacklisted_user_agents')));
-        $dispatcher->addSubscriber(new MWP_EventListener_PublicRequest_AutomaticLogin($this->getWordPressContext(), $this->getNonceManager(), $this->getSigner(), $this->getConfiguration()));
+        $dispatcher->addSubscriber(new MWP_EventListener_PublicRequest_AutomaticLogin($this->getWordPressContext(), $this->getNonceManager(), $this->getSigner(), $this->getConfiguration(), $this->getSessionStore()));
         $dispatcher->addSubscriber(new MWP_EventListener_PublicRequest_AddStatusPage($this->getWordPressContext(), $this->getConfiguration()));
 
         $dispatcher->addSubscriber(new MWP_EventListener_MasterRequest_VerifyConnectionInfo($this->getWordPressContext(), $this->getSigner()));
@@ -39,18 +39,21 @@ class MWP_ServiceContainer_Production extends MWP_ServiceContainer_Abstract
         $dispatcher->addSubscriber(new MWP_EventListener_MasterRequest_AttachJsonMessageHandler($this->getLogger(), $this->getJsonMessageHandler()));
         $dispatcher->addSubscriber(new MWP_EventListener_MasterRequest_RemoveUsernameParam());
         $dispatcher->addSubscriber(new MWP_EventListener_MasterRequest_AuthenticateLegacyRequest($this->getConfiguration()));
+        $dispatcher->addSubscriber(new MWP_EventListener_MasterRequest_SetRequestSettings($this->getWordPressContext()));
 
         $dispatcher->addSubscriber(new MWP_EventListener_ActionRequest_SetCurrentUser($this->getWordPressContext()));
         $dispatcher->addSubscriber(new MWP_EventListener_ActionRequest_SetSettings($this->getWordPressContext(), $this->getSystemEnvironment()));
         $dispatcher->addSubscriber(new MWP_EventListener_ActionRequest_LogRequest($this->getLogger()));
 
         $dispatcher->addSubscriber(new MWP_EventListener_ActionException_SetExceptionData());
+        $dispatcher->addSubscriber(new MWP_EventListener_ActionException_MultipartException($this->getParameter('multipart_boundary')));
 
         $dispatcher->addSubscriber(new MWP_EventListener_ActionResponse_SetActionData());
         $dispatcher->addSubscriber(new MWP_EventListener_ActionResponse_SetLegacyWebsiteConnectionData($this->getWordPressContext()));
         $dispatcher->addSubscriber(new MWP_EventListener_ActionResponse_ChainState($this));
         $dispatcher->addSubscriber(new MWP_EventListener_ActionResponse_SetUpdaterLog($this->getUpdaterSkin()));
         $dispatcher->addSubscriber(new MWP_EventListener_ActionResponse_SetLegacyPhpExecutionData());
+        $dispatcher->addSubscriber(new MWP_EventListener_ActionResponse_FetchFiles($this->getParameter('multipart_boundary')));
 
         $dispatcher->addSubscriber(new MWP_EventListener_MasterResponse_LogResponse($this->getLogger()));
 
@@ -110,6 +113,18 @@ class MWP_ServiceContainer_Production extends MWP_ServiceContainer_Abstract
         $mapper->addDefinition('change_comment_status', new MWP_Action_Definition('mmb_change_comment_status', array('hook_name' => 'init', 'hook_priority' => 9999)));
         $mapper->addDefinition('get_state', new MWP_Action_Definition(array('MWP_Action_GetState', 'execute')));
         $mapper->addDefinition('add_site', new MWP_Action_Definition(array('MWP_Action_ConnectWebsite', 'execute')));
+        $mapper->addDefinition('destroy_sessions', new MWP_Action_Definition(array('MWP_Action_DestroySessions', 'execute')));
+
+        // Incremental backup actions
+        $mapper->addDefinition('list_files', new MWP_Action_Definition(array('MWP_Action_IncrementalBackup_ListFiles', 'queryFiles')));
+        $mapper->addDefinition('list_directories', new MWP_Action_Definition(array('MWP_Action_IncrementalBackup_ListFiles', 'listDirectories')));
+        $mapper->addDefinition('hash_files', new MWP_Action_Definition(array('MWP_Action_IncrementalBackup_HashFiles', 'execute')));
+        $mapper->addDefinition('fetch_files', new MWP_Action_Definition(array('MWP_Action_IncrementalBackup_FetchFiles', 'execute')));
+        $mapper->addDefinition('list_tables', new MWP_Action_Definition(array('MWP_Action_IncrementalBackup_ListTables', 'listTables')));
+        $mapper->addDefinition('checksum_tables', new MWP_Action_Definition(array('MWP_Action_IncrementalBackup_ChecksumTables', 'execute')));
+        $mapper->addDefinition('dump_tables', new MWP_Action_Definition(array('MWP_Action_IncrementalBackup_DumpTables', 'execute')));
+        $mapper->addDefinition('backup_stats', new MWP_Action_Definition(array('MWP_Action_IncrementalBackup_Stats', 'execute')));
+        $mapper->addDefinition('upload_cloner', new MWP_Action_Definition(array('MWP_Action_IncrementalBackup_UploadCloner', 'execute')));
 
         return $mapper;
     }
@@ -270,7 +285,7 @@ class MWP_ServiceContainer_Production extends MWP_ServiceContainer_Abstract
      */
     protected function createHitCounter()
     {
-        $counter = new MWP_Extension_HitCounter($this->getWordPressContext(), 14);
+        $counter = new MWP_Extension_HitCounter($this->getWordPressContext(), 60);
 
         return $counter;
     }
@@ -305,7 +320,7 @@ class MWP_ServiceContainer_Production extends MWP_ServiceContainer_Abstract
      */
     protected function createSystemEnvironment()
     {
-        return new MWP_System_Environment();
+        return new MWP_System_Environment($this);
     }
 
     /**
@@ -314,5 +329,13 @@ class MWP_ServiceContainer_Production extends MWP_ServiceContainer_Abstract
     protected function createUpdaterSkin()
     {
         return new MWP_Updater_TraceableUpdaterSkin();
+    }
+
+    /**
+     * @return MWP_WordPress_SessionStore
+     */
+    protected function createSessionStore()
+    {
+        return new MWP_WordPress_SessionStore($this->getWordPressContext());
     }
 }

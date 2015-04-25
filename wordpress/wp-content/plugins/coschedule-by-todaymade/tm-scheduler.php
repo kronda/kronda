@@ -2,7 +2,7 @@
 /*
 Plugin Name: CoSchedule by Todaymade
 Description: Schedule social media messages alongside your blog posts in WordPress, and then view them on a Google Calendar interface. <a href="http://app.coschedule.com" target="_blank">Account Settings</a>
-Version: 2.3.2
+Version: 2.3.3
 Author: Todaymade
 Author URI: http://todaymade.com/
 Plugin URI: http://coschedule.com/
@@ -24,8 +24,8 @@ if ( ! class_exists( 'tm_coschedule' ) ) {
         private $app = "https://app.coschedule.com";
         private $app_metabox = "https://app.coschedule.com/metabox";
         private $assets = "https://d2lbmhk9kvi6z5.cloudfront.net";
-        private $version = "2.3.2";
-        private $build = 50;
+        private $version = "2.3.3";
+        private $build = 51;
         private $connected = false;
         private $token = false;
         private $blog_id = false;
@@ -85,7 +85,10 @@ if ( ! class_exists( 'tm_coschedule' ) ) {
             if ( get_option( 'tm_coschedule_activation_redirect', false ) ) {
                 // Redirect to settings page
                 if ( delete_option( 'tm_coschedule_activation_redirect' ) ) {
+                    // NOTE: call to exit after wp_redirect is per WP Codex doc:
+                    //       http://codex.wordpress.org/Function_Reference/wp_redirect#Usage
                     wp_redirect( 'admin.php?page=tm_coschedule_calendar' );
+                    exit;
                 }
             }
         }
@@ -137,6 +140,9 @@ if ( ! class_exists( 'tm_coschedule' ) ) {
             add_action( 'update_option_timezone_string', array( $this, "save_timezone_callback" ) );
             add_action( 'update_option_gmt_offset', array( $this, "save_timezone_callback" ) );
 
+            // work around 'missed schedule draft' condition //
+            add_action( 'wp_insert_post_data', array( $this, 'conditionally_update_post_date_on_publish' ), 1, 2);
+
             // Edit Flow Fix
             add_filter( 'wp_insert_post_data', array( $this, 'fix_custom_status_timestamp_before' ), 1 );
             add_filter( 'wp_insert_post_data', array( $this, 'fix_custom_status_timestamp_after' ), 20 );
@@ -150,9 +156,11 @@ if ( ! class_exists( 'tm_coschedule' ) ) {
             add_action( 'load-post.php', array( $this, "meta_box_action" ) );
             add_action( 'load-post-new.php', array( $this, "meta_box_action" ) );
 
-            // Ajax: Trigger cron
-            add_action( 'wp_ajax_tm_aj_trigger_cron', array( $this, 'tm_aj_trigger_cron' ) );
-            add_action( 'wp_ajax_nopriv_tm_aj_trigger_cron', array( $this, 'tm_aj_trigger_cron' ) );
+            if ( $this->is_wp_vip !== true ) {
+                // Ajax: Trigger cron - only available in non-WP-VIP environments
+                add_action( 'wp_ajax_tm_aj_trigger_cron', array( $this, 'tm_aj_trigger_cron' ) );
+                add_action( 'wp_ajax_nopriv_tm_aj_trigger_cron', array( $this, 'tm_aj_trigger_cron' ) );
+            }
 
             // Ajax: Get blog info
             add_action( 'wp_ajax_tm_aj_get_bloginfo', array( $this, 'tm_aj_get_bloginfo' ) );
@@ -457,11 +465,16 @@ if ( ! class_exists( 'tm_coschedule' ) ) {
          * Inserts the meta box
          */
         public function meta_box_insert( $post ) {
-            $url = $this->app_metabox;
-            $url .= "/#/authenticate?blogID=" . urlencode( get_option( 'tm_coschedule_id' ) );
-            $url .= "&postID=" . urlencode( $post->ID );
-            $url .= "&build=" . urlencode( $this->build );
-            $url .= "&userID=" . urlencode( $this->current_user_id );
+            $blog_id = get_option( 'tm_coschedule_id' );
+            $query_params = array(
+                "blogID" => urlencode( $blog_id ),
+                "postID" => urlencode( $post->ID ),
+                "build"  => urlencode( $this->build ),
+                "userID" => urlencode( $this->current_user_id )
+            );
+            $url = untrailingslashit( $this->app_metabox ) . "/#/authenticate";
+            // NOTE: calling add_query_arg(...) with empty string to avoid it relocating the hash location of above $url
+            $url .= add_query_arg( $query_params, '' );
         ?>
             <iframe id="CoSmetabox" frameborder="0" border="0" scrolling="no" src="<?php echo esc_url( $url ); ?>" width="100%"></iframe>
         <?php
@@ -850,6 +863,12 @@ if ( ! class_exists( 'tm_coschedule' ) ) {
                     'tm_aj_trigger_cron'
                 );
 
+                // do not allow some functions when in WP-VIP environments
+                if ( $this->is_wp_vip === true ) {
+                    unset( $defer_token_check[ array_search( 'tm_aj_trigger_cron', $defer_token_check ) ] );
+                    unset( $private_functions[ array_search( 'tm_aj_trigger_cron', $private_functions ) ] );
+                }
+
                 // Allowed functions
                 $allowed = array_merge( $wp_functions, $private_functions );
 
@@ -1023,9 +1042,8 @@ if ( ! class_exists( 'tm_coschedule' ) ) {
             $site_url = get_site_url();
 
             // remove trailing slash from site url
-            if( substr( $site_url, -1 ) == '/' ) {
-                $site_url = substr( $site_url, 0, -1 );
-            }
+            // Codex Reference: http://codex.wordpress.org/Function_Reference/untrailingslashit
+            $site_url = untrailingslashit( $site_url );
 
             // Only include valid URL
             if ( is_string( $post_thumbnail_url ) && strlen( $post_thumbnail_url ) > 0 ) {
@@ -1048,9 +1066,8 @@ if ( ! class_exists( 'tm_coschedule' ) ) {
             $site_url = get_site_url();
 
             // remove trailing slash from site url
-            if( substr( $site_url, -1 ) == '/' ) {
-                $site_url = substr( $site_url, 0, -1 );
-            }
+            // Codex Reference: http://codex.wordpress.org/Function_Reference/untrailingslashit
+            $site_url = untrailingslashit( $site_url );
 
             preg_match_all( '/<img[^>]+>/i', $content, $images );
 
@@ -1315,6 +1332,48 @@ if ( ! class_exists( 'tm_coschedule' ) ) {
             if ( isset( $cos_cached_post_date_gmt ) && ! empty( $cos_cached_post_date_gmt ) ) {
                 $data['post_date_gmt'] = $cos_cached_post_date_gmt;
             }
+            return $data;
+        }
+
+        /**
+         * Catch 'schedule missed draft' posts and if 'now' is within 24 hours of post_date, update post_date to now.
+         */
+        function conditionally_update_post_date_on_publish( $data, $postarr ) {
+            try {
+                if ( isset( $postarr ) && isset( $postarr['ID'] ) && isset( $postarr['post_status'] ) ) {
+                    $previous_status = get_post_field( 'post_status', $postarr['ID'] );
+                    $new_status = $postarr['post_status'];
+
+                    if ( $previous_status != 'publish' && $new_status == 'publish' ) {
+
+                        // post is transitioning to publish state //
+
+                        if ( isset( $postarr['post_date'] ) && !empty( $postarr['post_date'] ) ) {
+
+                            // found usable data for next test condition //
+
+                            $now_value = strtotime( current_time( 'mysql' ) );
+                            $post_date_value = strtotime( $postarr['post_date'] );
+                            $the_interval = ( $now_value - $post_date_value );
+
+                            // if 'now' is no more than 24 hours from the original post_date, force post_date to 'now' //
+
+                            if ( $the_interval > 0 && $the_interval <= 86400 ) {
+
+                                $new_post_date = current_time( 'mysql' );
+                                $new_post_date_gmt = get_gmt_from_date( $new_post_date );
+
+                                $data['post_date'] = $new_post_date;
+                                $data['post_date_gmt'] = $new_post_date_gmt;
+                            }
+                        }
+                    }
+                }
+            } catch( Exception $e ) {
+                /* ignore */
+            }
+
+            // ensure $data is always returned //
             return $data;
         }
 

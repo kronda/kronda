@@ -379,6 +379,10 @@ function mwp_is_nio_shell_available()
 
 function mwp_is_shell_available()
 {
+    if (mwp_container()->getParameter('disable_shell')) {
+        return false;
+    }
+
     if (mwp_is_safe_mode()) {
         return false;
     }
@@ -1472,5 +1476,27 @@ function mmb_change_comment_status($params)
         mmb_response($mmb_core->stats_instance->get_comments_stats($params), true);
     } else {
         mmb_response('Comment not updated', false);
+    }
+}
+
+function mwp_uninstall()
+{
+    $loaderName = '0-worker.php';
+    try {
+        $mustUsePluginDir = rtrim(WPMU_PLUGIN_DIR, '/');
+        $loaderPath       = $mustUsePluginDir.'/'.$loaderName;
+
+        if (!file_exists($loaderPath)) {
+            return;
+        }
+
+        $removed = @unlink($loaderPath);
+
+        if (!$removed) {
+            $error = error_get_last();
+            throw new Exception(sprintf('Unable to remove loader: %s', $error['message']));
+        }
+    } catch (Exception $e) {
+        mwp_logger()->error('Unable to remove loader', array('exception' => $e));
     }
 }
