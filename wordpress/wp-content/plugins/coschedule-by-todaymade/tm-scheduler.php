@@ -2,7 +2,7 @@
 /*
 Plugin Name: CoSchedule by Todaymade
 Description: Schedule social media messages alongside your blog posts in WordPress, and then view them on a Google Calendar interface. <a href="http://app.coschedule.com" target="_blank">Account Settings</a>
-Version: 2.3.3
+Version: 2.3.4
 Author: Todaymade
 Author URI: http://todaymade.com/
 Plugin URI: http://coschedule.com/
@@ -24,8 +24,8 @@ if ( ! class_exists( 'tm_coschedule' ) ) {
         private $app = "https://app.coschedule.com";
         private $app_metabox = "https://app.coschedule.com/metabox";
         private $assets = "https://d2lbmhk9kvi6z5.cloudfront.net";
-        private $version = "2.3.3";
-        private $build = 51;
+        private $version = "2.3.4";
+        private $build = 52;
         private $connected = false;
         private $token = false;
         private $blog_id = false;
@@ -887,10 +887,15 @@ if ( ! class_exists( 'tm_coschedule' ) ) {
                     $this->valid_token( $args['token'] );
                 }
 
-                // Fix: Prevent WP from stripping iframe tags when updating post
+                // Fix: Prevent WP from stripping iframe tags and Jetpack markdown when updating post
                 if ( 'wp_update_post' === $func || 'wp_insert_post' === $func ) {
                     remove_filter( 'title_save_pre', 'wp_filter_kses' );
                     remove_filter( 'content_save_pre', 'wp_filter_post_kses' );
+                }
+
+                // Fix: Prevent WP from stripping Jetpack markdown when updating post
+                if ( 'wp_update_post' === $func ) {
+                    $this->preserve_markdown();
                 }
 
                 // Is the target function private ?
@@ -926,6 +931,20 @@ if ( ! class_exists( 'tm_coschedule' ) ) {
 
             } catch ( Exception $e ) {
                 $this->respond_exception_and_die( $e );
+            }
+        }
+
+        /**
+         * Prevent WP from stripping Jetpack markdown
+         */
+        public function preserve_markdown () {
+            if ( class_exists( 'Jetpack' ) && Jetpack::is_module_active( 'markdown' ) ) {
+                require_once ABSPATH . 'wp-content/plugins/jetpack/modules/markdown/easy-markdown.php';
+                // jetpack_require_lib( 'markdown' );
+
+                if ( class_exists( 'WPCom_Markdown' ) ) {
+                    WPCom_Markdown::get_instance()->unload_markdown_for_posts();
+                }
             }
         }
 

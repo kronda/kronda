@@ -3,8 +3,8 @@
 Contributors: AlexSP
 Tags: picture,  optimization, image editor, pngout, upload speed, shortpixel, compression, jpegmini, webp, lossless, cwebp, media, tinypng, jpegtran,image, image optimisation, shrink, picture, photo, optimize photos, compress, performance, tinypng, crunch, pngquant, attachment, optimize, pictures,fast, images, image files, image quality, lossy, upload, kraken, resize, seo, smushit, optipng, kraken image optimizer, ewww, photo optimization, gifsicle, image optimizer, images, krakenio, png, gmagick, image optimize, pdf, pdf optimisation, pdf optimization, optimize pdf, optimise pdf, shrink pdf, jpg, jpeg, jpg optimisation, jpg optimization, optimize jpg, optimise jpg, shrink jpg, gif, animated gif, optimize gif, optimise gif
 Requires at least: 3.0.0 or higher
-Tested up to: 4.1.2
-Stable tag: 2.1.4
+Tested up to: 4.2
+Stable tag: 2.1.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -111,6 +111,13 @@ The ShortPixel team is here to help. <a href="https://shortpixel.com/contact">Co
 4. Restore to original image. (Media>Library)
 
 == Changelog ==
+
+= 2.1.5 = 
+
+* visiting Settings/ShortPixel now resets the Queue flag
+* when plgin's API Key cannot be validated the JS script that calls admin-ajas.php is stopped
+* return meaningful message on Media Library listing when API Key is not valid
+* extra check for API Key validation
 
 = 2.1.4 = 
 

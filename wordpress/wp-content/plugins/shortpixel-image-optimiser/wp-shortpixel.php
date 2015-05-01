@@ -3,7 +3,7 @@
  * Plugin Name: ShortPixel Image Optimizer
  * Plugin URI: https://shortpixel.com/
  * Description: ShortPixel is an image compression tool that helps improve your website performance. The plugin optimizes images automatically using both lossy and lossless compression. Resulting, smaller, images are no different in quality from the original. To install: 1) Click the "Activate" link to the left of this description. 2) <a href="https://shortpixel.com/wp-apikey" target="_blank">Free Sign up</a> for your unique API Key . 3) Check your email for your API key. 4) Use your API key to activate ShortPixel plugin in the 'Plugins' menu in WordPress. 5) Done!
- * Version: 2.1.4
+ * Version: 2.1.5
  * Author: ShortPixel
  * Author URI: https://shortpixel.com
  */
@@ -15,7 +15,7 @@ if ( !is_plugin_active( 'wpmandrill/wpmandrill.php' ) ) {
   require_once( ABSPATH . 'wp-includes/pluggable.php' );//to avoid conflict with wpmandrill plugin
 } 
 
-define('PLUGIN_VERSION', "2.1.4");
+define('PLUGIN_VERSION', "2.1.5");
 define('SP_DEBUG', false);
 define('SP_LOG', false);
 define('SP_MAX_TIMEOUT', 10);
@@ -178,14 +178,14 @@ class WPShortPixel {
 		}
 	}
 
-	function my_action_javascript() { ?>
+	function my_action_javascript() { ?> 
 		<script type="text/javascript" >
 			jQuery(document).ready(sendRequest());
 			function sendRequest() {
 				var data = { 'action': 'my_action' };
 				// since WP 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
 				jQuery.post(ajaxurl, data, function(response) {
-					if(response.search('Empty queue') >= 0 || response.search('Error processing image') >= 0) {
+					if(response.search('Empty queue') >= 0 || response.search('Error processing image') >= 0 || response.search('Missing API Key') >= 0) {
 						console.log('Queue is empty');
 					} else {
 						console.log('Server response: ' + response);
@@ -300,6 +300,7 @@ class WPShortPixel {
 						)
 						ORDER BY post_id DESC
 						LIMIT " . SP_MAX_RESULTS_QUERY;
+												
 		$resultsPostMeta = $wpdb->get_results($queryPostMeta);
 		
 		if ( empty($resultsPostMeta) )
@@ -436,7 +437,7 @@ class WPShortPixel {
 		$meta['ShortPixelImprovement'] = round($result[0]->PercentImprovement,2);
 		wp_update_attachment_metadata($ID, $meta);
 		echo "\nProcessing done succesfully for image #{$ID}";
-		
+			
 		//set the next ID to be processed (skip to the next valid value)
 		if ( isset($isList[1]) )
 		{
@@ -1063,13 +1064,21 @@ Currently, you have {$imageCount} images in your library. </br>
 			$response = wp_remote_get(str_replace('https://', 'http://', $requestURL), $args);
 		}
 
+		
+
 		$defaultData = array(
 			"APIKeyValid" => false,
-			"Message" => 'API Key could not be validated. Could not connect Shortpixel service.',
+			"Message" => 'API Key could not be validated. Could not connect to Shortpixel service.',
 			"APICallsMade" => 'Information unavailable. Please check your API key.',
 			"APICallsQuota" => 'Information unavailable. Please check your API key.');
 
 		if(is_object($response) && get_class($response) == 'WP_Error') {
+			
+			$urlElements = parse_url($requestURL);
+			$portConnect = @fsockopen($urlElements['host'],81,$errno,$errstr,15);
+			if(!$portConnect)
+				$defaultData['Message'] .= "<BR>Debug info: <i>$errstr</i>";
+	
 			return $defaultData;
 		}
 
@@ -1087,6 +1096,11 @@ Currently, you have {$imageCount} images in your library. </br>
 			return $defaultData;
 		}
 
+		if ( $data->APICallsMade < $data->APICallsQuota ) //reset quota exceeded flag -> user is allowed to process more images.
+			update_option('wp-short-pixel-quota-exceeded',0);
+		else
+			update_option('wp-short-pixel-quota-exceeded',1);//activate quota limiting			
+					
 		return array(
 			"APIKeyValid" => true,
 			"APICallsMade" => number_format($data->APICallsMade) . ' images',
@@ -1106,8 +1120,13 @@ Currently, you have {$imageCount} images in your library. </br>
 
 			if ( empty($data) )
 			{
-				if ( $fileExtension <> "pdf" )				
-					print 'Optimisation N/A';
+				if ( $fileExtension <> "pdf" )	
+					{
+						if(!$this->_verifiedKey)
+							print 'Invalid API Key. <a href="options-general.php?page=wp-shortpixel">Check your Settings</a>';
+						else
+							print 'Optimisation N/A';
+					}
 				else
 					{
 						if ( get_option('wp-short-pixel-quota-exceeded') )
