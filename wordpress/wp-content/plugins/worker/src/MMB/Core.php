@@ -104,15 +104,10 @@ class MMB_Core extends MMB_Helper
      */
     public function network_admin_notice()
     {
-        global $status, $page, $s;
-        $context              = $status;
-        $plugin               = 'worker/init.php';
-        $nonce                = wp_create_nonce('deactivate-plugin_'.$plugin);
-        $actions              = 'plugins.php?action=deactivate&amp;plugin='.urlencode($plugin).'&amp;plugin_status='.$context.'&amp;paged='.$page.'&amp;s='.$s.'&amp;_wpnonce='.$nonce;
         $configurationService = new MWP_Configuration_Service();
         $configuration        = $configurationService->getConfiguration();
         $notice               = $configuration->getNetworkNotice();
-        $notice               = str_replace("{deactivate_url}", $actions, $notice);
+
         echo $notice;
     }
 
@@ -121,21 +116,9 @@ class MMB_Core extends MMB_Helper
      */
     public function admin_notice()
     {
-        global $status, $page, $s;
-        $context              = $status;
-        $plugin               = 'worker/init.php';
-        $nonce                = wp_create_nonce('deactivate-plugin_'.$plugin);
-        $actions              = 'plugins.php?action=deactivate&amp;plugin='.urlencode($plugin).'&amp;plugin_status='.$context.'&amp;paged='.$page.'&amp;s='.$s.'&amp;_wpnonce='.$nonce;
         $configurationService = new MWP_Configuration_Service();
         $configuration        = $configurationService->getConfiguration();
         $notice               = $configuration->getNotice();
-        $deactivateText       = $configuration->getDeactivateText();
-        if ($this->mmb_multisite && $this->network_admin_install != '1') {
-            $deactivateTextLink = ''.$deactivateText;
-        } else {
-            $deactivateTextLink = '<a href="'.$actions.'" class="mwp_text_notice">'.$deactivateText.'</a>';
-        }
-        $notice = str_replace("{deactivate_text}", $deactivateTextLink, $notice);
 
         echo $notice;
     }
@@ -165,7 +148,7 @@ class MMB_Core extends MMB_Helper
     }
 
     /**
-     * Gets an instance of the Comment class
+     * @return MMB_Comment
      */
     public function get_comment_instance()
     {
@@ -177,7 +160,7 @@ class MMB_Core extends MMB_Helper
     }
 
     /**
-     * Gets an instance of MMB_Post class
+     * @return MMB_Post
      */
     public function get_post_instance()
     {
@@ -189,7 +172,7 @@ class MMB_Core extends MMB_Helper
     }
 
     /**
-     * Gets an instance of User
+     * @return MMB_User
      */
     public function get_user_instance()
     {
@@ -201,7 +184,7 @@ class MMB_Core extends MMB_Helper
     }
 
     /**
-     * Gets an instance of stats class
+     * @return MMB_Stats
      */
     public function get_stats_instance()
     {
@@ -213,7 +196,7 @@ class MMB_Core extends MMB_Helper
     }
 
     /**
-     * Gets an instance of stats class
+     * @return MMB_Backup
      */
     public function get_backup_instance()
     {
@@ -224,6 +207,9 @@ class MMB_Core extends MMB_Helper
         return $this->backup_instance;
     }
 
+    /**
+     * @return MMB_Installer
+     */
     public function get_installer_instance()
     {
         if (!isset($this->installer_instance)) {
@@ -296,6 +282,7 @@ EOF;
      */
     public function install()
     {
+        delete_option('mwp_recovering');
         try {
             $this->registerMustUse('0-worker.php', $this->buildLoaderContent('worker/init.php'));
         } catch (Exception $e) {

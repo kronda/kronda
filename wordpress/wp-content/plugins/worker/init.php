@@ -3,7 +3,7 @@
 Plugin Name: ManageWP - Worker
 Plugin URI: https://managewp.com
 Description: ManageWP Worker plugin allows you to manage your WordPress sites from one dashboard. Visit <a href="https://managewp.com">ManageWP.com</a> for more information.
-Version: 4.1.3
+Version: 4.1.7
 Author: ManageWP
 Author URI: https://managewp.com
 License: GPL2
@@ -68,15 +68,11 @@ if (!function_exists('mwp_fail_safe')):
             return;
         }
 
-        unset($activePlugins[$workerIndex]);
-        // Reset indexes.
-        $activePlugins = array_values($activePlugins);
-        update_option('active_plugins', $activePlugins);
+        // Signal ourselves that the installation is corrupt.
+        update_option('mwp_recovering', time());
 
-        // We probably won't have access to the wp_mail function.
-        $mailFn  = function_exists('wp_mail') ? 'wp_mail' : 'mail';
         $siteUrl = get_option('siteurl');
-        $title   = sprintf("ManageWP Worker deactivated on %s", $siteUrl);
+        $title   = sprintf("ManageWP Worker corrupt on %s", $siteUrl);
         $to      = get_option('admin_email');
         $brand   = get_option('mwp_worker_brand');
         if (!empty($brand['admin_email'])) {
@@ -89,8 +85,8 @@ if (!function_exists('mwp_fail_safe')):
         if (!empty($workerSettings['dataown'])) {
             $userID = (int) $workerSettings['dataown'];
         }
-        $body = sprintf("Worker deactivation due to an error. The site that was affected - %s. User email - %s (User ID: %s). Worker version: %s (%s). The error that caused this:\n<pre>%s</pre>", $siteUrl, $to, $userID, $GLOBALS['MMB_WORKER_VERSION'], $GLOBALS['MMB_WORKER_REVISION'], $fullError);
-        $mailFn('dev@managewp.com', $title, $body);
+        $body = sprintf("Corrupt ManageWP Worker v%s installation detected. Site URL in question is %s. User email is %s (User ID: %s). Attempting recovery process at %s. The error that caused this:\n\n<pre>%s</pre>", $GLOBALS['MMB_WORKER_VERSION'], $siteUrl, $to, $userID, date('Y-m-d H:i:s'), $fullError);
+        mail('dev@managewp.com', $title, $body, "Content-Type: text/html");
 
         // If we're inside a cron scope, don't attempt to hide this error.
         if (defined('DOING_CRON') && DOING_CRON) {
@@ -188,13 +184,200 @@ if (!function_exists('mwp_container')):
     }
 endif;
 
+if (!class_exists('MwpRecoveryKit', false)):
+    class MwpRecoveryKit
+    {
+        public function recover()
+        {
+            ignore_user_abort(true);
+            $dirName          = realpath(dirname(__FILE__));
+            $checksumResponse = wp_remote_get(sprintf('http://s3-us-west-2.amazonaws.com/mwp-orion-public/worker/raw/%s/checksum.json', $GLOBALS['MMB_WORKER_VERSION']));
+            if ($checksumResponse instanceof WP_Error) {
+                $this->selfDeactivate('Unable to download checksum.json: '.$checksumResponse->get_error_message());
+
+                return;
+            }
+            if ($checksumResponse['response']['code'] !== 200) {
+                $this->selfDeactivate('Unable to download checksum.json: invalid status code ('.$checksumResponse['response']['code'].')');
+
+                return;
+            }
+
+            $filesAndChecksums = json_decode($checksumResponse['body'], true);
+
+            if (json_last_error() !== JSON_ERROR_NONE) {
+                $this->selfDeactivate(sprintf('Error while parsing checksum.json [%s]: %s', json_last_error(), json_last_error_msg()));
+
+                return;
+            }
+
+            require_once ABSPATH.'wp-admin/includes/file.php';
+
+            $options = array();
+
+            $fsMethod = get_filesystem_method();
+            if ($fsMethod !== 'direct') {
+                ob_start();
+                $options = request_filesystem_credentials('');
+                ob_end_clean();
+            }
+
+            /** @var WP_Filesystem_Base $fs */
+            WP_Filesystem($options);
+            $fs = $GLOBALS['wp_filesystem'];
+
+            if (!$fs->connect()) {
+                $this->selfDeactivate('Unable to connect to the file system', error_get_last());
+
+                return;
+            }
+
+            // First create directories and remove them from the array.
+            // Must be done before shuffling because of nesting.
+            foreach ($filesAndChecksums as $relativePath => $checksum) {
+                if ($checksum !== '') {
+                    continue;
+                }
+                unset ($filesAndChecksums[$relativePath]);
+                $absolutePath = $dirName.'/'.$relativePath;
+                // Directories are ordered first.
+                if (!is_dir($absolutePath)) {
+                    $fs->mkdir($absolutePath);
+                }
+            }
+
+            // Check and recreate files. Shuffle them so multiple running instances have a smaller collision.
+            $recoveredFiles = array();
+            foreach ($this->shuffleAssoc($filesAndChecksums) as $relativePath => $checksum) {
+                $absolutePath = $dirName.'/'.$relativePath;
+                if (file_exists($absolutePath) && md5_file($absolutePath) === $checksum) {
+                    continue;
+                }
+                $fileUrl  = sprintf('http://s3-us-west-2.amazonaws.com/mwp-orion-public/worker/raw/%s/%s', $GLOBALS['MMB_WORKER_VERSION'], $relativePath);
+                $response = wp_remote_get($fileUrl);
+                if ($response instanceof WP_Error) {
+                    $this->selfDeactivate('Unable to download file '.$fileUrl.': '.$response->get_error_message());
+
+                    return;
+                }
+                if ($response['response']['code'] !== 200) {
+                    $this->selfDeactivate('Unable to download file '.$fileUrl.': invalid status code ('.$response['response']['code'].')');
+
+                    return;
+                }
+                $saved = $fs->put_contents($fs->find_folder(WP_PLUGIN_DIR).'worker/'.$relativePath, $response['body']);
+
+                if (!$saved) {
+                    $this->selfDeactivate('File saving failed.', error_get_last());
+
+                    return;
+                }
+
+                $recoveredFiles[] = $relativePath;
+            }
+
+            // Recovery complete.
+            delete_option('mwp_recovering');
+            mail('dev@managewp.com', sprintf("ManageWP Worker recovered on %s", get_option('siteurl')), sprintf("%d files successfully recovered in this recovery fork of ManageWP Worker v%s. Filesystem method used was <code>%s</code>.\n\n<pre>%s</pre>", count($recoveredFiles), $GLOBALS['MMB_WORKER_VERSION'], $fsMethod, implode("\n", $recoveredFiles)), 'Content-Type: text/html');
+        }
+
+        private function shuffleAssoc($array)
+        {
+            $keys = array_keys($array);
+            shuffle($keys);
+            $shuffled = array();
+            foreach ($keys as $key) {
+                $shuffled[$key] = $array[$key];
+            }
+
+            return $shuffled;
+        }
+
+        private function selfDeactivate($reason, array $lastError = null)
+        {
+            $activePlugins = get_option('active_plugins');
+            $workerIndex   = array_search(plugin_basename(__FILE__), $activePlugins);
+            if ($workerIndex === false) {
+                // Plugin is not yet enabled, possibly in activation context.
+                return;
+            }
+            unset($activePlugins[$workerIndex]);
+            // Reset indexes.
+            $activePlugins = array_values($activePlugins);
+
+            delete_option('mwp_recovering');
+            update_option('active_plugins', $activePlugins);
+
+            $lastErrorMessage = '';
+            if ($lastError !== null) {
+                $lastErrorMessage = "\n\nLast error: ".$lastError['message'];
+            }
+            mail('dev@managewp.com', sprintf("ManageWP Worker recovery aborted on %s", get_option('siteurl')), sprintf("ManageWP Worker v%s. Reason: %s%s", $GLOBALS['MMB_WORKER_VERSION'], $reason, $lastErrorMessage));
+        }
+    }
+endif;
+
+if (!function_exists('mwp_activation_hook')) {
+    function mwp_activation_hook()
+    {
+        if (get_option('mwp_recovering')) {
+            delete_option('mwp_recovering');
+            // Run the checksum one last time.
+            $recoveryKit = new MwpRecoveryKit();
+            $recoveryKit->recover();
+        }
+
+        if (!empty($GLOBALS['mmb_core'])) {
+            /** @var MMB_Core $core */
+            $core = $GLOBALS['mmb_core'];
+            $core->install();
+        }
+    }
+}
+
 if (!function_exists('mwp_init')):
     function mwp_init()
     {
+        // When the plugin deactivates due to a corrupt installation, (de)activation hooks
+        // will never get executed, so the 'mwp_recovering' option will never be deleted,
+        // making the plugin always force the recovery mode , which may always fail for any
+        // reason (eg. the site can't ping itself). Handle that case early.
+        register_activation_hook(__FILE__, 'mwp_activation_hook');
+
+        $GLOBALS['MMB_WORKER_VERSION']  = '4.1.7';
+        $GLOBALS['MMB_WORKER_REVISION'] = '2015-06-03 00:00:00';
+
         // Ensure PHP version compatibility.
         if (version_compare(PHP_VERSION, '5.2', '<')) {
             trigger_error("ManageWP Worker plugin requires PHP 5.2 or higher.", E_USER_ERROR);
             exit;
+        }
+
+        if (get_option('mwp_recovering')) {
+            $recoveryKey = get_transient('mwp_recovery_key');
+            if (!$passedRecoveryKey = filter_input(INPUT_POST, 'mwp_recovery_key')) {
+                $recoveryKey = md5(uniqid('', true));
+                set_transient('mwp_recovery_key', $recoveryKey, time() + 604800); // 1 week.
+                wp_remote_post(get_bloginfo('wpurl'), array(
+                    'reject_unsafe_urls' => false,
+                    'body'               => array(
+                        'mwp_recovery_key' => $recoveryKey,
+                    ),
+                    'timeout'            => 0.01,
+                    'cookies'            => array(
+                        'XDEBUG_SESSION' => 'PHPSTORM',
+                    ),
+                ));
+            } else {
+                if ($recoveryKey !== $passedRecoveryKey) {
+                    return;
+                }
+                delete_transient('mwp_recovery_key');
+                $repairKit = new MwpRecoveryKit();
+                $repairKit->recover();
+            }
+
+            return;
         }
 
         // Register the autoloader that loads everything except the Google namespace.
@@ -205,11 +388,9 @@ if (!function_exists('mwp_init')):
             spl_autoload_register('mwp_autoload', true, true);
         }
 
-        $GLOBALS['MMB_WORKER_VERSION']  = '4.1.3';
-        $GLOBALS['MMB_WORKER_REVISION'] = '2015-04-29 00:00:00';
-        $GLOBALS['mmb_plugin_dir']      = WP_PLUGIN_DIR.'/'.basename(dirname(__FILE__));
-        $GLOBALS['_mmb_item_filter']    = array();
-        $GLOBALS['mmb_core']            = $core = $GLOBALS['mmb_core_backup'] = new MMB_Core();
+        $GLOBALS['mmb_plugin_dir']   = WP_PLUGIN_DIR.'/'.basename(dirname(__FILE__));
+        $GLOBALS['_mmb_item_filter'] = array();
+        $GLOBALS['mmb_core']         = $core = $GLOBALS['mmb_core_backup'] = new MMB_Core();
 
         $siteUrl = function_exists('get_site_option') ? get_site_option('siteurl') : get_option('siteurl');
         define('MMB_XFRAME_COOKIE', 'wordpress_'.md5($siteUrl).'_xframe');
@@ -234,8 +415,6 @@ if (!function_exists('mwp_init')):
         // Register updater hooks.
         MMB_Updater::register();
 
-        // Plugin management hooks.
-        register_activation_hook(__FILE__, array($core, 'install'));
         register_deactivation_hook(__FILE__, array($core, 'deactivate'));
         register_uninstall_hook(dirname(__FILE__).'/functions.php', 'mwp_uninstall');
 

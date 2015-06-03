@@ -305,7 +305,7 @@ class Advanced_Responsive_Video_Embedder_Admin {
 	 * Return Admin message to be used on the dashboard notice and the options page.
 	 *
 	 * @since     3.0.0
-	 */	
+	 */
 	public function get_admin_message() {
 		
 		return sprintf(
@@ -313,6 +313,26 @@ class Advanced_Responsive_Video_Embedder_Admin {
 			'http://nextgenthemes.com/plugins/advanced-responsive-video-embedder/#contribute',
 			'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UNDSCARF3ZPBC'
 		);
+	}
+	
+	public function admin_notice_2() {
+		
+		global $current_user ;
+		$user_id = $current_user->ID;	
+		
+		if ( get_user_meta( $user_id, 'arve_ignore_pro_notice' ) ) {
+			return;
+		}
+		
+		$inst = (int) get_option( 'arve_install_date' );
+		
+		if ( $inst < 1491350400 ) {
+			?>
+			<div class="updated">
+				<p>There will be a Pro Addon for Advanced Resonsive Video Embedder, I need your help to help me out testing. Please <a href="https://nextgenthemes.com/?p=1371">read this</a> you will get the Pro Addon for <strong>FREE!</strong>. Note that the Pro Addon will be <strong>mandatory</strong> for all other modes then normal when version 6 will come out. | <a href="?arve_pro_ignore=1">Dismiss</a></p>
+			</div>
+			<?php
+		}
 	}
 	
 	/**
@@ -329,18 +349,19 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		$install_date = get_option( 'arve_install_date', $current_date );
 
 		#delete_user_meta( $user_id, 'arve_ignore_admin_notice' );
-		#$install_date = strtotime('-7 days', $current_date);
+		#delete_user_meta( $user_id, 'arve_ignore_pro_notice' );
+		#$install_date = strtotime( '-7 days', $current_date );
 		
 		if ( ! current_user_can( 'delete_plugins' ) || get_user_meta( $user_id, 'arve_ignore_admin_notice' ) || ( $current_date - $install_date ) < 604800 ) {
 			return;
 		}
 
 		$message  = $this->get_admin_message();
-		$message .= __( 'This Message is shown here because the ARVE Plugin was activated on this site for over a week now. I hope you like it.', $this->plugin_slug ) . '<br>';
+		$message .= __( 'This Message is shown here because the ARVE Plugin was activated on this site for over a week now. I hope you like it.', $this->plugin_slug );
 
-		$dismiss = sprintf( '<a class="alignright" href="?arve_nag_ignore=1">%s</a>', __( 'Dismiss', $this->plugin_slug ) );
+		$dismiss = sprintf( '| <a href="?arve_nag_ignore=1">%s</a>', __( 'Dismiss', $this->plugin_slug ) );
 
-		echo '<div class="updated"><p><big>' . $message . $dismiss . '</big><br class="clear"></p></div>';
+		echo '<div class="updated"><p><big>' . $message . $dismiss . '</big></p></div>';
 	}
 
 	/**
@@ -355,6 +376,11 @@ class Advanced_Responsive_Video_Embedder_Admin {
 		//* If user clicks to ignore the notice, add that to their user meta
 		if ( isset( $_GET['arve_nag_ignore'] ) && '1' == $_GET['arve_nag_ignore'] ) {
 			add_user_meta( $user_id, 'arve_ignore_admin_notice', 'true', true );
+		}
+		
+		//* If user clicks to ignore the notice, add that to their user meta
+		if ( isset( $_GET['arve_pro_ignore'] ) && '1' == $_GET['arve_pro_ignore'] ) {
+			add_user_meta( $user_id, 'arve_ignore_pro_notice', 'true', true );
 		}
 	}
 

@@ -4,7 +4,7 @@ Contributors: AlexSP
 Tags: picture,  optimization, image editor, pngout, upload speed, shortpixel, compression, jpegmini, webp, lossless, cwebp, media, tinypng, jpegtran,image, image optimisation, shrink, picture, photo, optimize photos, compress, performance, tinypng, crunch, pngquant, attachment, optimize, pictures,fast, images, image files, image quality, lossy, upload, kraken, resize, seo, smushit, optipng, kraken image optimizer, ewww, photo optimization, gifsicle, image optimizer, images, krakenio, png, gmagick, image optimize, pdf, pdf optimisation, pdf optimization, optimize pdf, optimise pdf, shrink pdf, jpg, jpeg, jpg optimisation, jpg optimization, optimize jpg, optimise jpg, shrink jpg, gif, animated gif, optimize gif, optimise gif
 Requires at least: 3.0.0 or higher
 Tested up to: 4.2
-Stable tag: 2.1.5
+Stable tag: 2.1.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -95,10 +95,13 @@ Your images are automatically stored in a backup folder, on your hosting server.
 
 For now, ShortPixel supports JPEG, PNG, PDF and GIF formats. Animated GIFs and thumbnails are also optimized. Additional formats are scheduled for optimization in the future. 
 
+= Will ShortPixel work if my website is using CloudFare? = 
+
+Yes, the image processing happens without interfering with the CloudFare protection. The ShortPixel and CloudFare plugins are also compatible. 
+
 = I’m stuck. What do I do? =
 
 The ShortPixel team is here to help. <a href="https://shortpixel.com/contact">Contact us</a>!
-
 
 == Screenshots ==
 
@@ -112,10 +115,23 @@ The ShortPixel team is here to help. <a href="https://shortpixel.com/contact">Co
 
 == Changelog ==
 
+= 2.1.7 = 
+* improved checking and reporting of firewall restriction on client side
+* optimized files are saved in the right location when dealing with WP Multisite
+
+= 2.1.6 = 
+
+* improved login procedure upon quota is exceeded
+* when quota is exceeded user can more easily increase it
+* extra warning regarding the number of thumbs available additionally to main images
+* improved counting of images
+* check if https works if not use http for communcations with the API 
+* better handling of error messages when API service cannot be contacted
+
 = 2.1.5 = 
 
 * visiting Settings/ShortPixel now resets the Queue flag
-* when plgin's API Key cannot be validated the JS script that calls admin-ajas.php is stopped
+* when plgin's API Key cannot be validated the JS script that calls admin-ajax.php is stopped
 * return meaningful message on Media Library listing when API Key is not valid
 * extra check for API Key validation
 

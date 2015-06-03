@@ -8,15 +8,6 @@
  * file that was distributed with this source code.
  */
 
-/*
- * This file is part of the ManageWP Worker plugin.
- *
- * (c) ManageWP LLC <contact@managewp.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 class MWP_Action_IncrementalBackup_ListFiles extends MWP_Action_IncrementalBackup_Abstract
 {
 
@@ -183,11 +174,11 @@ class MWP_Action_IncrementalBackup_ListFiles extends MWP_Action_IncrementalBacku
             $fileResult['group']       = $file->getGroup();
             $fileResult['permissions'] = $file->getPerms();
             $fileResult['exists']      = true;
+            if ($file->isLink()) {
+                $fileResult['linkTarget'] = $file->getLinkTarget();
+            };
         } catch (RuntimeException $e) {
         }
-        if ($file->isLink()) {
-            $fileResult['linkTarget'] = $file->getLinkTarget();
-        };
 
         return $fileResult;
     }
@@ -213,7 +204,7 @@ class MWP_Action_IncrementalBackup_ListFiles extends MWP_Action_IncrementalBacku
                 $directory = new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::SKIP_DOTS);
             }
 
-            $iterator = new RecursiveIteratorIterator($directory, RecursiveIteratorIterator::SELF_FIRST);
+            $iterator = new RecursiveIteratorIterator($directory, RecursiveIteratorIterator::SELF_FIRST, RecursiveIteratorIterator::CATCH_GET_CHILD);
         } else {
             $directory = new Symfony_Filesystem_FilesystemIterator($path, Symfony_Filesystem_FilesystemIterator::SKIP_DOTS);
             $iterator  = new IteratorIterator($directory);

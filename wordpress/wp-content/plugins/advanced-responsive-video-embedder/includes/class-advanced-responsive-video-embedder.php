@@ -69,7 +69,7 @@ class Advanced_Responsive_Video_Embedder {
 	public function __construct() {
 
 		$this->plugin_slug = 'advanced-responsive-video-embedder';
-		$this->version = '5.3.4';
+		$this->version = '5.4.2';
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -172,6 +172,7 @@ class Advanced_Responsive_Video_Embedder {
 		//* Display a notice that can be dismissed
 		$this->loader->add_action( 'admin_init',    $plugin_admin, 'admin_notice_ignore' );
 		$this->loader->add_action( 'admin_notices', $plugin_admin, 'admin_notice' );
+		$this->loader->add_action( 'admin_notices', $plugin_admin, 'admin_notice_2' );
 
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'register_settings' );
 

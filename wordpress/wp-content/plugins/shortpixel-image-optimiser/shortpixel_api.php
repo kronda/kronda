@@ -44,7 +44,10 @@ class shortpixel_api {
 			$response = $this->doBulkRequest($urls, true);
 
 		if(is_object($response) && get_class($response) == 'WP_Error') {
-			return false;
+			if ( isset($response->errors['http_request_failed'][0]) )
+				return $response->errors['http_request_failed'][0] . ". If problem persists please <a href='https://shortpixel.com/contact'>contact us</a>";
+			else
+				return "There was an error. If persists please <a href='https://shortpixel.com/contact'>contact us</a>";
 		}
 
 		return $response;
@@ -59,8 +62,8 @@ class shortpixel_api {
 			'lossy' => $this->_compressionType,
 			'urllist' => $imageList
 		);
-
-		$response = wp_remote_post($this->_apiEndPoint, array(
+		
+		$arguments = array(
 			'method' => 'POST',
 			'timeout' => 45,
 			'redirection' => 3,
@@ -70,7 +73,12 @@ class shortpixel_api {
 			'headers' => array(),
 			'body' => json_encode($requestParameters),
 			'cookies' => array()
-		));
+		);
+
+		$response = wp_remote_post($this->_apiEndPoint, $arguments );
+		
+		if(is_wp_error( $response ))
+			$response = wp_remote_post(str_replace('https://', 'http://', $this->_apiEndPoint), $arguments );
 
 		return $response;
 	}
@@ -106,7 +114,10 @@ class shortpixel_api {
 		}
 		
 		$response = $this->doRequests($url, $filePaths, $ID);//send requests to API
-		if(!$response) return $response;
+
+		if(! is_array($response)) {
+			 return $response;
+		}
 
 		if($response['response']['code'] != 200) {//response <> 200 -> there was an error apparently?
 			printf('ShortPixel API service accesibility error. Please try again later.');
@@ -345,6 +356,30 @@ class shortpixel_api {
 	
 	static public function returnSubDir($file)//return subdir for that particular attached file
 	{
+		$MultisiteExtraPath = "";
+		
+		if ( function_exists('is_multisite') && function_exists('get_current_blog_id') )
+		{//for dealing with WP Multisites
+			$BlogID = get_current_blog_id();
+			if ( is_multisite() && $BlogID > 1 ) //is a WP Multisite
+				$MultisiteExtraPath = "sites" . DIRECTORY_SEPARATOR . $BlogID . DIRECTORY_SEPARATOR;			
+		}
+		
+		$uploadDir = wp_upload_dir();	
+		
+		if ( !isset($file) || strpos($file, "/") === false )
+			$SubDir = "";
+		else
+			$SubDir = $MultisiteExtraPath . trim(substr($file,0,strrpos($file,"/")+1));		
+			
+		//remove upload dir from the URL if needed
+		$SubDir = str_ireplace($uploadDir['basedir'] . DIRECTORY_SEPARATOR ,"", $SubDir);
+
+		return $SubDir;
+	}
+
+	static public function returnSubDirURL($file)//return subdir for that particular attached file
+	{
 		
 		$uploadDir = wp_upload_dir();	
 		
@@ -352,7 +387,7 @@ class shortpixel_api {
 			$SubDir = "";
 		else
 			$SubDir = trim(substr($file,0,strrpos($file,"/")+1));		
-		
+			
 		//remove upload dir from the URL if needed
 		$SubDir = str_ireplace($uploadDir['basedir'] . DIRECTORY_SEPARATOR ,"", $SubDir);
 
