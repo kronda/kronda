@@ -8,7 +8,7 @@
  * file that was distributed with this source code.
  */
 
-class MWP_Action_IncrementalBackup_Stats extends MWP_Action_IncrementalBackup_Abstract
+class MWP_Action_IncrementalBackup_Stats extends MWP_Action_IncrementalBackup_AbstractFiles
 {
 
     public function execute(array $params = array())
@@ -57,7 +57,7 @@ class MWP_Action_IncrementalBackup_Stats extends MWP_Action_IncrementalBackup_Ab
 
     public function activePluginFilter($plugin)
     {
-        return $plugin['status'] == 'active';
+        return $plugin['status'] === 'active';
     }
 
     /**
@@ -69,7 +69,11 @@ class MWP_Action_IncrementalBackup_Stats extends MWP_Action_IncrementalBackup_Ab
     {
         $size   = 0;
         $ignore = array('.', '..');
-        $files  = scandir($path);
+        $files  = @scandir($path);
+        if ($files === false) {
+            return 0;
+        }
+
         foreach ($files as $file) {
             if (in_array($file, $ignore)) {
                 continue;

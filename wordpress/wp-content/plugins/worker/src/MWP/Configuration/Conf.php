@@ -18,15 +18,6 @@ class MWP_Configuration_Conf
     /**
      * @var string
      */
-    protected $notice;
-
-    /**
-     * @var string
-     */
-    protected $network_notice;
-    /**
-     * @var string
-     */
     protected $deactivate_text;
 
     /**
@@ -151,7 +142,7 @@ class MWP_Configuration_Conf
      */
     public function getNetworkNotice()
     {
-        return $this->getNoticeHtml('Use your network administrator username to add this multisite network to your <a href="https://managewp.com">ManageWP</a> account. ');
+        return $this->getNoticeHtml('Use your network administrator username to add this multisite network to your <a href="https://managewp.com" target="_blank">ManageWP</a> account.');
     }
 
     /**
@@ -291,11 +282,6 @@ class MWP_Configuration_Conf
         return <<<HTML
 <div class="updated" style="padding: 0; margin: 0; border: none; background: none;">
     <style scoped type="text/css">
-        body {
-            font-family: Arial, helvetica, sans-serif;
-            background: #f1f1f1;
-        }
-
         .mwp-notice-container {
             box-shadow: 1px 1px 1px #d9d9d9;
             max-width: 100%;

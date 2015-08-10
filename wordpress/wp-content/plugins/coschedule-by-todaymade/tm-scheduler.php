@@ -2,7 +2,7 @@
 /*
 Plugin Name: CoSchedule by Todaymade
 Description: Schedule social media messages alongside your blog posts in WordPress, and then view them on a Google Calendar interface. <a href="http://app.coschedule.com" target="_blank">Account Settings</a>
-Version: 2.3.4
+Version: 2.4.3
 Author: Todaymade
 Author URI: http://todaymade.com/
 Plugin URI: http://coschedule.com/
@@ -24,13 +24,14 @@ if ( ! class_exists( 'tm_coschedule' ) ) {
         private $app = "https://app.coschedule.com";
         private $app_metabox = "https://app.coschedule.com/metabox";
         private $assets = "https://d2lbmhk9kvi6z5.cloudfront.net";
-        private $version = "2.3.4";
-        private $build = 52;
+        private $version = "2.4.3";
+        private $build = 56;
         private $connected = false;
         private $token = false;
         private $blog_id = false;
         private $current_user_id = false;
         private $is_wp_vip = false;
+        private $base64_decode_disabled;
 
         /**
          * Class constructor: initializes class variables and adds actions and filters.
@@ -48,6 +49,7 @@ if ( ! class_exists( 'tm_coschedule' ) ) {
             $this->blog_id = get_option( 'tm_coschedule_id' );
             $this->synced_build = get_option( 'tm_coschedule_synced_build' );
             $this->is_wp_vip = ( defined( 'WPCOM_IS_VIP_ENV' ) && WPCOM_IS_VIP_ENV === true );
+            $this->base64_decode_disabled = in_array('base64_decode', explode( ',', str_replace( ' ', '', ini_get( 'disable_functions' ) ) ) );
 
             // Check if connected to api
             if ( ! empty( $this->token ) && ! empty( $this->blog_id ) ) {
@@ -378,40 +380,7 @@ if ( ! class_exists( 'tm_coschedule' ) ) {
          */
         public function meta_box_enabled() {
             $post_type = $this->get_current_post_type();
-            $custom_post_types_list = get_option( 'tm_coschedule_custom_post_types_list' );
-
-            // Grab remote list if not set
-            if ( empty( $custom_post_types_list ) && true == $this->connected ) {
-                // Load remote blog information
-                $resp = $this->api_get( '/wordpress_keys?_wordpress_key=' . $this->token );
-
-                // be extra careful with resp as we don't want an exception to escape this function //
-                if ( ! is_wp_error($resp) && isset( $resp['response'] ) && isset( $resp['response']['code'] ) && 200 === $resp['response']['code'] ) {
-                    $json = json_decode( $resp['body'], true );
-
-                    // Check for a good response
-                    if ( isset( $json['result'] ) && isset( $json['result'][0] ) && ! empty( $json['result'][0]['custom_post_types'] ) ) {
-                        $custom_post_types_list = $json['result'][0]['custom_post_types_list'];
-
-                        // Save custom list
-                        if ( ! empty( $custom_post_types_list ) ) {
-                            update_option( 'tm_coschedule_custom_post_types_list', $custom_post_types_list );
-                        }
-                    }
-                }
-            }
-
-            // Default
-            if ( empty( $custom_post_types_list ) ) {
-                $custom_post_types_list = 'post';
-                update_option( 'tm_coschedule_custom_post_types_list', $custom_post_types_list );
-            }
-
-            // Convert to an array
-            $custom_post_types_list_array = explode( ',', $custom_post_types_list );
-
-            // Check if post type is supported
-            return in_array( $post_type, $custom_post_types_list_array );
+            return $this->is_synchronizable_post_type( $post_type, true );
         }
 
         /**
@@ -566,10 +535,148 @@ if ( ! class_exists( 'tm_coschedule' ) ) {
         }
 
         /**
+         * Adapted from nice example found here: http://theme.fm/2011/10/how-to-upload-media-via-url-programmatically-in-wordpress-2657/
+         */
+        public function tm_aj_sideload_url( $data_args ) {
+            try {
+
+                if ( isset( $data_args['url'] ) ) {
+                    $url = $data_args['url'];
+                }
+                if ( isset( $data_args['post_id'] ) ) {
+                    $post_id = $data_args['post_id'];
+                }
+
+                // make $url safe //
+                $this->sanitize_param( $url );
+                $url = esc_url( $url );
+
+                // make $post_id safe //
+                $this->sanitize_param( $post_id );
+                if ( ! is_numeric( $post_id ) ) {
+                    $post_id = 0;
+                }
+
+                // validate required param //
+                if ( ! isset( $url ) || empty( $url ) ) {
+                    throw new Exception( 'Invalid API call. Missing argument(s).' );
+                }
+
+                // download it to temporary spot //
+                $attachment_pointer = download_url( $url );
+                $file_array = array(
+                    'name' => basename( $url ),
+                    'tmp_name' => $attachment_pointer
+                );
+
+                // track where in process //
+                $stage = 'download';
+
+                // check for download errors //
+                if ( ! is_wp_error( $attachment_pointer ) ) {
+
+                    // handle media, $post_id === 0 will not associate media with a post //
+                    $attachment_pointer = media_handle_sideload( $file_array, $post_id );
+
+                    // track where in process //
+                    $stage = 'sideload';
+
+                    // check for sideload error //
+                    if ( ! is_wp_error( $attachment_pointer ) ) {
+
+                        // extract url of attachment //
+                        $response = array();
+                        $response['url'] = $url;
+                        $response['attachment_url'] = wp_get_attachment_url( $attachment_pointer );
+
+                        // respond OK //
+                        return $this->respond_json_and_die( $response );
+                    }
+                }
+
+                // something went wrong, remove temporary file //
+                @unlink( $file_array['tmp_name'] );
+
+                // report error //
+                if ( is_wp_error( $attachment_pointer ) ) {
+                    throw new Exception( 'Sideload failed during ' . $stage . ' with WP Error: ' . $attachment_pointer->get_error_message() ) ;
+                } else {
+                    throw new Exception( 'Sideload failed during ' . $stage . ' for unknown reason.' ) ;
+                }
+
+            } catch ( Exception $e ) {
+                $this->respond_exception_and_die( $e );
+            }
+        }
+
+        /**
+         * Insert a new WordPress Post given a WP Post-like structure @ $data_args['post'], upon success returns JSON
+         * form of get_full_post(...)
+         */
+        public function tm_aj_import_post( $data_args ) {
+            try {
+
+                // validate expected arg //
+                if ( isset( $data_args['post'] ) ) {
+                    $post = $data_args['post'];
+                }
+
+                // NOTE: all significant sanitization of $post content is left to wp_insert_post(...) //
+                if ( ! isset( $post ) || empty( $post ) ) {
+                    throw new Exception( 'Invalid API call. Missing argument(s).' );
+                }
+
+                // validate required $post attributes //
+                $post_attributes = array( 'post_content', 'post_title' );
+                foreach ( $post_attributes as $required_attribute ) {
+                    if ( ! isset( $post[$required_attribute] ) || empty( $post[$required_attribute] ) ) {
+                        throw new Exception( 'Invalid API call. Missing required post attribute(s).' );
+                    }
+                }
+
+                // sanitize title per https://codex.wordpress.org/Function_Reference/wp_insert_post#Security //
+                $post['post_title'] = wp_strip_all_tags( $post['post_title'] );
+
+                // guarded default values //
+                $post['post_status'] = $this->get_value_or_default( $post['post_status'], 'draft' );
+                $post['post_type'] = $this->get_value_or_default( $post['post_type'], 'post' );
+
+                // add filter to prevent CoSchedule's own API callback upon post creation //
+                add_filter( 'tm_coschedule_save_post_callback_filter', array( $this, 'prevent_save_post_callback' ), 1, 2 );
+                $post_id = wp_insert_post( $post, true );
+
+                // respond //
+                if ( ! is_wp_error( $post_id ) ) {
+                    $this->respond_json_and_die( $this->get_full_post( $post_id ) );
+                } else {
+                    throw new Exception( 'Unable to insert post: ' . $post_id->get_error_message() );
+                }
+            } catch( Exception $e ) {
+                $this->respond_exception_and_die( $e );
+            }
+        }
+
+        /**
+         * Filter target that, when registered, will prevent CoSchedule's own registered save_post callback from executing.
+         */
+        public function prevent_save_post_callback( $state, $post_id ) {
+            return false;
+        }
+
+        /**
+         * Utility that will return given value, given default or null.
+         */
+        public function get_value_or_default(&$var, $default=null) {
+            return isset($var) ? $var : $default;
+        }
+
+        /**
          * Ajax: Return blog info
          */
         public function tm_aj_get_bloginfo( $data_args ) {
             try {
+                $http_api_transports = apply_filters( 'http_api_transports', array( 'curl', 'streams' ), array(), $this->api );
+                $http = new WP_Http;
                 $vars = array(
                     "name"            =>  get_bloginfo( "name" ),
                     "description"     =>  get_bloginfo( "description" ),
@@ -583,7 +690,14 @@ if ( ! class_exists( 'tm_coschedule' ) ) {
                     "gmt_offset"      =>  get_option( "gmt_offset" ),
                     "plugin_version"  =>  $this->version,
                     "plugin_build"    =>  $this->build,
-                    "is_wp_vip"       =>  $this->is_wp_vip
+                    "is_wp_vip"       =>  $this->is_wp_vip,
+                    "charset"         =>  get_bloginfo('charset'),
+                    "first_transport" =>  $http->_get_first_available_transport( $this->api ),
+                    "all_transports"  =>  implode( ',', $http_api_transports ),
+                    "is_multisite"    =>  is_multisite(),
+                    "base64_decode_disabled" => $this->base64_decode_disabled,
+                    "php_disabled_fn"        => ini_get( 'disable_functions' ),
+                    "php_disabled_cl"        => ini_get( 'disable_classes' )
                 );
 
                 if ( isset( $_GET['tm_debug'] ) || isset( $data_args['tm_debug'] ) ) {
@@ -809,7 +923,7 @@ if ( ! class_exists( 'tm_coschedule' ) ) {
                 }
 
                 // Decode 'data' and re-define $args
-                $args = json_decode( base64_decode( $args['data'] ), true );
+                $args = json_decode( $this->adapt_base64_decode( $args['data'] ), true );
 
                 // NOTE: After this point, $args elements should be individually sanitized before use!!!
 
@@ -860,7 +974,9 @@ if ( ! class_exists( 'tm_coschedule' ) ) {
                     'tm_aj_check_token',
                     'tm_aj_set_custom_post_types',
                     'tm_aj_deactivation',
-                    'tm_aj_trigger_cron'
+                    'tm_aj_trigger_cron',
+                    'tm_aj_sideload_url',
+                    'tm_aj_import_post',
                 );
 
                 // do not allow some functions when in WP-VIP environments
@@ -940,7 +1056,6 @@ if ( ! class_exists( 'tm_coschedule' ) ) {
         public function preserve_markdown () {
             if ( class_exists( 'Jetpack' ) && Jetpack::is_module_active( 'markdown' ) ) {
                 require_once ABSPATH . 'wp-content/plugins/jetpack/modules/markdown/easy-markdown.php';
-                // jetpack_require_lib( 'markdown' );
 
                 if ( class_exists( 'WPCom_Markdown' ) ) {
                     WPCom_Markdown::get_instance()->unload_markdown_for_posts();
@@ -1110,6 +1225,48 @@ if ( ! class_exists( 'tm_coschedule' ) ) {
         }
 
         /**
+         * Utility function to validate if given $post_type is in option 'tm_coschedule_custom_post_types_list' or
+         * default of 'post'
+         */
+        public function is_synchronizable_post_type( $post_type, $sync_with_api ) {
+            $sync_with_api = ( $sync_with_api === true ? true : false ) ;
+            $custom_post_types_list = get_option( 'tm_coschedule_custom_post_types_list' );
+
+            // Grab remote list if not set
+            if ( $sync_with_api && empty( $custom_post_types_list ) && true == $this->connected ) {
+                // Load remote blog information
+                $resp = $this->api_get( '/wordpress_keys?_wordpress_key=' . $this->token );
+
+                // be extra careful with resp as we don't want an exception to escape this function //
+                if ( ! is_wp_error($resp) && isset( $resp['response'] ) && isset( $resp['response']['code'] ) && 200 === $resp['response']['code'] ) {
+                    $json = json_decode( $resp['body'], true );
+
+                    // Check for a good response
+                    if ( isset( $json['result'] ) && isset( $json['result'][0] ) && ! empty( $json['result'][0]['custom_post_types'] ) ) {
+                        $custom_post_types_list = $json['result'][0]['custom_post_types_list'];
+
+                        // Save custom list
+                        if ( ! empty( $custom_post_types_list ) ) {
+                            update_option( 'tm_coschedule_custom_post_types_list', $custom_post_types_list );
+                        }
+                    }
+                }
+            }
+
+            // Default
+            if ( empty( $custom_post_types_list ) ) {
+                $custom_post_types_list = 'post';
+                update_option( 'tm_coschedule_custom_post_types_list', $custom_post_types_list );
+            }
+
+            // Convert to an array
+            $custom_post_types_list_array = explode( ',', $custom_post_types_list );
+
+            // Check if post type is supported
+            return in_array( $post_type, $custom_post_types_list_array );
+        }
+
+        /**
          * Get currated array of all plugins installed in this blog
          */
         public function get_installed_plugins() {
@@ -1161,9 +1318,13 @@ if ( ! class_exists( 'tm_coschedule' ) ) {
             if ( true == $this->connected && ! wp_is_post_revision( $post_id ) && $filter_result ) {
                 // Load post
                 $post = $this->get_full_post( $post_id );
+                $post_type = $this->get_value_or_default( $post['post_type'], 'post' );
 
-                // Send to API
-                $this->api_post( '/hook/wordpress_posts/save?_wordpress_key=' . $this->token, $post );
+                // poke API only for certain post_type //
+                if ( $this->is_synchronizable_post_type( $post_type, false ) ) {
+                    // Send to API
+                    $this->api_post( '/hook/wordpress_posts/save?_wordpress_key=' . $this->token, $post );
+                }
             }
         }
 
@@ -1177,8 +1338,16 @@ if ( ! class_exists( 'tm_coschedule' ) ) {
             $filter_result = apply_filters( 'tm_coschedule_delete_post_callback_filter', true , $post_id );
             // Verify post is not a revision
             if ( true == $this->connected && ! wp_is_post_revision( $post_id ) && $filter_result ){
-                // Send to API
-                $this->api_post( '/hook/wordpress_posts/delete?_wordpress_key=' . $this->token, array( 'post_id' => $post_id ) );
+
+                // Load post (NOTE: bypass $this->get_full_post(...) because we do not need added info) //
+                $post = get_post( $post_id, "ARRAY_A" );
+                $post_type = $this->get_value_or_default( $post['post_type'], 'post' );
+
+                // poke API only for certain post_type //
+                if ( $this->is_synchronizable_post_type( $post_type, false ) ) {
+                    // Send to API
+                    $this->api_post( '/hook/wordpress_posts/delete?_wordpress_key=' . $this->token, array( 'post_id' => $post_id ) );
+                }
             }
         }
 
@@ -1207,12 +1376,15 @@ if ( ! class_exists( 'tm_coschedule' ) ) {
         public function save_user_callback( $user_id ) {
             if ( true == $this->connected ) {
                 $user = get_userdata( $user_id );
-                $can_edit = $user->has_cap( 'edit_posts' );
-                if ( true == $can_edit ) {
+
+                if ( ! is_object( $user ) ) {
+                    return false; // invalid user
+                }
+
+                if ( $user->has_cap( 'edit_posts' ) ) {
                     $this->api_post( '/hook/wordpress_authors/save?_wordpress_key=' . $this->token, (array) $user->data );
                 } else {
-                    // Remove
-                    $this->delete_user_callback( $user_id );
+                    $this->delete_user_callback( $user_id ); // Remove
                 }
             }
         }
@@ -1542,6 +1714,113 @@ if ( ! class_exists( 'tm_coschedule' ) ) {
             }
 
             die();
+        }
+
+        public function adapt_base64_decode( $encoded_value ) {
+            if ( !$this->base64_decode_disabled ) {
+                return base64_decode( $encoded_value );
+            } else {
+                return $this->cos_base64_decode( $encoded_value );
+            }
+        }
+
+        /*
+         * Based on example found here: http://stackoverflow.com/a/27025025
+         */
+        public function cos_base64_decode( $input ) {
+
+            if ( !isset( $input ) || !is_string( $input ) ) {
+                return $input;
+            }
+
+            $keyStr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
+            $chr1 = $chr2 = $chr3 = '';
+            $enc1 = $enc2 = $enc3 = $enc4 = '';
+            $i = 0;
+            $output = '';
+
+            // remove all characters that are not A-Z, a-z, 0-9, +, /, or = //
+            $input = preg_replace( '[^A-Za-z0-9\+\/\=]', '', $input );
+
+            do {
+                $enc1 = strpos( $keyStr, substr( $input, $i++, 1 ) );
+                $enc2 = strpos( $keyStr, substr( $input, $i++, 1 ) );
+                $enc3 = strpos( $keyStr, substr( $input, $i++, 1 ) );
+                $enc4 = strpos( $keyStr, substr( $input, $i++, 1 ) );
+
+                $chr1 = ( $enc1 << 2 ) | ( $enc2 >> 4 );
+                $chr2 = ( ( $enc2 & 15 ) << 4 ) | ( $enc3 >> 2 );
+                $chr3 = ( ( $enc3 & 3 ) << 6 ) | $enc4;
+
+                $output = $output . chr( (int) $chr1 );
+                if ( $enc3 != 64 ) {
+                    $output = $output . chr( (int) $chr2 );
+                }
+                if ( $enc4 != 64 ) {
+                    $output = $output . chr( (int) $chr3 );
+                }
+
+                $chr1 = $chr2 = $chr3 = '';
+                $enc1 = $enc2 = $enc3 = $enc4 = '';
+
+            } while ( $i < strlen( $input ) );
+
+            return urldecode( $output );
+        }
+
+        /*
+         * Based on example found here: http://stackoverflow.com/a/27025025
+         */
+        public function cos_base64_encode( $data ) {
+
+            if ( !isset( $data ) || !is_string( $data ) ) {
+                return $data;
+            }
+
+            $b64 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
+            $o1 = $o2 = $o3 = $h1 = $h2 = $h3 = $h4 = $bits = $i = 0;
+            $ac = 0;
+            $enc = '';
+            $tmp_arr = array();
+
+            if ( !$data ) {
+                return data;
+            }
+
+            do {
+                // pack three octets into four hexets
+                $o1 = $this->charCodeAt( $data, $i++ );
+                $o2 = $this->charCodeAt( $data, $i++ );
+                $o3 = $this->charCodeAt( $data, $i++ );
+
+                $bits = $o1 << 16 | $o2 << 8 | $o3;
+
+                $h1 = $bits >> 18 & 0x3f;
+                $h2 = $bits >> 12 & 0x3f;
+                $h3 = $bits >> 6 & 0x3f;
+                $h4 = $bits & 0x3f;
+
+                // use hexets to index into b64, and append result to encoded string //
+                $tmp_arr[$ac++] =
+                    $this->charAt( $b64, $h1 )
+                    .$this->charAt( $b64, $h2 )
+                    .$this->charAt( $b64, $h3 )
+                    .$this->charAt( $b64, $h4 );
+
+            } while ( $i < strlen( $data ) );
+
+            $enc = implode( $tmp_arr, '' );
+            $r = ( strlen( $data ) % 3 );
+
+            return ( $r ? substr( $enc, 0, ( $r - 3 ) ) : $enc ) . substr( '===', ( $r || 3 ) );
+        }
+
+        public function charCodeAt( $data, $char ) {
+            return ord( substr( $data, $char, 1 ) );
+        }
+
+        public function charAt( $data, $char ) {
+            return substr( $data, $char, 1 );
         }
 
     } // End TM_CoSchedule class

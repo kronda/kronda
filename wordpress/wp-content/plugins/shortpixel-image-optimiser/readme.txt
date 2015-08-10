@@ -1,14 +1,15 @@
 === ShortPixel Image Optimizer ===
 
 Contributors: AlexSP
-Tags: picture,  optimization, image editor, pngout, upload speed, shortpixel, compression, jpegmini, webp, lossless, cwebp, media, tinypng, jpegtran,image, image optimisation, shrink, picture, photo, optimize photos, compress, performance, tinypng, crunch, pngquant, attachment, optimize, pictures,fast, images, image files, image quality, lossy, upload, kraken, resize, seo, smushit, optipng, kraken image optimizer, ewww, photo optimization, gifsicle, image optimizer, images, krakenio, png, gmagick, image optimize, pdf, pdf optimisation, pdf optimization, optimize pdf, optimise pdf, shrink pdf, jpg, jpeg, jpg optimisation, jpg optimization, optimize jpg, optimise jpg, shrink jpg, gif, animated gif, optimize gif, optimise gif
-Requires at least: 3.0.0 or higher
+Tags: picture,  optimization, image editor, pngout, upload speed, shortpixel, compression, jpegmini, webp, lossless, cwebp, media, jpegtran,image, image optimisation, shrink, picture, photo, optimize photos, compress, performance, tinypng, crunch, pngquant, attachment, optimize, pictures,fast, images, image files, image quality, lossy, upload, kraken, resize, seo, smushit, optipng, kraken image optimizer, ewww, photo optimization, gifsicle, image optimizer, images, krakenio, png, gmagick, image optimize, pdf, pdf optimisation, pdf optimization, optimize pdf, optimise pdf, shrink pdf, jpg, jpeg, jpg optimisation, jpg optimization, optimize jpg, optimise jpg, shrink jpg, gif, animated gif, optimize gif, optimise gif, optimizer, optimiser, compresion, optimization, cruncher, image cruncher, compress png, compress jpg, compress jpeg, faster loading times, image optimiser, improve pagerank, optimise, optimize animated gif,  optimise jpeg, optimize jpeg, optimize png, optimise png, tinyjpg, short pixel, shortpixel
+
+Requires at least: 3.0.1
 Tested up to: 4.2
-Stable tag: 2.1.7
+Stable tag: 3.0.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-The ShortPixel plugin reduces the images' size making your website load faster. Image quality is preserved using advanced compression technology.
+Fast, easy-to-use and lightweight plugin that optimizes images & PDFs. Preserve a high visual quality of images and make your website load faster.
 
 == Description ==
 
@@ -25,7 +26,7 @@ ShortPixel uses powerful algorithms that enable your website to load faster, use
 * **Backup and restore originals:** if you ever want to return to the original version, images are automatically stored in a backup folder on your hosting servers.
 * **Bulk image optimization:** Crunch your image gallery, and downsize your website. This feature may take up to several hours, depending on the number and size of existing images. 
 
-On the https://ShortPixel.com website, we offer free access to the ShrtPixel API which you can use for further image optimization purposes.
+On the https://ShortPixel.com website, we offer free access to the ShortPixel API which you can use for further image optimization purposes.
 
 == Installation ==
 
@@ -72,10 +73,13 @@ To get your API key, you must <a href="https://shortpixel.com/wp-apikey">Sign up
 
 You use the API key in the ShortPixel plugin Settings (don’t forget to click Save Settings). The same API key can be used on multiple websites/blogs. 
 
-= How do I activate the API key on a multisite? = 
+= How do I activate the API key on a multisite? =
 
-You have to activate the plugin in the network admin and then activate it manually via the plugins page on each individual site in the multisite. 
-Once you have done that, the Settings menu appears and you can add the API key for each individual site. 
+You have to activate the plugin in the network admin and then activate it manually on each individual site in the multisite. Once you have done that, the Settings menu appears and you can add the API key for each individual site.
+
+As an alternative, you can edit wp-config.php and add this line
+define('SHORTPIXEL_API_KEY', 'APIKEY')
+where 'APIKEY' is the API Key received upon sign up.
 
 = How does Bulk Optimization work? = 
 
@@ -115,9 +119,51 @@ The ShortPixel team is here to help. <a href="https://shortpixel.com/contact">Co
 
 == Changelog ==
 
+= 3.0.6 =
+
+* Optimized bulk processor behaviour when navigating from one admin page to another.
+* Improved some explanatory texts.
+
+= 3.0.5 =
+
+* different bug fixes
+
+= 3.0.2 =
+
+* Progress bar improvements
+
+= 3.0.0 = 
+
+* Major update
+* when validating the API Key on a multisite a message with instructions on how to add the API Key in wp-config.php is displayed
+* check when an optimized image cannot be saved and stop bulk processing (if running)
+* restore backup is not displayed when option is not activated
+* change image status in the Media Library ShortPixel Compression column imediately after the image is reduced, not only after reloading the page. Add spinner to the "Image waiting to be processed" status.
+* images with relative URLs are converted to absolute URL so they can be processed by the plugin
+* proper handling of images with non-standard latin chars inside
+* better average compression computation
+* rewritten handleImageUpload
+* removed MUST_HAVE_KEY 
+* changed isProcessable
+* and others :)
+
+= 2.1.9 =
+
+* Check if the server address is localhost and warn when activating the API key.
+* Quota exceeded now displays a link to billing page
+
+= 2.1.8 =
+
+* improved texts/explanations for different sections
+* added extra option to convert CMYK to RGB for further size reduction
+* display credits for one time payments as well
+* API Key can also be configured in wp-config.php like this: define('SHORTPIXEL_API_KEY', 'YOUR_API_KEY'); Useful for multisite installations
+
+
 = 2.1.7 = 
 * improved checking and reporting of firewall restriction on client side
 * optimized files are saved in the right location when dealing with WP Multisite
+* updated screenshots
 
 = 2.1.6 = 
 
@@ -125,7 +171,7 @@ The ShortPixel team is here to help. <a href="https://shortpixel.com/contact">Co
 * when quota is exceeded user can more easily increase it
 * extra warning regarding the number of thumbs available additionally to main images
 * improved counting of images
-* check if https works if not use http for communcations with the API 
+* check if https works if not use http for communications with the API 
 * better handling of error messages when API service cannot be contacted
 
 = 2.1.5 = 
@@ -138,7 +184,7 @@ The ShortPixel team is here to help. <a href="https://shortpixel.com/contact">Co
 = 2.1.4 = 
 
 * fixed global variable issue for some variables
-* fixed API Key validation that occured for some of the hosting providers out there when HTTPS was used
+* fixed API Key validation that occurred for some of the hosting providers out there when HTTPS was used
 
 = 2.1.3 =
 
@@ -146,7 +192,7 @@ The ShortPixel team is here to help. <a href="https://shortpixel.com/contact">Co
 * removed forgotten debug message
 * changed "optimised" to "optimized". Welcome USA :)
 * improved bulk handling and also "cancel" and "resume" options
-* fixed confilct with wpmandrill on wp_mail function
+* fixed conflict with wpmandrill on wp_mail function
 
 = 2.1.2 = 
 
@@ -185,7 +231,7 @@ The ShortPixel team is here to help. <a href="https://shortpixel.com/contact">Co
 * fixed issue with "missing" images
 * save plugin version for easier debugging
 * list mode is set for media library for first time run 
-* fixed bug that prevented backuped files to remove when the original was removed
+* fixed bug that prevented backup-ed files to remove when the original was removed
 
 = 2.0.6 =
 
@@ -303,7 +349,7 @@ The ShortPixel team is here to help. <a href="https://shortpixel.com/contact">Co
 = 1.4.0 =
 
 * Bulk image processing improved so it can optimize all the images in background while admin page is open
-* small changes in readme.txt descrption
+* small changes in readme.txt description
 
 = 1.3.5 =
 

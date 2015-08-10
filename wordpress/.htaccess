@@ -16,15 +16,7 @@ Options -MultiViews
 </IfModule>
 # END W3TC Browser Cache
 # BEGIN WordPress
-<IfModule mod_rewrite.c>
-RewriteEngine On
-RewriteBase /
-RewriteRule ^index\.php$ - [L]
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule . /index.php [L]
-</IfModule>
 
 # END WordPress
 
-# AddHandler application/x-httpd-php53 .php
+AddHandler application/x-httpd-php53 .php

@@ -8,23 +8,23 @@
  * registers the activation and deactivation functions, and defines a function
  * that starts the plugin.
  *
- * @link              http://nico.onl
+ * @link              https://nextgenthemes.com
  * @since             3.0.0
  * @package           Advanced_Responsive_Video_Embedder
  *
  * @wordpress-plugin
  * Plugin Name:       Advanced Responsive Video Embedder
- * Plugin URI:        https://nextgenthemes.com/plugins/advanced-responsive-video-embedder/
- * Description:       This is a short description of what the plugin does. It's displayed in the WordPress dashboard.
- * Version:           5.4.2
+ * Plugin URI:        https://nextgenthemes.com/plugins/advanced-responsive-video-embedder-pro/
+ * Description:       Easy responsive video embeds via URL (like WordPress) or Shortcodes. Supports almost anything you can imagine.
+ * Version:           6.0.6
  * Author:            Nicolas Jonas
  * Author URI:        http://nico.onl
  * License:           GPL-3.0
- * License URI:       https://www.gnu.org/licenses/gpl-3.0.html
+ * License URI:       http://www.gnu.org/licenses/gpl-3.0.html
  * Text Domain:       advanced-responsive-video-embedder
  * Domain Path:       /languages
  * GitHub Plugin URI: https://github.com/nextgenthemes/advanced-responsive-video-embedder
- * Github Branch:     master
+ * GitHub Branch:     dev
  */
 
 // If this file is called directly, abort.

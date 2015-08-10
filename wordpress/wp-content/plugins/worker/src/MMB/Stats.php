@@ -142,15 +142,18 @@ class MMB_Stats extends MMB_Core
             $recent_posts = array();
             if (!empty($posts)) {
                 foreach ($posts as $id => $recent_post) {
-                    $recent                   = new stdClass();
-                    $recent->post_permalink   = get_permalink($recent_post->ID);
-                    $recent->ID               = $recent_post->ID;
-                    $recent->post_date        = $recent_post->post_date;
-                    $recent->post_title       = $recent_post->post_title;
-                    $recent->post_type        = $recent_post->post_type;
-                    $recent->comment_count    = (int) $recent_post->comment_count;
-                    $recent->post_author_name = array('author_id' => $recent_post->post_author, 'author_name' => $user_info[$recent_post->post_author]);
-                    $recent_posts[]           = $recent;
+                    $recent                 = new stdClass();
+                    $recent->post_permalink = get_permalink($recent_post->ID);
+                    $recent->ID             = $recent_post->ID;
+                    $recent->post_date      = $recent_post->post_date;
+                    $recent->post_title     = $recent_post->post_title;
+                    $recent->post_type      = $recent_post->post_type;
+                    $recent->comment_count  = (int)$recent_post->comment_count;
+
+                    $author_name              = isset($user_info[$recent_post->post_author]) ? $user_info[$recent_post->post_author] : '';
+                    $recent->post_author_name = array('author_id' => $recent_post->post_author, 'author_name' => $author_name);
+
+                    $recent_posts[] = $recent;
                 }
             }
 
@@ -164,7 +167,9 @@ class MMB_Stats extends MMB_Core
                     $recent->ID             = $recent_page_published->ID;
                     $recent->post_date      = $recent_page_published->post_date;
                     $recent->post_title     = $recent_page_published->post_title;
-                    $recent->post_author    = array('author_id' => $recent_page_published->post_author, 'author_name' => $user_info[$recent_page_published->post_author]);
+
+                    $author_name         = isset($user_info[$recent_page_published->post_author]) ? $user_info[$recent_page_published->post_author] : '';
+                    $recent->post_author = array('author_id' => $recent_page_published->post_author, 'author_name' => $author_name);
 
                     $recent_posts[] = $recent;
                 }
@@ -394,15 +399,20 @@ class MMB_Stats extends MMB_Core
         extract($params);
 
         if ($params['refresh'] == 'transient') {
-            if (function_exists('w3tc_pgcache_flush') || function_exists('wp_cache_clear_cache')) {
-                $this->mmb_delete_transient('update_core');
-                $this->mmb_delete_transient('update_plugins');
-                $this->mmb_delete_transient('update_themes');
-            }
+            global $wp_current_filter;
+            $wp_current_filter[] = 'load-update-core.php';
 
             wp_version_check();
-            wp_update_plugins();
             wp_update_themes();
+
+            // THIS IS INTENTIONAL, please do not delete one of the calls to wp_update_plugins(), it is required for
+            // some custom plugins (read premium) to work with ManageWP :)
+            // the second call is not going to trigger the remote post invoked from the wp_update_plugins call
+            wp_update_plugins();
+
+            array_pop($wp_current_filter);
+
+            do_action('load-plugins.php');
         }
 
         /** @var $wpdb wpdb */
