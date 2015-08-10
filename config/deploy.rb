@@ -22,7 +22,7 @@ set :local_path, "/Users/Kronda/Sites/kronda"
 
 # Use a remote cache to speed things up
 set :deploy_via, :remote_cache
-ssh_options[:user] = 'krondaco'
+ssh_options[:user] = 'kronda'
 
 # Multistage support - see config/deploy/[STAGE].rb for specific configs
 set :default_stage, "dev"
@@ -39,4 +39,4 @@ set :httpd_group, 'apache'
 
 
 #set this to where you have installed your wp site locally (http://[local_domain]/wp-admin/ should exist. )
-set :local_domain, 'kronda.kdev.com'
+set :local_domain, 'kronda.dev'
